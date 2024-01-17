@@ -49,8 +49,9 @@ public class Comment {
 	private LocalDateTime updatedDate;
 
 	@Builder
-	protected Comment(String content, User user) {
+	protected Comment(String content, Board board, User user) {
 		this.content = content;
+		this.board = board;
 		this.user = user;
 	}
 

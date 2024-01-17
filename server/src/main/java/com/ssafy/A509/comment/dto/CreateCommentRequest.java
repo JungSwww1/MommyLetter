@@ -8,9 +8,11 @@ import lombok.Getter;
 @Getter
 @Builder
 public class CreateCommentRequest {
+
 	@NotBlank
 	User user;
-
+	@NotBlank
+	Long boardId;
 	@NotBlank
 	String content;
 }
