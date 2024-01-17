@@ -13,11 +13,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -36,10 +38,10 @@ public class User {
   private String email;
 
   @Enumerated(EnumType.STRING)
-  private String gender;
+  private Gender gender;
 
   @Enumerated(EnumType.STRING)
-  private String role;
+  private Role role;
 
   @CreatedDate
   @Column(updatable = false)
@@ -53,7 +55,7 @@ public class User {
 
   @Builder
   protected User(Long userId, String password, String nickname, String intro, String email,
-      String gender, String role, String profile_photo, String background_photo) {
+      Gender gender, Role role, String profile_photo, String background_photo) {
     this.userId = userId;
     this.password = password;
     this.nickname = nickname;
