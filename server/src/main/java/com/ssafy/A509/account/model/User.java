@@ -1,4 +1,4 @@
-package com.ssafy.A509.user.model;
+package com.ssafy.A509.account.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
