@@ -5,7 +5,9 @@ import com.ssafy.A509.board.dto.UpdateBoardRequest;
 import com.ssafy.A509.board.dto.CreateBoardRequest;
 import com.ssafy.A509.board.service.BoardService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +32,18 @@ public class BoardController {
 		return new ResponseEntity<>(boardService.createBoard(boardRequest), HttpStatus.CREATED);
 	}
 
+	@GetMapping
+	public ResponseEntity<List<BoardResponse>> getAllBoard() {
+		return new ResponseEntity<>(boardService.getAllBoard(), HttpStatus.OK);
+	}
+
+	@GetMapping("/user/{userId}")
+	public ResponseEntity<List<BoardResponse>> getUserBoard(@NotBlank @PathVariable Long userId) {
+		return new ResponseEntity<>(boardService.getUserBoard(userId), HttpStatus.OK);
+	}
+
 	@GetMapping("/{boardId}")
-	public ResponseEntity<BoardResponse> getBoard(@NotNull @PathVariable Long boardId) {
+	public ResponseEntity<BoardResponse> getBoard(@NotBlank @PathVariable Long boardId) {
 		return new ResponseEntity<>(boardService.getBoard(boardId), HttpStatus.OK);
 	}
 

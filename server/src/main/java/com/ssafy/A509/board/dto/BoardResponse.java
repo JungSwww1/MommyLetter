@@ -1,6 +1,7 @@
 package com.ssafy.A509.board.dto;
 
 import com.ssafy.A509.board.model.Access;
+import com.ssafy.A509.user.model.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -12,7 +13,6 @@ import lombok.Getter;
 public class BoardResponse {
 
 	@NotBlank
-	@NotNull
 	private Long boardId;
 	@NotBlank
 	private User user;
