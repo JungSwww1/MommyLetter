@@ -9,7 +9,6 @@ import lombok.Getter;
 public class UpdateBoardRequest {
 	@NotBlank
 	private Long boardId;
-
 	@NotBlank
 	private String content;
 }

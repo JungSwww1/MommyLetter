@@ -1,6 +1,7 @@
 package com.ssafy.A509.board.dto;
 
 import com.ssafy.A509.board.model.Access;
+import com.ssafy.A509.user.model.User;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;

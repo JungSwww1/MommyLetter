@@ -1,5 +1,6 @@
 package com.ssafy.A509.board.model;
 
+import com.ssafy.A509.user.model.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -31,7 +32,7 @@ public class Board {
 	private Long boardId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id");
+	@JoinColumn(name = "user_id")
 	private User user;
 
 	private String content;

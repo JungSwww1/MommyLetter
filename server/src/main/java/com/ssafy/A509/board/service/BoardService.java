@@ -5,7 +5,10 @@ import com.ssafy.A509.board.dto.BoardResponse;
 import com.ssafy.A509.board.dto.CreateBoardRequest;
 import com.ssafy.A509.board.model.Board;
 import com.ssafy.A509.board.repository.BoardRepository;
+import com.ssafy.A509.user.model.User;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -31,6 +34,17 @@ public class BoardService {
 		return boardRepository.findById(id)
 			.map(this::getBoardResponse)
 			.orElseThrow(() -> new NoSuchElementException("No value present"));
+	}
+
+	public List<BoardResponse> getAllBoard() {
+		return boardRepository.findAll().stream().map(board -> modelMapper.map(board, BoardResponse.class)).collect(
+			Collectors.toList());
+	}
+
+	public List<BoardResponse> getUserBoard(Long userId) {
+		return boardRepository.findAllByUserUserId(userId).stream()
+			.map(board -> modelMapper.map(board, BoardResponse.class)).collect(
+				Collectors.toList());
 	}
 
 	private BoardResponse getBoardResponse(Board board) {
