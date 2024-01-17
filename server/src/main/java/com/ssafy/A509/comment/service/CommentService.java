@@ -1,8 +1,6 @@
 package com.ssafy.A509.comment.service;
 
-import com.ssafy.A509.board.dto.BoardResponse;
-import com.ssafy.A509.board.dto.UpdateBoardRequest;
-import com.ssafy.A509.board.model.Board;
+import com.ssafy.A509.board.repository.BoardRepository;
 import com.ssafy.A509.comment.dto.CommentResponse;
 import com.ssafy.A509.comment.dto.CreateCommentRequest;
 import com.ssafy.A509.comment.dto.UpdateCommentRequest;
@@ -21,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class CommentService {
 
 	private final CommentRepository commentRepository;
+	private final BoardRepository boardRepository;
 	private final ModelMapper modelMapper;
 
 	@Transactional
@@ -28,6 +27,8 @@ public class CommentService {
 		Comment buildComment = Comment.builder()
 			.content(commentRequest.getContent())
 			.user(commentRequest.getUser())
+			.board(boardRepository.findById(commentRequest.getBoardId())
+				.orElseThrow())
 			.build();
 
 		Comment comment = commentRepository.save(buildComment);
