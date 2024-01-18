@@ -1,6 +1,6 @@
 import styled from "tailwind-styled-components";
 
-const Main = styled.div`
+export const Main = styled.div`
     flex
     flex-col
     w-[850px]
@@ -11,16 +11,16 @@ const Main = styled.div`
     border
     border-white/10
 `
-const Header=styled.div`
+export const Header=styled.div`
     flex
     justify-between
     items-center
     h-10
     pl-4
 `
-const Footer = styled.div`
+export const Footer = styled.div`
     flex
     h-[5%]
     bg-[#d9d9d9]
     mt-auto
-`
+`;
