@@ -6,6 +6,7 @@ import com.ssafy.A509.account.dto.AccountResponse;
 import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.account.repository.AccountRepository;
 import com.ssafy.A509.board.dto.BoardResponse;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -24,6 +25,7 @@ public class AccountService {
 
   //회원가입 기능
   //비밀번호 암호화 도입 X
+  @Transactional
   public void createAccount(CreateAccountRequest accountRequest){
     User buildAccount = User.builder()
         .email(accountRequest.getEmail())
@@ -51,6 +53,7 @@ public class AccountService {
   }
 
   // 계정 정보 수정
+  @Transactional
   public void updateAccount(UpdateAccountRequest accountRequest){
     accountRepository.findById(accountRequest.getUserId())
         .ifPresentOrElse(user -> {
@@ -66,6 +69,7 @@ public class AccountService {
 
   // 계정 비밀번호 수정
   // 암호화 도입 X
+  @Transactional
   public void updateAccountPassword(UpdateAccountRequest userRequest){
     accountRepository.findById(userRequest.getUserId())
         .ifPresentOrElse(user->{
@@ -81,6 +85,7 @@ public class AccountService {
   }
 
   //계정 삭제
+  @Transactional
   public void deleteAccount(Long userId){
     accountRepository.findById(userId)
         .ifPresentOrElse(accountRepository::delete, () -> {

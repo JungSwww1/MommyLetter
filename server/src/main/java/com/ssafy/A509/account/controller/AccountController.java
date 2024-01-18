@@ -4,7 +4,9 @@ import com.ssafy.A509.account.dto.AccountResponse;
 import com.ssafy.A509.account.dto.CreateAccountRequest;
 import com.ssafy.A509.account.dto.UpdateAccountRequest;
 import com.ssafy.A509.account.service.AccountService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
+@Tag(name = "User", description = "User API")
 public class AccountController {
   private final AccountService accountService;
 
@@ -35,7 +38,7 @@ public class AccountController {
 
   //userId를 통해 계정을 검색
   @GetMapping("/{userId}")
-  public ResponseEntity<AccountResponse> getAccount(@NotNull @PathVariable Long userId){
+  public ResponseEntity<AccountResponse> getAccount(@NotBlank @PathVariable Long userId){
     return new ResponseEntity<>(accountService.getAccount(userId), HttpStatus.OK);
   }
 

@@ -32,6 +32,4 @@ public class AccountResponse {
   private LocalDateTime createdDate;
 
   private LocalDateTime updatedDate;
-
-
 }
