@@ -29,7 +29,7 @@ public class DiaryService {
   
   //일기 리스트 전체 조회
   public List<DiaryResponse> getAllDiary(Long userId){
-    return diaryRepository.findAllByUserId(userId).stream()
+    return diaryRepository.findAllByUserUserId(userId).stream()
         .map(diary -> modelMapper.map(diary, DiaryResponse.class))
         .collect(Collectors.toList());
   }
