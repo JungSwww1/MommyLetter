@@ -6,14 +6,20 @@
   <component name="ChangeListManager">
     <list default="true" id="baaf8e23-038d-4a8f-8870-63ed274022fb" name="Changes" comment="Feat(LoginPage.tsx): 로그인화면 구현">
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       <change afterPath="$PROJECT_DIR$/src/pages/UserProfile.tsx" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/pages/UserRegist.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/UserProfile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/UserProfile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/UserRegist.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/UserRegist.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,7 +53,11 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "git-widget-placeholder": "feat__seungwon",
+=======
+    "git-widget-placeholder": "frontend",
+>>>>>>> Stashed changes
     "last_opened_file_path": "C:/Users/SSAFY/Desktop/Project/S10P12A509/client",
 =======
     "git-widget-placeholder": "frontend",

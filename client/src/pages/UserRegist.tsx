@@ -11,8 +11,7 @@ const UserRegist =()=> {
         console.log("회원가입용")
     }
     return(
-        <div className="w-[850px] h-screen relative rounded-sm bg-white border border-white/10 min-h-[320px]
-                        ">
+        <div>
                 <img
                     src="image-1.png"
                     className="w-[848px] h-[60px] absolute left-[-1px] top-[-1px] object-cover"
@@ -37,11 +36,7 @@ const UserRegist =()=> {
                 <p className="absolute left-[198px] top-[240px] text-[20px] text-base text-left text-black">@</p>
                 <input type="text"
                        placeholder="example.com"
-<<<<<<< Updated upstream
-                       className="w-[163px] h-9 absolute left-[225px] top-[236px] text-[15px] border-2"
-=======
-                       className="w-[185px] h-9 absolute left-[225px] top-[236px] text-[15px] border-2"
->>>>>>> Stashed changes
+                       className="w-[180px] h-9 absolute left-[225px] top-[236px] text-[15px] border-2"
                 />
                 <button onClick={checkEmail}
                         className="w-[97px] h-[36px] absolute left-6 top-[281px] bg-[#FF8282]

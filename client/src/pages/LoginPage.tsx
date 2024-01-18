@@ -9,19 +9,14 @@ const LoginPage = () => {
 
     // 회원가입 버튼 클릭 시
     const userRegist = ()=> {
-<<<<<<< Updated upstream
-        navigate("/auth/signup")
-=======
         navigate("/signup")
->>>>>>> Stashed changes
     }
     const loginFunc = () => {
         console.log(id);
         console.log(password);
     }
     return (
-        <div
-            className="w-[850px] h-screen relative rounded-sm bg-white border border-white/10 min-h-[320px]">
+        <div>
             {/*아래는 로고 들어갈 영역*/}
             <img src={logo}
                  alt="Logo"
