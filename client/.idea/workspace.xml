@@ -6,11 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="729cb632-49be-4f20-a050-677f72547010" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage/LoginPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/UserProfile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile/UserProfile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/UserRegist.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/UserRegist/UserRegist.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Profile/UserProfile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile/UserProfile.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
