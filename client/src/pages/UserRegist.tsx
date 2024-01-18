@@ -11,8 +11,7 @@ const UserRegist =()=> {
         console.log("회원가입용")
     }
     return(
-        <div className="w-[850px] h-screen relative rounded-sm bg-white border border-white/10 min-h-[320px]
-                        ">
+        <div>
                 <img
                     src="image-1.png"
                     className="w-[848px] h-[60px] absolute left-[-1px] top-[-1px] object-cover"

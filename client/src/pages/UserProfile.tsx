@@ -1,6 +1,6 @@
 const UserProfile =()=> {
     return(
-        <div className="w-[428px] h-[926px] relative overflow-hidden rounded-sm bg-white border border-white/10">
+        <div>
             <img
                 src="image-1.png"
                 className="w-[428px] h-[49px] absolute left-[-1px] top-[-1px] object-cover"

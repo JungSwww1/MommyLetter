@@ -16,8 +16,7 @@ const LoginPage = () => {
         console.log(password);
     }
     return (
-        <div
-            className="w-[850px] h-screen relative rounded-sm bg-white border border-white/10 min-h-[320px]">
+        <div>
             {/*아래는 로고 들어갈 영역*/}
             <img src={logo}
                  alt="Logo"
