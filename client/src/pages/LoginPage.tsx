@@ -1,10 +1,16 @@
 import {useState} from "react";
-import {Link} from "react-router-dom"
+import {Link, useNavigate } from "react-router-dom"
 import logo from '@/assets/logo512.png'
 const LoginPage = () => {
+    const navigate = useNavigate();
     const [id, setId] = useState("")
     const [password, setPassword] = useState("")
     const [autoLogin, setAutoLogin] = useState(false)
+
+    // 회원가입 버튼 클릭 시
+    const userRegist = ()=> {
+        navigate("/auth/signup")
+    }
     const loginFunc = () => {
         console.log(id);
         console.log(password);
@@ -15,15 +21,15 @@ const LoginPage = () => {
             {/*아래는 로고 들어갈 영역*/}
             <img src={logo}
                  alt="Logo"
-                 className="w-[183px] h-[183px] relative left-[39.23%] top-[120px]
-                            mb-[3%]"/>
+                 className="w-[183px] h-[183px] relative left-[39.23%] top-[120px]"
+            />
             {/*아이디 입력*/}
             <input
                 type="text"
                 placeholder={"아이디를 입력해주세요"}
                 onChange={e => setId(e.target.value)}
                 className="w-[325px] h-9 absolute left-[30.88%] top-[350px] text-[15px] text-left text-[#a0a0a0]
-                           border-2 text-center mt-[2%] mb-[1px] rounded-[4px]"
+                           border-2 text-center rounded-[6px]"
             />
 
             {/*비밀번호 입력*/}
@@ -32,14 +38,14 @@ const LoginPage = () => {
                 placeholder={"비밀번호를 입력해주세요"}
                 onChange={e => setPassword(e.target.value)}
                 className="w-[325px] h-9 absolute left-[30.88%] top-[400px] text-[15px] text-left text-[#a0a0a0]
-                           border-2 text-center mt-[1%] rounded-[4px]"
+                           border-2 text-center rounded-[6px]"
             />
 
             {/*로그인 버튼*/}
             <button
                 onClick={loginFunc}
                 className="w-[325px] h-9 absolute left-[30.88%] top-[470px] text-[15px] text-left text-[#a0a0a0]
-                           border-2 text-center mt-[1%] bg-[#FF78E9] text-white rounded-[4px]"
+                           border-2 text-center bg-[#FF78E9] text-white rounded-[6px]"
             >
                 로그인
             </button>
@@ -66,7 +72,9 @@ const LoginPage = () => {
 
             {/*회원가입*/}
             <button className="w-[89px] h-[28px] absolute left-[59.5%] top-[560px] text-[15px] text-left text-[#a0a0a0]
-                           border-2 text-center mt-[1%] bg-[#FF78E9] text-white rounded-[4px]">
+                           border-2 text-center mt-[1%] bg-[#FF78E9] text-white rounded-[6px]"
+                    onClick={userRegist}
+            >
                 회원가입
             </button>
 

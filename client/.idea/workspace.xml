@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="baaf8e23-038d-4a8f-8870-63ed274022fb" name="Changes" comment="Feat(LoginPage.tsx): 로그인화면 구현" />
+    <list default="true" id="baaf8e23-038d-4a8f-8870-63ed274022fb" name="Changes" comment="Feat(LoginPage.tsx): 로그인화면 구현">
+      <change afterPath="$PROJECT_DIR$/src/pages/UserProfile.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/UserRegist.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,9 +31,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2b4HLXIJVBeJPha2DOTREVxlOVz" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -35,8 +43,8 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/SSAFY/Desktop/practice/S10P10A508/client",
+    "git-widget-placeholder": "feat__seungwon",
+    "last_opened_file_path": "C:/Users/SSAFY/Desktop/Project/S10P12A509/client",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -49,6 +57,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\SSAFY\Desktop\Project\S10P12A509\client\src\pages" />
       <recent name="C:\Users\SSAFY\Desktop\practice\S10P10A508\client\src\assets" />
       <recent name="C:\Users\SSAFY\Desktop\practice\S10P10A508\client\src" />
     </key>
@@ -74,6 +83,8 @@
       <option name="presentableId" value="Default" />
       <updated>1705467375338</updated>
       <workItem from="1705467376423" duration="10673000" />
+      <workItem from="1705549688313" duration="72000" />
+      <workItem from="1705549761249" duration="3023000" />
     </task>
     <task id="LOCAL-00001" summary="Feat(LoginPage.tsx): 로그인화면 구현">
       <option name="closed" value="true" />
