@@ -1,10 +1,7 @@
 package com.ssafy.A509.profile.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
@@ -25,16 +22,4 @@ public class DoctorProfile {
     private String backgroundPhoto; //배경 사진
     private String profilePhoto;    //프로필 사진
 
-    @Builder
-    protected DoctorProfile(Long userId, Long doctorId, String name, String hospital, String intro, String specialty, String availableTime, String backgroundPhoto, String profilePhoto) {
-        this.userId = userId;
-        this.doctorId = doctorId;
-        this.name = name;
-        this.hospital = hospital;
-        this.intro = intro;
-        this.specialty = specialty;
-        this.availableTime = availableTime;
-        this.backgroundPhoto = backgroundPhoto;
-        this.profilePhoto = profilePhoto;
-    }
 }

@@ -5,6 +5,7 @@ import com.ssafy.A509.profile.model.*;
 import com.ssafy.A509.profile.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,13 +24,27 @@ public class ProfileServiceImpl implements ProfileService {
 
 
     @Override
+    @Transactional
     public void updateProfileImage(Long userId, ProfileImageRequest profileImageRequest) {
+        UserProfile userProfile = userProfileRepository.findByUserId(userId);
 
+        if (userProfile != null) {
+            userProfile.setProfilePhoto(profileImageRequest.getImageUrl());
+            userProfileRepository.save(userProfile);
+        }
+        // Handle the case where the user profile is not found
     }
 
     @Override
+    @Transactional
     public void updateBackgroundImage(Long userId, ProfileImageRequest profileImageRequest) {
+        UserProfile userProfile = userProfileRepository.findByUserId(userId);
 
+        if (userProfile != null) {
+            userProfile.setBackgroundPhoto(profileImageRequest.getImageUrl());
+            userProfileRepository.save(userProfile);
+        }
+        // Handle the case where the user profile is not found
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.ssafy.A509.profile.dto;
 
-import com.ssafy.A509.profile.model.UserProfile;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,9 +15,5 @@ public class UserProfileResponse {
     final String intro;
     final String backgroundPhoto;
     final String profilePhoto;
-    @NotBlank
-    final int followers;
-    @NotBlank
-    final int following;
 
 }
