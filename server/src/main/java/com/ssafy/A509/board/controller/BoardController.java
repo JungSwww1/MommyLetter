@@ -7,6 +7,7 @@ import com.ssafy.A509.board.service.BoardService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,8 @@ public class BoardController {
 
 	@PostMapping
 	public ResponseEntity<BoardResponse> createBoard(@Valid @RequestBody CreateBoardRequest boardRequest) {
-		return new ResponseEntity<>(boardService.createBoard(boardRequest), HttpStatus.CREATED);
+		Long boardId = boardService.createBoard(boardRequest);
+		return ResponseEntity.created(URI.create("/" + boardId)).build();
 	}
 
 	@GetMapping
