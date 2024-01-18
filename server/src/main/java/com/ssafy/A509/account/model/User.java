@@ -19,7 +19,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -50,12 +49,12 @@ public class User {
   @LastModifiedDate
   private LocalDateTime updatedDate;
 
-  private String profile_photo;
-  private String background_photo;
+  private String profilePhoto;
+  private String backgroundPhoto;
 
   @Builder
   protected User(Long userId, String password, String nickname, String intro, String email,
-      Gender gender, Role role, String profile_photo, String background_photo) {
+      Gender gender, Role role, String profilePhoto, String backgroundPhoto) {
     this.userId = userId;
     this.password = password;
     this.nickname = nickname;
@@ -63,7 +62,19 @@ public class User {
     this.email = email;
     this.gender = gender;
     this.role = role;
-    this.profile_photo = profile_photo;
-    this.background_photo = background_photo;
+    this.profilePhoto = profilePhoto;
+    this.backgroundPhoto = backgroundPhoto;
+  }
+
+  public void setNickname(String nickname) {
+    this.nickname = nickname;
+  }
+
+  public void setIntro(String intro) {
+    this.intro = intro;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 }
