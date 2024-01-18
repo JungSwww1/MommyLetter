@@ -36,7 +36,7 @@ const UserRegist =()=> {
                 <p className="absolute left-[198px] top-[240px] text-[20px] text-base text-left text-black">@</p>
                 <input type="text"
                        placeholder="example.com"
-                       className="w-[163px] h-9 absolute left-[225px] top-[236px] text-[15px] border-2"
+                       className="w-[180px] h-9 absolute left-[225px] top-[236px] text-[15px] border-2"
                 />
                 <button onClick={checkEmail}
                         className="w-[97px] h-[36px] absolute left-6 top-[281px] bg-[#FF8282]

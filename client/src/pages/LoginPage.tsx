@@ -9,7 +9,7 @@ const LoginPage = () => {
 
     // 회원가입 버튼 클릭 시
     const userRegist = ()=> {
-        navigate("/auth/signup")
+        navigate("/signup")
     }
     const loginFunc = () => {
         console.log(id);
