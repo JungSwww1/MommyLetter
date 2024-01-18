@@ -2,7 +2,7 @@ import logo from '@/assets/logo512.png'
 
 const UserProfile = () => {
     return (
-        <div className="w-[850px] h-[762px] relative rounded-sm bg-white border border-white/10 min-h-[320px] overflow-x-hidden">
+        <div>
             {/* 배경 사진 */}
             <img
                 src={logo}
