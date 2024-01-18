@@ -1,8 +1,7 @@
-package com.ssafy.A509.comment.model;
+package com.ssafy.A509.photo.model;
 
-import com.ssafy.A509.account.model.User;
-import com.ssafy.A509.board.model.Access;
 import com.ssafy.A509.board.model.Board;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -17,29 +16,35 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+@Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Comment {
+public class Photo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long commentId;
+	private Long photoId;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private User user;
+	private String path;
 
+	private int size;
+
+	@Setter
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "board_id")
+	@Nullable
 	private Board board;
 
-	private String content;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "diary_id")
+//	@Nullable
+//	private Diary diary;
 
 	@CreatedDate
 	@Column(updatable = false)
@@ -49,13 +54,8 @@ public class Comment {
 	private LocalDateTime updatedDate;
 
 	@Builder
-	protected Comment(String content, Board board, User user) {
-		this.content = content;
-		this.board = board;
-		this.user = user;
-	}
-
-	public void setCommentContent(String content) {
-		this.content = content;
+	protected Photo(String path, int size) {
+		this.path = path;
+		this.size = size;
 	}
 }
