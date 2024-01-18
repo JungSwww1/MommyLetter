@@ -2,9 +2,9 @@ import React from 'react';
 import {AppMain} from'./styles';
 import {Routes, Route} from 'react-router-dom';
 
-import LoginPage from "@/pages/LoginPage";
-import UserRegist from "@/pages/UserRegist";
-import UserProfile from "@/pages/UserProfile";
+import LoginPage from "@/pages/LoginPage/LoginPage";
+import UserRegist from "@/pages/UserRegist/UserRegist";
+import UserProfile from "@/pages/Profile/UserProfile";
 function App() {
   return (
     <AppMain>

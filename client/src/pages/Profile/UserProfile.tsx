@@ -3,15 +3,16 @@ import logo from '@/assets/logo512.png'
 const UserProfile = () => {
     return (
         <div>
+
+
             {/* 배경 사진 */}
             <img
                 src={logo}
                 alt="Logo"
                 className="w-[850px] h-[280px] absolute left-[-1px] top-[-1px] rounded-bl-[15px] rounded-br-[15px] bg-[#ffd1d1]"
             />
-
-            {/* 네비게이션 */}
-            <div>
+            {/* 네비게이션 바로 아래 fixed 된건 절대 건드리지 말것*/}
+            <div className="fixed"> 
                 <div className="w-[51px] h-10 absolute left-[21px] top-[58px] bg-[#ffa0a0]"/>
                 <p className="absolute left-[26px] top-[69px] text-[15px] font-bold text-left text-white">LOGO</p>
                 <svg
