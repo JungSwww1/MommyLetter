@@ -2,6 +2,7 @@ package com.ssafy.A509.comment.dto;
 
 import com.ssafy.A509.account.model.User;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,7 +12,7 @@ public class CreateCommentRequest {
 
 	@NotBlank
 	User user;
-	@NotBlank
+	@NotNull
 	Long boardId;
 	@NotBlank
 	String content;
