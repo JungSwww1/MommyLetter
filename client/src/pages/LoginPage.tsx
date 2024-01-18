@@ -9,7 +9,11 @@ const LoginPage = () => {
 
     // 회원가입 버튼 클릭 시
     const userRegist = ()=> {
+<<<<<<< Updated upstream
         navigate("/auth/signup")
+=======
+        navigate("/signup")
+>>>>>>> Stashed changes
     }
     const loginFunc = () => {
         console.log(id);

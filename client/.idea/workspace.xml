@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="baaf8e23-038d-4a8f-8870-63ed274022fb" name="Changes" comment="Feat(LoginPage.tsx): 로그인화면 구현">
+<<<<<<< Updated upstream
       <change afterPath="$PROJECT_DIR$/src/pages/UserProfile.tsx" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/pages/UserRegist.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+=======
+>>>>>>> Stashed changes
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage.tsx" afterDir="false" />
@@ -43,8 +46,13 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+<<<<<<< Updated upstream
     "git-widget-placeholder": "feat__seungwon",
     "last_opened_file_path": "C:/Users/SSAFY/Desktop/Project/S10P12A509/client",
+=======
+    "git-widget-placeholder": "frontend",
+    "last_opened_file_path": "C:/Users/SSAFY/Desktop/practice/S10P10A508/client",
+>>>>>>> Stashed changes
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
