@@ -1,6 +1,7 @@
 // ProfileController.java
 package com.ssafy.A509.profile.controller;
 
+import com.ssafy.A509.account.model.Role;
 import com.ssafy.A509.profile.dto.*;
 import com.ssafy.A509.profile.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,6 @@ public class ProfileController {
     }
     @GetMapping("/{userId}")
     public ResponseEntity<UserProfileResponse> getUserProfile(@PathVariable Long userId) {
-        System.out.println(userId);
         UserProfileResponse profile = profileService.getUserProfile(userId);
         return ResponseEntity.ok(profile);
     }

@@ -1,20 +1,17 @@
 package com.ssafy.A509.profile.dto;
 
-import com.ssafy.A509.account.model.User;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserProfileResponse {
-
+public class BoardProfileResponse {
     @NotNull
     private Long userId;
     @NotNull
     private String nickname;
-    private String intro;
-    private String backgroundPhoto;
     private String profilePhoto;
 }
