@@ -1,5 +1,7 @@
 package com.ssafy.A509.comment.service;
 
+import com.ssafy.A509.account.model.User;
+import com.ssafy.A509.account.repository.AccountRepository;
 import com.ssafy.A509.board.repository.BoardRepository;
 import com.ssafy.A509.comment.dto.CommentResponse;
 import com.ssafy.A509.comment.dto.CreateCommentRequest;
@@ -19,20 +21,23 @@ import org.springframework.stereotype.Service;
 public class CommentService {
 
 	private final CommentRepository commentRepository;
+	private final AccountRepository accountRepository;
 	private final BoardRepository boardRepository;
 	private final ModelMapper modelMapper;
 
 	@Transactional
-	public CommentResponse createComment(CreateCommentRequest commentRequest) {
+	public Long createComment(CreateCommentRequest commentRequest) {
+		User user = accountRepository.findById(commentRequest.getUserId())
+			.orElseThrow(() -> new NoSuchElementException("No value present"));
+
 		Comment buildComment = Comment.builder()
 			.content(commentRequest.getContent())
-			.user(commentRequest.getUser())
+			.user(user)
 			.board(boardRepository.findById(commentRequest.getBoardId())
 				.orElseThrow())
 			.build();
 
-		Comment comment = commentRepository.save(buildComment);
-		return getCommentResponse(comment);
+		return commentRepository.save(buildComment).getCommentId();
 	}
 
 	private CommentResponse getCommentResponse(Comment comment) {

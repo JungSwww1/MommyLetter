@@ -11,11 +11,9 @@ import com.ssafy.A509.photo.dto.CreatePhotoRequest;
 import com.ssafy.A509.photo.model.Photo;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -50,9 +48,8 @@ public class BoardService {
 		return save.getBoardId();
 	}
 
-
 	public BoardResponse getBoard(Long boardId) {
-		return boardRepository.findById(boardId).map(this::getBoardResponse)
+		return boardRepository.findById(boardId).map(board -> modelMapper.map(board, BoardResponse.class))
 			.orElseThrow(() -> new NoSuchElementException("No value present"));
 	}
 

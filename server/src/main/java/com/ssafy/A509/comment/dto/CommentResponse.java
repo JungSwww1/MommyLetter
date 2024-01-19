@@ -1,22 +1,23 @@
 package com.ssafy.A509.comment.dto;
 
-import com.ssafy.A509.account.model.User;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import lombok.Builder;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CommentResponse {
 
-	@NotBlank
+	@NotNull
 	private Long commentId;
-	@NotBlank
-	private User user;
+	@NotNull
+	private Long userId;
 	@NotBlank
 	private String content;
-	@NotBlank
+	@NotNull
 	private LocalDateTime createdDate;
 	private LocalDateTime updatedDate;
 }

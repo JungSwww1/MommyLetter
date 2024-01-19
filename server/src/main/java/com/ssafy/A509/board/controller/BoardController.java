@@ -1,12 +1,11 @@
 package com.ssafy.A509.board.controller;
 
 import com.ssafy.A509.board.dto.BoardResponse;
-import com.ssafy.A509.board.dto.UpdateBoardRequest;
 import com.ssafy.A509.board.dto.CreateBoardRequest;
+import com.ssafy.A509.board.dto.UpdateBoardRequest;
 import com.ssafy.A509.board.service.BoardService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
