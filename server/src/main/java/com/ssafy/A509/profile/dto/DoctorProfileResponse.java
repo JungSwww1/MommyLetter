@@ -3,9 +3,12 @@ package com.ssafy.A509.profile.dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
-@Builder
+@Setter
+@NoArgsConstructor
 public class DoctorProfileResponse {
 
     @NotBlank
@@ -15,13 +18,13 @@ public class DoctorProfileResponse {
     @NotBlank
     private String name;
     @NotBlank
-    private String hospital;
+    private String location;
     @NotBlank
     private String intro;
     @NotBlank
-    private String specialty;
+    private String department;
     @NotBlank
-    private String availableTime;
-    private String backgroundPhoto;
+    private String validTime;
     private String profilePhoto;
+    private String backgroundPhoto;
 }

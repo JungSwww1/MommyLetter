@@ -30,7 +30,6 @@ public class ProfileController {
     }
     @GetMapping("/{userId}")
     public ResponseEntity<UserProfileResponse> getUserProfile(@PathVariable Long userId) {
-        System.out.println(userId);
         UserProfileResponse profile = profileService.getUserProfile(userId);
         return ResponseEntity.ok(profile);
     }

@@ -1,5 +1,6 @@
 package com.ssafy.A509.profile.service;
 
+import com.ssafy.A509.account.model.Role;
 import com.ssafy.A509.profile.dto.*;
 import com.ssafy.A509.profile.model.*;
 import com.ssafy.A509.profile.repository.*;
@@ -12,13 +13,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProfileServiceImpl implements ProfileService {
-    private final UserProfileRepository userProfileRepository;
-    private final DoctorProfileRepository doctorProfileRepository;
+//    private final UserProfileRepository userProfileRepository;
+//    private final DoctorProfileRepository doctorProfileRepository;
+    private final ProfileRepository profileRepository;
     private final ModelMapper modelMapper;
 
-    public ProfileServiceImpl(UserProfileRepository userProfileRepository, DoctorProfileRepository doctorProfileRepository, ModelMapper modelMapper) {
-        this.userProfileRepository = userProfileRepository;
-        this.doctorProfileRepository = doctorProfileRepository;
+    public ProfileServiceImpl(ProfileRepository profileRepository, ModelMapper modelMapper) {
+        this.profileRepository = profileRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -26,11 +27,11 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     @Transactional
     public void updateProfileImage(Long userId, ProfileImageRequest profileImageRequest) {
-        UserProfile userProfile = userProfileRepository.findByUserId(userId);
+        Profile profile = profileRepository.findByUserId(userId);
 
-        if (userProfile != null) {
-            userProfile.setProfilePhoto(profileImageRequest.getImageUrl());
-            userProfileRepository.save(userProfile);
+        if (profile != null) {
+            profile.setProfilePhoto(profileImageRequest.getImageUrl());
+            profileRepository.save(profile);
         }
         // Handle the case where the user profile is not found
     }
@@ -38,44 +39,66 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     @Transactional
     public void updateBackgroundImage(Long userId, ProfileImageRequest profileImageRequest) {
-        UserProfile userProfile = userProfileRepository.findByUserId(userId);
+        Profile profile = profileRepository.findByUserId(userId);
 
-        if (userProfile != null) {
-            userProfile.setBackgroundPhoto(profileImageRequest.getImageUrl());
-            userProfileRepository.save(userProfile);
+        if (profile != null) {
+            profile.setBackgroundPhoto(profileImageRequest.getImageUrl());
+            profileRepository.save(profile);
         }
         // Handle the case where the user profile is not found
     }
 
     @Override
     public UserProfileResponse getUserProfile(Long userId) {
-        System.out.println(userId);
-        UserProfile userProfile = userProfileRepository.findByUserId(userId);
+        Profile profile = profileRepository.findByUserId(userId);
 
-        if (userProfile != null) {
-            return modelMapper.map(userProfile, UserProfileResponse.class);
+        if (profile != null && profile.getUser().getRole() == Role.Common) {
+            UserProfileResponse profileResponse = new UserProfileResponse();
+            profileResponse.setUserId(profile.getUser().getUserId());
+            profileResponse.setNickname(profile.getUser().getNickname());
+            profileResponse.setIntro(profile.getUser().getIntro());
+            profileResponse.setProfilePhoto(profile.getProfilePhoto());
+            profileResponse.setBackgroundPhoto(profile.getBackgroundPhoto());
+            return profileResponse;
+//            return modelMapper.map(profile, UserProfileResponse.class);
         } else {
+            System.out.println("일반사용자가 아님");
             return null;
         }
     }
 
     @Override
     public List<DoctorProfileCardsResponse> getAllDoctorProfileCards() {
-        List<DoctorProfile> doctorProfiles = doctorProfileRepository.findAll();
+        List<Profile> doctorProfiles = profileRepository.findAll();
         return doctorProfiles.stream()
                 .map(doctorProfile -> modelMapper.map(doctorProfile, DoctorProfileCardsResponse.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public DoctorProfileResponse getDoctorProfile(Long doctorId) {
-        DoctorProfile doctorProfile = doctorProfileRepository.findByDoctorId(doctorId);
+    public DoctorProfileResponse getDoctorProfile(Long userId) {
+        Profile doctorProfile = profileRepository.findByUserId(userId);
 
-        if (doctorProfile != null) {
-            return modelMapper.map(doctorProfile, DoctorProfileResponse.class);
+        if (doctorProfile != null && doctorProfile.getUser().getRole() == Role.Doctor) {
+            return getDoctorProfileResponse(doctorProfile);
         } else {
+            System.out.println("의사아님");
             return null;
         }
+    }
+
+    private static DoctorProfileResponse getDoctorProfileResponse(Profile doctorProfile) {
+        DoctorProfileResponse profileResponse = new DoctorProfileResponse();
+        profileResponse.setUserId(doctorProfile.getUserId());
+        profileResponse.setDoctorId(doctorProfile.getUser().getDoctor().getDoctorId());
+        profileResponse.setName(doctorProfile.getUser().getDoctor().getName());
+        profileResponse.setIntro(doctorProfile.getUser().getIntro());
+        profileResponse.setLocation(doctorProfile.getUser().getDoctor().getLocation());
+        profileResponse.setDepartment(doctorProfile.getUser().getDoctor().getDepartment());
+        profileResponse.setValidTime(doctorProfile.getUser().getDoctor().getValidTime());
+        profileResponse.setProfilePhoto(doctorProfile.getProfilePhoto());
+        profileResponse.setBackgroundPhoto(doctorProfile.getBackgroundPhoto());
+        return profileResponse;
     }
 
 }
