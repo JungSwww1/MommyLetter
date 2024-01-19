@@ -32,7 +32,6 @@ public class BoardService {
 		// 사용자 찾아오기
 //		User user = userRepository.findById(boardRequest.getUserId());
 		User user = User.builder().userId(101L).build();
-
 		// 게시글 생성
 		Board board = Board.builder().content(boardRequest.getContent()).user(user).access(boardRequest.getAccess())
 			.build();
@@ -49,8 +48,7 @@ public class BoardService {
 	}
 
 	public BoardResponse getBoard(Long boardId) {
-		return boardRepository.findById(boardId).map(board -> modelMapper.map(board, BoardResponse.class))
-			.orElseThrow(() -> new NoSuchElementException("No value present"));
+		return modelMapper.map(findById(boardId), BoardResponse.class);
 	}
 
 	public List<BoardResponse> getAllBoard() {
@@ -65,39 +63,32 @@ public class BoardService {
 
 	@Transactional
 	public void updateBoard(UpdateBoardRequest boardRequest) {
-		boardRepository.findById(boardRequest.getBoardId()).ifPresentOrElse(board -> {
-			// 내용 수정
-			board.setBoardContent(boardRequest.getContent());
+		Board board = findById(boardRequest.getBoardId());
+		board.setBoardContent(boardRequest.getContent());
 
-			// 해시태그 수정
-			List<Hashtag> hashtagList = new ArrayList<>(board.getHashtagList());
-			List<String> newHashtagList = Optional.ofNullable(boardRequest.getHashtagList()).orElseGet(ArrayList::new);
+		// 해시태그 수정
+		List<Hashtag> hashtagList = new ArrayList<>(board.getHashtagList());
+		List<String> newHashtagList = Optional.ofNullable(boardRequest.getHashtagList()).orElseGet(ArrayList::new);
 
-			// 이 두 개를 합칠 수 없을까??
-			// 해시태그 추가
-			newHashtagList.stream()
-				.filter(newHashtag -> hashtagList.stream()
-					.noneMatch(existingHashtag -> existingHashtag.getContent().equals(newHashtag)))
-				.map(newHashtag -> Hashtag.builder().content(newHashtag).build())
-				.forEach(board::addHashtag);
+		// 해시태그 추가
+		newHashtagList.stream()
+			.filter(newHashtag -> hashtagList.stream()
+				.noneMatch(existingHashtag -> existingHashtag.getContent().equals(newHashtag)))
+			.map(newHashtag -> Hashtag.builder().content(newHashtag).build())
+			.forEach(board::addHashtag);
 
-			// 해시태그 삭제
-			hashtagList.stream()
-				.filter(existingHashtag -> newHashtagList.stream()
-					.noneMatch(newHashtag -> newHashtag.equals(existingHashtag.getContent())))
-				.forEach(hashtag -> board.getHashtagList().remove(hashtag));
+		// 해시태그 삭제
+		hashtagList.stream()
+			.filter(existingHashtag -> newHashtagList.stream()
+				.noneMatch(newHashtag -> newHashtag.equals(existingHashtag.getContent())))
+			.forEach(hashtag -> board.getHashtagList().remove(hashtag));
 
-			boardRepository.save(board);
-		}, () -> {
-			throw new NoSuchElementException("No value present");
-		});
+		boardRepository.save(board);
 	}
 
 	@Transactional
 	public void deleteBoard(Long boardId) {
-		boardRepository.findById(boardId).ifPresentOrElse(boardRepository::delete, () -> {
-			throw new NoSuchElementException("No value present");
-		});
+		boardRepository.delete(findById(boardId));
 	}
 
 	private void addPhotos(Board board, CreateBoardRequest boardRequest) {
@@ -121,7 +112,7 @@ public class BoardService {
 		});
 	}
 
-	private BoardResponse getBoardResponse(Board board) {
-		return modelMapper.map(board, BoardResponse.class);
+	public Board findById(Long boardId) {
+		return boardRepository.findById(boardId).orElseThrow(() -> new NoSuchElementException("no such board"));
 	}
 }
