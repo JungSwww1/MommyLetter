@@ -11,14 +11,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DiaryResponse {
-  @NotBlank private Long diaryId;
+    @NotBlank
+    private Long diaryId;
 
-  @NotBlank private String content;
+    @NotBlank
+    private String content;
 
-  @NotBlank private Category category;
+    @NotBlank
+    private Category category;
 
-  @NotBlank private int emoji;
+    @NotBlank
+    private int emoji;
 
-  @NotBlank private LocalDateTime createdDate;
-  private LocalDateTime updatedDate;
+    @NotBlank
+    private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
 }
