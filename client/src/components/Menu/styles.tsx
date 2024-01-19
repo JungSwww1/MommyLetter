@@ -1,16 +1,7 @@
 import styled from "tailwind-styled-components";
 
-export const Main = styled.div`
-    flex
-    flex-col
-    w-[850px]
-    h-screen
-    overflow-hidden
-    rounded-sm
-    bg-white
-    border
-    border-white/10
-`
+
+{/*justify-between 되어있기때문에 헤더를 동일하게 사용해도 됨*/}
 export const Header=styled.div`
     flex
     justify-between
