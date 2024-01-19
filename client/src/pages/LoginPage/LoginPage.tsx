@@ -1,4 +1,4 @@
-import {CheckBox, Img, Input, LoginButton, RegisterButton, StyleLink} from "@/pages/LoginPage/styles";
+import {CheckBox, Img, Input, LoginButton, Main, RegisterButton, StyleLink} from "@/pages/LoginPage/styles";
 import {useState} from "react";
 import {useNavigate } from "react-router-dom"
 import logo from '@/assets/logo512.png'
@@ -17,7 +17,7 @@ const LoginPage = () => {
         console.log(password);
     }
     return (
-        <div>
+        <Main>
             {/*아래는 로고 들어갈 영역*/}
             <Img src={logo} alt="Logo"/>
             {/*아이디 입력*/}
@@ -64,7 +64,7 @@ const LoginPage = () => {
             <RegisterButton onClick={userRegist}>
                 회원가입
             </RegisterButton>
-        </div>
+        </Main>
     )
 }
 

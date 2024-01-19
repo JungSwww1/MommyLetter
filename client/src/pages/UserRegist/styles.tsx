@@ -1,9 +1,9 @@
 import styled from "tailwind-styled-components";
 
 export const PasswordInput = styled.input`
-    w-[381px] 
+    w-[52%] 
     h-9 
-    absolute left-[24px]
+    absolute left-[3%]
     text-[15px] 
     border-2
 `
@@ -15,7 +15,7 @@ export const DefaultInput = styled.input`
 `
 
 export const CheckButton = styled.button`
-    w-[97px] 
+    w-[11%] 
     h-[36px] 
     absolute
     bg-[#FF8282]
@@ -25,9 +25,9 @@ export const CheckButton = styled.button`
 `
 
 export const RegisterButton = styled.button`
-    w-[150px] 
+    w-[20%] 
     h-[36px] 
-    absolute left-[145px] 
+    absolute left-[19%] 
              top-[680px]    
     bg-[#FF8282]
     text-[14px] 

@@ -1,10 +1,9 @@
 import styled from "tailwind-styled-components";
 
 export const BackgroundImg = styled.img`
+    flex
     w-[850px] 
     h-[280px] 
-    absolute left-[0px] 
-             top-[0px] 
     rounded-bl-[15px] 
     rounded-br-[15px]
 `
@@ -14,7 +13,7 @@ export const Profile = styled.div`
 `
 
 export const ProfileImg = styled.img`
-    w-[200px] h-[200px] absolute left-[115px] top-[165px] rounded-full bg-amber-50
+    w-[200px] h-[200px] absolute left-[115px] top-[165px] rounded-full
 `
 export const Text = styled.p`
     absolute

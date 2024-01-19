@@ -1,19 +1,17 @@
-import logo from '@/assets/logo512.png'
+import logo from '@/assets/sample1.jpg'
 import {Link} from 'react-router-dom'
 import {BackgroundImg, BottomNav, Profile, ProfileButton, ProfileImg, Text} from "@/pages/Profile/styles";
 const UserProfile = () => {
     return (
-        <div>
+        <div className="relative">
             {/* 배경 사진 */}
             <BackgroundImg
                 src={logo}
                 alt="Logo"
-                /* 밑의 배경색은 차후 지울 것 : 영역 확인 용도 */
-                className="bg-[#ffd1d1]"
             />
             {/* 네비게이션 바로 아래 fixed 된건 절대 건드리지 말것*/}
             {/*nav bar에 있는 것들은 나중에 수정할 것이므로 style등은 안 건드림*/}
-            <nav className="fixed">
+            <nav className="fixed top-0">
                 <div className="w-[51px] h-10 absolute left-[21px] top-[58px] bg-[#ffa0a0]"/>
                 <p className="absolute left-[26px] top-[69px] text-[15px] font-bold text-left text-white">LOGO</p>
                 <svg
