@@ -10,7 +10,6 @@ import com.ssafy.A509.hashtag.repository.HashtagRepository;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,8 +46,9 @@ class BoardServiceTest {
 //		List<CreatePhotoRequest> photoRequestList = new ArrayList<>();
 
 		// 해시테그 추가
-		String hashtag = "ootd";
-		hashtagList.add(hashtag);
+		hashtagList.add("test1");
+		hashtagList.add("test2");
+		hashtagList.add("test3");
 
 		// 사진 추가
 //		CreatePhotoRequest photo = CreatePhotoRequest.builder()
@@ -77,7 +77,7 @@ class BoardServiceTest {
 		Board board = boardRepository.findById(boardId).get();
 		assertEquals(board.getContent(), "test");
 		assertEquals(board.getAccess(), Access.ALL);
-		assertEquals(board.getHashtagList().get(0).getContent(), "ootd");
+		assertEquals(board.getHashtagList().get(0).getContent(), "test1");
 	}
 
 	@Test
@@ -94,6 +94,8 @@ class BoardServiceTest {
 
 		// when
 		boardService.updateBoard(updateBoardRequest);
+
+		// then
 		Board board = boardRepository.findById(boardId).get();
 		assertEquals(board.getContent(), "수정");
 	}
@@ -114,7 +116,7 @@ class BoardServiceTest {
 
 	@Test
 	@DisplayName("해시태그 추가 테스트")
-	void updateHashtagTest() {
+	void addHashtagTest() {
 		// Given
 		CreateBoardRequest boardRequest = boardRequestSample;
 		Long boardId = boardService.createBoard(boardRequest);
@@ -124,20 +126,28 @@ class BoardServiceTest {
 
 		UpdateBoardRequest updateBoardRequest = UpdateBoardRequest.builder()
 			.boardId(boardId)
+			.content(boardRequest.getContent())
 			.hashtagList(hashtagList)
 			.build();
 
 		// when
 		boardService.updateBoard(updateBoardRequest);
+
+		// then
 		Board board = boardRepository.findById(boardId).get();
 
 		// Set으로 타입 변경
 		Set<String> hashtagContents = board.getHashtagList().stream().map(Hashtag::getContent)
 			.collect(Collectors.toSet());
 
-		// then
+		assertThat(hashtagContents.contains("test1")).isTrue();
+		assertThat(hashtagContents.contains("test2")).isTrue();
+		assertThat(hashtagContents.contains("test3")).isTrue();
 		assertThat(hashtagContents.contains("addHashtag")).isTrue();
+
+		assertThat(hashtagRepository.findAll().size()).isEqualTo(4);
 	}
+
 
 	@Test
 	@DisplayName("해시태그 삭제 테스트")
@@ -146,24 +156,102 @@ class BoardServiceTest {
 		CreateBoardRequest boardRequest = boardRequestSample;
 		Long boardId = boardService.createBoard(boardRequest);
 
+		Board savedBoard = boardRepository.findById(boardId).get();
+		List<Hashtag> hashtags = savedBoard.getHashtagList();
+
+		// 삭제할 해시태그
+		Hashtag hashtag = hashtags.get(0);
+
 		List<String> hashtagList = boardRequest.getHashtagList();
-		hashtagList.remove(hashtagList.get(0));
+		hashtagList.remove(hashtag.getContent());
 
 		UpdateBoardRequest updateBoardRequest = UpdateBoardRequest.builder()
 			.boardId(boardId)
+			.content(boardRequest.getContent())
 			.hashtagList(hashtagList)
 			.build();
 
 		// when
 		boardService.updateBoard(updateBoardRequest);
+
+		// then
+		Board board = boardRepository.findById(boardId).get();
+		List<Hashtag> newHashtags = board.getHashtagList();
+
+		assertThat(newHashtags.contains(hashtag)).isFalse();
+		assertThat(newHashtags.size()).isEqualTo(2);
+
+		assertThat(hashtagRepository.findAll().contains(hashtag)).isFalse();
+		assertThat(hashtagRepository.findAll().size()).isEqualTo(2);
+	}
+
+	@Test
+	@DisplayName("해시태그 전체 삭제 테스트")
+	void deleteHashtagAllTest() {
+		// Given
+		CreateBoardRequest boardRequest = boardRequestSample;
+		Long boardId = boardService.createBoard(boardRequest);
+
+		Board savedBoard = boardRepository.findById(boardId).get();
+		// 기존 해시태그
+		List<Hashtag> hashtags = new ArrayList<>(savedBoard.getHashtagList());
+
+		UpdateBoardRequest updateBoardRequest = UpdateBoardRequest.builder()
+			.boardId(boardId)
+			.content(boardRequest.getContent())
+			.hashtagList(null)
+			.build();
+
+		// when
+		boardService.updateBoard(updateBoardRequest);
+
+		// then
+		Board board = boardRepository.findById(boardId).get();
+		// 새로운 해시태그
+		List<Hashtag> newHashtags = board.getHashtagList();
+
+		assertThat(newHashtags.contains(hashtags.get(0))).isFalse();
+		assertThat(newHashtags.contains(hashtags.get(1))).isFalse();
+		assertThat(newHashtags.contains(hashtags.get(2))).isFalse();
+		assertThat(newHashtags.size()).isEqualTo(0);
+
+		assertThat(hashtagRepository.findAll().size()).isEqualTo(0);
+	}
+
+	@Test
+	@DisplayName("해시태그 추가 및 삭제 테스트")
+	void updateHashtagTest() {
+		// Given
+		CreateBoardRequest boardRequest = boardRequestSample;
+		Long boardId = boardService.createBoard(boardRequest);
+
+		List<String> hashtagList = boardRequest.getHashtagList();
+		// 해시태그 삭제
+		hashtagList.remove("test1");
+		// 해시태그 추가
+		hashtagList.add("addHashtag");
+
+		UpdateBoardRequest updateBoardRequest = UpdateBoardRequest.builder()
+			.boardId(boardId)
+			.content(boardRequest.getContent())
+			.hashtagList(hashtagList)
+			.build();
+
+		// when
+		boardService.updateBoard(updateBoardRequest);
+
+		// then
 		Board board = boardRepository.findById(boardId).get();
 
 		// Set으로 타입 변경
 		Set<String> hashtagContents = board.getHashtagList().stream().map(Hashtag::getContent)
 			.collect(Collectors.toSet());
 
-		// then
-		assertThat(hashtagContents.contains("ootd")).isFalse();
-		assertThat(hashtagContents.size()).isEqualTo(0);
+		assertThat(hashtagContents.contains("test1")).isFalse();
+		assertThat(hashtagContents.contains("test2")).isTrue();
+		assertThat(hashtagContents.contains("test3")).isTrue();
+		assertThat(hashtagContents.contains("addHashtag")).isTrue();
+
+		assertThat(hashtagRepository.findAll().size()).isEqualTo(3);
 	}
 }

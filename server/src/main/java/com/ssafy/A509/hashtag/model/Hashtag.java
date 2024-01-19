@@ -21,7 +21,7 @@ public class Hashtag {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long hashTagId;
+	private Long hashtagId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "board_id")
