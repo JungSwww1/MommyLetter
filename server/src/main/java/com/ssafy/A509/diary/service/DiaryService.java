@@ -43,7 +43,7 @@ public class DiaryService {
   }
 
   @Transactional
-  public DiaryResponse createDiary(CreateDiaryRequest diaryRequest){
+  public void createDiary(CreateDiaryRequest diaryRequest){
     Diary newDiary = Diary.builder()
         .user(accountRepository.findById(diaryRequest.getUserId())
           .orElseThrow())
@@ -52,17 +52,17 @@ public class DiaryService {
         .emoji(diaryRequest.getEmoji())
         .build();
 
-    Diary diary = diaryRepository.save(newDiary);
-
-    return getDiaryResponse(diary);
+    diaryRepository.save(newDiary);
   }
 
   @Transactional
   public void updateDiary(UpdateDiaryRequest diaryRequest){
+    System.out.println(diaryRequest.getDiaryId()+ " "  + diaryRequest.getEmoji() + diaryRequest.getContent());
     diaryRepository.findById(diaryRequest.getDiaryId())
         .ifPresentOrElse(diary -> {
-          diary.setContent(diary.getContent());
-          diary.setEmoji(diary.getEmoji());
+
+          diary.setContent(diaryRequest.getContent());
+          diary.setEmoji(diaryRequest.getEmoji());
 
           diaryRepository.save(diary);
         }, ()->{

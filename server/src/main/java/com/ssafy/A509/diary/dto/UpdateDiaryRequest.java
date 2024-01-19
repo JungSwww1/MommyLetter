@@ -1,19 +1,16 @@
 package com.ssafy.A509.diary.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
 public class UpdateDiaryRequest {
-  @NotBlank
-  private Long diaryId;
+  @NotNull private Long diaryId;
 
-  @NotBlank
-  private String content;
+  @NotBlank private String content;
 
-  @NotBlank
-  private String emoji;
+  @NotNull private int emoji;
 }

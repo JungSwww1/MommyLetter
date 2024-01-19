@@ -24,57 +24,57 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class User {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
 
-  private String password;
+    private String password;
 
-  private String nickname;
+    private String nickname;
 
-  private String intro;
+    private String intro;
 
-  private String email;
+    private String email;
 
-  @Enumerated(EnumType.STRING)
-  private Gender gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
-  @Enumerated(EnumType.STRING)
-  private Role role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-  @CreatedDate
-  @Column(updatable = false)
-  private LocalDateTime createdDate;
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdDate;
 
-  @LastModifiedDate
-  private LocalDateTime updatedDate;
+    @LastModifiedDate
+    private LocalDateTime updatedDate;
 
-  private String profilePhoto;
-  private String backgroundPhoto;
+    private String profilePhoto;
+    private String backgroundPhoto;
 
-  @Builder
-  protected User(Long userId, String password, String nickname, String intro, String email,
-      Gender gender, Role role, String profilePhoto, String backgroundPhoto) {
-    this.userId = userId;
-    this.password = password;
-    this.nickname = nickname;
-    this.intro = intro;
-    this.email = email;
-    this.gender = gender;
-    this.role = role;
-    this.profilePhoto = profilePhoto;
-    this.backgroundPhoto = backgroundPhoto;
-  }
+    @Builder
+    protected User(Long userId, String password, String nickname, String intro, String email,
+        Gender gender, Role role, String profilePhoto, String backgroundPhoto) {
+      this.userId = userId;
+      this.password = password;
+      this.nickname = nickname;
+      this.intro = intro;
+      this.email = email;
+      this.gender = gender;
+      this.role = role;
+      this.profilePhoto = profilePhoto;
+      this.backgroundPhoto = backgroundPhoto;
+    }
 
-  public void setNickname(String nickname) {
-    this.nickname = nickname;
-  }
+    public void setNickname(String nickname) {
+      this.nickname = nickname;
+    }
 
-  public void setIntro(String intro) {
-    this.intro = intro;
-  }
+    public void setIntro(String intro) {
+      this.intro = intro;
+    }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+    public void setPassword(String password) {
+      this.password = password;
+    }
 }
