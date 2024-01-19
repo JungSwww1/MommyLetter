@@ -9,12 +9,10 @@ import lombok.Getter;
 public class DoctorProfileCardsResponse {
 
     @NotBlank
-    private Long doctorId;
-    @NotBlank
     private String name;
     @NotBlank
-    private String hospital;
+    private String location;
     @NotBlank
-    private String specialty;
+    private String department;
     private String profilePhoto;
 }

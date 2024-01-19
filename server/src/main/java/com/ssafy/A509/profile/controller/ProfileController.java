@@ -1,6 +1,7 @@
 // ProfileController.java
 package com.ssafy.A509.profile.controller;
 
+import com.ssafy.A509.account.model.Role;
 import com.ssafy.A509.profile.dto.*;
 import com.ssafy.A509.profile.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;

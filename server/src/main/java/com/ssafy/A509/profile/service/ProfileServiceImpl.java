@@ -8,12 +8,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class ProfileServiceImpl implements ProfileService {
-//    private final UserProfileRepository userProfileRepository;
+    //    private final UserProfileRepository userProfileRepository;
 //    private final DoctorProfileRepository doctorProfileRepository;
     private final ProfileRepository profileRepository;
     private final ModelMapper modelMapper;
@@ -67,12 +68,17 @@ public class ProfileServiceImpl implements ProfileService {
         }
     }
 
-    @Override
     public List<DoctorProfileCardsResponse> getAllDoctorProfileCards() {
-        List<Profile> doctorProfiles = profileRepository.findAll();
-        return doctorProfiles.stream()
-                .map(doctorProfile -> modelMapper.map(doctorProfile, DoctorProfileCardsResponse.class))
-                .collect(Collectors.toList());
+        List<Profile> doctorProfiles = profileRepository.findByUser_Role(com.ssafy.A509.account.model.Role.Doctor);
+
+        List<DoctorProfileCardsResponse> doctorCards = new ArrayList<>();
+
+        for (Profile doctorProfile : doctorProfiles) {
+            DoctorProfileCardsResponse doctorCard = getDoctorProfileCardsResponse(doctorProfile);
+            doctorCards.add(doctorCard);
+        }
+
+        return doctorCards;
     }
 
     @Override
@@ -99,6 +105,15 @@ public class ProfileServiceImpl implements ProfileService {
         profileResponse.setProfilePhoto(doctorProfile.getProfilePhoto());
         profileResponse.setBackgroundPhoto(doctorProfile.getBackgroundPhoto());
         return profileResponse;
+    }
+
+    private static DoctorProfileCardsResponse getDoctorProfileCardsResponse(Profile doctorProfile) {
+        return DoctorProfileCardsResponse.builder()
+                .name(doctorProfile.getUser().getDoctor().getName())
+                .location(doctorProfile.getUser().getDoctor().getLocation())
+                .department(doctorProfile.getUser().getDoctor().getDepartment())
+                .profilePhoto(doctorProfile.getProfilePhoto())
+                .build();
     }
 
 }

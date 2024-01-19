@@ -1,6 +1,7 @@
 // ProfileService.java
 package com.ssafy.A509.profile.service;
 
+import com.ssafy.A509.account.model.Role;
 import com.ssafy.A509.profile.dto.*;
 import com.ssafy.A509.profile.repository.ProfileRepository;
 
