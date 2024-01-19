@@ -7,11 +7,11 @@ import lombok.Getter;
 @Getter
 @Builder
 public class CreateAccountRequest {
-  @NotBlank
-  private String email;
-  @NotBlank
-  private String nickname;
-  @NotBlank
-  private String password;
+    @NotBlank
+    private String email;
+    @NotBlank
+    private String nickname;
+    @NotBlank
+    private String password;
 
 }

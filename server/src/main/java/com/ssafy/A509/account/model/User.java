@@ -19,30 +19,30 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class User {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
 
-  private String password;
+    private String password;
 
-  private String nickname;
+    private String nickname;
 
-  private String intro;
+    private String intro;
 
-  private String email;
+    private String email;
 
-  @Enumerated(EnumType.STRING)
-  private Gender gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
-  @Enumerated(EnumType.STRING)
-  private Role role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-  @CreatedDate
-  @Column(updatable = false)
-  private LocalDateTime createdDate;
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdDate;
 
-  @LastModifiedDate
-  private LocalDateTime updatedDate;
+    @LastModifiedDate
+    private LocalDateTime updatedDate;
 
 //  @JsonBackReference
   @OneToOne(mappedBy = "user")
@@ -60,15 +60,15 @@ public class User {
     this.role = role;
   }
 
-  public void setNickname(String nickname) {
-    this.nickname = nickname;
-  }
+    public void setNickname(String nickname) {
+      this.nickname = nickname;
+    }
 
-  public void setIntro(String intro) {
-    this.intro = intro;
-  }
+    public void setIntro(String intro) {
+      this.intro = intro;
+    }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+    public void setPassword(String password) {
+      this.password = password;
+    }
 }

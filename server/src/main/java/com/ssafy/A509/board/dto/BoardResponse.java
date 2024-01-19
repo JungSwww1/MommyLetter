@@ -1,27 +1,29 @@
 package com.ssafy.A509.board.dto;
 
-import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.board.model.Access;
-import jakarta.validation.constraints.NotBlank;
+import com.ssafy.A509.photo.dto.CreatePhotoRequest;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import java.util.List;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardResponse {
-	@NotBlank
+	@NotNull
 	private Long boardId;
-	@NotBlank
+	// 이 부분 나중에 userDto 생성되면 수정
+	@NotNull
 	private Long userId;
-	@NotBlank
+	@NotNull
 	private String content;
-	@NotBlank
+	@NotNull
 	private Access access;
-	@NotBlank
+	@NotNull
 	private LocalDateTime createdDate;
 	private LocalDateTime updatedDate;
+	private List<String> hashTagList;
+	private List<CreatePhotoRequest> photoList;
 }

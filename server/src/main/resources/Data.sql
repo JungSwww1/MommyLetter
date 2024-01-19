@@ -131,7 +131,7 @@ VALUES
 # -- Add 13 more rows...
 #
 # -- Insert data into CONSULT table
-# INSERT INTO `CONSULT` (`counseling_id`, `user_id`, `resesrve_id`, `prescription_path`)
+# INSERT INTO `CONSULT` (`counseling_id`, `user_id`, `reserve_id`, `prescription_path`)
 # VALUES
 #     (1, 101, 501, 'path/to/prescription1.pdf'),
 #     (2, 102, 502, 'path/to/prescription2.pdf');
@@ -152,7 +152,7 @@ VALUES
 # -- Add 13 more rows...
 #
 # -- Insert data into RESERVE table
-# INSERT INTO `RESERVE` (`resesrve_id`, `doctor_id`, `user_id`, `reserve_date`)
+# INSERT INTO `RESERVE` (`reserve_id`, `doctor_id`, `user_id`, `reserve_date`)
 # VALUES
 #     (501, 201, 101, '2024-01-18 10:00:00'),
 #     (502, 202, 102, '2024-01-19 11:00:00');
