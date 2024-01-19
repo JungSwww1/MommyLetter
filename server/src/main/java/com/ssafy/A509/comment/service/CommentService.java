@@ -2,7 +2,7 @@ package com.ssafy.A509.comment.service;
 
 import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.account.repository.AccountRepository;
-import com.ssafy.A509.board.repository.BoardRepository;
+import com.ssafy.A509.board.service.BoardService;
 import com.ssafy.A509.comment.dto.CommentResponse;
 import com.ssafy.A509.comment.dto.CreateCommentRequest;
 import com.ssafy.A509.comment.dto.UpdateCommentRequest;
@@ -20,9 +20,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommentService {
 
+	private final BoardService boardService;
+
 	private final CommentRepository commentRepository;
 	private final AccountRepository accountRepository;
-	private final BoardRepository boardRepository;
+
 	private final ModelMapper modelMapper;
 
 	@Transactional
@@ -33,15 +35,10 @@ public class CommentService {
 		Comment buildComment = Comment.builder()
 			.content(commentRequest.getContent())
 			.user(user)
-			.board(boardRepository.findById(commentRequest.getBoardId())
-				.orElseThrow())
+			.board(boardService.findById(commentRequest.getBoardId()))
 			.build();
 
 		return commentRepository.save(buildComment).getCommentId();
-	}
-
-	private CommentResponse getCommentResponse(Comment comment) {
-		return modelMapper.map(comment, CommentResponse.class);
 	}
 
 	public List<CommentResponse> getBoardComment(Long boardId) {
@@ -52,20 +49,17 @@ public class CommentService {
 
 	@Transactional
 	public void updateComment(UpdateCommentRequest commentRequest) {
-		commentRepository.findById(commentRequest.getCommentId())
-			.ifPresentOrElse(comment -> {
-				comment.setCommentContent(commentRequest.getContent());
-				commentRepository.save(comment);
-			}, () -> {
-				throw new NoSuchElementException("No value present");
-			});
+		Comment comment = findById(commentRequest.getCommentId());
+		comment.setCommentContent(commentRequest.getContent());
+		commentRepository.save(comment);
 	}
 
 	@Transactional
-	public void deleteComment(Long id) {
-		commentRepository.findById(id)
-			.ifPresentOrElse(commentRepository::delete, () -> {
-				throw new NoSuchElementException("No value present");
-			});
+	public void deleteComment(Long commentId) {
+		commentRepository.delete(findById(commentId));
+	}
+
+	public Comment findById(Long commentId) {
+		return commentRepository.findById(commentId).orElseThrow(() -> new NoSuchElementException("no such comment"));
 	}
 }

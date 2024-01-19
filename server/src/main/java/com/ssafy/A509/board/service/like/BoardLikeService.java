@@ -6,7 +6,6 @@ import com.ssafy.A509.board.dto.like.CreateBoardLikeRequest;
 import com.ssafy.A509.board.model.Board;
 import com.ssafy.A509.board.model.like.BoardLike;
 import com.ssafy.A509.board.repository.like.BoardLikeRepository;
-import com.ssafy.A509.board.repository.BoardRepository;
 import com.ssafy.A509.board.service.BoardService;
 import jakarta.transaction.Transactional;
 import java.util.NoSuchElementException;
@@ -19,8 +18,6 @@ public class BoardLikeService {
 
 	private final BoardLikeRepository boardLikeRepository;
 	private final AccountRepository accountRepository;
-	private final BoardRepository boardRepository;
-
 	private final BoardService boardService;
 
 	@Transactional
@@ -45,7 +42,7 @@ public class BoardLikeService {
 	}
 
 	public boolean boardLikeByUser(Long boardId, Long userId) {
-		return boardLikeRepository.findByBoard_BoardIdAndUser_UserId(boardId, userId).isPresent();
+		return boardLikeRepository.existsBoardLikeByBoard_BoardIdAndUser_UserId(boardId, userId);
 	}
 
 	@Transactional
