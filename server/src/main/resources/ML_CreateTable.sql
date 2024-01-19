@@ -131,8 +131,8 @@ CREATE TABLE `PHOTO` (
                          `size` VARCHAR(255) NULL,
                          `created_date` TIMESTAMP NOT NULL,
                          `updated_date` TIMESTAMP NULL,
-                         `board_id` INT NOT NULL,
-                         `diary_id` INT NOT NULL,
+                         `board_id` INT,
+                         `diary_id` INT,
                          FOREIGN KEY (`board_id`) REFERENCES `BOARD` (`board_id`),
                          FOREIGN KEY (`diary_id`) REFERENCES `DIARY` (`diary_id`)
 );
