@@ -2,7 +2,9 @@ package com.ssafy.A509.account.service;
 
 import com.ssafy.A509.account.dto.CreateUserInfoRequest;
 import com.ssafy.A509.account.dto.UpdateUserInfoRequest;
+import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.account.model.UserInfo;
+import com.ssafy.A509.account.repository.AccountRepository;
 import com.ssafy.A509.account.repository.UserInfoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -14,22 +16,24 @@ import org.springframework.stereotype.Service;
 public class UserInfoService {
 
     private final UserInfoRepository userInfoRepository;
+    private final AccountRepository accountRepository;
 
     @Transactional
     public void createUserInfo(Long userId, CreateUserInfoRequest userInfoRequest){
-        UserInfo userInfo = userInfoRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("UserInfo not found with id: " + userId));
+        User user = accountRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
 
         UserInfo buildUserInfo = UserInfo.builder()
-                    .name(userInfoRequest.getName())
-                    .SSN(userInfoRequest.getSSN())
-                    .phone(userInfoRequest.getPhone())
-                    .pregnancyStatus(userInfoRequest.getPregnancyStatus())
-                    .extra(userInfoRequest.getExtra())
-                    .diaryOpen(userInfoRequest.getDiaryOpen())
-                    .build();
+                .user(user)
+                .SSN(userInfoRequest.getSSN())
+                .name(userInfoRequest.getName())
+                .phone(userInfoRequest.getPhone())
+                .pregnancyStatus(userInfoRequest.getPregnancyStatus())
+                .extra(userInfoRequest.getExtra())
+                .diaryOpen(userInfoRequest.getDiaryOpen())
+                .build();
 
-        userInfoRepository.save(userInfo);
+        userInfoRepository.save(buildUserInfo);
     }
 
     @Transactional
