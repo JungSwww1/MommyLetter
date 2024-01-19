@@ -11,25 +11,25 @@ import lombok.Getter;
 @Getter
 @Builder
 public class AccountResponse {
-  @NotBlank
-  private Long userId;
+    @NotBlank
+    private Long userId;
 
-  @NotNull
-  private String password;
+    @NotNull
+    private String password;
 
-  @NotNull
-  private String nickname;
+    @NotNull
+    private String nickname;
 
-  private String intro;
+    private String intro;
 
-  @NotNull
-  private String email;
+    @NotNull
+    private String email;
 
-  private Gender gender;
-  private Role role;
+    private Gender gender;
+    private Role role;
 
-  @NotNull
-  private LocalDateTime createdDate;
+    @NotNull
+    private LocalDateTime createdDate;
 
-  private LocalDateTime updatedDate;
+    private LocalDateTime updatedDate;
 }

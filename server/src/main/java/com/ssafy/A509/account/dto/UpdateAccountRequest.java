@@ -8,20 +8,20 @@ import lombok.Getter;
 @Getter
 @Builder
 public class UpdateAccountRequest {
-  @NotBlank
-  private Long userId;
+    @NotBlank
+    private Long userId;
 
-  @NotNull
-  private String nickname;
+    @NotNull
+    private String nickname;
 
-  @NotNull
-  private String intro;
+    @NotNull
+    private String intro;
 
-  @NotNull
-  private String currentPassword;
+    @NotNull
+    private String currentPassword;
 
-  @NotNull
-  private String newPassword;
+    @NotNull
+    private String newPassword;
 
 
 }
