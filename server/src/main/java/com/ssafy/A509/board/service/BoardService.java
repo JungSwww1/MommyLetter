@@ -74,7 +74,7 @@ public class BoardService {
 
 			// 해시태그 수정
 			List<Hashtag> hashtagList = new ArrayList<>(board.getHashtagList());
-			List<String> newHashtagList = boardRequest.getHashtagList();
+			List<String> newHashtagList = Optional.ofNullable(boardRequest.getHashtagList()).orElseGet(ArrayList::new);
 
 			// 이 두 개를 합칠 수 없을까??
 			// 해시태그 추가
