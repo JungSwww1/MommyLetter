@@ -39,7 +39,7 @@ export const DiaryWrite = () => {
         </div>
         <br/>
         <div className="flex justify-center">
-            <textarea placeholder="내용을 입력" className="text-[17px] h-[400px] w-[700px] ext-[#9d9d9d]"/>
+            <textarea placeholder="내용을 입력" className="text-[17px] h-[50%] w-[100%] ext-[#9d9d9d]"/>
         </div>
     <br/>
         <div>
