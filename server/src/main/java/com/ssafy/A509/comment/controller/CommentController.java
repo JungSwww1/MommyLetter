@@ -6,6 +6,7 @@ import com.ssafy.A509.comment.dto.UpdateCommentRequest;
 import com.ssafy.A509.comment.service.CommentService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,8 @@ public class CommentController {
 
 	@PostMapping
 	public ResponseEntity<CommentResponse> createComment(@Valid @RequestBody CreateCommentRequest commentRequest) {
-		return new ResponseEntity<>(commentService.createComment(commentRequest), HttpStatus.CREATED);
+		Long commentId = commentService.createComment(commentRequest);
+		return ResponseEntity.created(URI.create("/" + commentId)).build();
 	}
 
 	@GetMapping("/{boardId}")

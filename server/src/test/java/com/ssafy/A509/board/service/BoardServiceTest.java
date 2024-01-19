@@ -1,5 +1,8 @@
 package com.ssafy.A509.board.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.ssafy.A509.board.dto.CreateBoardRequest;
 import com.ssafy.A509.board.dto.UpdateBoardRequest;
 import com.ssafy.A509.board.model.Access;
@@ -19,9 +22,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.assertj.core.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -58,7 +58,7 @@ class BoardServiceTest {
 
 		// 게시글 생성
 		boardRequestSample = CreateBoardRequest.builder()
-			.access(Access.ALL)
+			.access(Access.All)
 			.hashtagList(hashtagList)
 //			.photoList(photoRequestList)
 			.content("test")
@@ -76,7 +76,7 @@ class BoardServiceTest {
 		// then
 		Board board = boardRepository.findById(boardId).get();
 		assertEquals(board.getContent(), "test");
-		assertEquals(board.getAccess(), Access.ALL);
+		assertEquals(board.getAccess(), Access.All);
 		assertEquals(board.getHashtagList().get(0).getContent(), "test1");
 	}
 
