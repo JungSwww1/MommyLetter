@@ -1,21 +1,27 @@
 package com.ssafy.A509.diary.dto;
 
 import com.ssafy.A509.diary.model.Category;
+import com.ssafy.A509.photo.dto.CreatePhotoRequest;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
 public class CreateDiaryRequest {
-  @NotNull private Long userId;
+    @NotNull
+    private Long userId;
 
-  @NotBlank private String content;
+    @NotBlank
+    private String content;
 
-  @NotNull(message = "유효하지 않은 카테고리가 입력되었습니다.")
-  //  @Enum(enumClass = Category.class, ignoreCase = true)
-  private Category category;
+    @NotNull(message = "유효하지 않은 카테고리가 입력되었습니다.")
+    private Category category;
 
-  @NotNull private int emoji;
+    @NotNull
+    private int emoji;
+
+    private List<CreatePhotoRequest> photoList;
 }
