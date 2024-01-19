@@ -11,7 +11,6 @@ export const Title = styled.b`
     flex-grow
     text-xl
     font-bold
-    text-left
     text-black
 `;
 export const Input = styled.div`
