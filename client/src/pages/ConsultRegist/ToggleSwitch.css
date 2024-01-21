@@ -1,0 +1,27 @@
+.toggle-switch {
+    width: 60px;
+    height: 30px;
+    background-color: #ccc;
+    border-radius: 15px;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .slider {
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    transition: transform 0.3s ease;
+  }
+  
+  .toggle-switch.toggled {
+    background-color: #4caf50; /* 토글된 상태의 배경색 */
+  }
+  
+  .toggle-switch.toggled .slider {
+    transform: translateX(30px); /* 토글된 상태에서 슬라이더를 오른쪽으로 이동 */
+  }
+  
