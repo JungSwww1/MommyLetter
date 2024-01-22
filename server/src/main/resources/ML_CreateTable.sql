@@ -111,7 +111,7 @@ CREATE TABLE `DIRECT_MESSAGE`
 
 CREATE TABLE `RESERVE`
 (
-    `resesrve_id`  INT       NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `reserve_id`  INT       NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `doctor_id`    INT       NOT NULL,
     `user_id`      INT       NOT NULL,
     `reserve_date` TIMESTAMP NULL,
@@ -123,10 +123,10 @@ CREATE TABLE `CONSULT`
 (
     `counseling_id`     INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `user_id`           INT          NOT NULL,
-    `resesrve_id`       INT          NOT NULL,
+    `reserve_id`       INT          NOT NULL,
     `prescription_path` VARCHAR(255) NULL,
     FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`),
-    FOREIGN KEY (`resesrve_id`) REFERENCES `RESERVE` (`resesrve_id`)
+    FOREIGN KEY (`reserve_id`) REFERENCES `RESERVE` (`reserve_id`)
 );
 
 CREATE TABLE `FOLLOW`
