@@ -2,6 +2,7 @@ import styled from "tailwind-styled-components";
 
 export const Diary = styled.div`
     flex
+    flex-wrap
     justify-between
     items-center
     h-10

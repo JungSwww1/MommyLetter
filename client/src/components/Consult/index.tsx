@@ -1,5 +1,5 @@
 import React from "react";
-import sample1 from "@/assets/sample1.jpg"
+import sample1 from "@/assets/images/sample1.jpg"
 import {ConsultListLayout,CardBox,Img,List,Span,Item,ButtonBox,Button} from "@/components/Consult/styles";
 
 export const ConsultList = () => {

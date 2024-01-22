@@ -1,7 +1,7 @@
 import React from "react";
 import {Content, Date, DiaryList, Feeling, Image, Images, Time} from './styles';
-import sample1 from '@/assets/sample1.jpg'
-import sample2 from '@/assets/sample2.jpg'
+import sample1 from '@/assets/images/sample1.jpg'
+import sample2 from '@/assets/images/sample2.jpg'
 
 
 const DiaryPage = () => {

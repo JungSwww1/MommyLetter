@@ -1,10 +1,10 @@
 import React from "react";
 import {Diary, Input, Title, Select,Img,Label} from './styles';
-import angry from '@/assets/sample_angry.png'
-import bad from '@/assets/sample_bad.png'
-import good from '@/assets/sample_good.png'
-import soso from '@/assets/sample_soso.png'
-import tired from '@/assets/sample_tired.png'
+import angry from '@/assets/images/sample_angry.png'
+import bad from '@/assets/images/sample_bad.png'
+import good from '@/assets/images/sample_good.png'
+import soso from '@/assets/images/sample_soso.png'
+import tired from '@/assets/images/sample_tired.png'
 
 
 export const DiaryPage = () => {
@@ -21,7 +21,7 @@ export const DiaryWrite = () => {
     const month = `${today.getMonth() + 1}`
     const day = `${today.getDate()}`;
 
-    return (<div className="flex flex-col ml-5">
+    return (<div className="flex flex-col ml-5 h-[80%]">
         <p className="text-[15px] font-bold text-black">날짜 선택</p>
         <div className="flex justify-around">
             <Select> <option value="year">{year}</option> </Select>
@@ -38,7 +38,7 @@ export const DiaryWrite = () => {
             <Img src={tired}/>
         </div>
         <br/>
-        <div className="flex justify-center">
+        <div className="h-[80%]">
             <textarea placeholder="내용을 입력" className="text-[17px] h-[50%] w-[100%] ext-[#9d9d9d]"/>
         </div>
     <br/>
