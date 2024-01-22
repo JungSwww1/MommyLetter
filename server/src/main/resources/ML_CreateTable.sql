@@ -151,7 +151,7 @@ CREATE TABLE `HISTORY`
 
 CREATE TABLE `PHOTO`
 (
-    `file_id`      INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `photo_id`      INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `path`         VARCHAR(255) NOT NULL,
     `size`         VARCHAR(255) NULL,
     `created_date` TIMESTAMP    NOT NULL,
