@@ -14,7 +14,7 @@ const UserRegist =()=> {
     }
 
     return(
-        <div className="flex-col">
+        <div>
 
             {/*  위에 헤더 추가해야된다. 아래는 내용  */}
             <div className="relative left-[25%] top-[-50px]">
@@ -33,7 +33,6 @@ const UserRegist =()=> {
                        className="w-[24%] left-[30%] top-[236px] ml-[0.1%]"
                 />
                 <Title className="w-[20%] left-[26.0%] top-[240px] text-[20px] text-base ml-[0.1%] mr-[0.1%]"
-                // style={{ left: calculateDiff()}}
                 >@</Title>
                 <CheckButton onClick={checkEmail}
                         className="left-[3%] top-[281px]">중복확인

@@ -1,24 +1,59 @@
 import styled from "tailwind-styled-components";
-
+import { Link } from 'react-router-dom';
 export const ProfileImg = styled.img`
     w-[150px] h-[150px]
     mb-[8%]
     rounded-full
 `
 
-// 프로필 사진 밑의 밑줄
-export const underline = styled.svg`
-  viewBox: 0 0 385 1;
-  fill: none;
-  xmlns: http://www.w3.org/2000/svg;
-  preserveAspectRatio: xMidYMid meet;
-  margin-bottom: 5%;
-  
-  line {
-    x1: -4.37114e-8;
-    y1: 0.500031;
-    x2: 385;
-    y2: 0.499997;
-    stroke: black;
-  }
-`;
+export const Input = styled.input`
+    w-[59%] 
+    border-b-2 border-black
+`
+
+export const Title = styled.div`
+    font-bold
+`
+
+export const Submit = styled.button`
+    w-[10%]
+    h-[45px]
+    mr-[7%]
+    mt-[3%]
+    bg-blue-300
+    rounded-[6%]
+    
+`
+
+export const StyleLink = styled(Link)`
+    text-blue-700
+`
+
+export const Wrapper = styled.div`
+    mb-[2%]
+`
+
+export const Wrapper2 = styled.div`
+    flex 
+    mb-[2%] 
+    justify-around
+`
+
+export const Wrapper3 = styled.div`
+    flex 
+    justify-end
+`
+
+export const ProfileWrapper = styled.div`
+    flex 
+    justify-center
+`
+
+export const Container = styled.div`
+    mt-[10%]
+`
+
+export const SubContainer = styled.div`
+    mt-[7%]
+    ml-[7%]
+`
