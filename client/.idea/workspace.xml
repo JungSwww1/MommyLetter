@@ -5,16 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="729cb632-49be-4f20-a050-677f72547010" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/SwitchButton/ToggleSwitch.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/LoginPage/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage/LoginPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/LoginPage/styles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage/styles.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Profile/UserProfile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile/UserProfile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Profile/styles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile/styles.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/UserRegist/UserRegist.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/UserRegist/UserRegist.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/UserRegist/styles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/UserRegist/styles.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/ConsultRegist/ConsultRegist.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/ConsultRegist/ConsultRegist.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/ConsultRegist/ToggleSwitch.css" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +53,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\SSAFY\Desktop\Project\S10P12A509\client\src\components\SwitchButton" />
       <recent name="C:\Users\SSAFY\Desktop\Project\S10P12A509\client\src\pages\Profile" />
       <recent name="C:\Users\SSAFY\Desktop\Project\S10P12A509\client\src\pages\UserRegist" />
       <recent name="C:\Users\SSAFY\Desktop\Project\S10P12A509\client\src\pages\LoginPage" />
@@ -75,7 +70,9 @@
       <workItem from="1705622406626" duration="49000" />
       <workItem from="1705622468657" duration="29000" />
       <workItem from="1705622498905" duration="16000" />
-      <workItem from="1705622530430" duration="24137000" />
+      <workItem from="1705622530430" duration="26822000" />
+      <workItem from="1705881612011" duration="23000" />
+      <workItem from="1705881691156" duration="1319000" />
     </task>
     <servers />
   </component>
