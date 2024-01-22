@@ -18,7 +18,7 @@ VALUES
     (115, 'password15', 'User15', 'user15@example.com', 'Male', 'Admin', '2024-01-18 02:00:00', '2024-01-18 02:30:00');
 
 -- Insert data into USER_INFO table
-INSERT INTO `USER_INFO` (`SSN`, `user_id`, `name`, `phone`, `status`, `extra`, `diary_open`, `agree_date`)
+INSERT INTO `USER_INFO` (`SSN`, `user_id`, `name`, `phone`, `pregnancy_status`, `extra`, `diary_open`, `agree_date`)
 VALUES
     ('1234567890123', 101, 'User1 Name', '12345678901', 'Pregnant', 'Extra Info 1', TRUE, '2024-01-17 12:00:00'),
     ('9876543210987', 102, 'User2 Name', '98765432109', 'Mother', 'Extra Info 2', FALSE, '2024-01-17 13:00:00'),

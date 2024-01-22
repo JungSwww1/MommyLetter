@@ -34,17 +34,20 @@ CREATE TABLE `BOARD`
     FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`)
 );
 
-CREATE TABLE `USER_INFO`
+
+CREATE TABLE USER_INFO
 (
-    `SSN`        CHAR(13)     NOT NULL,
-    `user_id`    INT          NOT NULL PRIMARY KEY,
-    `name`       VARCHAR(15)  NULL,
-    `phone`      CHAR(11)     NULL,
-    `status`     ENUM ('Pregnant', 'Mother', 'None') DEFAULT 'None',
-    `extra`      VARCHAR(255) NULL,
-    `diary_open` BOOLEAN      NULL                   DEFAULT FALSE,
-    `agree_date` TIMESTAMP    NULL,
-    FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`)
+    user_info_id     BIGINT   NOT NULL AUTO_INCREMENT, -- 새로운 기본 키
+    user_id          INT      NOT NULL,                -- 외래 키
+    SSN              CHAR(13) NOT NULL,
+    name             VARCHAR(15),
+    phone            CHAR(11),
+    pregnancy_status ENUM ('Pregnant', 'Mother', 'None') DEFAULT 'None',
+    extra            VARCHAR(255),
+    diary_open       BOOLEAN                             DEFAULT FALSE,
+    agree_date       TIMESTAMP,
+    PRIMARY KEY (user_info_id),                        -- 기본 키 지정
+    FOREIGN KEY (user_id) REFERENCES USER (user_id)    -- 외래 키 제약 조건
 );
 
 CREATE TABLE `DOCTOR`
@@ -91,7 +94,7 @@ CREATE TABLE `COMMENT_LIKE`
 
 CREATE TABLE `BOARD_LIKE`
 (
-    `board_like_id` INT NOT NULL PRIMARY KEY,
+    `board_like_id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `board_id`      INT NOT NULL,
     `user_id`       INT NOT NULL,
     FOREIGN KEY (`board_id`) REFERENCES `BOARD` (`board_id`),
@@ -111,7 +114,7 @@ CREATE TABLE `DIRECT_MESSAGE`
 
 CREATE TABLE `RESERVE`
 (
-    `resesrve_id`  INT       NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `reserve_id`   INT       NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `doctor_id`    INT       NOT NULL,
     `user_id`      INT       NOT NULL,
     `reserve_date` TIMESTAMP NULL,
@@ -123,10 +126,10 @@ CREATE TABLE `CONSULT`
 (
     `counseling_id`     INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `user_id`           INT          NOT NULL,
-    `resesrve_id`       INT          NOT NULL,
+    `reserve_id`        INT          NOT NULL,
     `prescription_path` VARCHAR(255) NULL,
     FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`),
-    FOREIGN KEY (`resesrve_id`) REFERENCES `RESERVE` (`resesrve_id`)
+    FOREIGN KEY (`reserve_id`) REFERENCES `RESERVE` (`reserve_id`)
 );
 
 CREATE TABLE `FOLLOW`

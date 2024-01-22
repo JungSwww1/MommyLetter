@@ -25,38 +25,36 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/diary")
 @Tag(name = "Diary", description = "Diary API")
 public class DiaryController {
-  private final DiaryService diaryService;
+    private final DiaryService diaryService;
 
-  // 일기 리스트 전체 조회
-  @GetMapping("user/{userId}")
-  public ResponseEntity<List<DiaryResponse>> getAllDiary(@NotBlank @PathVariable Long userId) {
-    return new ResponseEntity<>(diaryService.getAllDiary(userId), HttpStatus.OK);
-  }
+    // 일기 리스트 전체 조회
+    @GetMapping("user/{userId}")
+    public ResponseEntity<List<DiaryResponse>> getAllDiary(@NotBlank @PathVariable Long userId) {
+        return new ResponseEntity<>(diaryService.getAllDiary(userId), HttpStatus.OK);
+    }
 
-  // 특정 날짜 일기 조회
-  @GetMapping("/{diaryId}")
-  public ResponseEntity<DiaryResponse> getDiary(@NotBlank @PathVariable Long diaryId) {
-    System.out.println("Service Success");
-    return new ResponseEntity<>(diaryService.getDiary(diaryId), HttpStatus.OK);
-  }
+    // 특정 날짜 일기 조회
+    @GetMapping("/{diaryId}")
+    public ResponseEntity<DiaryResponse> getDiary(@NotBlank @PathVariable Long diaryId) {
+        return new ResponseEntity<>(diaryService.getDiary(diaryId), HttpStatus.OK);
+    }
 
-  // 일기작성
-  @PostMapping
-  public ResponseEntity<Void> createDiary(@Valid @RequestBody CreateDiaryRequest diaryRequest) {
-    diaryService.createDiary(diaryRequest);
-    return new ResponseEntity<>(HttpStatus.CREATED);
-  }
+    // 일기작성
+    @PostMapping
+    public ResponseEntity<DiaryResponse> createDiary(@Valid @RequestBody CreateDiaryRequest diaryRequest) {
+		return new ResponseEntity<>(diaryService.createDiary(diaryRequest),HttpStatus.CREATED);
+    }
 
-  // 일기수정
-  @PatchMapping
-  public ResponseEntity<Void> updateDiary(@Valid @RequestBody UpdateDiaryRequest diaryRequest) {
-    diaryService.updateDiary(diaryRequest);
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
+    // 일기수정
+    @PatchMapping
+    public ResponseEntity<Void> updateDiary(@Valid @RequestBody UpdateDiaryRequest diaryRequest) {
+        diaryService.updateDiary(diaryRequest);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
-  @DeleteMapping("/{diaryId}")
-  public ResponseEntity<Void> deleteDiary(@NotBlank @PathVariable Long diaryId) {
-    diaryService.deleteDiary(diaryId);
-    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-  }
+    @DeleteMapping("/{diaryId}")
+    public ResponseEntity<Void> deleteDiary(@NotBlank @PathVariable Long diaryId) {
+        diaryService.deleteDiary(diaryId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

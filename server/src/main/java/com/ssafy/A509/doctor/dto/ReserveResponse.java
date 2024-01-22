@@ -1,5 +1,6 @@
-package com.ssafy.A509.comment.dto;
+package com.ssafy.A509.doctor.dto;
 
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -7,11 +8,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CommentResponse {
+public class ReserveResponse {
 
-	private Long commentId;
+	@NotNull
+	private Long reserveId;
+	@NotNull
 	private Long userId;
-	private String content;
-	private LocalDateTime createdDate;
-	private LocalDateTime updatedDate;
+	private LocalDateTime reserveDate;
 }

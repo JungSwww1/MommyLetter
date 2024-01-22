@@ -62,8 +62,15 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Profile profile;
 
-  @Builder
-  protected User(Long userId, String password, String nickname, String intro, String email,
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private UserInfo userInfo;
+
+    //  @JsonBackReference
+    @OneToOne(mappedBy = "user")
+    private Doctor doctor;
+
+    @Builder
+    protected User(Long userId, String password, String nickname, String intro, String email,
       Gender gender, Role role, String profilePhoto, String backgroundPhoto) {
     this.userId = userId;
     this.password = password;
@@ -72,7 +79,7 @@ public class User {
     this.email = email;
     this.gender = gender;
     this.role = role;
-  }
+    }
 
     public void setNickname(String nickname) {
       this.nickname = nickname;

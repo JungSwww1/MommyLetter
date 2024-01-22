@@ -8,9 +8,12 @@ import lombok.Getter;
 @Getter
 @Builder
 public class UpdateDiaryRequest {
-  @NotNull private Long diaryId;
+	@NotNull
+  	private Long diaryId;
 
-  @NotBlank private String content;
+  	@NotBlank
+	private String content;
 
-  @NotNull private int emoji;
+  	@NotNull
+	private int emoji;
 }
