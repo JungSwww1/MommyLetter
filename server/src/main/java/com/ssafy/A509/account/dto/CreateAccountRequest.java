@@ -1,17 +1,17 @@
 package com.ssafy.A509.account.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class CreateAccountRequest {
-    @NotBlank
-    private String email;
-    @NotBlank
-    private String nickname;
-    @NotBlank
-    private String password;
 
+    private String email;
+    private String nickname;
+    private String password;
 }

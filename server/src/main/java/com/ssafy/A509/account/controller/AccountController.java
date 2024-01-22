@@ -24,55 +24,59 @@ public class AccountController {
     //계정 생성 (회원가입)
     @PostMapping("/signup")
     public ResponseEntity<Void> createAccount(@Valid @RequestBody CreateAccountRequest accountRequest){
-      accountService.createAccount(accountRequest);
-      return new ResponseEntity<>(HttpStatus.CREATED);
+        accountService.createAccount(accountRequest);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     //userId를 통해 계정을 검색
     @GetMapping("/{userId}")
     public ResponseEntity<AccountResponse> getAccount(@NotBlank @PathVariable Long userId){
-      return new ResponseEntity<>(accountService.getAccount(userId), HttpStatus.OK);
+        return new ResponseEntity<>(accountService.getAccount(userId), HttpStatus.OK);
     }
 
     //전체 계정 리스트 검색
     @GetMapping
     public ResponseEntity<List<AccountResponse>> getAllAccount(){
-      return new ResponseEntity<>(accountService.getAllAccount(), HttpStatus.OK);
+        return new ResponseEntity<>(accountService.getAllAccount(), HttpStatus.OK);
     }
 
     //계정 정보 수정
     @PatchMapping("/{userId}")
-    public ResponseEntity<Void> updateAccount(@Valid UpdateAccountRequest accountRequest){
-      accountService.updateAccount(accountRequest);
-      return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Void> updateAccount(@PathVariable Long userId, @Valid @RequestBody UpdateAccountRequest accountRequest) {
+        try {
+            accountService.updateAccount(userId, accountRequest);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     //계정 비밀번호 수정
-    @PatchMapping("/changepwd")
-    public ResponseEntity<Void> updateAccountPassword(@Valid UpdateAccountRequest accountRequest){
-      accountService.updateAccountPassword(accountRequest);
-      return new ResponseEntity<>(HttpStatus.OK);
+    @PatchMapping("/changepwd/{userId}")
+    public ResponseEntity<Void> updateAccountPassword(@PathVariable Long userId, @Valid @RequestBody UpdateAccountRequest accountRequest) {
+        accountService.updateAccountPassword(userId, accountRequest);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //계정 삭제
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteAccount(@NotNull @PathVariable Long userId){
-      accountService.deleteAccount(userId);
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        accountService.deleteAccount(userId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     //이메일 중복체크
     @GetMapping("/signup/check-email")
     public ResponseEntity<Boolean> checkEmail(@RequestParam String email) {
-      boolean existsEmail = accountService.isEmailExists(email);
-      return new ResponseEntity<>(existsEmail, HttpStatus.OK);
+        boolean existsEmail = accountService.isEmailExists(email);
+        return new ResponseEntity<>(existsEmail, HttpStatus.OK);
     }
 
     //닉네임 중복체크
     @GetMapping("/signup/check-nickname")
     public ResponseEntity<Boolean> checkNickname(@RequestParam String nickname) {
-      boolean existsNickname = accountService.isNicknameExists(nickname);
-      return new ResponseEntity<>(existsNickname, HttpStatus.OK);
+        boolean existsNickname = accountService.isNicknameExists(nickname);
+        return new ResponseEntity<>(existsNickname, HttpStatus.OK);
     }
 
 
