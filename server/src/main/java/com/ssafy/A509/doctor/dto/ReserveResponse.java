@@ -14,7 +14,5 @@ public class ReserveResponse {
 	private Long reserveId;
 	@NotNull
 	private Long userId;
-	@NotNull
-	private Long doctorId;
 	private LocalDateTime reserveDate;
 }
