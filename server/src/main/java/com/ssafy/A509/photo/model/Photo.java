@@ -1,6 +1,7 @@
 package com.ssafy.A509.photo.model;
 
 import com.ssafy.A509.board.model.Board;
+import com.ssafy.A509.diary.model.Diary;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -41,10 +42,11 @@ public class Photo {
 	@Nullable
 	private Board board;
 
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "diary_id")
-//	@Nullable
-//	private Diary diary;
+	@Setter
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "diary_id")
+	@Nullable
+	private Diary diary;
 
 	@CreatedDate
 	@Column(updatable = false)

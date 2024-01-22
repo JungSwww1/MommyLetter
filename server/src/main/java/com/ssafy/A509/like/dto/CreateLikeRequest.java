@@ -1,15 +1,15 @@
-package com.ssafy.A509.comment.dto.like;
+package com.ssafy.A509.like.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 
-@Getter
 @Builder
-public class CreateCommentLikeRequest {
-	@NotNull
-	Long userId;
+@Getter
+public class CreateLikeRequest {
 
 	@NotNull
+	Long userId;
+	Long boardId;
 	Long commentId;
 }

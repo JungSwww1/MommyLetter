@@ -9,15 +9,13 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -81,15 +79,4 @@ public class User {
     this.role = role;
     }
 
-    public void setNickname(String nickname) {
-      this.nickname = nickname;
-    }
-
-    public void setIntro(String intro) {
-      this.intro = intro;
-    }
-
-    public void setPassword(String password) {
-      this.password = password;
-    }
 }

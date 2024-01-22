@@ -5,16 +5,13 @@ import com.ssafy.A509.account.dto.UpdateAccountRequest;
 import com.ssafy.A509.account.dto.AccountResponse;
 import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.account.repository.AccountRepository;
-import com.ssafy.A509.board.dto.BoardResponse;
-import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -54,34 +51,33 @@ public class AccountService {
 
     // 계정 정보 수정
     @Transactional
-    public void updateAccount(UpdateAccountRequest accountRequest){
-        accountRepository.findById(accountRequest.getUserId())
-            .ifPresentOrElse(user -> {
-              user.setNickname(accountRequest.getNickname());
-              user.setIntro(accountRequest.getIntro());
+    public void updateAccount(Long userId, UpdateAccountRequest accountRequest) {
+        User user = accountRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("해당 userId를 가진 사용자가 없습니다."));
 
-              accountRepository.save(user);
-            }, () -> {
-              throw new NoSuchElementException("No such account");
-            });
+        if (accountRequest.getNickname() != null) {
+            user.setNickname(accountRequest.getNickname());
+        }
+        if (accountRequest.getIntro() != null) {
+            user.setIntro(accountRequest.getIntro());
+        }
 
+        accountRepository.save(user);
     }
 
     // 계정 비밀번호 수정
     // 암호화 도입 X
     @Transactional
-    public void updateAccountPassword(UpdateAccountRequest userRequest){
-        accountRepository.findById(userRequest.getUserId())
-            .ifPresentOrElse(user->{
-              if(user.getPassword().equals(userRequest.getCurrentPassword())){ // 기존 비밀번호 대조
-                user.setPassword(userRequest.getNewPassword()); // 새로운 비밀번호로 업데이트
-                accountRepository.save(user);
-              }else{
-                throw new NoSuchElementException("Password does not match");
-              }
-            }, () -> {
-              throw new NoSuchElementException("No such account");
-            });
+    public void updateAccountPassword(Long userId, UpdateAccountRequest accountRequest) {
+        User user = accountRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("해당 userId를 가진 사용자가 없습니다."));
+
+        if (!user.getPassword().equals(accountRequest.getCurrentPassword())) {
+            throw new IllegalArgumentException("현재 비밀번호가 일치하지 않습니다.");
+        }
+
+        user.setPassword(accountRequest.getNewPassword());
+        accountRepository.save(user);
     }
 
     //계정 삭제
