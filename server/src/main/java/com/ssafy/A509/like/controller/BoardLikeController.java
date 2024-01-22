@@ -2,8 +2,10 @@ package com.ssafy.A509.like.controller;
 
 import com.ssafy.A509.like.dto.CreateLikeRequest;
 import com.ssafy.A509.like.service.BoardLikeService;
+import jakarta.validation.Valid;
 import java.net.URI;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,8 +18,10 @@ public class BoardLikeController extends LikeController<BoardLikeService> {
 	}
 
 	@Override
-	public ResponseEntity<URI> createLike(CreateLikeRequest likeRequest) {
-		likeService.createLike(likeRequest);
+	public ResponseEntity<URI> createLike(@Valid @RequestBody CreateLikeRequest likeRequest) {
+		if (likeRequest.checkBoardId(likeRequest)) {
+			likeService.createLike(likeRequest);
+		}
 		// 뭘 돌려줄까?
 		return ResponseEntity.ok().build();
 	}

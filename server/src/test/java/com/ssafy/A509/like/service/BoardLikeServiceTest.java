@@ -36,7 +36,7 @@ public class BoardLikeServiceTest {
 	void beforeEach() {
 		likeRequest = CreateLikeRequest.builder()
 			.boardId(1L)
-			.userId(101L)
+			.userId(103L)
 			.build();
 	}
 
@@ -51,7 +51,7 @@ public class BoardLikeServiceTest {
 		// then
 		BoardLike save = boardLikeRepository.findById(likeId).get();
 		assertEquals(save.getBoard().getBoardId(), 1L);
-		assertEquals(save.getUser().getUserId(), 101L);
+		assertEquals(save.getUser().getUserId(), 103L);
 	}
 
 	@Test

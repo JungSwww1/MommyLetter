@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.ssafy.A509.comment.dto.CreateCommentRequest;
-import com.ssafy.A509.comment.dto.UpdateCommentRequest;
 import com.ssafy.A509.comment.model.Comment;
 import com.ssafy.A509.comment.repository.CommentRepository;
 import jakarta.transaction.Transactional;
@@ -75,14 +74,10 @@ class CommentServiceTest {
 		CreateCommentRequest commentRequest = commentRequestSample;
 		Long commentId = commentService.createComment(commentRequest);
 		Comment comment = commentRepository.findById(commentId).get();
-
-		UpdateCommentRequest updateCommentRequest = UpdateCommentRequest.builder()
-			.commentId(commentId)
-			.content("수정")
-			.build();
+		String content = "수정";
 
 		// when
-		commentService.updateComment(updateCommentRequest);
+		commentService.updateComment(commentId, content);
 
 		// then
 		Comment updatedComment = commentRepository.findById(comment.getCommentId()).get();

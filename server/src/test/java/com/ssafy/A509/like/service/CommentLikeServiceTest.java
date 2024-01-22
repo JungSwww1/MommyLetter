@@ -8,6 +8,7 @@ import com.ssafy.A509.like.dto.CreateLikeRequest;
 import com.ssafy.A509.like.model.CommentLike;
 import com.ssafy.A509.like.repository.CommentLikeRepository;
 import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,8 +37,13 @@ class CommentLikeServiceTest {
 	void beforeEach() {
 		likeRequest = CreateLikeRequest.builder()
 			.commentId(1L)
-			.userId(101L)
+			.userId(103L)
 			.build();
+	}
+
+	@AfterEach
+	void afterEach() {
+
 	}
 
 	@Test
@@ -51,12 +57,12 @@ class CommentLikeServiceTest {
 		// then
 		CommentLike save = commentLikeRepository.findById(likeId).get();
 		assertEquals(save.getComment().getCommentId(), 1L);
-		assertEquals(save.getUser().getUserId(), 101L);
+		assertEquals(save.getUser().getUserId(), 103L);
 	}
 
 	@Test
 	@DisplayName("댓글 좋아요 삭제")
-	void deleteBoardLike() {
+	void deleteCommentLike() {
 		// given
 		Long likeId = commentLikeService.createLike(likeRequest);
 
