@@ -1,30 +1,50 @@
 import styled from "tailwind-styled-components";
 
+export const Container = styled.div`
+    flex flex-col items-center
+`
+
+export const ProfileContainer = styled.div`
+    w-[100%]
+    relative top-[-100px] 
+    text-center
+`
+
+export const SubProfileContainer = styled.div`
+    flex 
+    justify-around
+    mb-[5%]
+    mt-[5%]
+`
+
+export const ContentContainer = styled.div`
+    grid grid-cols-3
+`
+
+export const ContentWrapper = styled.div`
+    m-2
+    bg-gray-200
+    h-[90px]
+`
+
 export const BackgroundImg = styled.img`
-    flex
-    w-[850px] 
-    h-[280px] 
+    w-full
+    h-[250px] 
     rounded-bl-[15px] 
     rounded-br-[15px]
 `
 
-export const Profile = styled.div`
-    w-[850px] relative left-[25%] top-[-25px]
+export const Img = styled.img`
+    w-[183px]
+    h-[183px]
+    rounded-full
+    mb-[4%]
+    mx-auto
 `
 
-export const ProfileImg = styled.img`
-    w-[200px] h-[200px] absolute left-[115px] top-[165px] rounded-full
-`
-export const Text = styled.p`
-    absolute
-    text-[15px] 
-    font-bold 
-    text-left 
-    text-black
-`
 export const ProfileButton = styled.button`
-    w-[188px] h-[27px] absolute  rounded-[5px] bg-[#d9d9d9] text-[13px]
-`
-export const BottomNav = styled.nav`
-    fixed bottom-0 w-[850px] h-45 bg-gray-300 border-t-2 border-gray-500
+    w-[45%]
+    h-[30px]
+    bg-gray-300
+    rounded-[5px]
 `
