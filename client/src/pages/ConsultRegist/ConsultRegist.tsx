@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import './ToggleSwitch.css';
+import '../../components/SwitchButton/ToggleSwitch.css';
 const ConsultRegist = () => {
+    // 토글 슬라이드 버튼(이건 슬라이드 버튼용)
     const [isToggled, setToggled] = useState(false);
 
     const handleToggle = () => {
@@ -9,7 +10,7 @@ const ConsultRegist = () => {
     
     const [isToggled1, setToggled1] = useState(false);
 
-    // 토글 버튼 클릭 핸들러
+    // 토글 버튼 클릭 핸들러 (이건 체크박스용)
     const handleToggle1 = () => {
     setToggled1(!isToggled1);
     };
