@@ -24,9 +24,9 @@ public class UserInfoController {
     }
 
     // 회원 상담 정보 수정
-    @PatchMapping("/{userId}")
-    public ResponseEntity<Void> updateUserInfo(@PathVariable Long userId, @Valid @RequestBody UpdateUserInfoRequest updateUserInfoRequest) {
-        userInfoService.updateUserInfo(userId, updateUserInfoRequest);
+    @PatchMapping("/{userInfoId}")
+    public ResponseEntity<Void> updateUserInfo(@PathVariable Long userInfoId, @Valid @RequestBody UpdateUserInfoRequest updateUserInfoRequest) {
+        userInfoService.updateUserInfo(userInfoId, updateUserInfoRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
