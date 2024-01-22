@@ -2,9 +2,13 @@ package com.ssafy.A509.account.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.ssafy.A509.follow.model.Follow;
+import com.ssafy.A509.profile.model.Profile;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,6 +25,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", insertable = false, updatable = false)
     private Long userId;
 
     private String password;
@@ -44,9 +49,18 @@ public class User {
     @LastModifiedDate
     private LocalDateTime updatedDate;
 
-//  @JsonBackReference
-  @OneToOne(mappedBy = "user")
-  private Doctor doctor;
+    @OneToMany(mappedBy = "follower")
+    private List<Follow> followingList;
+
+    @OneToMany(mappedBy = "following")
+    private List<Follow> followerList;
+
+//    @JsonBackReference
+    @OneToOne(mappedBy = "user")
+    private Doctor doctor;
+
+    @OneToOne(mappedBy = "user")
+    private Profile profile;
 
   @Builder
   protected User(Long userId, String password, String nickname, String intro, String email,
