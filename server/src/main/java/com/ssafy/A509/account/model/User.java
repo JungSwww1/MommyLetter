@@ -2,9 +2,13 @@ package com.ssafy.A509.account.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.ssafy.A509.board.model.Board;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -44,12 +48,18 @@ public class User {
     @LastModifiedDate
     private LocalDateTime updatedDate;
 
-//  @JsonBackReference
-  @OneToOne(mappedBy = "user")
-  private Doctor doctor;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Board> boards = new ArrayList<>();
 
-  @Builder
-  protected User(Long userId, String password, String nickname, String intro, String email,
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private UserInfo userInfo;
+
+    //  @JsonBackReference
+    @OneToOne(mappedBy = "user")
+    private Doctor doctor;
+
+    @Builder
+    protected User(Long userId, String password, String nickname, String intro, String email,
       Gender gender, Role role, String profilePhoto, String backgroundPhoto) {
     this.userId = userId;
     this.password = password;
@@ -58,7 +68,7 @@ public class User {
     this.email = email;
     this.gender = gender;
     this.role = role;
-  }
+    }
 
     public void setNickname(String nickname) {
       this.nickname = nickname;
