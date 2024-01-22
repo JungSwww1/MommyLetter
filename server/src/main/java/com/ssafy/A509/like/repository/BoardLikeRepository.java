@@ -1,10 +1,9 @@
-package com.ssafy.A509.board.repository.like;
+package com.ssafy.A509.like.repository;
 
-import com.ssafy.A509.board.model.like.BoardLike;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.ssafy.A509.like.model.BoardLike;
 import org.springframework.data.repository.query.Param;
 
-public interface BoardLikeRepository extends JpaRepository<BoardLike, Long> {
+public interface BoardLikeRepository extends LikeRepository<BoardLike> {
 	Long countByBoard_BoardId(@Param("boardId") Long boardId);
 	boolean existsBoardLikeByBoard_BoardIdAndUser_UserId(@Param("boardId") Long boardId, @Param("userId") Long userId);
 }
