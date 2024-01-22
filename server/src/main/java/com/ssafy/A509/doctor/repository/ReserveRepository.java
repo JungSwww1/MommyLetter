@@ -5,5 +5,5 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReserveRepository extends JpaRepository<Reserve, Long> {
-	List<Reserve> findAllByDoctorId(Long doctorId);
+	List<Reserve> findAllByDoctorDoctorId(Long doctorId);
 }
