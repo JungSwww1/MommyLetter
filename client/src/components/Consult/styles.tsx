@@ -1,38 +1,44 @@
 import styled from "tailwind-styled-components";
 
-export const DiaryList = styled.div`
-    ml-3
+export const ConsultListLayout= styled.div`
+    flex
+    flex-col
+    justify-center
+    items-center
+    rounded-[100px]
 `;
-export const Date = styled.div`
-    flex
-    justify-between
-    text-[17px]
-    text-black
+
+export const CardBox=styled.div`
+    card
+    card-side
+    bg-base-100
+    shadow-xl
+    w-[70%]
+    mb-3
 `;
-export const Time = styled.div`
-    text-[13px]
-    text-left
-    text-[#707070]
-    mt-2
-`
-export const Feeling = styled.b`
-    text-right
-    text-[#1e01d1]
-`
-export const Content = styled.div`
-    text-[15px]
-    text-left
-    text-black
-    mt-2
-`
-export const Images = styled.div`
-    flex
+
+export const Img = styled.img`
     ml-3
-`
-export const Image = styled.img`
-    flex
+    rounded-[100%]
     w-[200px]
-    h-[150px]
-    mt-5
-    mr-3
+    h-[80%]
+`;
+
+export const List = styled.ul`
+    card-body
+`;
+
+export const Span=styled.span`
+    card-title
+`;
+export const Item = styled.li`
+        {/* 이곳에 회원정보를 꾸며줌*/}
+`;
+export const ButtonBox=styled.div`
+    card-actions
+    justify-end
+`;
+export const Button=styled.button`
+    btn
+    btn-primary
 `;
