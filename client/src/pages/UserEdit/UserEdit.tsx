@@ -1,4 +1,4 @@
-import logo from '@/assets/sample1.jpg'
+import logo from '@/assets/images/sample1.jpg'
 import {ProfileImg} from "@/pages/UserEdit/styles";
 import {Link} from "react-router-dom"
 

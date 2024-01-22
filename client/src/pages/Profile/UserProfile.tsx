@@ -1,4 +1,4 @@
-import logo from '@/assets/sample1.jpg'
+import logo from '@/assets/images/sample1.jpg'
 import {Link} from 'react-router-dom'
 import {BackgroundImg, BottomNav, Profile, ProfileButton, ProfileImg, Text} from "@/pages/Profile/styles";
 const UserProfile = () => {
