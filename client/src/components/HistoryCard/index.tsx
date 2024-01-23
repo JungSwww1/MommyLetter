@@ -1,6 +1,6 @@
 import React,{FC} from "react";
 import sample1 from "@/assets/images/sample1.jpg";
-import { CardListLayout, CardBox, Img, List, Span, Item, ButtonBox, Button } from "@/components/Card/styles";
+import { CardListLayout, CardBox, Img, List, Span, Item, ButtonBox, Button } from "@/components/HistoryCard/styles";
 import { ReactComponent as RightButton } from "@/assets/icons/chevron-right.svg";
 
 // ICard 인터페이스
@@ -18,7 +18,7 @@ const CardItem: FC<{ card: ICard }> = ({ card }) => (
     <CardBox>
         <figure><Img src={card.img} alt="User" /></figure>
         <List>
-            <div className="text-s">
+            <div className="text-sm">
                 <Item className="font-bold mb-3">{card.date}</Item>
                 <Item>{card.reserveTime}</Item>
                 <Item>{card.department}</Item>

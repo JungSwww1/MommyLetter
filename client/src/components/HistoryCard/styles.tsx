@@ -15,7 +15,7 @@ export const CardBox=styled.div`
     bg-base-70
     shadow-xl
     h-[25%]
-    w-[70%]
+    w-[90%]
     mb-3
 `;
 
