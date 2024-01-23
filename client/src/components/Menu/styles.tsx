@@ -23,6 +23,8 @@ export const HeaderItem=styled.div`
 export const NavigationLayout = styled.div`
     h-[100%]
     w-[100%]
+    bottom-0
+    sticky
 `;
 
 export const NavigationItem=styled.div`

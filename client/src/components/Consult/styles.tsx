@@ -1,52 +1,41 @@
 import styled from "tailwind-styled-components";
 
-export const ProfileLayout = styled.div`
-    flex
-    flex-col
-    h-[100%]
-    w-[100%]
-`;
-
-export const BackgroundBox=styled.img`
-        h-[30%]
-    `
-
-export const ContentBox=styled.div`
-    relative top-[-10%]
-    flex
-    flex-col
-    items-center
-    h-[35%]
-    w-[100%]
-
-    `;
-export const DoctorSection=styled.section`
-    flex
-    flex-col
-    items-center
-    h-[50%]
-    w-[100%]
-    mb-5
-`;
-export const ConsultSection=styled.section`
-    flex
-    flex-row
-    ml-5
-    h-[50%]
-    w-[100%]
-`;
-export const AvailableSection=styled.section`
-    w-[40%]
-`;
-
-export const ReserveSection=styled.section`
-    text-center
-    
-    w-[60%]
+export const Layout = styled.div`
 `
-export const HistoryBox=styled.div`
-    h-[35%]
-    mt-3
-`;
 
+export const BackgroundImg = styled.img`
+    w-full
+    h-[250px] 
+    rounded-bl-[15px] 
+    rounded-br-[15px]
+`
+export const ProfileContainer = styled.div`
+    relative top-[-130px] 
+    text-center
+`
 
+export const SubProfileContainer = styled.div`
+    flex flex-col
+    mt-[3%] 
+    ml-[33%] 
+    text-left
+`
+
+export const ContentWrapper = styled.div`
+    flex 
+    mb-[4%]
+`
+
+export const Title = styled.p`
+    w-[30%]
+    font-bold
+`
+
+export const Button = styled.button`
+    ml-[3%]
+    mb-[3%]
+    w-[50%]
+    p-3
+    bg-[#D9D9D9]
+    rounded-[5px]
+`
