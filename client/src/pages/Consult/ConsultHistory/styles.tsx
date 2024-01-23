@@ -4,8 +4,6 @@ export const ConsultHistoryLayout=styled.div`
         flex
         flex-col
         h-[100%]
-        p-[3]
-        
     `;
 
 export const BackgroundSection=styled.section`

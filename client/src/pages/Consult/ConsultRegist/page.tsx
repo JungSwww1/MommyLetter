@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import '../../components/SwitchButton/ToggleSwitch.css';
-import {BasicInput, Button, Layout, NumberInput, Submit, Title, Wrapper, Wrapper2} from "@/pages/ConsultRegist/styles";
+import '../../../components/SwitchButton/ToggleSwitch.css';
+import {BasicInput, Button, Layout, NumberInput, Submit, Title, Wrapper, Wrapper2} from "@/pages/Consult/ConsultRegist/styles";
 
 // 밑 내용은 수정해야한다.
 import Header from "@/pages/Profile/Header";
 import Footer from "@/pages/Profile/Footer";
-const ConsultRegist = () => {
+const Page = () => {
     // 토글 슬라이드 버튼(이건 슬라이드 버튼용)
     const [isToggled, setToggled] = useState(false);
 
@@ -77,4 +77,4 @@ const ConsultRegist = () => {
     )
 }
 
-export default ConsultRegist;
+export default Page;
