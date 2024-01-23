@@ -5,7 +5,6 @@ import com.ssafy.A509.account.repository.AccountRepository;
 import com.ssafy.A509.board.service.BoardService;
 import com.ssafy.A509.comment.dto.CommentResponse;
 import com.ssafy.A509.comment.dto.CreateCommentRequest;
-import com.ssafy.A509.comment.dto.UpdateCommentRequest;
 import com.ssafy.A509.comment.model.Comment;
 import com.ssafy.A509.comment.repository.CommentRepository;
 import jakarta.transaction.Transactional;
@@ -48,9 +47,9 @@ public class CommentService {
 	}
 
 	@Transactional
-	public void updateComment(UpdateCommentRequest commentRequest) {
-		Comment comment = findById(commentRequest.getCommentId());
-		comment.setCommentContent(commentRequest.getContent());
+	public void updateComment(Long commentId, String content) {
+		Comment comment = findById(commentId);
+		comment.setCommentContent(content);
 		commentRepository.save(comment);
 	}
 

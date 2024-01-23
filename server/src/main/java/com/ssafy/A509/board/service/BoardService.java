@@ -1,9 +1,9 @@
 package com.ssafy.A509.board.service;
 
 import com.ssafy.A509.account.model.User;
-import com.ssafy.A509.board.dto.UpdateBoardRequest;
 import com.ssafy.A509.board.dto.BoardResponse;
 import com.ssafy.A509.board.dto.CreateBoardRequest;
+import com.ssafy.A509.board.dto.UpdateBoardRequest;
 import com.ssafy.A509.board.model.Board;
 import com.ssafy.A509.board.repository.BoardRepository;
 import com.ssafy.A509.hashtag.model.Hashtag;
@@ -62,10 +62,10 @@ public class BoardService {
 	}
 
 	@Transactional
-	public void updateBoard(UpdateBoardRequest boardRequest) {
-		Board board = findById(boardRequest.getBoardId());
-		board.setBoardContent(boardRequest.getContent());
-
+	public void updateBoard(Long boardId, UpdateBoardRequest boardRequest) {
+		Board board = findById(boardId);
+		Optional.ofNullable(boardRequest.getContent()).ifPresent(board::setBoardContent);
+		Optional.ofNullable(boardRequest.getAccess()).ifPresent(board::setAccess);
 		// 해시태그 수정
 		List<Hashtag> hashtagList = new ArrayList<>(board.getHashtagList());
 		List<String> newHashtagList = Optional.ofNullable(boardRequest.getHashtagList()).orElseGet(ArrayList::new);

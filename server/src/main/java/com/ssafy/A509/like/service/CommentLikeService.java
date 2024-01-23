@@ -8,6 +8,7 @@ import com.ssafy.A509.like.dto.CreateLikeRequest;
 import com.ssafy.A509.like.model.CommentLike;
 import com.ssafy.A509.like.repository.CommentLikeRepository;
 import java.util.NoSuchElementException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,6 +38,10 @@ public class CommentLikeService extends LikeService<CommentService, CommentLikeR
 
 	@Override
 	protected Long createLikeObject(CreateLikeRequest likeRequest, User user) {
+		if (checkUserLike(likeRequest.getCommentId(), likeRequest.getUserId())) {
+			throw new DuplicateKeyException("이미 존재하는 comment_like 입니다");
+		}
+
 		Comment comment = service.findById(likeRequest.getCommentId());
 
 		CommentLike commentLike = CommentLike.builder()
@@ -45,6 +50,6 @@ public class CommentLikeService extends LikeService<CommentService, CommentLikeR
 			.build();
 
 		CommentLike save = likeRepository.save(commentLike);
-		return save.getComment().getCommentId();
+		return save.getId();
 	}
 }

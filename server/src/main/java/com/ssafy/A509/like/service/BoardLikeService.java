@@ -8,6 +8,7 @@ import com.ssafy.A509.like.dto.CreateLikeRequest;
 import com.ssafy.A509.like.model.BoardLike;
 import com.ssafy.A509.like.repository.BoardLikeRepository;
 import java.util.NoSuchElementException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,6 +38,11 @@ public class BoardLikeService extends LikeService<BoardService, BoardLikeReposit
 
 	@Override
 	protected Long createLikeObject(CreateLikeRequest likeRequest, User user) {
+		// 검증
+		if (checkUserLike(likeRequest.getBoardId(), likeRequest.getUserId())) {
+			throw new DuplicateKeyException("이미 존재하는 board_like 입니다");
+		}
+
 		Board board = service.findById(likeRequest.getBoardId());
 
 		BoardLike boardLike = BoardLike.builder()

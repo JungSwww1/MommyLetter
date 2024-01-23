@@ -2,11 +2,10 @@ package com.ssafy.A509.comment.controller;
 
 import com.ssafy.A509.comment.dto.CommentResponse;
 import com.ssafy.A509.comment.dto.CreateCommentRequest;
-import com.ssafy.A509.comment.dto.UpdateCommentRequest;
 import com.ssafy.A509.comment.service.CommentService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import java.net.URI;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,8 +28,8 @@ public class CommentController {
 
 	@PostMapping
 	public ResponseEntity<CommentResponse> createComment(@Valid @RequestBody CreateCommentRequest commentRequest) {
-		Long commentId = commentService.createComment(commentRequest);
-		return ResponseEntity.created(URI.create("/" + commentId)).build();
+		commentService.createComment(commentRequest);
+		return ResponseEntity.ok().build();
 	}
 
 	@GetMapping("/{boardId}")
@@ -39,8 +38,8 @@ public class CommentController {
 	}
 
 	@PatchMapping("/{commentId}")
-	public ResponseEntity<Void> updateComment(@Valid UpdateCommentRequest commentRequest) {
-		commentService.updateComment(commentRequest);
+	public ResponseEntity<Void> updateComment(@NotNull @PathVariable Long commentId, @NotBlank @RequestBody String content) {
+		commentService.updateComment(commentId, content);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
