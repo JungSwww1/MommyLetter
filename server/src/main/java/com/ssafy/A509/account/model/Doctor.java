@@ -21,8 +21,8 @@ public class Doctor {
     @Column(name = "doctor_id")
     private Long doctorId;
 
-//    @Column(name = "user_id", insertable = false, updatable = false)
-//    private Long userId;
+    @Column(name = "user_id", insertable = false, updatable = false)
+    private Long userId;
 
     @Column(name = "department")
     private String department;
