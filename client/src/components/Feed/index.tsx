@@ -8,6 +8,10 @@ import {
     TitleContainer, TitleWrapper
 } from "@/components/Feed/styles";
 import logo from '@/assets/images/sample1.jpg'
+
+
+
+
 const MainFeed = () => {
     return (
         <Layout>
