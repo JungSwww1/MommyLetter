@@ -3,7 +3,6 @@ import styled from "tailwind-styled-components";
 export const CardListLayout= styled.div`
     flex
     flex-col
-    justify-center
     items-center
     rounded-[100px]
     h-[100%]
@@ -30,6 +29,7 @@ export const List = styled.ul`
     flex
     flex-row
     justify-between
+    items-center
     w-[50%]
     card-body
     

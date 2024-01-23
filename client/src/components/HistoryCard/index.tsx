@@ -10,19 +10,18 @@ interface ICard {
     name: string;
     gender: string;
     department: string;
-    reserveTime: string;
 }
 
 // CardItem 함수형 컴포넌트를 생성하고 ICard를 프로퍼티로 받음
 const CardItem: FC<{ card: ICard }> = ({ card }) => (
     <CardBox>
+
         <figure><Img src={card.img} alt="User" /></figure>
         <List>
-            <div className="text-sm">
-                <Item className="font-bold mb-3">{card.date}</Item>
-                <Item>{card.reserveTime}</Item>
+            <div className="flex flex-col justify-center text-sm">
+                <Item className="font-bold ">{card.date}</Item>
+                <Item className="font-bold ">{card.name}</Item>
                 <Item>{card.department}</Item>
-                <Item>{`${card.gender}`}</Item>
             </div>
             <ButtonBox>
                 <Button><RightButton /></Button>
@@ -31,8 +30,8 @@ const CardItem: FC<{ card: ICard }> = ({ card }) => (
     </CardBox>
 );
 
-// CardList 함수형 컴포넌트
-export const CardList: React.FC = () => {
+// CardComponent 함수형 컴포넌트
+export const HistoryCardComponent: React.FC = () => {
     // 예시 데이터
 
     const exampleCard: ICard = {
@@ -41,12 +40,15 @@ export const CardList: React.FC = () => {
         name: "오은영",
         gender: "여성",
         department: "아동심리학",
-        reserveTime: "09:00",
     };
 
     return (
         <CardListLayout>
             {/* CardItem 컴포넌트에 예시 데이터를 전달 */}
+            <CardItem card={exampleCard} />
+
+            <CardItem card={exampleCard} />
+            <CardItem card={exampleCard} />
             <CardItem card={exampleCard} />
         </CardListLayout>
     );
