@@ -6,8 +6,8 @@ export const HeaderLayout=styled.div`
     sticky
     top-0
     self-start
-    h-[20%]
-    pl-4
+    h-[10%]
+    z-10
 `;
 export const HeaderItem=styled.div`
     flex
