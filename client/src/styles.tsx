@@ -10,7 +10,7 @@ export const AppMain = styled.div`
 `
 
 export const AppBody=styled.div`
-    h-[90%]
+    h-[93%]
     `
 export const AppNavi=styled.div`
     h-[7%]
