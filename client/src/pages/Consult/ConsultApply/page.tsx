@@ -48,8 +48,8 @@ const ConsultApplyPage = () => {
                 </div>
 
             </HistoryBox>
-</ProfileLayout>)
-    ;
+        </ProfileLayout>)
+        ;
 }
 
 export default ConsultApplyPage;
