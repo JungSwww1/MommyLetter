@@ -5,7 +5,7 @@ import {
     Layout,
     ProfileContainer,
     SubProfileContainer, Title
-} from "@/components/Consult/styles";
+} from "@/pages/Doctor/Applicant/styles";
 import {
     Img,
 } from "@/pages/Profile/styles";
