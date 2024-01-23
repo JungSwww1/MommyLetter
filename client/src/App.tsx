@@ -6,6 +6,7 @@ import UserProfile from "@/pages/Profile/UserProfile";
 import Feed from "@/pages/Feed/Feed";
 import {Index, Navigation} from "@/components/Menu";
 import ConsultApplicant from "@/components/Consult/ConsultApplicant";
+import {DM} from "@/pages/DirectMessage/page"
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
                 <Route path={"/main"} element={<Feed/>}/>
                 <Route path={"/profile"} element={<UserProfile/>}/>
                 <Route path={"/consult"} element={<ConsultApplicant/>}/>
+                <Route path={"/dm"} element={<DM/>}/>
             </Routes>
         </AppBody>
         <AppNavi>
