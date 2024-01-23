@@ -1,21 +1,21 @@
 package com.ssafy.A509.account.model;
 
-import com.ssafy.A509.board.model.Board;
-import com.ssafy.A509.doctor.model.Reserve;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.ssafy.A509.follow.model.Follow;
 import com.ssafy.A509.profile.model.Profile;
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -23,6 +23,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", insertable = false, updatable = false)
     private Long userId;
 
     private String password;
@@ -46,8 +47,18 @@ public class User {
     @LastModifiedDate
     private LocalDateTime updatedDate;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Board> boards = new ArrayList<>();
+    @OneToMany(mappedBy = "follower")
+    private List<Follow> followingList;
+
+    @OneToMany(mappedBy = "following")
+    private List<Follow> followerList;
+
+//    @JsonBackReference
+    @OneToOne(mappedBy = "user")
+    private Doctor doctor;
+
+    @OneToOne(mappedBy = "user")
+    private Profile profile;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private UserInfo userInfo;
@@ -74,15 +85,4 @@ public class User {
     this.role = role;
     }
 
-    public void setNickname(String nickname) {
-      this.nickname = nickname;
-    }
-
-    public void setIntro(String intro) {
-      this.intro = intro;
-    }
-
-    public void setPassword(String password) {
-      this.password = password;
-    }
 }

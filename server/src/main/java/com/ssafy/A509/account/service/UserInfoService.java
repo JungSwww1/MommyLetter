@@ -7,45 +7,35 @@ import com.ssafy.A509.account.model.UserInfo;
 import com.ssafy.A509.account.repository.AccountRepository;
 import com.ssafy.A509.account.repository.UserInfoRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import jakarta.transaction.Transactional;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class UserInfoService {
 
     private final UserInfoRepository userInfoRepository;
     private final AccountRepository accountRepository;
+    private final ModelMapper modelMapper;
 
     @Transactional
-    public void createUserInfo(Long userId, CreateUserInfoRequest userInfoRequest){
+    public void createUserInfo(Long userId, CreateUserInfoRequest userInfoRequest) {
         User user = accountRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
 
-        UserInfo buildUserInfo = UserInfo.builder()
-                .user(user)
-                .SSN(userInfoRequest.getSSN())
-                .name(userInfoRequest.getName())
-                .phone(userInfoRequest.getPhone())
-                .pregnancyStatus(userInfoRequest.getPregnancyStatus())
-                .extra(userInfoRequest.getExtra())
-                .diaryOpen(userInfoRequest.getDiaryOpen())
-                .build();
-
-        userInfoRepository.save(buildUserInfo);
+        UserInfo userInfo = modelMapper.map(userInfoRequest, UserInfo.class);
+        userInfo.setUser(user); // User 엔티티 연결
+        userInfoRepository.save(userInfo);
     }
 
     @Transactional
-    public void updateUserInfo(Long userId, UpdateUserInfoRequest updateRequest) {
-        UserInfo userInfo = userInfoRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("UserInfo not found with id: " + userId));
+    public void updateUserInfo(Long userInfoId, UpdateUserInfoRequest updateRequest) {
+        UserInfo userInfo = userInfoRepository.findById(userInfoId)
+                .orElseThrow(() -> new EntityNotFoundException("UserInfo not found with id: " + userInfoId));
 
-        userInfo.setPhone(updateRequest.getPhone());
-        userInfo.setPregnancyStatus(updateRequest.getPregnancyStatus());
-        userInfo.setExtra(updateRequest.getExtra());
-        userInfo.setDiaryOpen(updateRequest.getDiaryOpen());
-
+        modelMapper.map(updateRequest, userInfo); // 기존 엔티티에 변경사항 매핑
         userInfoRepository.save(userInfo);
     }
 }
