@@ -1,7 +1,7 @@
 import {CheckBox, Img, Input, LoginButton, Main, RegisterButton, StyleLink} from "@/pages/LoginPage/styles";
 import {useState} from "react";
 import {useNavigate } from "react-router-dom"
-import logo from '@/assets/logo512.png'
+import logo from '@/assets/images/logo_white.png'
 const LoginPage = () => {
     const navigate = useNavigate();
     const [id, setId] = useState("")

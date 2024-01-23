@@ -1,4 +1,4 @@
-import logo from '@/assets/sample1.jpg'
+import logo from '@/assets/images/sample1.jpg'
 import {
     BackgroundImg,
     Container,
