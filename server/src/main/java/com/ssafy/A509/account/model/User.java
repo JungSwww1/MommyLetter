@@ -2,18 +2,19 @@ package com.ssafy.A509.account.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.ssafy.A509.follow.model.Follow;
+import com.ssafy.A509.profile.model.Profile;
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import java.util.List;
+
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -21,6 +22,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", insertable = false, updatable = false)
     private Long userId;
 
     private String password;
@@ -44,12 +46,34 @@ public class User {
     @LastModifiedDate
     private LocalDateTime updatedDate;
 
-//  @JsonBackReference
-  @OneToOne(mappedBy = "user")
-  private Doctor doctor;
+    @OneToMany(mappedBy = "follower")
+    private List<Follow> followingList;
 
-  @Builder
-  protected User(Long userId, String password, String nickname, String intro, String email,
+    @OneToMany(mappedBy = "following")
+    private List<Follow> followerList;
+
+//    @JsonBackReference
+    @OneToOne(mappedBy = "user")
+    private Doctor doctor;
+
+    @OneToOne(mappedBy = "user")
+    private Profile profile;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private UserInfo userInfo;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Profile profile;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reserve> reserve = new ArrayList<>();
+
+    //  @JsonBackReference
+    @OneToOne(mappedBy = "user")
+    private Doctor doctor;
+
+    @Builder
+    protected User(Long userId, String password, String nickname, String intro, String email,
       Gender gender, Role role, String profilePhoto, String backgroundPhoto) {
     this.userId = userId;
     this.password = password;
@@ -58,17 +82,6 @@ public class User {
     this.email = email;
     this.gender = gender;
     this.role = role;
-  }
-
-    public void setNickname(String nickname) {
-      this.nickname = nickname;
     }
 
-    public void setIntro(String intro) {
-      this.intro = intro;
-    }
-
-    public void setPassword(String password) {
-      this.password = password;
-    }
 }
