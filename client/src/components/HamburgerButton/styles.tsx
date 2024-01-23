@@ -3,12 +3,13 @@ import styled from "tailwind-styled-components";
 export const HamburgerLayout = styled.div`
     dropdown
     dropdown-end
+    
 `;
 
 export const List = styled.ul`
     menu
     dropdown-content
-    z-[1]
+    z-10
     p-2
     shadow
     bg-base-100
