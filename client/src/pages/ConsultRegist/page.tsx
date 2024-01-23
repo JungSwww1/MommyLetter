@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import '../../../components/SwitchButton/ToggleSwitch.css';
-import {BasicInput, Button, Layout, NumberInput, Submit, Title, Wrapper, Wrapper2} from "@/pages/Consult/ConsultRegist/styles";
+import '../../components/SwitchButton/ToggleSwitch.css';
+import {BasicInput, Button, Layout, NumberInput, Submit, Title, Wrapper, Wrapper2} from "@/pages/ConsultRegist/styles";
 
 // 밑 내용은 수정해야한다.
 import Header from "@/pages/Profile/Header";

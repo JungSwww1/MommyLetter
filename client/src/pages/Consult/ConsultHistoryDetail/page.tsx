@@ -4,7 +4,7 @@ import {BackPageSection,DoctorProfileSection,ConsultContextSection, ConsultHisto
 import {HistoryCardComponent} from "@/components/HistoryCard";
 import sample1 from "@/assets/images/sample1.jpg"
 import {ReactComponent as Left} from "@/assets/icons/chevron-left.svg"
-const ConsultHistory = () => {
+const ConsultHistoryDetailPage = () => {
     return (
         <ConsultHistoryDetailLayout>
             <BackPageSection>
@@ -28,4 +28,4 @@ const ConsultHistory = () => {
         </ConsultHistoryDetailLayout>);
 };
 
-export default ConsultHistory;
+export default ConsultHistoryDetailPage;

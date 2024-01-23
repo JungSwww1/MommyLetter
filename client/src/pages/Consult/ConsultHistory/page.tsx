@@ -3,7 +3,7 @@ import {ProfileComponent} from "@/components/Profile";
 import {BackgroundSection,ProfileSection,DoctorListSection, ConsultHistoryLayout} from "@/pages/Consult/ConsultHistory/styles";
 import {HistoryCardComponent} from "@/components/HistoryCard";
 import sample1 from "@/assets/images/sample1.jpg"
-const ConsultHistory = () => {
+const ConsultHistoryPage = () => {
     return (
         <ConsultHistoryLayout>
             <BackgroundSection>
@@ -20,4 +20,4 @@ const ConsultHistory = () => {
         </ConsultHistoryLayout>);
 };
 
-export default ConsultHistory;
+export default ConsultHistoryPage;
