@@ -37,7 +37,9 @@ public class Consult {
 	private String prescriptionPath;
 
 	@Builder
-	public Consult(String prescriptionPath) {
+	public Consult(User user, Reserve reserve, String prescriptionPath) {
+		this.user = user;
+		this.reserve = reserve;
 		this.prescriptionPath = prescriptionPath;
 	}
 }
