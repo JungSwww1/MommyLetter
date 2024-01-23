@@ -94,7 +94,7 @@ CREATE TABLE `COMMENT_LIKE`
 
 CREATE TABLE `BOARD_LIKE`
 (
-    `board_like_id` INT NOT NULL PRIMARY KEY,
+    `board_like_id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `board_id`      INT NOT NULL,
     `user_id`       INT NOT NULL,
     FOREIGN KEY (`board_id`) REFERENCES `BOARD` (`board_id`),
@@ -151,7 +151,7 @@ CREATE TABLE `HISTORY`
 
 CREATE TABLE `PHOTO`
 (
-    `file_id`      INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `photo_id`      INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `path`         VARCHAR(255) NOT NULL,
     `size`         VARCHAR(255) NULL,
     `created_date` TIMESTAMP    NOT NULL,
