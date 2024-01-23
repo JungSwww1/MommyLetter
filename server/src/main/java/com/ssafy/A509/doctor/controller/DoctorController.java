@@ -26,11 +26,17 @@ public class DoctorController {
 
 	private final DoctorService doctorService;
 
+	/**
+	 * 예약된 날짜 호출
+	 * */
 	@GetMapping("/calender/{doctorId}")
 	public ResponseEntity<List<ReserveResponse>> getReserveList(@NotBlank @PathVariable Long doctorId){
 		return new ResponseEntity<>(doctorService.getReserveList(doctorId), HttpStatus.OK);
 	}
 
+	/**
+	 * 환자 리스트 호출
+	 * */
 	@GetMapping("/{doctorId}")
 	public ResponseEntity<List<PatientResponse>> getPatientList(@NotBlank @PathVariable Long doctorId){
 		return new ResponseEntity<>(doctorService.getPatientList(doctorId), HttpStatus.OK);
@@ -42,6 +48,14 @@ public class DoctorController {
 	@GetMapping("/diary/{userId}")
 	public ResponseEntity<List<DiaryResponse>> getDiaryList(@NotBlank @PathVariable Long userId){
 		return new ResponseEntity<>(doctorService.getDiaryList(userId), HttpStatus.OK);
+	}
+
+	/**
+	 * 환자의 상세정보 호출
+	 * */
+	@GetMapping("/patient/{reserveId}")
+	public ResponseEntity<PatientResponse> getPatientInfo(@NotBlank @PathVariable Long reserveId){
+		return new ResponseEntity<>(doctorService.getPatientInfo(reserveId), HttpStatus.OK);
 	}
 
 	/**

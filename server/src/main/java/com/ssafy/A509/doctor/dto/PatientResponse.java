@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Builder
@@ -16,7 +17,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PatientResponse {
 	@NotNull
+	private Long reserveId;
+	@NotNull
 	private Long userId;
+	@NotNull
+	private Long doctorId;
 
 	@NotBlank
 	private String name;
@@ -40,5 +45,11 @@ public class PatientResponse {
 
 	@NotNull
 	private LocalDateTime reserveDate;
+
+	@Setter
+	private long countReserve;
+
+	@Setter
+	private boolean isConsulted;
 
 }

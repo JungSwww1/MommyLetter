@@ -1,14 +1,12 @@
 package com.ssafy.A509.account.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.ssafy.A509.doctor.model.Reserve;
 import com.ssafy.A509.follow.model.Follow;
 import com.ssafy.A509.profile.model.Profile;
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -63,15 +61,8 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private UserInfo userInfo;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Profile profile;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reserve> reserve = new ArrayList<>();
-
-    //  @JsonBackReference
-    @OneToOne(mappedBy = "user")
-    private Doctor doctor;
 
     @Builder
     protected User(Long userId, String password, String nickname, String intro, String email,
