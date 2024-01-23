@@ -6,7 +6,7 @@ export const CardListLayout= styled.div`
     justify-center
     items-center
     rounded-[100px]
-h-[100%]
+    h-[100%]
 `;
 
 export const CardBox=styled.div`
@@ -15,15 +15,15 @@ export const CardBox=styled.div`
     bg-base-70
     shadow-xl
     h-[25%]
-w-[70%]
-mb-3
+    w-[70%]
+    mb-3
 `;
 
 export const Img = styled.img`
     ml-3
     rounded-[100%]
-w-[65%]
-h-[85%]
+    w-[65%]
+    h-[85%]
 `;
 
 export const List = styled.ul`
@@ -31,8 +31,8 @@ export const List = styled.ul`
     flex-row
     justify-between
     w-[50%]
-card-body
-
+    card-body
+    
 `;
 
 export const Span=styled.span`
@@ -40,15 +40,15 @@ export const Span=styled.span`
     mb-3
 `;
 export const Item = styled.li`
-{/* 이곳에 회원정보를 꾸며줌*/}
+        {/* 이곳에 회원정보를 꾸며줌*/}
 `;
 export const ButtonBox=styled.div`
     card-actions
     flex
     flex-col
     w-[50%]
-justify-center
-items-end
+    justify-center
+    items-end
 `;
 export const Button=styled.button`
     btn
