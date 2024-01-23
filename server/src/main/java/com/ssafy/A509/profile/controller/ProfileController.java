@@ -1,11 +1,9 @@
 // ProfileController.java
 package com.ssafy.A509.profile.controller;
 
-import com.ssafy.A509.account.model.Role;
 import com.ssafy.A509.profile.dto.*;
 import com.ssafy.A509.profile.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,16 +17,17 @@ public class ProfileController {
     private ProfileService profileService;
 
     @PostMapping("/profileImage/{userId}")
-    public ResponseEntity<Void> updateProfileImage(@PathVariable Long userId, @RequestBody ProfileImageRequest profileImageRequest) {
-        profileService.updateProfileImage(userId, profileImageRequest);
+    public ResponseEntity<Void> updateProfileImage(@RequestBody ProfileImageRequest profileImageRequest) {
+        profileService.updateProfileImage(profileImageRequest);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/backgroundImage/{userId}")
-    public ResponseEntity<Void> updateBackgroundImage(@PathVariable Long userId, @RequestBody ProfileImageRequest profileImageRequest) {
-        profileService.updateBackgroundImage(userId, profileImageRequest);
+    public ResponseEntity<Void> updateBackgroundImage(@RequestBody ProfileImageRequest profileImageRequest) {
+        profileService.updateBackgroundImage(profileImageRequest);
         return ResponseEntity.ok().build();
     }
+
     @GetMapping("/{userId}")
     public ResponseEntity<UserProfileResponse> getUserProfile(@PathVariable Long userId) {
         UserProfileResponse profile = profileService.getUserProfile(userId);
