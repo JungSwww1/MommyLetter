@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="729cb632-49be-4f20-a050-677f72547010" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/MommyLetter.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Menu/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Profile/UserProfile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile/UserProfile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Profile/styles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile/styles.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/ConsultRegist/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/ConsultRegist/ConsultRegist.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +37,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "frontend",
+    "git-widget-placeholder": "feat__seokju__history",
     "last_opened_file_path": "C:/Users/SSAFY/Desktop/Project/S10P12A509/client/src/pages/ConsultRegist",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",

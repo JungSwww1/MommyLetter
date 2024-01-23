@@ -5,7 +5,7 @@ import {BasicInput, Button, Layout, NumberInput, Submit, Title, Wrapper, Wrapper
 // 밑 내용은 수정해야한다.
 import Header from "@/pages/Profile/Header";
 import Footer from "@/pages/Profile/Footer";
-const Page = () => {
+const ConsultRegist = () => {
     // 토글 슬라이드 버튼(이건 슬라이드 버튼용)
     const [isToggled, setToggled] = useState(false);
 
@@ -77,4 +77,4 @@ const Page = () => {
     )
 }
 
-export default Page;
+export default ConsultRegist;
