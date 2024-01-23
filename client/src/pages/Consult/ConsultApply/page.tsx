@@ -11,17 +11,14 @@ import {
 } from "./styles"
 import sample1 from "@/assets/images/sample1.jpg"
 import sample2 from "@/assets/images/sample2.jpg"
-export const ConsultProfile = () => {
+const ConsultApplyPage = () => {
     return (
         <ProfileLayout>
             <BackgroundBox src={sample1}/>
             <ContentBox>
 
-                <img className="rounded-[100%] h-[45%] w-[35%]" src={sample2}/>
                 <DoctorSection>
-                    <p className="mb-3 text-lg font-bold">고승민</p>
-                    <p className="mb-1">서울대학교 병원</p>
-                    <p>가정의학</p>
+
                 </DoctorSection>
                 <ConsultSection>
                     <AvailableSection>
@@ -54,3 +51,5 @@ export const ConsultProfile = () => {
 </ProfileLayout>)
     ;
 }
+
+export default ConsultApplyPage;

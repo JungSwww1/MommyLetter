@@ -7,11 +7,10 @@ import sample2 from "@/assets/images/sample2.jpg"
 export const ProfileComponent = () => {
     return (
             <ContentBox>
-                <img className="rounded-[100%] h-[45%] w-[35%]" src={sample2}/>
                 <ProfileSection>
-                    <p className="mb-3 text-lg font-bold">고승민</p>
-                    <p className="mb-1">서울대학교 병원</p>
-                    <p>가정의학</p>
+                    <img className="rounded-[100%] h-[100%] w-[30%]" src={sample2}/>
+                    <p className="mb-3 font-bold">고승민</p>
+                    <p className="text-xs">고추장 아빠(15개월)</p>
                 </ProfileSection>
             </ContentBox>);
 }
