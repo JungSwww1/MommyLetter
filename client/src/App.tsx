@@ -5,7 +5,7 @@ import LoginPage from "@/pages/LoginPage/LoginPage";
 import UserProfile from "@/pages/Profile/UserProfile";
 import Feed from "@/pages/Feed/Feed";
 import {Index, Navigation} from "@/components/Menu";
-import ConsultApplicant from "@/components/Consult/ConsultApplicant";
+import ConsultApplicant from "@/pages/Doctor/Applicant/ConsultApplicant";
 import {DM} from "@/pages/DirectMessage/page"
 
 function App() {
