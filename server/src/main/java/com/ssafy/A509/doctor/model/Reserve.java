@@ -2,6 +2,7 @@ package com.ssafy.A509.doctor.model;
 
 import com.ssafy.A509.account.model.Doctor;
 import com.ssafy.A509.account.model.User;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
@@ -25,6 +26,7 @@ public class Reserve {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "reserve_id")
 	private Long reserveId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
