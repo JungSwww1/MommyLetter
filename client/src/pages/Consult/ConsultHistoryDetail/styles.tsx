@@ -8,14 +8,22 @@ export const ConsultHistoryDetailLayout=styled.div`
 
 
 export const BackPageSection=styled.section`
-        h-[5%]
+        flex
+        items-center
+        h-[10%]
+        bg-user
 `
 export const DoctorProfileSection=styled.section`
-        h-[15%]
+        h-[30%]
     
     `
 
 export const ConsultContextSection=styled.section`
-        h-[80%]
+        flex
+        flex-col
+        
+        h-[60%]
+        w-[100%]
+        ml-3
     
     `
