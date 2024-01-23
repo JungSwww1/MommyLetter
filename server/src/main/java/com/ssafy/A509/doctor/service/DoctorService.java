@@ -1,6 +1,5 @@
 package com.ssafy.A509.doctor.service;
 
-import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.account.repository.AccountRepository;
 import com.ssafy.A509.diary.dto.DiaryResponse;
 import com.ssafy.A509.diary.model.Category;
@@ -41,10 +40,6 @@ public class DoctorService {
 				Collectors.toList());
 	}
 
-	private PatientResponse getPatientResponse(User patient){
-		return modelMapper.map(patient, PatientResponse.class);
-	}
-
 	private ConsultResponse getConsultResponse(Consult consult){
 		return modelMapper.map(consult, ConsultResponse.class);
 	}
@@ -54,20 +49,43 @@ public class DoctorService {
 	 * {doctorId}를 가진 의사의 모든 환자 리스트를 조회하여 List의 형태로 return한다.
 	 * */
 	public List<PatientResponse> getPatientList(Long doctorId){
-//		List<PatientResponse> patientResponses = accountRepository.findPatientByDoctorId(doctorId)
-//			.stream()
-//			.map(patient -> modelMapper.map(patient, PatientResponse.class))
-//			.toList();
-//
-//		List<PatientResponse> patientResponses = reserveRepository.findPatientByReserveDoctorId(doctorId)
-//			.stream()
-//			.map(patient -> modelMapper.map(patient, PatientResponse.class))
-//			.collect(Collectors.toList());
-
-		List<PatientResponse> patientResponses = null;
+		List<PatientResponse> patientResponses = accountRepository.findPatientByReserveDoctorId(doctorId)
+			.stream()
+			.map(patient -> modelMapper.map(patient, PatientResponse.class))
+			.toList();
 
 		return patientResponses;
 	}
+
+	/**
+	 * 상담 환자 상세 정보
+	 * {reserveId} 상담 예약한 환자의 정보를 가져온다
+	 * */
+	public PatientResponse getPatientInfo(Long reserveId){
+		PatientResponse patientResponse = accountRepository
+			.findPatientByReserveReserveId(reserveId)
+			;
+
+		long reserveCount =
+			getReserveCount(patientResponse.getUserId(), patientResponse.getDoctorId());
+
+		patientResponse.setCountReserve(reserveCount);
+
+		boolean consulted = consultRepository.existsByReserveReserveId(reserveId);
+
+		patientResponse.setConsulted(consulted);
+
+		return patientResponse;
+	}
+
+	/**
+	 * 특정 의사에게 진료를 받은 환자의 진료 횟수
+	 * */
+	public Long getReserveCount(Long userId, Long doctorId){
+		return reserveRepository.countByUserUserIdAndDoctorDoctorId(userId, doctorId);
+	}
+
+
 
 	/**
 	 * 산모 일기 조회
