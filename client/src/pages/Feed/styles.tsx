@@ -5,5 +5,6 @@ export const Layout = styled.div`
 `
 
 export const MainContainer = styled.div`
-
+    mt-[5%]
+    mb-[5%]
 `

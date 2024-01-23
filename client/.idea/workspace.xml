@@ -4,25 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="729cb632-49be-4f20-a050-677f72547010" name="Changes" comment="">
+    <list default="true" id="c26449a3-158f-4866-a1a0-51fdbf84fe3f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/MommyLetter.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Menu/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Profile/UserProfile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile/UserProfile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Profile/styles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile/styles.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Feed/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Feed/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Feed/styles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Feed/styles.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="TypeScript JSX File" />
-      </list>
-    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -30,56 +20,26 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 5
-}</component>
-  <component name="ProjectId" id="2b9LYXcI6soTEGQZ3bnzurXgsNX" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="2bL8anxrBEioAt46t9JgPm3EomK" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "frontend",
-    "last_opened_file_path": "C:/Users/SSAFY/Desktop/Project/S10P12A509/client/src/pages/ConsultRegist",
+    "git-widget-placeholder": "feat__seungwon__feed",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "ts.external.directory.path": "yarn:package.json:typescript",
-    "vue.rearranger.settings.migration": "true"
+    "ts.external.directory.path": "yarn:package.json:typescript"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\SSAFY\Desktop\Project\S10P12A509\client\src\pages\ConsultRegist" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\SSAFY\Desktop\Project\S10P12A509\client\src\assets\images" />
-      <recent name="C:\Users\SSAFY\Desktop\Project\S10P12A509\client\public" />
-      <recent name="C:\Users\SSAFY\Desktop\Project\S10P12A509\client\src\components\SwitchButton" />
-      <recent name="C:\Users\SSAFY\Desktop\Project\S10P12A509\client\src\pages\Profile" />
-      <recent name="C:\Users\SSAFY\Desktop\Project\S10P12A509\client\src\pages\UserRegist" />
-    </key>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="729cb632-49be-4f20-a050-677f72547010" name="Changes" comment="" />
-      <created>1705622400764</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1705622400764</updated>
-      <workItem from="1705622406626" duration="49000" />
-      <workItem from="1705622468657" duration="29000" />
-      <workItem from="1705622498905" duration="16000" />
-      <workItem from="1705622530430" duration="26822000" />
-      <workItem from="1705881612011" duration="23000" />
-      <workItem from="1705881691156" duration="19924000" />
-    </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
