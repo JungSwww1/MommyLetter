@@ -7,7 +7,6 @@ export const HeaderLayout=styled.div`
     top-0
     self-start
     h-[20%]
-    pl-4
 `;
 export const HeaderItem=styled.div`
     flex
@@ -23,6 +22,8 @@ export const HeaderItem=styled.div`
 export const NavigationLayout = styled.div`
     h-[100%]
     w-[100%]
+    bottom-0
+    sticky
 `;
 
 export const NavigationItem=styled.div`
