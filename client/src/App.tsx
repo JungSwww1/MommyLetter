@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppMain} from'./styles';
+import {AppMain,AppBody,AppNavi} from'./styles';
 import {Routes, Route} from 'react-router-dom';
 import LoginPage from "@/pages/LoginPage/LoginPage";
 import UserProfile from "@/pages/Profile/UserProfile";
