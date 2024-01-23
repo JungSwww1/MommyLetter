@@ -21,8 +21,15 @@ export const HeaderItem=styled.div`
     bg-[#6eb400]
 `;
 export const NavigationLayout = styled.div`
-    flex
-    h-[5%]
-    bg-[#d9d9d9]
-    mt-auto
+    h-[100%]
+    w-[100%]
 `;
+
+export const NavigationItem=styled.div`
+    flex
+    justify-around
+    items-center
+    h-[100%]
+    rounded-tr-[10px]
+    rounded-tl-[10px]
+`
