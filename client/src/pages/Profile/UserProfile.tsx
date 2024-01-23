@@ -9,17 +9,12 @@ import {
     ProfileContainer,
     SubProfileContainer
 } from "@/pages/Profile/styles";
-import Header from "@/pages/Profile/Header";
-import Footer from "@/pages/Profile/Footer";
 
 const UserProfile = () => {
     const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
     return (
         <div>
-            {/*아래는 header부분*/}
-            <Header/>
-
             {/* 본문 */}
             <Container>
                 {/* 배경 사진 */}
@@ -65,9 +60,6 @@ const UserProfile = () => {
                     </ContentContainer>
                 </ProfileContainer>
             </Container>
-
-            {/* 프로필 하단 메뉴 */}
-            <Footer/>
         </div>
     );
 };

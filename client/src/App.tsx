@@ -5,6 +5,7 @@ import LoginPage from "@/pages/LoginPage/LoginPage";
 import UserProfile from "@/pages/Profile/UserProfile";
 import Feed from "@/pages/Feed/Feed";
 import {Index, Navigation} from "@/components/Menu";
+import ConsultApplicant from "@/components/Consult/ConsultApplicant";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
                 <Route path={"/"} element={<LoginPage/>}/>
                 <Route path={"/main"} element={<Feed/>}/>
                 <Route path={"/profile"} element={<UserProfile/>}/>
+                <Route path={"/consult"} element={<ConsultApplicant/>}/>
             </Routes>
         </AppBody>
         <AppNavi>

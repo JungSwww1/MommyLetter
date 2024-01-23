@@ -10,13 +10,10 @@ import {
     Wrapper2, Wrapper3
 } from "@/pages/UserEdit/styles";
 import {Link} from "react-router-dom"
-import Header from "@/pages/Profile/Header";
-import Footer from "@/pages/Profile/Footer";
 
 const UserEdit = () => {
     return (
         <div>
-            <Header/>
             <Container>
                 {/* 하단의 헤더 마진값은 추후에 조정해야 한다. */}
 
@@ -62,7 +59,6 @@ const UserEdit = () => {
                     </Wrapper>
                 </SubContainer>
             </Container>
-            <Footer/>
         </div>
     )
 }

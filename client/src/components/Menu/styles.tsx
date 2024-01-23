@@ -7,6 +7,7 @@ export const HeaderLayout=styled.div`
     top-0
     self-start
     h-[20%]
+    z-10
 `;
 export const HeaderItem=styled.div`
     flex

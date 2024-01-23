@@ -3,8 +3,6 @@ import '../../components/SwitchButton/ToggleSwitch.css';
 import {BasicInput, Button, Layout, NumberInput, Submit, Title, Wrapper, Wrapper2} from "@/pages/ConsultRegist/styles";
 
 // 밑 내용은 수정해야한다.
-import Header from "@/pages/Profile/Header";
-import Footer from "@/pages/Profile/Footer";
 const ConsultRegist = () => {
     // 토글 슬라이드 버튼(이건 슬라이드 버튼용)
     const [isToggled, setToggled] = useState(false);
@@ -22,9 +20,6 @@ const ConsultRegist = () => {
 
     return (
         <div>
-            {/* 아래는 헤더부분 */}
-            <Header/>
-
             {/* 메인 내용 */}
             <Layout>
                 <Title>이름</Title>
@@ -71,8 +66,6 @@ const ConsultRegist = () => {
                 <Submit>제출</Submit>
             </Layout>
 
-            {/* 아래는 Footer */}
-            <Footer/>
         </div>
     )
 }

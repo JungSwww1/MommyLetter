@@ -7,16 +7,27 @@
     <list default="true" id="c26449a3-158f-4866-a1a0-51fdbf84fe3f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Menu/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Feed/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Feed/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Menu/styles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu/styles.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/ConsultRegist/ConsultRegist.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/ConsultRegist/ConsultRegist.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Feed/Feed.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Feed/Feed.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Feed/styles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Feed/styles.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Profile/Footer.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Profile/Header.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Profile/UserProfile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile/UserProfile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/UserEdit/UserEdit.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/UserEdit/UserEdit.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
