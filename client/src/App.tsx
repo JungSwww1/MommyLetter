@@ -7,6 +7,7 @@ import Feed from "@/pages/Feed/Feed";
 import {Index, Navigation} from "@/components/Menu";
 import ConsultApplicant from "@/pages/Doctor/Applicant/ConsultApplicant";
 import {DM} from "@/pages/DirectMessage/page"
+import UserRegist from "@/pages/UserRegist/UserRegist";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Index/>
             <Routes>
                 <Route path={"/"} element={<LoginPage/>}/>
+                <Route path={"/signup"} element={<UserRegist/>}/>
                 <Route path={"/main"} element={<Feed/>}/>
                 <Route path={"/profile"} element={<UserProfile/>}/>
                 <Route path={"/consult"} element={<ConsultApplicant/>}/>
