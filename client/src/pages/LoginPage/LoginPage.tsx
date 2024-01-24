@@ -10,11 +10,16 @@ const LoginPage = () => {
 
     // 회원가입 버튼 클릭 시
     const userRegist = ()=> {
-        navigate("/signup")
+        navigate("/join")
     }
     const loginFunc = () => {
-        console.log(id);
-        console.log(password);
+        const loginInfo = {
+            id,
+            password,
+            autoLogin
+        };
+        localStorage.setItem('loginInfo', JSON.stringify(loginInfo));
+        navigate('/', {replace:true})
     }
     return (
         <Main>
