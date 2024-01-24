@@ -34,7 +34,7 @@ public class Photo {
 
 	private String path;
 
-	private int size;
+	private String size;
 
 	@Setter
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -56,8 +56,7 @@ public class Photo {
 	private LocalDateTime updatedDate;
 
 	@Builder
-	protected Photo(String path, int size) {
+	protected Photo(String path) {
 		this.path = path;
-		this.size = size;
 	}
 }

@@ -159,10 +159,10 @@ VALUES
 # -- Add 13 more rows...
 #
 # -- Insert data into PHOTO table
-# INSERT INTO `PHOTO` (`file_id`, `path`, `size`, `created_date`, `updated_date`, `board_id`, `diary_id`)
+# INSERT INTO `PHOTO` (`photo_id`, `path`, `created_date`, `updated_date`, `board_id`, `diary_id`)
 # VALUES
-#     (1, 'path/to/photo1.jpg', '1024x768', '2024-01-17 12:00:00', '2024-01-17 12:30:00', 301, 1),
-#     (2, 'path/to/photo2.jpg', '800x600', '2024-01-17 13:00:00', '2024-01-17 13:30:00', 302, 2);
+#     (1, 'path/to/photo1.jpg', '2024-01-17 12:00:00', '2024-01-17 12:30:00', 1, 1),
+#     (2, 'path/to/photo2.jpg', '2024-01-17 13:00:00', '2024-01-17 13:30:00', 2, 2);
 # -- Add 13 more rows...
 #
 # -- Insert data into HASHTAG table
