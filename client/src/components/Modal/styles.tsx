@@ -1,7 +1,7 @@
 import styled from "tailwind-styled-components";
 
 
-// 헤더영역
+{/*justify-between 되어있기때문에 헤더를 동일하게 사용해도 됨*/}
 export const HeaderLayout=styled.div`
     sticky
     top-0
@@ -19,33 +19,8 @@ export const HeaderItem=styled.div`
     h-[100%]
     rounded-bl-[15px]
     rounded-br-[15px]
-    bg-user
+    bg-[#6eb400]
 `;
-
-
-
-// 글 쓸때 보이는 영역
-export const WriteLayout=styled.div`
-    sticky
-    top-0
-    self-start
-    h-[5%]
-    z-10
-    mb-5
-`;
-
-export const WriteItem=styled.div`
-    flex
-    justify-between
-    flex-wrap
-    items-center
-    w-[100%]
-    h-[100%]
-`;
-
-
-
-//네비 영역
 export const NavigationLayout = styled.div`
     h-[100%]
     w-[100%]
