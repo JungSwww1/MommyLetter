@@ -104,6 +104,7 @@ CREATE TABLE `BOARD_LIKE`
 CREATE TABLE `DIRECT_MESSAGE`
 (
     `dm_id`        INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `room_id`      VARCHAR(255) NOT NULL,
     `sender_id`    INT          NOT NULL,
     `receiver_id`  INT          NOT NULL,
     `content`      VARCHAR(255) NOT NULL,
@@ -151,7 +152,7 @@ CREATE TABLE `HISTORY`
 
 CREATE TABLE `PHOTO`
 (
-    `photo_id`      INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `photo_id`     INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `path`         VARCHAR(255) NOT NULL,
     `created_date` TIMESTAMP    NOT NULL,
     `updated_date` TIMESTAMP    NULL,
