@@ -49,7 +49,7 @@ const UserEdit = () => {
                     <Submit>수정</Submit>
                 </Wrapper3>
 
-                {/* password change and user withdrawal */}
+                {/* password change and User withdrawal */}
                 <SubContainer>
                     <Wrapper>
                         <StyleLink to="/passwordChange">비밀번호 변경</StyleLink>
