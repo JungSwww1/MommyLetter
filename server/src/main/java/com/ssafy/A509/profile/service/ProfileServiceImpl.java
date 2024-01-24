@@ -4,7 +4,6 @@ import com.ssafy.A509.account.model.Role;
 import com.ssafy.A509.profile.dto.*;
 import com.ssafy.A509.profile.model.*;
 import com.ssafy.A509.profile.repository.*;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,21 +12,17 @@ import java.util.List;
 
 @Service
 public class ProfileServiceImpl implements ProfileService {
-    //    private final UserProfileRepository userProfileRepository;
-//    private final DoctorProfileRepository doctorProfileRepository;
     private final ProfileRepository profileRepository;
-    private final ModelMapper modelMapper;
 
-    public ProfileServiceImpl(ProfileRepository profileRepository, ModelMapper modelMapper) {
+    public ProfileServiceImpl(ProfileRepository profileRepository) {
         this.profileRepository = profileRepository;
-        this.modelMapper = modelMapper;
     }
 
 
     @Override
     @Transactional
-    public void updateProfileImage(Long userId, ProfileImageRequest profileImageRequest) {
-        Profile profile = profileRepository.findByUserId(userId);
+    public void updateProfileImage(ProfileImageRequest profileImageRequest) {
+        Profile profile = profileRepository.findByUserId(profileImageRequest.getUserId());
 
         if (profile != null) {
             profile.setProfilePhoto(profileImageRequest.getImageUrl());
@@ -38,12 +33,15 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     @Transactional
-    public void updateBackgroundImage(Long userId, ProfileImageRequest profileImageRequest) {
-        Profile profile = profileRepository.findByUserId(userId);
+    public void updateBackgroundImage(ProfileImageRequest profileImageRequest) {
+        Profile profile = profileRepository.findByUserId(profileImageRequest.getUserId());
 
         if (profile != null) {
+            // 배경 이미지 URL 설정
             profile.setBackgroundPhoto(profileImageRequest.getImageUrl());
+            // 프로필 저장
             profileRepository.save(profile);
+
         }
         // Handle the case where the user profile is not found
     }

@@ -1,6 +1,8 @@
 package com.ssafy.A509.account.model;
 
+import com.ssafy.A509.doctor.model.Reserve;
 import jakarta.persistence.*;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,5 +39,9 @@ public class Doctor {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany
+    @JoinColumn(name = "doctor_id")
+    private List<Reserve> reserves;
 
 }

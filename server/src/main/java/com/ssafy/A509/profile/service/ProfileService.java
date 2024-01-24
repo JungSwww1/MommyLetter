@@ -10,9 +10,9 @@ import java.util.List;
 public interface ProfileService {
 
 
-    void updateProfileImage(Long userId, ProfileImageRequest profileImageRequest);
+    void updateProfileImage(ProfileImageRequest profileImageRequest);
 
-    void updateBackgroundImage(Long userId, ProfileImageRequest profileImageRequest);
+    void updateBackgroundImage(ProfileImageRequest profileImageRequest);
 
     UserProfileResponse getUserProfile(Long userId);
 

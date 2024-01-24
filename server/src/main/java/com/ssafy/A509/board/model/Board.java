@@ -51,6 +51,7 @@ public class Board {
 
 	private String content;
 
+	@Setter
 	@Enumerated(EnumType.STRING)
 	private Access access;
 
