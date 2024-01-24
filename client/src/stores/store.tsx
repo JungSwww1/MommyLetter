@@ -1,13 +1,22 @@
-import {configureStore} from "@reduxjs/toolkit";
-import authReducer from './User/authSlice'
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from './User/authSlice';
+import storage from 'redux-persist/lib/storage';
+import { persistStore, persistReducer } from "redux-persist";
+
+const persistConfig = {
+    key: "root",
+    storage,
+};
+
+// rootReducer에 대한 persist 설정을 적용
+const persistedReducer = persistReducer(persistConfig, authReducer);
 
 export const store = configureStore({
-    reducer: {
-        // signup에 해당되는 이름은 authSlice에서 정의된 이름
-        // authReducer에 해당되는 이름은 임의로 정하는 것. : authSlice 맨 밑줄 참조
-        signup : authReducer
-    },
+    reducer: persistedReducer,
 });
+
+// persistor 생성
+export const persistor = persistStore(store);
 
 // 밑은 export를 해서 다른 페이지에서 useSelector로 접근 시 RootState로 정의 후 state.store에서 정의한 리듀서 이름으로 접근한다.
 export type RootState = ReturnType<typeof store.getState>;

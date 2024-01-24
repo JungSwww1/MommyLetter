@@ -7,7 +7,7 @@ import {setSignupUser} from "@/stores/User/authSlice";
 const UserRegist =()=> {
     const dispatch = useDispatch();
     // 밑은 확인용. 차후에 지워야한다
-    const { nickname: Storednickname, password: Storedpassword, email: Storedemail } = useSelector((state: RootState) => state.signup);
+    const { nickname: Storednickname, password: Storedpassword, email: Storedemail } = useSelector((state: RootState) => state);
 
     // 회원가입 내용 받는 용도
     const [localNickname, setLocalNickname] = useState('')
