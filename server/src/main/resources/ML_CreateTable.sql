@@ -153,7 +153,6 @@ CREATE TABLE `PHOTO`
 (
     `photo_id`      INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `path`         VARCHAR(255) NOT NULL,
-    `size`         VARCHAR(255) NULL,
     `created_date` TIMESTAMP    NOT NULL,
     `updated_date` TIMESTAMP    NULL,
     `board_id`     INT          NULL,

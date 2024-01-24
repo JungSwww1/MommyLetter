@@ -1,9 +1,9 @@
 package com.ssafy.A509.board.service;
 
 import com.ssafy.A509.account.model.User;
-import com.ssafy.A509.board.dto.UpdateBoardRequest;
 import com.ssafy.A509.board.dto.BoardResponse;
 import com.ssafy.A509.board.dto.CreateBoardRequest;
+import com.ssafy.A509.board.dto.UpdateBoardRequest;
 import com.ssafy.A509.board.model.Board;
 import com.ssafy.A509.board.repository.BoardRepository;
 import com.ssafy.A509.hashtag.model.Hashtag;
@@ -94,7 +94,7 @@ public class BoardService {
 	private void addPhotos(Board board, CreateBoardRequest boardRequest) {
 		Optional.ofNullable(boardRequest.getPhotoList()).ifPresent(list -> {
 			for (CreatePhotoRequest photoRequest : list) {
-				Photo photo = Photo.builder().path(photoRequest.getPath()).size(100) // 사진 받아서 가공해서 사이즈 넣어주기
+				Photo photo = Photo.builder().path(photoRequest.getPath()) // 사진 받아서 가공해서 사이즈 넣어주기
 					.build();
 
 				board.addPhoto(photo);
