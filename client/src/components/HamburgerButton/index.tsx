@@ -1,7 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ReactComponent as Hamburger} from "@/assets/icons/hamburger.svg"
 import {HamburgerLayout,List,Item,Button} from "./styles"
+import {useNavigate} from "react-router-dom";
+
 const HamburgerButton = () => {
+    const navigate = useNavigate();
+    const logout = () => {
+        localStorage.removeItem('loginInfo');
+        navigate('/login')
+    }
+
     return (
         <HamburgerLayout className="dropdown dropdown-end ">
             <div tabIndex={0} role="button" className="btn btn-ghost rounded-btn"><Hamburger/></div>
@@ -11,7 +19,7 @@ const HamburgerButton = () => {
                 <Item><a>회원정보수정</a></Item>
                 <Item><a>상담정보 등록/수정</a></Item>
                 <Item><a>상담 기록</a></Item>
-                <Button>로그아웃 들어가자</Button>
+                <Button onClick={logout}>로그아웃 들어가자</Button>
             </List>
         </HamburgerLayout>
     );

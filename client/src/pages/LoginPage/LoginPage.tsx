@@ -13,8 +13,13 @@ const LoginPage = () => {
         navigate("/signup")
     }
     const loginFunc = () => {
-        console.log(id);
-        console.log(password);
+        const loginInfo = {
+            id,
+            password,
+            autoLogin
+        };
+        localStorage.setItem('loginInfo', JSON.stringify(loginInfo));
+        navigate('/', {replace:true})
     }
     return (
         <Main>
