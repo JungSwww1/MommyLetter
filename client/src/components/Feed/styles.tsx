@@ -14,7 +14,7 @@ export const TitleContainer = styled.div`
 `
 export const ContextContainer = styled.div`
     mb-[3%] 
-    bg-gray-300 
+    
     p-4 
     rounded-md 
     overflow-hidden
