@@ -3,7 +3,6 @@ package com.ssafy.A509.photo.model;
 import com.ssafy.A509.board.model.Board;
 import com.ssafy.A509.diary.model.Diary;
 import jakarta.annotation.Nullable;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
@@ -34,8 +33,6 @@ public class Photo {
 
 	private String path;
 
-	private String size;
-
 	@Setter
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "board_id")
@@ -49,7 +46,6 @@ public class Photo {
 	private Diary diary;
 
 	@CreatedDate
-	@Column(updatable = false)
 	private LocalDateTime createdDate;
 
 	@LastModifiedDate

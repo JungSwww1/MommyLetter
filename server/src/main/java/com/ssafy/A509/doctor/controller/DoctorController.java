@@ -43,6 +43,7 @@ public class DoctorController {
 	}
 
 	/**
+	 * 산모 일기 조회
 	 * {userId}를 가지는 환자의 모든 일기 가져오기
 	 * */
 	@GetMapping("/diary/{userId}")

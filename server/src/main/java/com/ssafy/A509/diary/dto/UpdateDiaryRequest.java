@@ -2,6 +2,7 @@ package com.ssafy.A509.diary.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -16,4 +17,7 @@ public class UpdateDiaryRequest {
 
   	@NotNull
 	private int emoji;
+
+	private List<String> photoList;
+
 }
