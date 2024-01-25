@@ -19,9 +19,9 @@ public interface AccountRepository extends JpaRepository<User, Long> {
             + "u.gender as gender, ui.pregnancyStatus as status, ui.extra as extra, "
             + "ui.diaryOpen as diaryOpen, r.reserveDate as reserveDate ) "
             + "FROM User u "
+            + "RIGHT JOIN Reserve r ON u.userId = r.user.userId "
             + "LEFT JOIN UserInfo ui ON u.userId = ui.user.userId "
             + "LEFT JOIN Profile p ON u.userId = p.userId "
-            + "LEFT JOIN Reserve r ON u.userId = r.user.userId "
             + "WHERE r.doctor.doctorId = :doctorId "
             + "ORDER BY r.reserveDate DESC ")
     List<PatientResponse> findPatientByReserveDoctorId(Long doctorId);
@@ -33,9 +33,9 @@ public interface AccountRepository extends JpaRepository<User, Long> {
             + "u.gender as gender, ui.pregnancyStatus as status, ui.extra as extra, "
             + "ui.diaryOpen as diaryOpen, r.reserveDate as reserveDate ) "
             + "FROM User u "
-            + "LEFT JOIN UserInfo ui ON u.userId = ui.user.userId "
+            + "RIGHT JOIN Reserve r ON u.userId = r.user.userId "
             + "LEFT JOIN Profile p ON u.userId = p.userId "
-            + "LEFT JOIN Reserve r ON u.userId = r.user.userId "
+            + "LEFT JOIN UserInfo ui ON u.userId = ui.user.userId "
             + "WHERE r.reserveId = :reserveId "
     )
     PatientResponse findPatientByReserveReserveId(Long reserveId);
