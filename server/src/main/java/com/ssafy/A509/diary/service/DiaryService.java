@@ -8,7 +8,9 @@ import com.ssafy.A509.diary.model.Diary;
 import com.ssafy.A509.diary.repository.DiaryRepository;
 import com.ssafy.A509.photo.dto.CreatePhotoRequest;
 import com.ssafy.A509.photo.model.Photo;
+import com.ssafy.A509.photo.repository.PhotoRepository;
 import jakarta.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -24,6 +26,7 @@ public class DiaryService {
     private final DiaryRepository diaryRepository;
     private final ModelMapper modelMapper;
     private final AccountRepository accountRepository;
+    private final PhotoRepository photoRepository;
 
     //Diary와 DiaryResponse 매핑
     private DiaryResponse getDiaryResponse(Diary diary){
@@ -53,6 +56,7 @@ public class DiaryService {
             .content(diaryRequest.getContent())
             .category(diaryRequest.getCategory())
             .emoji(diaryRequest.getEmoji())
+            .createdDate(diaryRequest.getCreatedDate())
             .build();
 
         addPhotos(newDiary, diaryRequest);
@@ -64,25 +68,44 @@ public class DiaryService {
 
     @Transactional
     public void updateDiary(UpdateDiaryRequest diaryRequest){
-        System.out.println(diaryRequest.getDiaryId()+ " "  + diaryRequest.getEmoji() + diaryRequest.getContent());
-        diaryRepository.findById(diaryRequest.getDiaryId())
-            .ifPresentOrElse(diary -> {
-                diary.setContent(diaryRequest.getContent());
-                diary.setEmoji(diaryRequest.getEmoji());
+        Diary diary = findById(diaryRequest.getDiaryId());
+        diary.setContent(diaryRequest.getContent());
+        diary.setEmoji(diaryRequest.getEmoji());
 
-                diaryRepository.save(diary);
-            }, ()->{
-                throw new NoSuchElementException("No such Diary");
-            });
+        //사진리스트 수정
+        List<Photo> photoList = new ArrayList<>(diary.getPhotoList());
+        List<String> newPhotoList = Optional.ofNullable(diaryRequest.getPhotoList())
+            .orElseGet(ArrayList::new);
+        List<Photo> deletePhotoList = new ArrayList<>();
+
+        //사진 추가
+        newPhotoList.stream()
+            .filter(newPhoto -> photoList.stream()
+                .noneMatch(existingPhoto -> existingPhoto.getPath().equals(newPhoto)))
+            .map(newPhoto -> Photo.builder().path(newPhoto).build())
+            .forEach(diary::addPhoto);
+
+        //사진 삭제
+        photoList.stream()
+            .filter(existingPhoto -> newPhotoList.stream()
+                .noneMatch(newPhoto -> newPhoto.equals(existingPhoto.getPath())))
+            .forEach(
+                photo -> {
+                    diary.getPhotoList().remove(photo);
+                    deletePhotoList.add(photo);
+                }
+            );
+
+        if(!deletePhotoList.isEmpty()){
+            photoRepository.deleteAllInBatch(deletePhotoList);
+        }
+
+        diaryRepository.save(diary);
     }
 
     @Transactional
     public void deleteDiary(Long diaryId){
-        diaryRepository.findById(diaryId)
-            .ifPresentOrElse(
-                diaryRepository::delete,
-                () -> {throw new NoSuchElementException("No such Diary");}
-            );
+        diaryRepository.delete(findById(diaryId));
     }
 
     private void addPhotos(Diary diary, CreateDiaryRequest diaryRequest) {
@@ -90,12 +113,16 @@ public class DiaryService {
             for(CreatePhotoRequest photoRequest : list) {
                 Photo photo = Photo.builder()
                     .path(photoRequest.getPath())
-                    .size(100)
                     .build();
 
                 diary.addPhoto(photo);
             }
         });
+    }
+
+    public Diary findById(Long diaryId){
+        return diaryRepository.findById(diaryId).orElseThrow(()
+            -> new NoSuchElementException("No such Diary"));
     }
 
 }
