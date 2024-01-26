@@ -14,10 +14,8 @@ import lombok.NoArgsConstructor;
 public class DMRequest implements Serializable {
 	@NotNull
 	Long senderId;
-
 	@NotNull
 	Long receiverId;
-
 	@NotBlank
 	String content;
 
