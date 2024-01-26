@@ -1,12 +1,12 @@
 package com.ssafy.A509.dm.dto;
 
-import com.ssafy.A509.account.dto.AccountSimpleReponse;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Builder
 @Getter
+@NoArgsConstructor
 public class OtherUserResponse {
-	AccountSimpleReponse accountSimpleReponse;
+	Long senderId;
+	Long userId;
 	String latestMessage;
 }
