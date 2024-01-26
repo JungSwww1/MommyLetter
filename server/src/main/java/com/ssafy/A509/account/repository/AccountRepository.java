@@ -3,6 +3,8 @@ package com.ssafy.A509.account.repository;
 import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.doctor.dto.PatientResponse;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -39,4 +41,7 @@ public interface AccountRepository extends JpaRepository<User, Long> {
             + "WHERE r.reserveId = :reserveId "
     )
     PatientResponse findPatientByReserveReserveId(Long reserveId);
+
+    Optional<User> findByEmail(String email);
+    User findByNickname(String nickname);
 }

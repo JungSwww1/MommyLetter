@@ -10,6 +10,10 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,18 +23,42 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
     private final ModelMapper modelMapper;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final PasswordEncoder passwordEncoder;
+
+    // 로그인 메서드 구현
+    public String login(String email, String password) {
+        User user = accountRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+
+//        if (!passwordEncoder.matches(password, user.getPassword())) {
+//            throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
+//        }
+
+        // 평문 비밀번호 비교
+        if (!user.getPassword().equals(password)) {
+            throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
+        }
+
+        // JWT 토큰 생성
+//        String token = jwtTokenProvider.createToken(email);
+
+        return "success"; // token을 return해야 합니다
+    }
 
     //회원가입 기능
     //비밀번호 암호화 도입 X
     @Transactional
     public void createAccount(CreateAccountRequest accountRequest){
-        User buildAccount = User.builder()
-            .email(accountRequest.getEmail())
-            .nickname(accountRequest.getNickname())
-            .password(accountRequest.getPassword())
-            .build();
+//        String encodedPassword = passwordEncoder.encode(accountRequest.getPassword()); // 비밀번호 암호화
 
-        User account = accountRepository.save(buildAccount);
+        User buildAccount = User.builder()
+                .email(accountRequest.getEmail())
+                .nickname(accountRequest.getNickname())
+                .password(accountRequest.getPassword())
+                .build();
+
+        accountRepository.save(buildAccount);
     }
 
     //User 모델과 AccountResponse dto를 매핑

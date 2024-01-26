@@ -2,6 +2,7 @@ package com.ssafy.A509.account.controller;
 
 import com.ssafy.A509.account.dto.AccountResponse;
 import com.ssafy.A509.account.dto.CreateAccountRequest;
+import com.ssafy.A509.account.dto.LoginRequest;
 import com.ssafy.A509.account.dto.UpdateAccountRequest;
 import com.ssafy.A509.account.service.AccountService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,6 +21,12 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "User", description = "User API")
 public class AccountController {
     private final AccountService accountService;
+
+    // 일반 로그인 (소셜 로그인 X)
+    @PostMapping("/user-login")
+    public String login(@RequestBody LoginRequest loginRequest) {
+        return accountService.login(loginRequest.getEmail(), loginRequest.getPassword());
+    }
 
     //계정 생성 (회원가입)
     @PostMapping("/signup")
