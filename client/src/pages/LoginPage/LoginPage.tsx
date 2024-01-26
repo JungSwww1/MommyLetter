@@ -1,7 +1,7 @@
 import {CheckBox, Img, Input, LoginButton, Main, RegisterButton, StyleLink} from "@/pages/LoginPage/styles";
 import {useState} from "react";
 import {useNavigate } from "react-router-dom"
-import logo from '@/assets/logo512.png'
+import logo from '@/assets/images/logo_white.png'
 const LoginPage = () => {
     const navigate = useNavigate();
     const [id, setId] = useState("")
@@ -10,11 +10,16 @@ const LoginPage = () => {
 
     // 회원가입 버튼 클릭 시
     const userRegist = ()=> {
-        navigate("/signup")
+        navigate("/join")
     }
     const loginFunc = () => {
-        console.log(id);
-        console.log(password);
+        const loginInfo = {
+            id,
+            password,
+            autoLogin
+        };
+        localStorage.setItem('loginInfo', JSON.stringify(loginInfo));
+        navigate('/', {replace:true})
     }
     return (
         <Main>
