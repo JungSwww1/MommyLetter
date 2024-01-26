@@ -14,9 +14,9 @@ public class PhotoResponse {
 	@NotBlank
 	String path;
 	@NotBlank
-	int size;
-	@NotBlank
 	Long boardId;
+	@NotBlank
+	Long diaryId;
 	@NotBlank
 	LocalDateTime createdDate;
 	LocalDateTime updatedDate;

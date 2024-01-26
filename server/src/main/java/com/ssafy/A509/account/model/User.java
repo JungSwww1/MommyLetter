@@ -55,7 +55,7 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Doctor doctor;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Profile profile;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

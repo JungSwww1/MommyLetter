@@ -10,7 +10,6 @@ import com.ssafy.A509.doctor.dto.PatientResponse;
 import com.ssafy.A509.doctor.dto.ReserveResponse;
 import com.ssafy.A509.doctor.model.Consult;
 import com.ssafy.A509.doctor.repository.ConsultRepository;
-import com.ssafy.A509.doctor.repository.DoctorRepository;
 import com.ssafy.A509.doctor.repository.ReserveRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -24,7 +23,6 @@ import org.springframework.stereotype.Service;
 public class DoctorService {
 
 	private final AccountRepository accountRepository;
-	private final DoctorRepository doctorRepository;
 	private final ReserveRepository reserveRepository;
 	private final ModelMapper modelMapper;
 	private final DiaryRepository diaryRepository;
@@ -63,16 +61,13 @@ public class DoctorService {
 	 * */
 	public PatientResponse getPatientInfo(Long reserveId){
 		PatientResponse patientResponse = accountRepository
-			.findPatientByReserveReserveId(reserveId)
-			;
+			.findPatientByReserveReserveId(reserveId);
 
 		long reserveCount =
 			getReserveCount(patientResponse.getUserId(), patientResponse.getDoctorId());
-
 		patientResponse.setCountReserve(reserveCount);
 
 		boolean consulted = consultRepository.existsByReserveReserveId(reserveId);
-
 		patientResponse.setConsulted(consulted);
 
 		return patientResponse;
@@ -84,8 +79,6 @@ public class DoctorService {
 	public Long getReserveCount(Long userId, Long doctorId){
 		return reserveRepository.countByUserUserIdAndDoctorDoctorId(userId, doctorId);
 	}
-
-
 
 	/**
 	 * 산모 일기 조회

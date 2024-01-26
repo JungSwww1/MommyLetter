@@ -3,7 +3,6 @@ package com.ssafy.A509.diary.model;
 import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.photo.model.Photo;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
@@ -48,7 +47,6 @@ public class Diary {
     private int emoji;
 
     @CreatedDate
-    @Column(updatable = false)
     private LocalDateTime createdDate;
 
     @LastModifiedDate
@@ -58,11 +56,12 @@ public class Diary {
     private List<Photo> photoList = new ArrayList<>();
 
     @Builder
-    public Diary(User user, String content, Category category, int emoji) {
+    public Diary(User user, String content, Category category, int emoji, LocalDateTime createdDate) {
         this.user = user;
         this.content = content;
         this.category = category;
         this.emoji = emoji;
+        this.createdDate = createdDate;
     }
 
     public void setContent(String content) {
