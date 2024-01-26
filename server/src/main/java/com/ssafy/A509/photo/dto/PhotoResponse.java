@@ -16,6 +16,8 @@ public class PhotoResponse {
 	@NotBlank
 	Long boardId;
 	@NotBlank
+	Long diaryId;
+	@NotBlank
 	LocalDateTime createdDate;
 	LocalDateTime updatedDate;
 }
