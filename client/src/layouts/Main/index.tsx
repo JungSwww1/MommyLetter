@@ -9,6 +9,7 @@ import './index.css';
 import DiaryMomPage from "@/pages/Diary/DiaryMom/page";
 import DiaryBabyPage from "@/pages/Diary/DiaryBaby/page";
 import WritePage from "@/pages/Diary/DiaryWrite/page";
+import UserRegist from "@/pages/UserRegist/UserRegist";
 
 
 
@@ -25,6 +26,7 @@ function Main() {
                 {(isWriteEndpoint && currentPath.includes('baby')) && <Write title={"육아일기"}/>}
                 {(isWriteEndpoint && currentPath.includes('board')) && <Write title={"피드"}/>}
                 <Routes>
+                    <Route path={"/join"} element={<UserRegist/>}/>
                     <Route path={"/"} element={<Feed/>}/>
                     <Route path={"/profile"} element={<UserProfile/>}/>
                     <Route path={"/diary/:diaryType"} element={<DiaryMomPage/>}/>

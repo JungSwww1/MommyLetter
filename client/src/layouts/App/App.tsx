@@ -5,10 +5,10 @@ import UserRegist from "@/pages/UserRegist/UserRegist";
 import Main from "@/layouts/Main";
 
 function App() {
-    return (<div className="w-[40%] h-[100%] bg-white">
+    return (
+        <div className="w-[40%] h-[100%] bg-white">
             <Routes>
                 <Route path={"/login"} element={<LoginPage/>}/>
-                <Route path={"/join"} element={<UserRegist/>}/>
                 <Route path={"/*"} element={<Main/>}/>
             </Routes>
         </div>);

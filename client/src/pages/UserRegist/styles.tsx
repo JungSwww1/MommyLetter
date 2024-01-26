@@ -3,6 +3,7 @@ import styled from "tailwind-styled-components";
 export const Layout = styled.div`
     ml-[4%]
     mr-[4%]
+    mb-[6%]
 `
 
 export const Container = styled.div`
@@ -74,3 +75,6 @@ export const MainTitle = styled.p`
     font-bold
 `
 
+export const PasswordBlank = styled.div`
+    invisible
+`
