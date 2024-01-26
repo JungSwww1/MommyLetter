@@ -51,7 +51,7 @@ public class User {
     @OneToMany(mappedBy = "following")
     private List<Follow> followerList;
 
-//    @JsonBackReference
+    //    @JsonBackReference
     @OneToOne(mappedBy = "user")
     private Doctor doctor;
 
@@ -64,16 +64,20 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reserve> reserve = new ArrayList<>();
 
+    public static User createUser() {
+        return new User();
+    }
+
     @Builder
     protected User(Long userId, String password, String nickname, String intro, String email,
-      Gender gender, Role role, String profilePhoto, String backgroundPhoto) {
-    this.userId = userId;
-    this.password = password;
-    this.nickname = nickname;
-    this.intro = intro;
-    this.email = email;
-    this.gender = gender;
-    this.role = role;
+                   Gender gender, Role role, String profilePhoto, String backgroundPhoto) {
+        this.userId = userId;
+        this.password = password;
+        this.nickname = nickname;
+        this.intro = intro;
+        this.email = email;
+        this.gender = gender;
+        this.role = role;
     }
 
 }
