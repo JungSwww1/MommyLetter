@@ -5,6 +5,7 @@ import com.ssafy.A509.dm.dto.DMRequest;
 import com.ssafy.A509.dm.dto.DMResponse;
 import com.ssafy.A509.dm.dto.OtherUserResponse;
 import com.ssafy.A509.dm.service.DMService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "DM", description = "DM API")
 @RequestMapping("/message")
 public class DMController {
 
