@@ -3,7 +3,9 @@ package com.ssafy.A509.board.controller;
 import com.ssafy.A509.board.dto.BoardResponse;
 import com.ssafy.A509.board.dto.CreateBoardRequest;
 import com.ssafy.A509.board.dto.UpdateBoardRequest;
+import com.ssafy.A509.board.model.Category;
 import com.ssafy.A509.board.service.BoardService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/boards")
+@Tag(name = "Board", description = "Board API")
 public class BoardController {
 
 	private final BoardService boardService;
@@ -45,6 +48,11 @@ public class BoardController {
 	@GetMapping("/{boardId}")
 	public ResponseEntity<BoardResponse> getBoard(@NotNull @PathVariable Long boardId) {
 		return ResponseEntity.ok(boardService.getBoard(boardId));
+	}
+
+	@GetMapping("/cate/{category}")
+	public ResponseEntity<List<BoardResponse>> getBoardsByCategory(@NotNull @PathVariable Category category) {
+		return ResponseEntity.ok(boardService.findAllByCategory(category));
 	}
 
 	@PatchMapping("/{boardId}")

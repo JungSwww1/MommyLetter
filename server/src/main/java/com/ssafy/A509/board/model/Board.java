@@ -4,7 +4,6 @@ import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.hashtag.model.Hashtag;
 import com.ssafy.A509.photo.model.Photo;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
@@ -49,28 +48,29 @@ public class Board {
 	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Hashtag> hashtagList = new ArrayList<>();
 
+	@Setter
 	private String content;
 
 	@Setter
 	@Enumerated(EnumType.STRING)
 	private Access access;
 
+	@Setter
+	@Enumerated(EnumType.STRING)
+	private Category category;
+
 	@CreatedDate
-	@Column(updatable = false)
 	private LocalDateTime createdDate;
 
 	@LastModifiedDate
 	private LocalDateTime updatedDate;
 
 	@Builder
-	protected Board(String content, Access access, User user) {
+	protected Board(String content, Access access, User user, Category category) {
 		this.content = content;
 		this.access = access;
 		this.user = user;
-	}
-
-	public void setBoardContent(String content) {
-		this.content = content;
+		this.category = category;
 	}
 
 	public void addPhoto(Photo photo) {

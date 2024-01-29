@@ -29,6 +29,7 @@ CREATE TABLE `BOARD`
     `user_id`      INT          NOT NULL,
     `content`      VARCHAR(255) NOT NULL,
     `access`       ENUM ('All', 'Follower', 'Nobody') DEFAULT 'All',
+    `category`     ENUM ('One', 'Two', 'Three') DEFAULT 'One',
     `created_date` TIMESTAMP    NOT NULL,
     `updated_date` TIMESTAMP    NULL,
     FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`)

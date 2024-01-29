@@ -1,10 +1,14 @@
 package com.ssafy.A509.account.dto;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Builder
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
 public class AccountSimpleReponse {
 	private String nickname;
 	private String profilePhoto;
