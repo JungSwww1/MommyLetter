@@ -1,11 +1,10 @@
-﻿select * from user;
-
+﻿
 CREATE TABLE `USER`
 (
     `user_id`      INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `password`     VARCHAR(20)  NULL,
     `nickname`     VARCHAR(20) CHARACTER SET utf8 NULL ,
-    `intro`        VARCHAR(255) NULL,
+    `intro`        VARCHAR(255) CHARACTER SET utf8 NULL,
     `email`        VARCHAR(50)  NULL,
     `gender`       ENUM ('Male', 'Female')            DEFAULT 'Female',
     `role`         ENUM ('Common', 'Doctor', 'Admin') DEFAULT 'Common',

@@ -6,10 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c922c00b-04a3-4d83-8df6-c9051167dc13" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/layouts/App/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/layouts/App/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/layouts/Main/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/layouts/Main/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/UserRegist/UserRegist.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/UserRegist/UserRegist.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/UserRegist/styles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/UserRegist/styles.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/UserEdit/UserEdit.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/UserEdit/UserEdit.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,20 +28,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feat__seungwon&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/SSAFY/Desktop/practice/S10P10A508/client&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;yarn:package.json:typescript&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "feat__seungwon__loginapi",
+    "last_opened_file_path": "C:/Users/SSAFY/Desktop/practice/S10P10A508/client",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "ts.external.directory.path": "yarn:package.json:typescript",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

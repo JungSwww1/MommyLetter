@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin("*")
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 @Tag(name = "User", description = "User API")
@@ -29,7 +30,6 @@ public class AccountController {
     }
 
     //계정 생성 (회원가입)
-    @CrossOrigin("*")
     @PostMapping("/signup")
     public ResponseEntity<Void> createAccount(@Valid @RequestBody CreateAccountRequest accountRequest){
         accountService.createAccount(accountRequest);

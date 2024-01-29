@@ -13,6 +13,7 @@ import ChatBarComponent from "@/components/ChatBar";
 import DirectMessagePage from "@/pages/DirectMessage/DirectMessageDetail/page";
 import DirectMessageList from "@/pages/DirectMessage/DirectMessageList/page";
 import UserRegist from "@/pages/UserRegist/UserRegist";
+import UserEdit from "@/pages/UserEdit/UserEdit";
 
 
 
@@ -31,6 +32,7 @@ function Main() {
                 {(isWriteEndpoint && currentPath.includes('board')) && <Write title={"피드"}/>}
                 <Routes>
                     <Route path={"/join"} element={<UserRegist/>}/>
+                    <Route path={"/edit"} element={<UserEdit/>}/>
                     <Route path={"/"} element={<Feed/>}/>
                     <Route path={"/profile"} element={<UserProfile/>}/>
                     <Route path={"/diary/:diaryType"} element={<DiaryMomPage/>}/>
