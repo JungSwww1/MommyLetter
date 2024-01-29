@@ -13,7 +13,6 @@ export const HeaderLayout=styled.div`
 export const HeaderItem=styled.div`
     flex
     justify-between
-    flex-wrap
     items-center
     w-[100%]
     h-[100%]

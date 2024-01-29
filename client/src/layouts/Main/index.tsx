@@ -12,7 +12,9 @@ import WritePage from "@/pages/Diary/DiaryWrite/page";
 import ChatBarComponent from "@/components/ChatBar";
 import DirectMessagePage from "@/pages/DirectMessage/DirectMessageDetail/page";
 import DirectMessageList from "@/pages/DirectMessage/DirectMessageList/page";
-
+import UserRegist from "@/pages/UserRegist/UserRegist";
+import SearchPage from "@/pages/Search/page";
+import ConsultHistoryPage from "@/pages/Consult/ConsultHistory/page";
 
 
 function Main() {
@@ -36,7 +38,10 @@ function Main() {
                     <Route path="/diary/:diaryType/write" element={<WritePage/>} />
                     <Route path={"/message"} element={<DirectMessageList/>}/>
                     <Route path={"/message/room"} element={<DirectMessagePage/>}/>
-                    <Route path={"/consult"} element={<ConsultApplicant/>}/>
+                    <Route path={"/consult/detail"} element={<ConsultApplicant/>}/>
+                    <Route path={"/search/*"} element={<SearchPage/>}/>
+                    <Route path={"/consult/list"} element={<ConsultHistoryPage/>}/>
+                    <Route path={"/*"} element=""/>
 
                 </Routes>
             </BodySection>

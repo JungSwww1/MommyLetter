@@ -1,7 +1,8 @@
-import React, {useEffect} from 'react';
-import {ReactComponent as Hamburger} from "@/assets/icons/hamburger.svg"
+import React from 'react';
 import {HamburgerLayout,List,Item,Button} from "./styles"
 import {useNavigate} from "react-router-dom";
+import Hamburger from "@/assets/icons/Hamburger";
+
 
 const HamburgerButton = () => {
     const navigate = useNavigate();
