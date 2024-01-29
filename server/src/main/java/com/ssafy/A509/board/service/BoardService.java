@@ -6,6 +6,7 @@ import com.ssafy.A509.board.dto.BoardResponse;
 import com.ssafy.A509.board.dto.CreateBoardRequest;
 import com.ssafy.A509.board.dto.UpdateBoardRequest;
 import com.ssafy.A509.board.model.Board;
+import com.ssafy.A509.board.model.Category;
 import com.ssafy.A509.board.repository.BoardRepository;
 import com.ssafy.A509.hashtag.model.Hashtag;
 import com.ssafy.A509.photo.dto.CreatePhotoRequest;
@@ -124,6 +125,11 @@ public class BoardService {
 
 	public User findByUserId(Long userId) {
 		return accountRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("no such user"));
+	}
+
+	public List<BoardResponse> findAllByCategory(Category category) {
+		return boardRepository.findAllByCategory(category).stream().map(this::getBoardResponse)
+			.collect(Collectors.toList());
 	}
 
 	private BoardResponse getBoardResponse(Board board) {
