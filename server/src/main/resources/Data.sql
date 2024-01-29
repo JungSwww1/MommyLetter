@@ -1,24 +1,24 @@
 -- Insert data into USER table
-INSERT INTO `USER` (`user_id`, `password`, `nickname`, `email`, `gender`, `role`, `created_date`, `updated_date`, `profile_photo`, `background_photo`)
+INSERT INTO `USER` (`user_id`, `password`, `nickname`, `email`, `gender`, `role`, `created_date`, `updated_date`)
 VALUES
-    (101, 'password1', 'User1', 'user1@example.com', 'Male', 'Common', '2024-01-17 12:00:00', '2024-01-17 12:30:00', 'path/to/profile1.jpg', 'path/to/background1.jpg'),
-    (102, 'password2', 'User2', 'user2@example.com', 'Female', 'Doctor', '2024-01-17 13:00:00', '2024-01-17 13:30:00', 'path/to/profile2.jpg', 'path/to/background2.jpg'),
-    (103, 'password3', 'User3', 'user3@example.com', 'Male', 'Admin', '2024-01-17 14:00:00', '2024-01-17 14:30:00', 'path/to/profile3.jpg', 'path/to/background3.jpg'),
-    (104, 'password4', 'User4', 'user4@example.com', 'Female', 'Common', '2024-01-17 15:00:00', '2024-01-17 15:30:00', 'path/to/profile4.jpg', 'path/to/background4.jpg'),
-    (105, 'password5', 'User5', 'user5@example.com', 'Male', 'Doctor', '2024-01-17 16:00:00', '2024-01-17 16:30:00', 'path/to/profile5.jpg', 'path/to/background5.jpg'),
-    (106, 'password6', 'User6', 'user6@example.com', 'Female', 'Admin', '2024-01-17 17:00:00', '2024-01-17 17:30:00', 'path/to/profile6.jpg', 'path/to/background6.jpg'),
-    (107, 'password7', 'User7', 'user7@example.com', 'Male', 'Common', '2024-01-17 18:00:00', '2024-01-17 18:30:00', 'path/to/profile7.jpg', 'path/to/background7.jpg'),
-    (108, 'password8', 'User8', 'user8@example.com', 'Female', 'Doctor', '2024-01-17 19:00:00', '2024-01-17 19:30:00', 'path/to/profile8.jpg', 'path/to/background8.jpg'),
-    (109, 'password9', 'User9', 'user9@example.com', 'Male', 'Admin', '2024-01-17 20:00:00', '2024-01-17 20:30:00', 'path/to/profile9.jpg', 'path/to/background9.jpg'),
-    (110, 'password10', 'User10', 'user10@example.com', 'Female', 'Common', '2024-01-17 21:00:00', '2024-01-17 21:30:00', 'path/to/profile10.jpg', 'path/to/background10.jpg'),
-    (111, 'password11', 'User11', 'user11@example.com', 'Male', 'Doctor', '2024-01-17 22:00:00', '2024-01-17 22:30:00', 'path/to/profile11.jpg', 'path/to/background11.jpg'),
-    (112, 'password12', 'User12', 'user12@example.com', 'Female', 'Admin', '2024-01-17 23:00:00', '2024-01-17 23:30:00', 'path/to/profile12.jpg', 'path/to/background12.jpg'),
-    (113, 'password13', 'User13', 'user13@example.com', 'Male', 'Common', '2024-01-18 00:00:00', '2024-01-18 00:30:00', 'path/to/profile13.jpg', 'path/to/background13.jpg'),
-    (114, 'password14', 'User14', 'user14@example.com', 'Female', 'Doctor', '2024-01-18 01:00:00', '2024-01-18 01:30:00', 'path/to/profile14.jpg', 'path/to/background14.jpg'),
-    (115, 'password15', 'User15', 'user15@example.com', 'Male', 'Admin', '2024-01-18 02:00:00', '2024-01-18 02:30:00', 'path/to/profile15.jpg', 'path/to/background15.jpg');
+    (101, 'password1', 'User1', 'user1@example.com', 'Male', 'Common', '2024-01-17 12:00:00', '2024-01-17 12:30:00'),
+    (102, 'password2', 'User2', 'user2@example.com', 'Female', 'Doctor', '2024-01-17 13:00:00', '2024-01-17 13:30:00'),
+    (103, 'password3', 'User3', 'user3@example.com', 'Male', 'Admin', '2024-01-17 14:00:00', '2024-01-17 14:30:00'),
+    (104, 'password4', 'User4', 'user4@example.com', 'Female', 'Common', '2024-01-17 15:00:00', '2024-01-17 15:30:00'),
+    (105, 'password5', 'User5', 'user5@example.com', 'Male', 'Doctor', '2024-01-17 16:00:00', '2024-01-17 16:30:00'),
+    (106, 'password6', 'User6', 'user6@example.com', 'Female', 'Admin', '2024-01-17 17:00:00', '2024-01-17 17:30:00'),
+    (107, 'password7', 'User7', 'user7@example.com', 'Male', 'Common', '2024-01-17 18:00:00', '2024-01-17 18:30:00'),
+    (108, 'password8', 'User8', 'user8@example.com', 'Female', 'Doctor', '2024-01-17 19:00:00', '2024-01-17 19:30:00'),
+    (109, 'password9', 'User9', 'user9@example.com', 'Male', 'Admin', '2024-01-17 20:00:00', '2024-01-17 20:30:00'),
+    (110, 'password10', 'User10', 'user10@example.com', 'Female', 'Common', '2024-01-17 21:00:00', '2024-01-17 21:30:00'),
+    (111, 'password11', 'User11', 'user11@example.com', 'Male', 'Doctor', '2024-01-17 22:00:00', '2024-01-17 22:30:00'),
+    (112, 'password12', 'User12', 'user12@example.com', 'Female', 'Admin', '2024-01-17 23:00:00', '2024-01-17 23:30:00'),
+    (113, 'password13', 'User13', 'user13@example.com', 'Male', 'Common', '2024-01-18 00:00:00', '2024-01-18 00:30:00'),
+    (114, 'password14', 'User14', 'user14@example.com', 'Female', 'Doctor', '2024-01-18 01:00:00', '2024-01-18 01:30:00'),
+    (115, 'password15', 'User15', 'user15@example.com', 'Male', 'Admin', '2024-01-18 02:00:00', '2024-01-18 02:30:00');
 
 -- Insert data into USER_INFO table
-INSERT INTO `USER_INFO` (`SSN`, `user_id`, `name`, `phone`, `status`, `extra`, `diary_open`, `agree_date`)
+INSERT INTO `USER_INFO` (`SSN`, `user_id`, `name`, `phone`, `pregnancy_status`, `extra`, `diary_open`, `agree_date`)
 VALUES
     ('1234567890123', 101, 'User1 Name', '12345678901', 'Pregnant', 'Extra Info 1', TRUE, '2024-01-17 12:00:00'),
     ('9876543210987', 102, 'User2 Name', '98765432109', 'Mother', 'Extra Info 2', FALSE, '2024-01-17 13:00:00'),
@@ -56,13 +56,32 @@ VALUES
     (15, 115, 'Diary Content 15', 'Mom', 3, '2024-01-18 02:00:00', '2024-01-18 02:30:00');
 
 -- Insert data into DOCTOR table
-INSERT INTO `DOCTOR` (`doctor_id`, `user_id`, `department`, `location`, `vaild_time`)
+INSERT INTO `DOCTOR` (`doctor_id`, `user_id`, `name`, `department`, `location`, `valid_time`)
 VALUES
-    (1, 102, 'Cardiology', 'Hospital A', 'Monday 9:00 AM - 5:00 PM'),
-    (2, 105, 'Pediatrics', 'Hospital B', 'Tuesday 10:00 AM - 6:00 PM');
+    (1, 102, 'doctor1', 'Cardiology', 'Hospital A', 'Monday 9:00 AM - 5:00 PM'),
+    (2, 105, 'doctor2', 'Pediatrics', 'Hospital B', 'Tuesday 10:00 AM - 6:00 PM');
 -- Add 13 more rows...
 
--- Insert data into BOARD table
+-- Insert data into Profile table with NULL profile_photo and background_photo
+INSERT INTO `PROFILE` (`profile_id`, `user_id`, `profile_photo`, `background_photo`)
+VALUES
+    (1, 101, NULL, NULL),
+    (2, 102, NULL, NULL),
+    (3, 103, NULL, NULL),
+    (4, 104, NULL, NULL),
+    (5, 105, NULL, NULL),
+    (6, 106, NULL, NULL),
+    (7, 107, NULL, NULL),
+    (8, 108, NULL, NULL),
+    (9, 109, NULL, NULL),
+    (10, 110, NULL, NULL),
+    (11, 111, NULL, NULL),
+    (12, 112, NULL, NULL),
+    (13, 113, NULL, NULL),
+    (14, 114, NULL, NULL),
+    (15, 115, NULL, NULL);
+
+
 -- Insert data into BOARD table
 INSERT INTO `BOARD` (`board_id`, `user_id`, `content`, `access`, `created_date`, `updated_date`)
 VALUES
@@ -112,7 +131,7 @@ VALUES
 # -- Add 13 more rows...
 #
 # -- Insert data into CONSULT table
-# INSERT INTO `CONSULT` (`counseling_id`, `user_id`, `resesrve_id`, `prescription_path`)
+# INSERT INTO `CONSULT` (`counseling_id`, `user_id`, `reserve_id`, `prescription_path`)
 # VALUES
 #     (1, 101, 501, 'path/to/prescription1.pdf'),
 #     (2, 102, 502, 'path/to/prescription2.pdf');
@@ -133,17 +152,17 @@ VALUES
 # -- Add 13 more rows...
 #
 # -- Insert data into RESERVE table
-# INSERT INTO `RESERVE` (`resesrve_id`, `doctor_id`, `user_id`, `reserve_date`)
+# INSERT INTO `RESERVE` (`reserve_id`, `doctor_id`, `user_id`, `reserve_date`)
 # VALUES
 #     (501, 201, 101, '2024-01-18 10:00:00'),
 #     (502, 202, 102, '2024-01-19 11:00:00');
 # -- Add 13 more rows...
 #
 # -- Insert data into PHOTO table
-# INSERT INTO `PHOTO` (`file_id`, `path`, `size`, `created_date`, `updated_date`, `board_id`, `diary_id`)
+# INSERT INTO `PHOTO` (`photo_id`, `path`, `created_date`, `updated_date`, `board_id`, `diary_id`)
 # VALUES
-#     (1, 'path/to/photo1.jpg', '1024x768', '2024-01-17 12:00:00', '2024-01-17 12:30:00', 301, 1),
-#     (2, 'path/to/photo2.jpg', '800x600', '2024-01-17 13:00:00', '2024-01-17 13:30:00', 302, 2);
+#     (1, 'path/to/photo1.jpg', '2024-01-17 12:00:00', '2024-01-17 12:30:00', 1, 1),
+#     (2, 'path/to/photo2.jpg', '2024-01-17 13:00:00', '2024-01-17 13:30:00', 2, 2);
 # -- Add 13 more rows...
 #
 # -- Insert data into HASHTAG table

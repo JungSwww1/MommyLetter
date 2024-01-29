@@ -2,10 +2,11 @@ package com.ssafy.A509.comment.controller;
 
 import com.ssafy.A509.comment.dto.CommentResponse;
 import com.ssafy.A509.comment.dto.CreateCommentRequest;
-import com.ssafy.A509.comment.dto.UpdateCommentRequest;
 import com.ssafy.A509.comment.service.CommentService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,13 +23,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/comments")
+@Tag(name = "Comment", description = "Comment API")
 public class CommentController {
 
 	private final CommentService commentService;
 
 	@PostMapping
 	public ResponseEntity<CommentResponse> createComment(@Valid @RequestBody CreateCommentRequest commentRequest) {
-		return new ResponseEntity<>(commentService.createComment(commentRequest), HttpStatus.CREATED);
+		commentService.createComment(commentRequest);
+		return ResponseEntity.ok().build();
 	}
 
 	@GetMapping("/{boardId}")
@@ -37,12 +40,12 @@ public class CommentController {
 	}
 
 	@PatchMapping("/{commentId}")
-	public ResponseEntity<Void> updateComment(@Valid UpdateCommentRequest commentRequest) {
-		commentService.updateComment(commentRequest);
+	public ResponseEntity<Void> updateComment(@NotNull @PathVariable Long commentId, @NotBlank @RequestBody String content) {
+		commentService.updateComment(commentId, content);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@DeleteMapping("{/commentId}")
+	@DeleteMapping("/{commentId}")
 	public ResponseEntity<Void> deleteComment(@NotBlank @PathVariable Long commentId) {
 		commentService.deleteComment(commentId);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);

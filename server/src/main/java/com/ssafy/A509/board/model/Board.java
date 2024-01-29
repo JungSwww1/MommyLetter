@@ -1,6 +1,9 @@
 package com.ssafy.A509.board.model;
 
-import com.ssafy.A509.user.model.User;
+import com.ssafy.A509.account.model.User;
+import com.ssafy.A509.hashtag.model.Hashtag;
+import com.ssafy.A509.photo.model.Photo;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -12,11 +15,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -35,8 +42,16 @@ public class Board {
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Photo> photoList = new ArrayList<>();
+
+	@Setter
+	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Hashtag> hashtagList = new ArrayList<>();
+
 	private String content;
 
+	@Setter
 	@Enumerated(EnumType.STRING)
 	private Access access;
 
@@ -58,5 +73,13 @@ public class Board {
 		this.content = content;
 	}
 
+	public void addPhoto(Photo photo) {
+		this.photoList.add(photo);
+		photo.setBoard(this);
+	}
 
+	public void addHashtag(Hashtag hashtag) {
+		this.hashtagList.add(hashtag);
+		hashtag.setBoard(this);
+	}
 }
