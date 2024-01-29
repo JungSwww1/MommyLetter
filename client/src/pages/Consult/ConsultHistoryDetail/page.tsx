@@ -1,8 +1,8 @@
 import React from 'react';
 import {ProfileComponent} from "@/components/Profile";
 import {BackPageSection,DoctorProfileSection,ConsultContextSection, ConsultHistoryDetailLayout} from "@/pages/Consult/ConsultHistoryDetail/styles";
-import {HistoryCardComponent} from "@/components/HistoryCard";
-import sample1 from "@/assets/images/sample1.jpg"
+
+
 import {ReactComponent as Left} from "@/assets/icons/chevron-left.svg"
 const ConsultHistoryDetailPage = () => {
     return (

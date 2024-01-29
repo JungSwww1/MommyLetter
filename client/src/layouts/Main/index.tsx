@@ -15,6 +15,7 @@ import DirectMessageList from "@/pages/DirectMessage/DirectMessageList/page";
 import UserRegist from "@/pages/UserRegist/UserRegist";
 import SearchPage from "@/pages/Search/page";
 import ConsultHistoryPage from "@/pages/Consult/ConsultHistory/page";
+import ConsultPage from "@/pages/Consult/page";
 
 
 function Main() {
@@ -31,16 +32,29 @@ function Main() {
                 {(isWriteEndpoint && currentPath.includes('baby')) && <Write title={"육아일기"}/>}
                 {(isWriteEndpoint && currentPath.includes('board')) && <Write title={"피드"}/>}
                 <Routes>
+                    {/*유저관련 라우터*/}
                     <Route path={"/join"} element={<UserRegist/>}/>
-                    <Route path={"/"} element={<Feed/>}/>
                     <Route path={"/profile"} element={<UserProfile/>}/>
+
+                    {/*피드관련 라우터*/}
+                    <Route path={"/"} element={<Feed/>}/>
+
+                    {/*다이어리관련 라우터*/}
                     <Route path={"/diary/:diaryType"} element={<DiaryMomPage/>}/>
                     <Route path="/diary/:diaryType/write" element={<WritePage/>} />
+
+                    {/*DM관련 라우터*/}
                     <Route path={"/message"} element={<DirectMessageList/>}/>
                     <Route path={"/message/room"} element={<DirectMessagePage/>}/>
-                    <Route path={"/consult/detail"} element={<ConsultApplicant/>}/>
+
+                    {/*검색관련 라우터*/}
                     <Route path={"/search/*"} element={<SearchPage/>}/>
-                    <Route path={"/consult/list"} element={<ConsultHistoryPage/>}/>
+
+                    {/*상담관련 라우터*/}
+                    <Route path={"/consult/*"} element={<ConsultPage/>}/>
+
+
+                    {/*접근관련 라우터*/}
                     <Route path={"/*"} element=""/>
 
                 </Routes>
