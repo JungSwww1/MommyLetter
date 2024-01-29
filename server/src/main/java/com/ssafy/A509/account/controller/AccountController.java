@@ -29,6 +29,7 @@ public class AccountController {
     }
 
     //계정 생성 (회원가입)
+    @CrossOrigin("*")
     @PostMapping("/signup")
     public ResponseEntity<Void> createAccount(@Valid @RequestBody CreateAccountRequest accountRequest){
         accountService.createAccount(accountRequest);

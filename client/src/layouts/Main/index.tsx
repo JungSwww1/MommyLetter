@@ -12,6 +12,7 @@ import WritePage from "@/pages/Diary/DiaryWrite/page";
 import ChatBarComponent from "@/components/ChatBar";
 import DirectMessagePage from "@/pages/DirectMessage/DirectMessageDetail/page";
 import DirectMessageList from "@/pages/DirectMessage/DirectMessageList/page";
+import UserRegist from "@/pages/UserRegist/UserRegist";
 
 
 
