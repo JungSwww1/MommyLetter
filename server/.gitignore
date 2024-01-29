@@ -38,4 +38,4 @@ out/
 .vscode/
 
 ### Secret Keys ###
-SecretKeys.java
+application.yml
