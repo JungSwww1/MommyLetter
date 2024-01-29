@@ -36,3 +36,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Secret Keys ###
+SecretKeys.java
