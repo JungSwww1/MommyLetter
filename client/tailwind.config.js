@@ -5,8 +5,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'user': '#A4CF5F',
-        'doctor': '#3854E9'
+        'user': '#FFDF6D',
+        'doctor': '#3854E9',
+        'MenuColor':"#533C00",
       },
     },
   },
