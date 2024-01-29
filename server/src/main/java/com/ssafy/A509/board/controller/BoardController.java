@@ -4,6 +4,7 @@ import com.ssafy.A509.board.dto.BoardResponse;
 import com.ssafy.A509.board.dto.CreateBoardRequest;
 import com.ssafy.A509.board.dto.UpdateBoardRequest;
 import com.ssafy.A509.board.service.BoardService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/boards")
+@Tag(name = "Board", description = "Board API")
 public class BoardController {
 
 	private final BoardService boardService;
