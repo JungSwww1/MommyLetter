@@ -30,7 +30,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             String username = jwtTokenProvider.getUsernameFromToken(token); // 토큰에서 사용자 이름을 추출
 
             // 사용자의 인증 정보를 설정하는 UsernamePasswordAuthenticationToken 객체 생성
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, null, List.of(new SimpleGrantedAuthority("ROLE_USER")));
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, null, List.of(new SimpleGrantedAuthority("Common")));
 
             // 요청 세부 정보 설정
             auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

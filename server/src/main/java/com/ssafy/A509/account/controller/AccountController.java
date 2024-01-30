@@ -85,6 +85,4 @@ public class AccountController {
         boolean existsNickname = accountService.isNicknameExists(nickname);
         return new ResponseEntity<>(existsNickname, HttpStatus.OK);
     }
-
-
 }
