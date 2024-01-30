@@ -18,7 +18,7 @@ export const ContentBox=styled.div`
     items-center
     h-[35%]
     w-[100%]
-
+    ml-3
     `;
 export const DoctorSection=styled.section`
     flex
@@ -47,6 +47,7 @@ export const ReserveSection=styled.section`
 export const HistoryBox=styled.div`
     h-[35%]
     mt-3
+    
 `;
 
 

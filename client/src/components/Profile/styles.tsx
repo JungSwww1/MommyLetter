@@ -1,7 +1,7 @@
 import styled from "tailwind-styled-components";
 
 export const ContentBox=styled.div`
-    relative top-[-30%]
+    relative top-[-15%]
     flex
     flex-col
     items-center

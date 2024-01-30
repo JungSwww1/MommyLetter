@@ -1,4 +1,6 @@
 import React from "react";
+import {Link} from 'react-router-dom'
+
 import {
     AvailableSection,
     BackgroundBox,
@@ -10,15 +12,16 @@ import {
     ConsultSection,
 } from "./styles"
 import sample1 from "@/assets/images/sample1.jpg"
-import sample2 from "@/assets/images/sample2.jpg"
-const ConsultApplyPage = () => {
+import {ProfileComponent} from "@/components/Profile";
+import ConsultRegist from "@/pages/Consult/ConsultRegist/page";
+
+const ConsultPage = () => {
     return (
         <ProfileLayout>
             <BackgroundBox src={sample1}/>
             <ContentBox>
-
                 <DoctorSection>
-
+                    <ProfileComponent name="오은영" intro="아동심리학과"/>
                 </DoctorSection>
                 <ConsultSection>
                     <AvailableSection>
@@ -29,7 +32,7 @@ const ConsultApplyPage = () => {
                     </AvailableSection>
                     <ReserveSection>
 
-                        <button className="btn btn-primary w-[80%] mb-3">지금 상담하기</button>
+                        <Link to="write"><button className="btn btn-primary w-[80%] mb-3">지금 상담하기</button></Link>
                         <button className="btn btn-primary w-[80%]">진료 예약</button>
 
                     </ReserveSection>
@@ -52,4 +55,4 @@ const ConsultApplyPage = () => {
         ;
 }
 
-export default ConsultApplyPage;
+export default ConsultPage;

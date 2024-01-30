@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, ButtonBox, CardBox, CardListLayout, Img, Item, List} from "@/components/DoctorListCard/styles";
+import {ButtonBox, CardBox, CardListLayout, Img, Item, List} from "@/components/DoctorListCard/styles";
 import {ReactComponent as RightButton} from "@/assets/icons/chevron-right.svg";
 
 import {DoctorListCardComponentProps} from "@/components/type/types";
@@ -10,15 +10,15 @@ const DoctorListCardComponent = ({img, date, name, department}: DoctorListCardCo
         <CardListLayout>
             <CardBox>
 
-                <figure><Img src={img} alt="User"/></figure>
+                <Img src={img} alt="User"/>
                 <List>
-                    <div className="flex flex-col justify-center text-sm">
-                        <Item className="font-bold ">{date}</Item>
-                        <Item className="font-bold ">{name}</Item>
+                    <div className="flex flex-col text-sm w-[50%]">
+                        <Item className="font-bold">{date}</Item>
+                        <Item className="">{name}</Item>
                         <Item>{department}</Item>
                     </div>
                     <ButtonBox>
-                        <Button><RightButton/></Button>
+                        <button><RightButton/></button>
                     </ButtonBox>
                 </List>
             </CardBox>

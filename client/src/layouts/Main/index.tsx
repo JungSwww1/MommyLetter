@@ -5,7 +5,6 @@ import {Routes, Route} from 'react-router-dom';
 import UserProfile from "@/pages/Profile/UserProfile";
 import Feed from "@/pages/Feed/Feed";
 import {Header,Write, Navigation} from "@/components/Menu";
-import ConsultApplicant from "@/pages/Doctor/Applicant/ConsultApplicant";
 import './index.css';
 import DiaryMomPage from "@/pages/Diary/DiaryMom/page";
 import WritePage from "@/pages/Diary/DiaryWrite/page";
@@ -14,8 +13,11 @@ import DirectMessagePage from "@/pages/DirectMessage/DirectMessageDetail/page";
 import DirectMessageList from "@/pages/DirectMessage/DirectMessageList/page";
 import UserRegist from "@/pages/UserRegist/UserRegist";
 import SearchPage from "@/pages/Search/page";
-import ConsultHistoryPage from "@/pages/Consult/ConsultHistory/page";
-import ConsultPage from "@/pages/Consult/page";
+import ConsultListPage from "@/pages/Consult/ConsultList/page";
+import ConsultPage from "@/pages/Consult/Consult/page";
+import HistoryPage from "@/pages/History/History/page";
+import HistoryListPage from "@/pages/History/HistoryList/page";
+import ConsultRegist from "@/pages/Consult/ConsultRegist/page";
 
 
 function Main() {
@@ -51,7 +53,13 @@ function Main() {
                     <Route path={"/search/*"} element={<SearchPage/>}/>
 
                     {/*상담관련 라우터*/}
-                    <Route path={"/consult/*"} element={<ConsultPage/>}/>
+                    <Route path={"/consult"} element={<ConsultListPage/>}/>
+                    <Route path={"/consult/:id/"} element={<ConsultPage/>}/>
+                    <Route path={"/consult/:id/write"} element={<ConsultRegist/>}/>
+
+                    {/*기록관련 라우터*/}
+                    <Route path={"/history"} element={<HistoryListPage/>}/>
+                    <Route path={"/history/:id"} element={<HistoryPage/>}/>
 
 
                     {/*접근관련 라우터*/}

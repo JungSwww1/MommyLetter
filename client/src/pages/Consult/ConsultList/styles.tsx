@@ -1,6 +1,6 @@
 import styled from "tailwind-styled-components";
 
-export const ConsultHistoryLayout=styled.div`
+export const ConsultListLayout=styled.div`
         flex
         flex-col
         h-[100%]
@@ -17,6 +17,19 @@ export const ProfileSection=styled.section`
     `
 
 export const DoctorListSection=styled.section`
-        h-[60%]
+    flex
+    flex-col
     
+        
+    
+    `
+export const Button=styled.button`
+    btn
+    h-[30%]
+    w-[100%]
+    border-transparent
+    hover:bg-transparent
+    bg-transparent
+    shadow-none
+    hover:border-transparent
     `

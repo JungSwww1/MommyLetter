@@ -1,20 +1,21 @@
 import React from 'react';
 import {ProfileComponent} from "@/components/Profile";
-import {BackPageSection,DoctorProfileSection,ConsultContextSection, ConsultHistoryDetailLayout} from "@/pages/Consult/ConsultHistoryDetail/styles";
+import {BackPageSection,DoctorProfileSection,ContextSection, HistoryLayout} from "@/pages/History/History/styles";
 
 
 import {ReactComponent as Left} from "@/assets/icons/chevron-left.svg"
-const ConsultHistoryDetailPage = () => {
+const HistoryPage= () => {
     return (
-        <ConsultHistoryDetailLayout>
+        <HistoryLayout>
             <BackPageSection>
                 <Left/>
             </BackPageSection>
             <DoctorProfileSection>
-                <ProfileComponent/>
+                <ProfileComponent name="오은영" intro="아동심리학과"/>
+
             </DoctorProfileSection>
 
-            <ConsultContextSection>
+            <ContextSection>
                 <span className="font-bold">환자명</span>
                 <div className="w-[95%] h-[10%] rounded-full bg-gray-200"></div>
                 <span className="font-bold">상담 시간</span>
@@ -22,10 +23,10 @@ const ConsultHistoryDetailPage = () => {
                 <span className="font-bold">처방전</span>
                 <div className="w-[95%] h-[65%] rounded-[10%] bg-gray-200"></div>
                 <p>원본 다운로드</p>
-            </ConsultContextSection>
+            </ContextSection>
 
 
-        </ConsultHistoryDetailLayout>);
+        </HistoryLayout>);
 };
 
-export default ConsultHistoryDetailPage;
+export default HistoryPage;
