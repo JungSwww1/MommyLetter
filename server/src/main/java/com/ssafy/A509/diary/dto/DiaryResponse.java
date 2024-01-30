@@ -17,6 +17,9 @@ public class DiaryResponse {
     private Long diaryId;
 
     @NotBlank
+    private Long userId;
+
+    @NotBlank
     private String content;
 
     @NotBlank

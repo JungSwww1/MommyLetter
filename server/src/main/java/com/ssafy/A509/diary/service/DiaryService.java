@@ -120,7 +120,7 @@ public class DiaryService {
         });
     }
 
-    public Diary findById(Long diaryId){
+    private Diary findById(Long diaryId){
         return diaryRepository.findById(diaryId).orElseThrow(()
             -> new NoSuchElementException("No such Diary"));
     }
