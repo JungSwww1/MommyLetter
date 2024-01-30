@@ -1,5 +1,6 @@
 package com.ssafy.A509.profile.model;
 
+import com.ssafy.A509.account.model.History;
 import com.ssafy.A509.account.model.User;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -32,9 +33,6 @@ public class Profile {
     @JoinColumn(name = "user_id")
     @MapsId
     private User user;
-
-    // 생성자, 게터, 세터 및 필요한 다른 메서드
-
 
     @Builder
     public Profile(Long profileId, Long userId, String profilePhoto, String backgroundPhoto, User user) {

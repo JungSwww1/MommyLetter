@@ -18,6 +18,6 @@ public interface ProfileService {
 
     List<DoctorProfileCardsResponse> getAllDoctorProfileCards();
 
-    DoctorProfileResponse getDoctorProfile(Long doctorId);
+    DoctorProfileResponse getDoctorProfile(Long userId);
 
 }

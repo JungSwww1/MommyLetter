@@ -44,4 +44,8 @@ public class Doctor {
     @JoinColumn(name = "doctor_id")
     private List<Reserve> reserves;
 
+    @OneToMany
+    @JoinColumn(name = "doctor_id")
+    private List<History> histories;
+
 }
