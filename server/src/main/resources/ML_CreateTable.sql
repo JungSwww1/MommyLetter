@@ -29,7 +29,7 @@ CREATE TABLE `BOARD`
     `user_id`      INT          NOT NULL,
     `content`      VARCHAR(255) NOT NULL,
     `access`       ENUM ('All', 'Follower', 'Nobody') DEFAULT 'All',
-    `category`     ENUM ('One', 'Two', 'Three') DEFAULT 'One',
+    `category`     ENUM ('One', 'Two', 'Three')       DEFAULT 'One',
     `created_date` TIMESTAMP    NOT NULL,
     `updated_date` TIMESTAMP    NULL,
     FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`)
@@ -169,4 +169,23 @@ CREATE TABLE `HASHTAG`
     `board_id`   INT         NOT NULL,
     `content`    VARCHAR(30) NOT NULL,
     FOREIGN KEY (`board_id`) REFERENCES `BOARD` (`board_id`)
+);
+
+CREATE TABLE `DM_GROUP`
+(
+    `dm_group_id`   INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `dm_group_name` VARCHAR(255) NOT NULL,
+    `user_id`       INT          NOT NULL,
+    `created_date`  TIMESTAMP,
+    `updated_date`  TIMESTAMP,
+    FOREIGN KEY (`user_id`) REFERENCES User (`user_id`)
+);
+
+CREATE TABLE USER_DM_GROUP
+(
+    dm_group_id INT NOT NULL,
+    user_id     INT NOT NULL,
+    PRIMARY KEY (dm_group_id, user_id),
+    FOREIGN KEY (user_id) REFERENCES User (user_id),
+    FOREIGN KEY (dm_group_id) REFERENCES DM_GROUP (dm_group_id)
 );
