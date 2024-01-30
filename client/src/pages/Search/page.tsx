@@ -20,7 +20,7 @@ const SearchPage = () => {
             <hr/>
             <div className="flex justify-center mt-3">
                 <Routes>
-                    <Route path={"/nickname"} element={<DirectMessageCard/>}/>
+                    <Route path={"/nickname"} element={""}/>
                     <Route path={"/hashtag"} element={<HashTagComponent title="#육아" count={10}/>}/>
                 </Routes>
 

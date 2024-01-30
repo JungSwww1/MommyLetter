@@ -21,7 +21,7 @@ export const Header = () => {
                 <Link className="flex items-center h-[100%] mr-3 ml-5" to={"/"}><Logo/></Link>
                 <Link to={""}><p className="font-bold text-MenuColor text-[20px]">Mommy Letter</p></Link>
             </div>
-            <Link className="mr-3" to={"/message/room"}><Message/></Link>
+            <Link className="mr-3" to={"/message"}><Message/></Link>
             <Link to={"/diary/mom"}><Diary/></Link>
 
             <HamburgerButton/>

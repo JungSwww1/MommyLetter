@@ -28,8 +28,8 @@ export const Button=styled.button`
     h-[30%]
     w-[100%]
     border-transparent
-    hover:bg-transparent
     bg-transparent
     shadow-none
     hover:border-transparent
+    hover:bg-transparent
     `
