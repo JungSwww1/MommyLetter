@@ -43,3 +43,11 @@ export interface ProfileProps{
     intro: string;
 
 }
+
+export interface DirectMessageCardProps{
+    nickname: string;
+    profileUrl: string;
+    date: string;
+    content: string;
+    roomNumber: number;
+}
