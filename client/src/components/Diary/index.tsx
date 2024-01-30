@@ -9,41 +9,22 @@ import tired from '@/assets/images/sample_tired.png'
 
 
 export const DiaryHeader = () => {
-    const {diaryType} = useParams();
-    const [isMomDiary, setIsMomDiary] = useState(true);
-
-
-    const swap = () => {
-        setIsMomDiary((prevState) => !prevState);
+    const [isToggled, setToggled] = useState(false);
+    const navigate = useNavigate();
+    const handleToggle = () => {
+        setToggled(!isToggled);
+        isToggled ? navigate("/diary/mom") : navigate("/diary/baby")
     };
-    if (diaryType === "mom") {
+
         return (<DiaryLayout>
-            <span className="font-bold text-xl">산모일기</span>
+            <span className="font-bold text-xl">{isToggled ? "육아일기" : "산모일기"}</span>
             {/* On Off 버튼 */}
             <label className="swap">
-                <input type="checkbox" checked={isMomDiary} onChange={swap}/>
-                <div className="swap-on" onClick={swap}>
-                    ON
-                </div>
-                <div className="swap-off" onClick={swap}>
-                    OFF
+                <div className={`toggle-switch ${isToggled ? 'toggled' : ''}`} onClick={handleToggle}>
+                    <div className="slider"></div>
                 </div>
             </label>
         </DiaryLayout>);
-    };
-    return (<DiaryLayout>
-        <span className="font-bold text-xl">육아일기</span>
-        {/* On Off 버튼 */}
-        <label className="swap">
-            <input type="checkbox" checked={isMomDiary} onChange={swap}/>
-            <div className="swap-on" onClick={swap}>
-                ON
-            </div>
-            <div className="swap-off" onClick={swap}>
-                OFF
-            </div>
-        </label>
-    </DiaryLayout>);
 }
 export const DiaryWrite = () => {
     const today = new Date();
