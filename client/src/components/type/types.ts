@@ -36,3 +36,10 @@ export interface DiaryListProps{
     content: string;
     pictures: string[];
 }
+
+
+export interface ProfileProps{
+    name: string;
+    intro: string;
+
+}
