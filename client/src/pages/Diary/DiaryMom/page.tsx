@@ -1,10 +1,12 @@
-import React from "react";
+import React,{useEffect} from "react";
 
 import {DiaryHeader} from "@/components/Diary";
 import DiaryListComponent from "@/components/DiaryList";
-
+import {fetchDiary} from '@/apis/diary/DiaryAPI';
 const DiaryMomPage = () => {
-
+    // useEffect(() => {
+    // fetchDiary(101)
+    // }, []);
 
     return (<div className="w-[100%] h-[100%]">
         <DiaryHeader/>
