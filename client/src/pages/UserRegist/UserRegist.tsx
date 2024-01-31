@@ -11,8 +11,11 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/stores/store";
 import {setSignupUser} from "@/stores/User/authSlice";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const UserRegist =()=> {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     // 밑은 확인용. 차후에 지워야한다
     const { nickname: Storednickname, password: Storedpassword, email: Storedemail } = useSelector((state: RootState) => state.signup);
@@ -44,9 +47,21 @@ const UserRegist =()=> {
 
     const register = () => {
         const userData={nickname:localNickname, password:localPassword, email:localEmail}
-        dispatch(setSignupUser(userData));
+        // dispatch(setSignupUser(userData));
+
+        // API
+        axios.post('http://localhost:8080/auth/signup', userData)
+            .then(response => {
+                console.log('응답 데이터:', response.data);
+                navigate('/login')
+
+            })
+            .catch(error => {
+                console.error('에러 발생:', error);
+            });
         console.log("회원가입용")
     }
+
 
     return(
         <Layout>

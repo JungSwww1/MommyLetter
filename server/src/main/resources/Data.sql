@@ -1,4 +1,3 @@
--- Insert data into USER table
 INSERT INTO `USER` (`user_id`, `password`, `nickname`, `email`, `gender`, `role`, `created_date`, `updated_date`)
 VALUES
     (101, 'password1', 'User1', 'user1@example.com', 'Male', 'Common', '2024-01-17 12:00:00', '2024-01-17 12:30:00'),
@@ -16,7 +15,7 @@ VALUES
     (113, 'password13', 'User13', 'user13@example.com', 'Male', 'Common', '2024-01-18 00:00:00', '2024-01-18 00:30:00'),
     (114, 'password14', 'User14', 'user14@example.com', 'Female', 'Doctor', '2024-01-18 01:00:00', '2024-01-18 01:30:00'),
     (115, 'password15', 'User15', 'user15@example.com', 'Male', 'Admin', '2024-01-18 02:00:00', '2024-01-18 02:30:00');
-
+select * from user;
 -- Insert data into USER_INFO table
 INSERT INTO `USER_INFO` (`SSN`, `user_id`, `name`, `phone`, `pregnancy_status`, `extra`, `diary_open`, `agree_date`)
 VALUES

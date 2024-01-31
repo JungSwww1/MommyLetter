@@ -18,6 +18,8 @@ import ConsultPage from "@/pages/Consult/Consult/page";
 import HistoryPage from "@/pages/History/History/page";
 import HistoryListPage from "@/pages/History/HistoryList/page";
 import ConsultRegist from "@/pages/Consult/ConsultRegist/page";
+import UserEdit from "@/pages/UserEdit/UserEdit";
+
 
 
 function Main() {
@@ -36,6 +38,7 @@ function Main() {
                 <Routes>
                     {/*유저관련 라우터*/}
                     <Route path={"/join"} element={<UserRegist/>}/>
+                    <Route path={"/edit"} element={<UserEdit/>}/>
                     <Route path={"/profile"} element={<UserProfile/>}/>
 
                     {/*피드관련 라우터*/}

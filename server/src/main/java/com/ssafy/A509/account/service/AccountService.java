@@ -56,6 +56,7 @@ public class AccountService {
                 .email(accountRequest.getEmail())
                 .nickname(accountRequest.getNickname())
                 .password(accountRequest.getPassword())
+//                .password(encodedPassword)
                 .build();
 
         accountRepository.save(buildAccount);

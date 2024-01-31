@@ -7,22 +7,24 @@ export const ProfileImg = styled.img`
 `
 
 export const Input = styled.input`
-    w-[59%] 
-    border-b-2 border-black
+    w-[65%] 
+    border-b-2 border-[#533C00]
 `
 
 export const Title = styled.div`
-    font-bold
+    text-[#533C00]
 `
 
 export const Submit = styled.button`
-    w-[10%]
-    h-[45px]
+    btn
+    hover:bg-black
+    w-[27%]
+    h-[40px]
     mr-[7%]
-    mt-[3%]
-    bg-blue-300
-    rounded-[6%]
-    
+    bg-yellow-800
+    shadow-md  
+    rounded-full
+    text-[white]
 `
 
 export const StyleLink = styled(Link)`
@@ -34,14 +36,15 @@ export const Wrapper = styled.div`
 `
 
 export const Wrapper2 = styled.div`
-    flex 
+    flex-col
     mb-[2%] 
     justify-around
 `
 
 export const Wrapper3 = styled.div`
+    mt-[14%]
     flex 
-    justify-end
+    justify-center
 `
 
 export const ProfileWrapper = styled.div`
@@ -49,11 +52,14 @@ export const ProfileWrapper = styled.div`
     justify-center
 `
 
+export const Layout = styled.div`
+`
+
 export const Container = styled.div`
-    mt-[10%]
+    mt-[5%]
 `
 
 export const SubContainer = styled.div`
-    mt-[7%]
+    mt-[13%]
     ml-[7%]
 `
