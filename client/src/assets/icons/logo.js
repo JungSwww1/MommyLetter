@@ -3,7 +3,7 @@ import palette from '@/lib/styles/colorPalette'
 const LogoWhite = () => {
     return (
         <svg width="34" height="49" viewBox="0 0 34 49" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g id="_&#235;&#160;&#136;&#236;&#157;&#180;&#236;&#150;&#180;_1" clip-path="url(#clip0_251_459)">
+            <g id="_&#235;&#160;&#136;&#236;&#157;&#180;&#236;&#150;&#180;_1" clipPath="url(#clip0_251_459)">
                 <path id="Vector"
                       d="M0 29.5371C0 43.2481 6.35399 49.6154 12.3899 47.2424C18.9933 44.6446 11.1863 38.0673 21.18 28.8923C33.9928 17.1268 20.6957 6.33045 12.3899 6.33045C4.08419 6.32676 0 15.8261 0 29.5371Z"
                       fill={palette.MenuColor}/>

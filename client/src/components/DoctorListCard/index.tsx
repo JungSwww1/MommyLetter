@@ -18,7 +18,7 @@ const DoctorListCardComponent = ({img, date, name, department}: DoctorListCardCo
                         <Item>{department}</Item>
                     </div>
                     <ButtonBox>
-                        <button><RightButton/></button>
+                        <RightButton/>
                     </ButtonBox>
                 </List>
             </CardBox>
