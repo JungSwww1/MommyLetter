@@ -13,16 +13,16 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private final String secretKey = "mySecretKey"; // 실제 서비스에서는 보안을 위해 복잡한 키로 지정해주세요!!
+    private final String secretKey = "dddddddddddddddddddddddddddddddddddddddddddddd"; // 실제 서비스에서는 보안을 위해 복잡한 키로 지정해주세요!!
     private static final Logger log = LoggerFactory.getLogger(JwtTokenProvider.class); // Logger 추가
 
-    public String createToken(String username) {
+    public String createToken(Long userId) {
         Date now = new Date(); // 현재 시각
         long validityInMilliseconds = 3600000; // 토큰의 유효 시간 (1시간)
 
         // JWT 토큰 생성
         String token = Jwts.builder()
-                .setSubject(username) // 토큰의 주체 (subject) 설정
+                .setSubject(String.valueOf(userId)) // 토큰의 주체 (subject) 설정
                 .setIssuedAt(now) // 토큰 발행 시간 설정
                 .setExpiration(new Date(now.getTime() + validityInMilliseconds)) // 토큰 만료 시간 설정
                 .signWith(SignatureAlgorithm.HS256, secretKey) // 비밀 키와 알고리즘으로 서명

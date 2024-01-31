@@ -56,7 +56,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             accountRepository.save(existData);
         }
 
-        role = "ROLE_USER"; // 기본 사용자 권한 설정
+        role = "Common"; // 기본 사용자 권한 설정
 
         // CustomOAuth2User 객체를 생성하여 반환 (사용자 정보와 권한 포함)
         return new CustomOAuth2User(oAuth2Response, role);
