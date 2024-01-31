@@ -5,8 +5,10 @@ import com.ssafy.A509.doctor.dto.PatientResponse;
 import java.util.List;
 import java.util.Optional;
 
+import com.ssafy.A509.profile.dto.UserProfileResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -44,4 +46,8 @@ public interface AccountRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
     User findByNickname(String nickname);
+
+    @Query("SELECT NEW com.ssafy.A509.profile.dto.UserProfileResponse(u.userId, u.nickname, p.profilePhoto) FROM User u LEFT JOIN Profile p ON u.userId = p.userId WHERE u.nickname LIKE %:nickname%")
+    List<UserProfileResponse> findUserProfilesByNickname(@Param("nickname") String nickname);
+
 }
