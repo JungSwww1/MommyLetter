@@ -21,6 +21,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -39,11 +40,16 @@ public class Diary {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL)
+    private List<Emoticon> emoticonList = new ArrayList<>();
+
+    @Setter
     private String content;
 
     @Enumerated(EnumType.STRING)
     private Category category;
 
+    @Setter
     private int emoji;
 
     @CreatedDate
@@ -64,17 +70,14 @@ public class Diary {
         this.createdDate = createdDate;
     }
 
-    public void setContent(String content) {
-      this.content = content;
-    }
-
-    public void setEmoji(int emoji){
-      this.emoji = emoji;
-    }
-
     public void addPhoto(Photo photo) {
         this.photoList.add(photo);
         photo.setDiary(this);
+    }
+
+    public void addEmoticon(Emoticon emoticon){
+        this.emoticonList.add(emoticon);
+        emoticon.setDiary(this);
     }
 
 }

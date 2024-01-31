@@ -33,4 +33,5 @@ public class DiaryResponse {
     private LocalDateTime updatedDate;
 
     private List<PhotoResponse> photoList;
+    private List<EmoticonResponse> emoticonList;
 }

@@ -5,7 +5,10 @@ import com.ssafy.A509.diary.dto.CreateDiaryRequest;
 import com.ssafy.A509.diary.dto.DiaryResponse;
 import com.ssafy.A509.diary.dto.UpdateDiaryRequest;
 import com.ssafy.A509.diary.model.Diary;
+import com.ssafy.A509.diary.model.Emoticon;
+import com.ssafy.A509.diary.model.Emotion;
 import com.ssafy.A509.diary.repository.DiaryRepository;
+import com.ssafy.A509.diary.repository.EmoticonRepository;
 import com.ssafy.A509.photo.dto.CreatePhotoRequest;
 import com.ssafy.A509.photo.model.Photo;
 import com.ssafy.A509.photo.repository.PhotoRepository;
@@ -27,6 +30,7 @@ public class DiaryService {
     private final ModelMapper modelMapper;
     private final AccountRepository accountRepository;
     private final PhotoRepository photoRepository;
+    private final EmoticonRepository emoticonRepository;
 
     //Diary와 DiaryResponse 매핑
     private DiaryResponse getDiaryResponse(Diary diary){
@@ -60,6 +64,7 @@ public class DiaryService {
             .build();
 
         addPhotos(newDiary, diaryRequest);
+        addEmoticons(newDiary, diaryRequest);
 
         Diary save = diaryRepository.save(newDiary);
 
@@ -72,6 +77,22 @@ public class DiaryService {
         diary.setContent(diaryRequest.getContent());
         diary.setEmoji(diaryRequest.getEmoji());
 
+        updatePhoto(diary, diaryRequest);
+
+        updateEmoticon(diary, diaryRequest);
+
+        diaryRepository.save(diary);
+    }
+
+    @Transactional
+    public void deleteDiary(Long diaryId){
+        diaryRepository.delete(findById(diaryId));
+    }
+
+    /*
+    * 사진 업데이트
+    * */
+    public void updatePhoto(Diary diary, UpdateDiaryRequest diaryRequest){
         //사진리스트 수정
         List<Photo> photoList = new ArrayList<>(diary.getPhotoList());
         List<String> newPhotoList = Optional.ofNullable(diaryRequest.getPhotoList())
@@ -99,15 +120,46 @@ public class DiaryService {
         if(!deletePhotoList.isEmpty()){
             photoRepository.deleteAllInBatch(deletePhotoList);
         }
+    }
+    
+    /*
+    * 이모티콘 업데이트
+    * */
+    public void updateEmoticon(Diary diary, UpdateDiaryRequest diaryRequest){
+        //기존 이모티콘 리스트
+        List<Emoticon> emoticonList = new ArrayList<>(diary.getEmoticonList());
+        //새로 들어온 이모티콘 리스트
+        List<Emotion> newEmotionList = Optional.ofNullable(diaryRequest.getEmotionList())
+            .orElseGet(ArrayList::new);
+        //삭제할 이모티콘 리스트
+        List<Emoticon> deleteEmoticonList = new ArrayList<>();
 
-        diaryRepository.save(diary);
+        //이모티콘 추가
+        newEmotionList.stream()
+            .filter(newEmotion -> emoticonList.stream()
+                .noneMatch(existingEmoticon -> existingEmoticon.getEmotion().equals(newEmotion)))
+            .map(newEmotion -> Emoticon.builder().emotion(newEmotion).build())
+            .forEach(diary::addEmoticon);
+
+        //이모티콘 삭제
+        emoticonList.stream()
+            .filter(existingEmoticon -> newEmotionList.stream()
+                .noneMatch(newEmotion -> newEmotion.equals(existingEmoticon.getEmotion())))
+            .forEach(
+                emoticon -> {
+                    diary.getEmoticonList().remove(emoticon);
+                    deleteEmoticonList.add(emoticon);
+                }
+            );
+        if(!deleteEmoticonList.isEmpty()){
+            emoticonRepository.deleteAllInBatch(deleteEmoticonList);
+        }
+
     }
 
-    @Transactional
-    public void deleteDiary(Long diaryId){
-        diaryRepository.delete(findById(diaryId));
-    }
-
+    /*
+    * 사진 추가
+    * */
     private void addPhotos(Diary diary, CreateDiaryRequest diaryRequest) {
         Optional.ofNullable(diaryRequest.getPhotoList()).ifPresent(list -> {
             for(CreatePhotoRequest photoRequest : list) {
@@ -116,6 +168,21 @@ public class DiaryService {
                     .build();
 
                 diary.addPhoto(photo);
+            }
+        });
+    }
+
+    /*
+    * 이모티콘 추가
+    * */
+    private void addEmoticons(Diary diary, CreateDiaryRequest diaryRequest) {
+        Optional.ofNullable(diaryRequest.getEmoticonList()).ifPresent(list -> {
+            for(Emotion emotion : list){
+                Emoticon emoticon = Emoticon.builder()
+                    .emotion(emotion)
+                    .build();
+
+                diary.addEmoticon(emoticon);
             }
         });
     }

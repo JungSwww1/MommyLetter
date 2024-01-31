@@ -1,6 +1,7 @@
 package com.ssafy.A509.diary.dto;
 
 import com.ssafy.A509.diary.model.Category;
+import com.ssafy.A509.diary.model.Emotion;
 import com.ssafy.A509.photo.dto.CreatePhotoRequest;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -28,4 +29,6 @@ public class CreateDiaryRequest {
     private LocalDateTime createdDate;
 
     private List<CreatePhotoRequest> photoList;
+
+    private List<Emotion> emoticonList;
 }

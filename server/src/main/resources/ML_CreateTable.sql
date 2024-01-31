@@ -1,8 +1,13 @@
 ﻿CREATE TABLE `USER`
 (
     `user_id`      INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+<<<<<<< PATCH SET (56fdd0 :art: Feat: Add Emoticon Features)
+    `password`     VARCHAR(20)  NULL,
+    `nickname`     VARCHAR(20) CHARACTER SET utf8 NULL,
+=======
     `password`     VARCHAR(200) NULL,
     `nickname`     VARCHAR(200) NULL,
+>>>>>>> BASE      (064008 :bug: Fix: fix board, comment controller and add explanation)
     `intro`        VARCHAR(255) NULL,
     `email`        VARCHAR(50)  NULL,
     `gender`       ENUM ('Male', 'Female')            DEFAULT 'Female',
@@ -171,6 +176,20 @@ CREATE TABLE `HASHTAG`
     FOREIGN KEY (`board_id`) REFERENCES `BOARD` (`board_id`)
 );
 
+<<<<<<< PATCH SET (56fdd0 :art: Feat: Add Emoticon Features)
+CREATE TABLE `EMOTICON`
+(
+    `emoticon_id` INT        NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `diary_id`    INT        NOT NULL,
+    `emotion`     ENUM ('Joy', 'Delight', 'Excited', 'Happy', 'Surprise', 'Calm'
+                          , 'Sad', 'Anxious', 'Tired', 'Irritated', 'Angry', 'Lonely'
+                          , 'Clear', 'Cloudy', 'Rain', 'Snow', 'Fog', 'Wind'
+                          , 'Healthy', 'Sick', 'Medicine', 'Diagnosis', 'Hospitalization'
+                          , 'Family', 'Friend', 'Acquaintance', 'Stranger', 'None'
+                          , 'Harmony', 'Quarrel', 'Reconcile', 'Uncomfortable', 'Discord'),
+    FOREIGN KEY (`diary_id`) REFERENCES `DIARY` (`diary_id`)
+);
+=======
 CREATE TABLE `DM_GROUP`
 (
     `dm_group_id`   INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -189,3 +208,4 @@ CREATE TABLE USER_DM_GROUP
     FOREIGN KEY (user_id) REFERENCES User (user_id),
     FOREIGN KEY (dm_group_id) REFERENCES DM_GROUP (dm_group_id)
 );
+>>>>>>> BASE      (064008 :bug: Fix: fix board, comment controller and add explanation)
