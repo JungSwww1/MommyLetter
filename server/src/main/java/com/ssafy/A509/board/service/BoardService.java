@@ -1,5 +1,6 @@
 package com.ssafy.A509.board.service;
 
+import com.ssafy.A509.account.dto.AccountSimpleReponse;
 import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.account.repository.AccountRepository;
 import com.ssafy.A509.board.dto.BoardResponse;
@@ -135,9 +136,15 @@ public class BoardService {
 	private BoardResponse getBoardResponse(Board board) {
 		BoardResponse boardResponse = modelMapper.map(board, BoardResponse.class);
 		UserProfileResponse userProfile = profileService.getUserProfile(board.getUser().getUserId());
-		boardResponse.setNickname(board.getUser().getNickname());
-		Optional.ofNullable(userProfile)
-			.ifPresent(userProfileResponse -> boardResponse.setProfilePhoto(userProfileResponse.getProfilePhoto()));
+		boardResponse.setAccountSimpleReponse(getUserResponse(board, userProfile));
 		return boardResponse;
+	}
+
+	private static AccountSimpleReponse getUserResponse(Board board, UserProfileResponse userProfile) {
+		return AccountSimpleReponse.builder()
+			.nickname(board.getUser().getNickname())
+			.userId(board.getUser().getUserId())
+			.profilePhoto(Optional.ofNullable(userProfile).map(UserProfileResponse::getProfilePhoto).orElse(null))
+			.build();
 	}
 }
