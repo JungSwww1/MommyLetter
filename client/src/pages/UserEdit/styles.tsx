@@ -1,18 +1,44 @@
 import styled from "tailwind-styled-components";
 import { Link } from 'react-router-dom';
 export const ProfileImg = styled.img`
-    w-[150px] h-[150px]
-    mb-[8%]
+    w-[150px] h-[150px] 
+    mt-[7%]
+    mb-[6%]
     rounded-full
 `
 
 export const Input = styled.input`
-    w-[65%] 
-    border-b-2 border-[#533C00]
+    bg-white
+    shadow-inner
+    md:shadow md:w-[100%] md:h-9 md:rounded-2xl
+    pl-[4%]
 `
 
 export const Title = styled.div`
     text-[#533C00]
+    mb-[4%]
+`
+
+export const EditButton = styled.button`
+    btn
+    hover:bg-floralwhite
+    w-[40%] 
+    h-[10px] 
+    bg-yellow-300 
+    shadow-md 
+    rounded-xl
+`
+
+export const CheckButton = styled.div`
+    btn
+    hover:bg-floralwhite
+    w-[20%]
+    h-[10px]
+    mt-[4%]
+    bg-yellow-300
+    shadow-md
+    rounded-full
+    text-[90%]
 `
 
 export const Submit = styled.button`
@@ -36,9 +62,10 @@ export const Wrapper = styled.div`
 `
 
 export const Wrapper2 = styled.div`
-    flex-col
-    mb-[2%] 
-    justify-around
+    flex flex-col
+    mb-[4%]
+    ml-[4%]
+    mr-[4%]
 `
 
 export const Wrapper3 = styled.div`
@@ -46,7 +73,11 @@ export const Wrapper3 = styled.div`
     flex 
     justify-center
 `
-
+export const ButtonWrapper = styled.div`
+    flex flex-row 
+    justify-around
+    mb-[4%]
+`
 export const ProfileWrapper = styled.div`
     flex 
     justify-center
@@ -56,10 +87,17 @@ export const Layout = styled.div`
 `
 
 export const Container = styled.div`
-    mt-[5%]
+    mb-[5%]
 `
 
 export const SubContainer = styled.div`
     mt-[13%]
     ml-[7%]
+`
+
+export const BackgroundContainer = styled.div`
+    w-full 
+    h-full 
+    bg-cover 
+    bg-center
 `

@@ -3,7 +3,6 @@ import { Layout, MainContainer } from "@/pages/Feed/styles";
 import { allBoardList } from "@/apis/Board/boardApi";
 import axios from "axios";
 import RandomCat from "@/pages/Feed/RandomCat";
-import MainFeed from "@/components/Feed";
 
 interface Board {
     board_id: number;
@@ -37,11 +36,11 @@ const Feed: React.FC = () => {
 
     const getBoard = useCallback(async () => {
         if (!preventRef.current) {
-            // Fetch data only if not already fetching
+            // Fetch 2 data only if not already fetching
             setLoad(true);
             try {
                 const res = await axios.get(`http://localhost:8080/boards`, {
-                    params: { page },
+                    params: { page, perPage: 2 }, // Adjust the API to support pagination and set the number of items per page
                 });
 
                 if (res.data && res.data.length > 0) {
@@ -70,7 +69,6 @@ const Feed: React.FC = () => {
                     옵저버 Element
                 </div>
                 {/*<RandomCat/>*/}
-                {/*<MainFeed/>*/}
             </MainContainer>
         </Layout>
     );
