@@ -1,8 +1,8 @@
 ﻿CREATE TABLE `USER`
 (
     `user_id`      INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `password`     VARCHAR(200)  NULL,
-    `nickname`     VARCHAR(200)  NULL,
+    `password`     VARCHAR(200) NULL,
+    `nickname`     VARCHAR(200) NULL,
     `intro`        VARCHAR(255) NULL,
     `email`        VARCHAR(50)  NULL,
     `gender`       ENUM ('Male', 'Female')            DEFAULT 'Female',
@@ -107,7 +107,7 @@ CREATE TABLE `DIRECT_MESSAGE`
     `dm_id`        INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `room_id`      VARCHAR(255) NOT NULL,
     `sender_id`    INT          NOT NULL,
-    `receiver_id`  INT          NOT NULL,
+    `receiver_id`  INT,
     `content`      VARCHAR(255) NOT NULL,
     `created_date` TIMESTAMP    NOT NULL,
     FOREIGN KEY (`sender_id`) REFERENCES `USER` (`user_id`),
