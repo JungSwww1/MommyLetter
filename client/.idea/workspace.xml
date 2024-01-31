@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c922c00b-04a3-4d83-8df6-c9051167dc13" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/UserEdit/UserEdit.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/UserEdit/UserEdit.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/UserEdit/styles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/UserEdit/styles.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Feed/Feed.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Feed/Feed.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +48,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\SSAFY\Desktop\Project\S10P12A509\client\src\pages\Feed" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
