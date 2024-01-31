@@ -10,15 +10,20 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -80,8 +85,13 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Reserve> reserve = new ArrayList<>();
 
-	@ManyToMany(mappedBy = "userList")
-	private List<DmGroup> groupList = new ArrayList<>();
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(
+		name = "user_dm_group",
+		joinColumns = { @JoinColumn(name = "user_id") },
+		inverseJoinColumns = { @JoinColumn(name = "dm_group_id") }
+	)
+	private Set<DmGroup> groups = new HashSet<>();
 
 	public static User createUser() {
 		return new User();
@@ -97,5 +107,13 @@ public class User {
 		this.email = email;
 		this.gender = gender;
 		this.role = role;
+	}
+
+	public void addGroup(DmGroup dmGroup) {
+		this.groups.add(dmGroup);
+	}
+
+	public void removeGroup(DmGroup dmGroup) {
+		this.groups.remove(dmGroup);
 	}
 }

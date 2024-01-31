@@ -9,18 +9,16 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
@@ -39,27 +37,15 @@ public class DmGroup {
 	@JoinColumn(name = "user_id")
 	private User host;
 
-	@ManyToMany
-	@JoinTable(
-		name = "user_dm_group",
-		joinColumns = @JoinColumn(name = "dm_group_id"),
-		inverseJoinColumns = @JoinColumn(name = "user_id")
-	)
-	private List<User> userList = new ArrayList<>();
+	@ManyToMany(mappedBy = "groups", fetch = LAZY)
+	private Set<User> users = new HashSet<>();
 
 	@CreatedDate
 	private LocalDateTime createdDate;
-
-	@LastModifiedDate
-	private LocalDateTime updatedDate;
 
 	@Builder
 	public DmGroup(String dmGroupName, User host) {
 		this.dmGroupName = dmGroupName;
 		this.host = host;
-	}
-
-	public void addUser(User user) {
-		userList.add(user);
 	}
 }

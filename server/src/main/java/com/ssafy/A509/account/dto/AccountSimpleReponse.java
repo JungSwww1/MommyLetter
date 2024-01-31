@@ -1,6 +1,7 @@
 package com.ssafy.A509.account.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +10,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
+@Builder
 public class AccountSimpleReponse {
+	private Long userId;
 	private String nickname;
 	private String profilePhoto;
 }
