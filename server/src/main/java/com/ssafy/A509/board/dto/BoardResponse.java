@@ -23,12 +23,4 @@ public class BoardResponse {
 	private LocalDateTime updatedDate;
 	private List<String> hashTagList;
 	private List<CreatePhotoRequest> photoList;
-
-	public void setNickname(String nickname) {
-		accountSimpleReponse.setNickname(nickname);
-	}
-
-	public void setProfilePhoto(String profilePhoto) {
-		accountSimpleReponse.setProfilePhoto(profilePhoto);
-	}
 }
