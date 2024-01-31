@@ -4,6 +4,7 @@ import com.ssafy.A509.account.dto.AccountSimpleReponse;
 import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.account.repository.AccountRepository;
 import com.ssafy.A509.board.dto.BoardResponse;
+import com.ssafy.A509.board.dto.BoardSimpleResponse;
 import com.ssafy.A509.board.dto.CreateBoardRequest;
 import com.ssafy.A509.board.dto.UpdateBoardRequest;
 import com.ssafy.A509.board.model.Board;
@@ -58,15 +59,26 @@ public class BoardService {
 		return getBoardResponse(board);
 	}
 
-	public List<BoardResponse> getAllBoard() {
-		return boardRepository.findAll().stream().map(this::getBoardResponse)
+	public List<BoardSimpleResponse> getAllBoardByUser(Long userId) {
+		List<BoardSimpleResponse> boardAll = getAllBoard();
+
+		List<BoardSimpleResponse> boardFollwer = boardRepository.findByAccess(userId).stream()
+			.map(this::getBoardSimpleResponse)
+			.collect(Collectors.toList());
+
+		boardAll.addAll(boardFollwer);
+		return boardAll;
+	}
+
+	public List<BoardSimpleResponse> getAllBoard() {
+		return boardRepository.findAll().stream().map(this::getBoardSimpleResponse)
 			.collect(Collectors.toList());
 	}
 
 
-	public List<BoardResponse> getUserBoard(Long userId) {
+	public List<BoardSimpleResponse> getUserBoard(Long userId) {
 		return boardRepository.findAllByUserUserId(userId).stream()
-			.map(this::getBoardResponse).collect(Collectors.toList());
+			.map(this::getBoardSimpleResponse).collect(Collectors.toList());
 	}
 
 	@Transactional
@@ -128,8 +140,8 @@ public class BoardService {
 		return accountRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("no such user"));
 	}
 
-	public List<BoardResponse> findAllByCategory(Category category) {
-		return boardRepository.findAllByCategory(category).stream().map(this::getBoardResponse)
+	public List<BoardSimpleResponse> findAllByCategory(Category category) {
+		return boardRepository.findAllByCategory(category).stream().map(this::getBoardSimpleResponse)
 			.collect(Collectors.toList());
 	}
 
@@ -140,11 +152,19 @@ public class BoardService {
 		return boardResponse;
 	}
 
-	private static AccountSimpleReponse getUserResponse(Board board, UserProfileResponse userProfile) {
+	private AccountSimpleReponse getUserResponse(Board board, UserProfileResponse userProfile) {
 		return AccountSimpleReponse.builder()
 			.nickname(board.getUser().getNickname())
 			.userId(board.getUser().getUserId())
 			.profilePhoto(Optional.ofNullable(userProfile).map(UserProfileResponse::getProfilePhoto).orElse(null))
+			.build();
+	}
+
+	private BoardSimpleResponse getBoardSimpleResponse(Board board) {
+		return BoardSimpleResponse.builder()
+			.boardId(board.getBoardId())
+			// 여기에 null 대신 defualt 사진 넣어주기?
+			.photo(board.getPhotoList().isEmpty() ? null : board.getPhotoList().get(0))
 			.build();
 	}
 }

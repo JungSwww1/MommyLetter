@@ -140,10 +140,10 @@ VALUES
 # -- Add 13 more rows...
 #
 # -- Insert data into FOLLOW table
-# INSERT INTO `FOLLOW` (`follow_id`, `following_id`, `follower_id`)
-# VALUES
-#     (1, 501, 101),
-#     (2, 502, 102);
+INSERT INTO `FOLLOW` (`follow_id`, `following_id`, `follower_id`)
+VALUES
+    (1, 101, 102),
+    (2, 102, 103);
 # -- Add 13 more rows...
 #
 # -- Insert data into HISTORY table
