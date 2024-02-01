@@ -37,6 +37,7 @@ export const LikeIconContainer = styled.div`
 `
 export const CommentContainer = styled.div`
     flex 
+    items-center
     space-x-4
 `
 

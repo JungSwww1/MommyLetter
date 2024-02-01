@@ -5,7 +5,9 @@ import {
     Layout,
     LikeIconContainer,
     PhotoContainer,
-    TitleContainer, TitleWrapper
+    TitleContainer, TitleWrapper,
+    CreatedDate,
+    ButtonWrapper
 } from "@/components/Feed/styles";
 import logo from '@/assets/images/sample1.jpg'
 import {localFunction} from "@/components/Feed/ApiFunction";
@@ -35,6 +37,18 @@ interface likedata {
 }
 
 const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
+    const {getNickname} = localFunction()
+    const [nickname, setNickname] = useState<string | null>(null);
+    // 닉네임 용도
+    useEffect(() => {
+        const fetchNickname = async () => {
+            const userNickname = await getNickname(board.userId);
+            setNickname(userNickname);
+        };
+        fetchNickname();
+    }, [board.userId]);
+
+    // 아래는 날짜전환용도
     const createdDateString : string = board.createdDate
     const createdDate:Date = new Date(createdDateString)
     const year: number = createdDate.getFullYear();
@@ -53,16 +67,18 @@ const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
             <TitleContainer>
                 <TitleWrapper>
                     <img src={logo} alt="Logo" className={"w-[50px] h-[50px] rounded-full"}/>
-                    <p className={"text-[16px] font-bold"}>{`${board.userId}`}</p>
+                    <p className={"text-[16px] font-bold"}>{nickname}</p>
                 </TitleWrapper>
-                <div>
-                    <p>{formattedDate}</p>
-                    <p>icon area</p>
+                <div className={"justify-end"}>
+                    <div className={"flex justify-end items-center"}>
+                        <ThreeDotMenu/>
+                    </div>
+                    <CreatedDate>{formattedDate}</CreatedDate>
                 </div>
             </TitleContainer>
 
             <ContextContainer>
-                <p className="line-clamp-3">
+                <p className="line-clamp-3 text-[80%]">
                     {`${board.content}`}
                 </p>
             </ContextContainer>
