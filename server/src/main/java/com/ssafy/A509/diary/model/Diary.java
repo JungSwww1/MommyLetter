@@ -40,20 +40,14 @@ public class Diary {
     @JoinColumn(name = "user_id")
     private User user;
 
-<<<<<<< PATCH SET (c36cdb :art: Feat: Divide Emoticons into 5 Different Tables)
-<<<<<<< PATCH SET (f73de4 :art: Feat: Divide Emoticons into 5 Different Tables)
     @OneToOne(mappedBy = "diary", cascade = CascadeType.ALL)
     private Emoticon emoticon;
 
     @Setter
-=======
->>>>>>> BASE      (064008 :bug: Fix: fix board, comment controller and add explanation)
-=======
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL)
     private List<Emoticon> emoticonList = new ArrayList<>();
 
     @Setter
->>>>>>> BASE      (12c0ba :art: Feat: Add Emoticon Features)
     private String content;
 
     @Enumerated(EnumType.STRING)
@@ -83,20 +77,9 @@ public class Diary {
         photo.setDiary(this);
     }
 
-<<<<<<< PATCH SET (c36cdb :art: Feat: Divide Emoticons into 5 Different Tables)
-<<<<<<< PATCH SET (f73de4 :art: Feat: Divide Emoticons into 5 Different Tables)
     public void addEmoticon(Emoticon emoticon){
         this.emoticon = emoticon;
         emoticon.setDiary(this);
     }
 
-=======
->>>>>>> BASE      (064008 :bug: Fix: fix board, comment controller and add explanation)
-=======
-    public void addEmoticon(Emoticon emoticon){
-        this.emoticonList.add(emoticon);
-        emoticon.setDiary(this);
-    }
-
->>>>>>> BASE      (12c0ba :art: Feat: Add Emoticon Features)
 }

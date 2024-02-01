@@ -13,30 +13,20 @@ import lombok.Getter;
 @Getter
 @Builder
 public class CreateDiaryRequest {
-    @NotNull
-    private Long userId;
+  @NotNull private Long userId;
 
-    @NotBlank
-    private String content;
+  @NotBlank private String content;
 
-    @NotNull(message = "유효하지 않은 카테고리가 입력되었습니다.")
-    private Category category;
+  @NotNull(message = "유효하지 않은 카테고리가 입력되었습니다.")
+  private Category category;
 
-    @NotNull
-    private int emoji;
+  @NotNull private int emoji;
 
-    @NotNull
-    private LocalDateTime createdDate;
+  @NotNull private LocalDateTime createdDate;
 
-    private List<CreatePhotoRequest> photoList;
-<<<<<<< PATCH SET (c36cdb :art: Feat: Divide Emoticons into 5 Different Tables)
-<<<<<<< PATCH SET (f73de4 :art: Feat: Divide Emoticons into 5 Different Tables)
+  private List<CreatePhotoRequest> photoList;
 
-    private CreateEmoticonRequest emoticon;
-=======
->>>>>>> BASE      (064008 :bug: Fix: fix board, comment controller and add explanation)
-=======
+  private CreateEmoticonRequest emoticon;
 
-    private List<Emotion> emoticonList;
->>>>>>> BASE      (12c0ba :art: Feat: Add Emoticon Features)
+  private List<Emotion> emoticonList;
 }
