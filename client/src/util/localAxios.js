@@ -1,10 +1,8 @@
 import axios from "axios";
 
-// local vue api axios instance
-
 const LocalAxios = () => {
     const instance = axios.create({
-        baseURL: process.env.BACKEND_BASE_URL,
+        baseURL: process.env.REACT_APP_BACKEND_BASE_URL,
         headers: {
             "Content-Type": "application/json;charset=utf-8",
         },

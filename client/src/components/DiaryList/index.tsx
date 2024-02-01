@@ -1,27 +1,29 @@
 import React from "react";
-import {DiaryListProps} from "@/components/type/types";
+import {DiaryResponseProps} from "@/components/type/types";
 
-
-export const DiaryListComponent = ({ date,feeling,createdTime,content,pictures }:DiaryListProps) => {
-
+export const DiaryListComponent = ({content,emoji,photoList,createdDate }:DiaryResponseProps) => {
+    const date = new Date(createdDate);
+    const letterCheck = (num:number) =>{
+        const parseNum = num.toString();
+        return parseNum.length < 2 ? "0" + parseNum : parseNum;
+    }
     return (
         <div className="p-5">
             <div>
                 <div className="flex justify-between">
-                    <span className="font-bold">{date}</span>
-                    <span><img className="h-[40px]" src={feeling} alt="Feeling Icon"/></span>
+                    <span className="font-bold">{date.getFullYear()}. {letterCheck(date.getMonth()+1)}.{date.getDate()}</span>
+                    이모지{emoji}
                 </div>
-                <div className="text-gray-400">{createdTime}</div>
+                <div className="text-gray-400">{letterCheck(date.getHours())}:{letterCheck(date.getMinutes())}</div>
                 <div>{content}</div>
             </div>
             <div className="flex">
-                {pictures.map((picture, index) => (
+                {photoList.map((photo, index) => (
                     <img
                         key={index}
                         className="w-[200px] h-[150px] mt-5 mr-3"
-                        src={picture}
-                        alt={`Picture ${index + 1}`}
-                    />
+                        src={photo}
+                        alt={`Picture ${index + 1}`}/>
                 ))}
             </div>
         </div>
