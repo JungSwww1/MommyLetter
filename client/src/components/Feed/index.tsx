@@ -32,11 +32,6 @@ interface MainFeedProps {
     board: board;
 }
 
-interface likedata {
-    boardId: number;
-    userId: number;
-}
-
 const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
     const {getNickname} = localFunction()
     const [nickname, setNickname] = useState<string | null>(null);
@@ -58,7 +53,7 @@ const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
     const formattedDate: string = `${year}년 ${month}월 ${day}일`;
 
     //좋아요 버튼 용도
-    const likeData: likedata = {
+    const likeData = {
         boardId: board.boardId,
         userId: board.userId,
     };

@@ -30,7 +30,7 @@ const Feed: React.FC = () => {
     const hasMore = page * chunkSize < allBoards.length;
 
     useEffect(() => {
-        // Fetch all data initially
+        // 전체 데이터 가져오기
         const fetchData = async () => {
             setLoad(true);
             try {
