@@ -1,7 +1,5 @@
 package com.ssafy.A509.profile.dto;
 
-import com.ssafy.A509.account.model.User;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -17,4 +15,10 @@ public class UserProfileResponse {
     private String intro;
     private String backgroundPhoto;
     private String profilePhoto;
+
+    public UserProfileResponse(Long userId, String nickname, String profilePhoto) {
+        this.userId = userId;
+        this.nickname = nickname;
+        this.profilePhoto = profilePhoto;
+    }
 }

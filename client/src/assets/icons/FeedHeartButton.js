@@ -7,12 +7,14 @@ const FeedHeartButton = ({ likedata }) => {
 
     const toggleLike = async () => {
         if(!liked) {
-            setLiked(!liked);
+            setLiked(liked);
             const { userId, boardId } = likedata;
             await sendBoardLike(userId, boardId);
             console.log('Like status toggled for:', { userId, boardId });
         } else {
-
+            setLiked(!liked);
+            const{userId, boardId} = likedata
+            await sendBoardUnlike(userId, boardId);
         }
     };
 

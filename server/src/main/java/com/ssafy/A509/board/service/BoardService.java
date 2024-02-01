@@ -1,14 +1,21 @@
 package com.ssafy.A509.board.service;
 
+import com.ssafy.A509.account.dto.AccountSimpleReponse;
 import com.ssafy.A509.account.model.User;
+import com.ssafy.A509.account.repository.AccountRepository;
 import com.ssafy.A509.board.dto.BoardResponse;
+import com.ssafy.A509.board.dto.BoardSimpleResponse;
 import com.ssafy.A509.board.dto.CreateBoardRequest;
 import com.ssafy.A509.board.dto.UpdateBoardRequest;
 import com.ssafy.A509.board.model.Board;
+import com.ssafy.A509.board.model.Category;
 import com.ssafy.A509.board.repository.BoardRepository;
 import com.ssafy.A509.hashtag.model.Hashtag;
 import com.ssafy.A509.photo.dto.CreatePhotoRequest;
 import com.ssafy.A509.photo.model.Photo;
+import com.ssafy.A509.profile.dto.UserProfileResponse;
+import com.ssafy.A509.profile.service.ProfileService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +31,14 @@ import org.springframework.stereotype.Service;
 public class BoardService {
 
 	private final BoardRepository boardRepository;
-	//	private final UserRepository userRepository;
+	private final AccountRepository accountRepository;
+	private final ProfileService profileService;
 	private final ModelMapper modelMapper;
 
 	@Transactional
 	public Long createBoard(CreateBoardRequest boardRequest) {
 		// 사용자 찾아오기
-//		User user = userRepository.findById(boardRequest.getUserId());
-		User user = User.builder().userId(101L).build();
+		User user = findByUserId(boardRequest.getUserId());
 		// 게시글 생성
 		Board board = Board.builder().content(boardRequest.getContent()).user(user).access(boardRequest.getAccess())
 			.build();
@@ -48,23 +55,36 @@ public class BoardService {
 	}
 
 	public BoardResponse getBoard(Long boardId) {
-		return modelMapper.map(findById(boardId), BoardResponse.class);
+		Board board = findById(boardId);
+		return getBoardResponse(board);
 	}
 
-	public List<BoardResponse> getAllBoard() {
-		return boardRepository.findAll().stream().map(board -> modelMapper.map(board, BoardResponse.class))
+	public List<BoardSimpleResponse> getAllBoardByUser(Long userId) {
+		List<BoardSimpleResponse> boardAll = getAllBoard();
+
+		List<BoardSimpleResponse> boardFollwer = boardRepository.findByAccess(userId).stream()
+			.map(this::getBoardSimpleResponse)
+			.collect(Collectors.toList());
+
+		boardAll.addAll(boardFollwer);
+		return boardAll;
+	}
+
+	public List<BoardSimpleResponse> getAllBoard() {
+		return boardRepository.findAll().stream().map(this::getBoardSimpleResponse)
 			.collect(Collectors.toList());
 	}
 
-	public List<BoardResponse> getUserBoard(Long userId) {
+
+	public List<BoardSimpleResponse> getUserBoard(Long userId) {
 		return boardRepository.findAllByUserUserId(userId).stream()
-			.map(board -> modelMapper.map(board, BoardResponse.class)).collect(Collectors.toList());
+			.map(this::getBoardSimpleResponse).collect(Collectors.toList());
 	}
 
 	@Transactional
 	public void updateBoard(Long boardId, UpdateBoardRequest boardRequest) {
 		Board board = findById(boardId);
-		Optional.ofNullable(boardRequest.getContent()).ifPresent(board::setBoardContent);
+		Optional.ofNullable(boardRequest.getContent()).ifPresent(board::setContent);
 		Optional.ofNullable(boardRequest.getAccess()).ifPresent(board::setAccess);
 		// 해시태그 수정
 		List<Hashtag> hashtagList = new ArrayList<>(board.getHashtagList());
@@ -114,5 +134,37 @@ public class BoardService {
 
 	public Board findById(Long boardId) {
 		return boardRepository.findById(boardId).orElseThrow(() -> new NoSuchElementException("no such board"));
+	}
+
+	public User findByUserId(Long userId) {
+		return accountRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("no such user"));
+	}
+
+	public List<BoardSimpleResponse> findAllByCategory(Category category) {
+		return boardRepository.findAllByCategory(category).stream().map(this::getBoardSimpleResponse)
+			.collect(Collectors.toList());
+	}
+
+	private BoardResponse getBoardResponse(Board board) {
+		BoardResponse boardResponse = modelMapper.map(board, BoardResponse.class);
+		UserProfileResponse userProfile = profileService.getUserProfile(board.getUser().getUserId());
+		boardResponse.setAccountSimpleReponse(getUserResponse(board, userProfile));
+		return boardResponse;
+	}
+
+	private AccountSimpleReponse getUserResponse(Board board, UserProfileResponse userProfile) {
+		return AccountSimpleReponse.builder()
+			.nickname(board.getUser().getNickname())
+			.userId(board.getUser().getUserId())
+			.profilePhoto(Optional.ofNullable(userProfile).map(UserProfileResponse::getProfilePhoto).orElse(null))
+			.build();
+	}
+
+	private BoardSimpleResponse getBoardSimpleResponse(Board board) {
+		return BoardSimpleResponse.builder()
+			.boardId(board.getBoardId())
+			// 여기에 null 대신 defualt 사진 넣어주기?
+			.photo(board.getPhotoList().isEmpty() ? null : board.getPhotoList().get(0))
+			.build();
 	}
 }

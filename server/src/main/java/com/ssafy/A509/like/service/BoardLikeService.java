@@ -20,8 +20,8 @@ public class BoardLikeService extends LikeService<BoardService, BoardLikeReposit
 	}
 
 	@Override
-	public void deleteLike(Long id) {
-		likeRepository.findById(id).ifPresentOrElse(likeRepository::delete, () -> {
+	public void deleteLike(Long id, Long userId) {
+		likeRepository.findByBoard_BoardIdAndUser_UserId(id, userId).ifPresentOrElse(likeRepository::delete, () -> {
 			throw new NoSuchElementException("no such board-like");
 		});
 	}

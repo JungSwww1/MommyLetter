@@ -40,8 +40,9 @@ public class Reserve {
 	private LocalDateTime reserveDate;
 
 	@Builder
-	protected Reserve(LocalDateTime reserveDate){
+	public Reserve(User user, Doctor doctor, LocalDateTime reserveDate) {
+		this.user = user;
+		this.doctor = doctor;
 		this.reserveDate = reserveDate;
 	}
-
 }

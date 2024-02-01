@@ -1,3 +1,4 @@
+-- Insert data into USER table
 INSERT INTO `USER` (`user_id`, `password`, `nickname`, `email`, `gender`, `role`, `created_date`, `updated_date`)
 VALUES
     (101, 'password1', 'User1', 'user1@example.com', 'Male', 'Common', '2024-01-17 12:00:00', '2024-01-17 12:30:00'),
@@ -15,7 +16,7 @@ VALUES
     (113, 'password13', 'User13', 'user13@example.com', 'Male', 'Common', '2024-01-18 00:00:00', '2024-01-18 00:30:00'),
     (114, 'password14', 'User14', 'user14@example.com', 'Female', 'Doctor', '2024-01-18 01:00:00', '2024-01-18 01:30:00'),
     (115, 'password15', 'User15', 'user15@example.com', 'Male', 'Admin', '2024-01-18 02:00:00', '2024-01-18 02:30:00');
-select * from user;
+
 -- Insert data into USER_INFO table
 INSERT INTO `USER_INFO` (`SSN`, `user_id`, `name`, `phone`, `pregnancy_status`, `extra`, `diary_open`, `agree_date`)
 VALUES
@@ -82,61 +83,26 @@ VALUES
 
 
 -- Insert data into BOARD table
-INSERT INTO `BOARD` (`board_id`, `user_id`, `content`, `access`, `created_date`, `updated_date`)
+INSERT INTO `BOARD` (`board_id`, `user_id`, `content`, `access`, `created_date`, `updated_date`, `category`)
 VALUES
-    (1, 101, 'Board Content 1', 'All', '2024-01-17 12:00:00', '2024-01-17 12:30:00'),
-    (2, 101, 'Board Content 2', 'Follower', '2024-01-17 13:00:00', '2024-01-17 13:30:00'),
-    (3, 102, 'Board Content 3', 'All', '2024-01-17 14:00:00', '2024-01-17 14:30:00'),
-    (4, 102, 'Board Content 4', 'Nobody', '2024-01-17 15:00:00', '2024-01-17 15:30:00'),
-    (5, 103, 'Board Content 5', 'Follower', '2024-01-17 16:00:00', '2024-01-17 16:30:00'),
-    (6, 103, 'Board Content 6', 'All', '2024-01-17 17:00:00', '2024-01-17 17:30:00'),
-    (7, 101, 'Board Content 7', 'Nobody', '2024-01-17 18:00:00', '2024-01-17 18:30:00'),
-    (8, 102, 'Board Content 8', 'All', '2024-01-17 19:00:00', '2024-01-17 19:30:00'),
-    (9, 103, 'Board Content 9', 'Follower', '2024-01-17 20:00:00', '2024-01-17 20:30:00'),
-    (10, 101, 'Board Content 10', 'Nobody', '2024-01-17 21:00:00', '2024-01-17 21:30:00'),
-    (11, 102, 'Board Content 11', 'All', '2024-01-17 22:00:00', '2024-01-17 22:30:00'),
-    (12, 103, 'Board Content 12', 'Follower', '2024-01-17 23:00:00', '2024-01-17 23:30:00'),
-    (13, 101, 'Board Content 13', 'All', '2024-01-18 00:00:00', '2024-01-18 00:30:00'),
-    (14, 102, 'Board Content 14', 'Nobody', '2024-01-18 01:00:00', '2024-01-18 01:30:00'),
-    (15, 103, 'Board Content 15', 'Follower', '2024-01-18 02:00:00', '2024-01-18 02:30:00');
-INSERT INTO `BOARD` (`board_id`, `user_id`, `content`, `access`, `created_date`, `updated_date`)
-VALUES
-    (16, 101, 'Board Content 16', 'All', '2024-01-18 03:00:00', '2024-01-18 03:30:00'),
-    (17, 102, 'Board Content 17', 'Follower', '2024-01-18 04:00:00', '2024-01-18 04:30:00'),
-    (18, 103, 'Board Content 18', 'Nobody', '2024-01-18 05:00:00', '2024-01-18 05:30:00'),
-    (19, 101, 'Board Content 19', 'All', '2024-01-18 06:00:00', '2024-01-18 06:30:00'),
-    (20, 102, 'Board Content 20', 'Follower', '2024-01-18 07:00:00', '2024-01-18 07:30:00'),
-    (21, 103, 'Board Content 21', 'Nobody', '2024-01-18 08:00:00', '2024-01-18 08:30:00'),
-    (22, 101, 'Board Content 22', 'All', '2024-01-18 09:00:00', '2024-01-18 09:30:00'),
-    (23, 102, 'Board Content 23', 'Follower', '2024-01-18 10:00:00', '2024-01-18 10:30:00'),
-    (24, 103, 'Board Content 24', 'Nobody', '2024-01-18 11:00:00', '2024-01-18 11:30:00'),
-    (25, 101, 'Board Content 25', 'All', '2024-01-18 12:00:00', '2024-01-18 12:30:00'),
-    (26, 102, 'Board Content 26', 'Follower', '2024-01-18 13:00:00', '2024-01-18 13:30:00'),
-    (27, 103, 'Board Content 27', 'Nobody', '2024-01-18 14:00:00', '2024-01-18 14:30:00'),
-    (28, 101, 'Board Content 28', 'All', '2024-01-18 15:00:00', '2024-01-18 15:30:00'),
-    (29, 102, 'Board Content 29', 'Follower', '2024-01-18 16:00:00', '2024-01-18 16:30:00'),
-    (30, 103, 'Board Content 30', 'Nobody', '2024-01-18 17:00:00', '2024-01-18 17:30:00'),
-    (31, 101, 'Board Content 31', 'All', '2024-01-18 18:00:00', '2024-01-18 18:30:00'),
-    (32, 102, 'Board Content 32', 'Follower', '2024-01-18 19:00:00', '2024-01-18 19:30:00'),
-    (33, 103, 'Board Content 33', 'Nobody', '2024-01-18 20:00:00', '2024-01-18 20:30:00'),
-    (34, 101, 'Board Content 34', 'All', '2024-01-18 21:00:00', '2024-01-18 21:30:00'),
-    (35, 102, 'Board Content 35', 'Follower', '2024-01-18 22:00:00', '2024-01-18 22:30:00'),
-    (36, 103, 'Board Content 36', 'Nobody', '2024-01-18 23:00:00', '2024-01-18 23:30:00'),
-    (37, 101, 'Board Content 37', 'All', '2024-01-19 00:00:00', '2024-01-19 00:30:00'),
-    (38, 102, 'Board Content 38', 'Follower', '2024-01-19 01:00:00', '2024-01-19 01:30:00'),
-    (39, 103, 'Board Content 39', 'Nobody', '2024-01-19 02:00:00', '2024-01-19 02:30:00'),
-    (40, 101, 'Board Content 40', 'All', '2024-01-19 03:00:00', '2024-01-19 03:30:00'),
-    (41, 102, 'Board Content 41', 'Follower', '2024-01-19 04:00:00', '2024-01-19 04:30:00'),
-    (42, 103, 'Board Content 42', 'Nobody', '2024-01-19 05:00:00', '2024-01-19 05:30:00'),
-    (43, 101, 'Board Content 43', 'All', '2024-01-19 06:00:00', '2024-01-19 06:30:00'),
-    (44, 102, 'Board Content 44', 'Follower', '2024-01-19 07:00:00', '2024-01-19 07:30:00'),
-    (45, 103, 'Board Content 45', 'Nobody', '2024-01-19 08:00:00', '2024-01-19 08:30:00'),
-    (46, 101, 'Board Content 46', 'All', '2024-01-19 09:00:00', '2024-01-19 09:30:00'),
-    (47, 102, 'Board Content 47', 'Follower', '2024-01-19 10:00:00', '2024-01-19 10:30:00'),
-    (48, 103, 'Board Content 48', 'Nobody', '2024-01-19 11:00:00', '2024-01-19 11:30:00'),
-    (49, 101, 'Board Content 49', 'All', '2024-01-19 12:00:00', '2024-01-19 12:30:00'),
-    (50, 102, 'Board Content 50', 'Follower', '2024-01-19 13:00:00', '2024-01-19 13:30:00');
-
+    (1, 101, 'Board Content 1', 'All', '2024-01-17 12:00:00', '2024-01-17 12:30:00', 'One'),
+    (2, 101, 'Board Content 2', 'Follower', '2024-01-17 13:00:00', '2024-01-17 13:30:00', 'Two'),
+    (3, 102, 'Board Content 3', 'All', '2024-01-17 14:00:00', '2024-01-17 14:30:00', 'Three'),
+    (4, 102, 'Board Content 4', 'Nobody', '2024-01-17 15:00:00', '2024-01-17 15:30:00', 'One'),
+    (5, 103, 'Board Content 5', 'Follower', '2024-01-17 16:00:00', '2024-01-17 16:30:00', 'Two'),
+    (6, 103, 'Board Content 6', 'All', '2024-01-17 17:00:00', '2024-01-17 17:30:00', 'Three'),
+    (7, 101, 'Board Content 7', 'Nobody', '2024-01-17 18:00:00', '2024-01-17 18:30:00', 'One'),
+    (8, 102, 'Board Content 8', 'All', '2024-01-17 19:00:00', '2024-01-17 19:30:00', 'Two'),
+    (9, 103, 'Board Content 9', 'Follower', '2024-01-17 20:00:00', '2024-01-17 20:30:00', 'Three'),
+    (10, 101, 'Board Content 10', 'Nobody', '2024-01-17 21:00:00', '2024-01-17 21:30:00', 'One'),
+    (11, 102, 'Board Content 11', 'All', '2024-01-17 22:00:00', '2024-01-17 22:30:00', 'Two'),
+    (12, 103, 'Board Content 12', 'Follower', '2024-01-17 23:00:00', '2024-01-17 23:30:00', 'Three'),
+    (13, 101, 'Board Content 13', 'All', '2024-01-18 00:00:00', '2024-01-18 00:30:00', 'One'),
+    (14, 102, 'Board Content 14', 'Nobody', '2024-01-18 01:00:00', '2024-01-18 01:30:00', 'Two'),
+    (15, 103, 'Board Content 15', 'Follower', '2024-01-18 02:00:00', '2024-01-18 02:30:00', 'Three'),
+    (16, 101, 'Board Content 16', 'All', '2024-01-18 03:00:00', '2024-01-18 03:30:00', 'One'),
+    (17, 101, 'Board Content 17', 'Follower', '2024-01-18 04:00:00', '2024-01-18 04:30:00', 'Two'),
+    (18, 102, 'Board Content 18', 'All', '2024-01-18 05:00:00', '2024-01-18 05:30:00', 'Three');
 
 -- Insert data into COMMENT table
 INSERT INTO `COMMENT` (`comment_id`, `board_id`, `user_id`, `content`, `created_date`, `updated_date`)
@@ -174,10 +140,10 @@ VALUES
 # -- Add 13 more rows...
 #
 # -- Insert data into FOLLOW table
-# INSERT INTO `FOLLOW` (`follow_id`, `following_id`, `follower_id`)
-# VALUES
-#     (1, 501, 101),
-#     (2, 502, 102);
+INSERT INTO `FOLLOW` (`follow_id`, `following_id`, `follower_id`)
+VALUES
+    (1, 101, 102),
+    (2, 102, 103);
 # -- Add 13 more rows...
 #
 # -- Insert data into HISTORY table

@@ -1,10 +1,9 @@
-﻿
-CREATE TABLE `USER`
+﻿CREATE TABLE `USER`
 (
     `user_id`      INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `password`     VARCHAR(20)  NULL,
-    `nickname`     VARCHAR(20) CHARACTER SET utf8 NULL ,
-    `intro`        VARCHAR(255) CHARACTER SET utf8 NULL,
+    `password`     VARCHAR(200) NULL,
+    `nickname`     VARCHAR(200) NULL,
+    `intro`        VARCHAR(255) NULL,
     `email`        VARCHAR(50)  NULL,
     `gender`       ENUM ('Male', 'Female')            DEFAULT 'Female',
     `role`         ENUM ('Common', 'Doctor', 'Admin') DEFAULT 'Common',
@@ -30,6 +29,7 @@ CREATE TABLE `BOARD`
     `user_id`      INT          NOT NULL,
     `content`      VARCHAR(255) NOT NULL,
     `access`       ENUM ('All', 'Follower', 'Nobody') DEFAULT 'All',
+    `category`     ENUM ('One', 'Two', 'Three')       DEFAULT 'One',
     `created_date` TIMESTAMP    NOT NULL,
     `updated_date` TIMESTAMP    NULL,
     FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`)
@@ -107,7 +107,7 @@ CREATE TABLE `DIRECT_MESSAGE`
     `dm_id`        INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `room_id`      VARCHAR(255) NOT NULL,
     `sender_id`    INT          NOT NULL,
-    `receiver_id`  INT          NOT NULL,
+    `receiver_id`  INT,
     `content`      VARCHAR(255) NOT NULL,
     `created_date` TIMESTAMP    NOT NULL,
     FOREIGN KEY (`sender_id`) REFERENCES `USER` (`user_id`),
@@ -169,4 +169,23 @@ CREATE TABLE `HASHTAG`
     `board_id`   INT         NOT NULL,
     `content`    VARCHAR(30) NOT NULL,
     FOREIGN KEY (`board_id`) REFERENCES `BOARD` (`board_id`)
+);
+
+CREATE TABLE `DM_GROUP`
+(
+    `dm_group_id`   INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `dm_group_name` VARCHAR(255) NOT NULL,
+    `user_id`       INT          NOT NULL,
+    `created_date`  TIMESTAMP,
+    `updated_date`  TIMESTAMP,
+    FOREIGN KEY (`user_id`) REFERENCES User (`user_id`)
+);
+
+CREATE TABLE USER_DM_GROUP
+(
+    dm_group_id INT NOT NULL,
+    user_id     INT NOT NULL,
+    PRIMARY KEY (dm_group_id, user_id),
+    FOREIGN KEY (user_id) REFERENCES User (user_id),
+    FOREIGN KEY (dm_group_id) REFERENCES DM_GROUP (dm_group_id)
 );

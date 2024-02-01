@@ -1,6 +1,6 @@
 package com.ssafy.A509.config;
 
-import com.ssafy.A509.dm.dto.DMRequest;
+import com.ssafy.A509.dm.dto.KafkaDMRequest;
 import com.ssafy.A509.dm.model.KafkaConstants;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,14 +19,14 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 public class KafkaConsumerConfig {
 
 	@Bean
-	public ConcurrentKafkaListenerContainerFactory<String, DMRequest> kafkaListenerContainerFactory() {
-		ConcurrentKafkaListenerContainerFactory<String, DMRequest> factory = new ConcurrentKafkaListenerContainerFactory<>();
+	public ConcurrentKafkaListenerContainerFactory<String, KafkaDMRequest> kafkaListenerContainerFactory() {
+		ConcurrentKafkaListenerContainerFactory<String, KafkaDMRequest> factory = new ConcurrentKafkaListenerContainerFactory<>();
 		factory.setConsumerFactory(consumerFactory());
 		return factory;
 	}
 
 	@Bean
-	public ConsumerFactory<String, DMRequest> consumerFactory() {
+	public ConsumerFactory<String, KafkaDMRequest> consumerFactory() {
 		Map<String, Object> consumerProps = new HashMap<>();
 		consumerProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaConstants.KAFKA_BROKER);
 		consumerProps.put(ConsumerConfig.GROUP_ID_CONFIG, KafkaConstants.GROUP_ID);

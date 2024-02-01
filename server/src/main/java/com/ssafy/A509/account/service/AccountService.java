@@ -31,32 +31,33 @@ public class AccountService {
         User user = accountRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
 
-//        if (!passwordEncoder.matches(password, user.getPassword())) {
-//            throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
-//        }
-
-        // 평문 비밀번호 비교
-        if (!user.getPassword().equals(password)) {
+        // 암호화 비밀번호 비교
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
         }
 
-        // JWT 토큰 생성
-//        String token = jwtTokenProvider.createToken(email);
+//        // 평문 비밀번호 비교
+//        if (!user.getPassword().equals(password)) {
+//            throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
+//        }
 
-        return "success"; // token을 return해야 합니다
+        // JWT 토큰 생성
+        String token = jwtTokenProvider.createToken(user.getUserId());
+
+//        return "success"; // token을 return해야 합니다
+        return token;
     }
 
     //회원가입 기능
-    //비밀번호 암호화 도입 X
     @Transactional
     public void createAccount(CreateAccountRequest accountRequest){
-//        String encodedPassword = passwordEncoder.encode(accountRequest.getPassword()); // 비밀번호 암호화
+        String encodedPassword = passwordEncoder.encode(accountRequest.getPassword()); // 비밀번호 암호화
 
         User buildAccount = User.builder()
                 .email(accountRequest.getEmail())
                 .nickname(accountRequest.getNickname())
-                .password(accountRequest.getPassword())
-//                .password(encodedPassword)
+//                .password(accountRequest.getPassword())   //비암호화
+                .password(encodedPassword)  //암호화 비밀번호
                 .build();
 
         accountRepository.save(buildAccount);
@@ -101,11 +102,18 @@ public class AccountService {
         User user = accountRepository.findById(userId)
                 .orElseThrow(() -> new NoSuchElementException("해당 userId를 가진 사용자가 없습니다."));
 
-        if (!user.getPassword().equals(accountRequest.getCurrentPassword())) {
-            throw new IllegalArgumentException("현재 비밀번호가 일치하지 않습니다.");
+        // 암호화 비밀번호 비교
+        if (!passwordEncoder.matches(accountRequest.getCurrentPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-        user.setPassword(accountRequest.getNewPassword());
+//        // 평문 암호 비교
+//        if (!user.getPassword().equals(accountRequest.getCurrentPassword())) {
+//            throw new IllegalArgumentException("현재 비밀번호가 일치하지 않습니다.");
+//        }
+
+        String encodedPassword = passwordEncoder.encode(accountRequest.getNewPassword()); // 비밀번호 암호화
+        user.setPassword(encodedPassword);
         accountRepository.save(user);
     }
 

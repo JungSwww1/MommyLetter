@@ -95,7 +95,7 @@ public class ProfileServiceImpl implements ProfileService {
         profileResponse.setUserId(doctorProfile.getUserId());
         profileResponse.setDoctorId(doctorProfile.getUser().getDoctor().getDoctorId());
         profileResponse.setName(doctorProfile.getUser().getDoctor().getName());
-        profileResponse.setIntro(doctorProfile.getUser().getIntro());
+        profileResponse.setHistoryList(doctorProfile.getUser().getDoctor().getHistories());
         profileResponse.setLocation(doctorProfile.getUser().getDoctor().getLocation());
         profileResponse.setDepartment(doctorProfile.getUser().getDoctor().getDepartment());
         profileResponse.setValidTime(doctorProfile.getUser().getDoctor().getValidTime());
