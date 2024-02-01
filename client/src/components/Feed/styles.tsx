@@ -45,3 +45,15 @@ export const TitleWrapper = styled.div`
     items-center 
     space-x-4
 `
+
+export const ButtonWrapper = styled.div`
+    flex 
+    w-[25%] 
+    justify-between 
+    items-center
+`
+
+export const CreatedDate = styled.p`
+    text-[80%] 
+    mt-[10%]
+`

@@ -8,7 +8,13 @@ import {
     TitleContainer, TitleWrapper
 } from "@/components/Feed/styles";
 import logo from '@/assets/images/sample1.jpg'
-
+import {localFunction} from "@/components/Feed/ApiFunction";
+import {useEffect, useState} from "react";
+import MultiMessage from "@/assets/icons/multiMessage";
+import ThreeDotMenu from "@/assets/icons/ThreeDotMenu";
+import FeedHeartButton from "@/assets/icons/FeedHeartButton";
+import FeedMessage from "@/assets/icons/FeedMessage";
+import {Link} from "react-router-dom";
 
 interface board {
     boardId: number;
@@ -23,6 +29,11 @@ interface MainFeedProps {
     board: board;
 }
 
+interface likedata {
+    boardId: number;
+    userId: number;
+}
+
 const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
     const createdDateString : string = board.createdDate
     const createdDate:Date = new Date(createdDateString)
@@ -30,6 +41,12 @@ const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
     const month: number = createdDate.getMonth() + 1; // getMonth()는 0부터 시작하므로 +1
     const day: number = createdDate.getDate();
     const formattedDate: string = `${year}년 ${month}월 ${day}일`;
+
+    //좋아요 버튼 용도
+    const likeData: likedata = {
+        boardId: board.boardId,
+        userId: board.userId,
+    };
 
     return (
         <Layout>
@@ -79,12 +96,18 @@ const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
 
             <LikeIconContainer>
                 <p className={"text-[13px] font-bold"}>좋아요 10개</p>
-                <p>icon area</p>
+                <ButtonWrapper>
+                    <FeedHeartButton likedata={likeData}/>
+                    <Link className={"mt-[8%] h-[90%]"} to={"/message"}><MultiMessage/></Link>
+                    <Link className={"mt-[8%] h-[90%]"} to={"/message"}><FeedMessage/></Link>
+                </ButtonWrapper>
+
+
             </LikeIconContainer>
 
             <CommentContainer>
-                <p className={"text-[15px] font-bold"}>닉네임</p>
-                <p className={"text-[15px]"}>sadasdasdasdasdasdasdasdasdasdasdss</p>
+                <p className="text-[90%] font-bold">닉네임</p>
+                <p className="w-[75%] text-[80%] truncate">댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글</p>
             </CommentContainer>
         </Layout>
     )

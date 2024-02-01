@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState } from "react";
 import { Layout, MainContainer } from "@/pages/Feed/styles";
 import axios from "axios";
 import MainFeed from "@/components/Feed";
+import LogoWhite from "@/assets/icons/logo";
 
 interface Board {
     boardId: number;
@@ -69,7 +70,12 @@ const Feed: React.FC = () => {
                 {displayBoards.map((board) => (
                     <MainFeed key={board.boardId} board={board}/>
                 ))}
-                {load && <div className="py-3 bg-floralwhite text-center">로딩 중</div>}
+                {load &&
+                    <div className={"flex flex-col justify-center items-center"}>
+                        <div><LogoWhite/></div>
+                        <div className="py-3 bg-floralwhite text-center">로딩 중...</div>
+                    </div>
+                }
                 {hasMore && (
                     // 아래는 관측 지점
                     <div ref={obsRef} className="invisible py-3">
