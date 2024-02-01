@@ -10,4 +10,6 @@ public interface ReserveRepository extends JpaRepository<Reserve, Long> {
 	List<Reserve> findAllByDoctorDoctorId(Long doctorId);
 
 	Long countByUserUserIdAndDoctorDoctorId(Long userId, Long doctorId);
+
+	List<Reserve> findAllByUserUserId(Long userId);
 }

@@ -83,24 +83,26 @@ VALUES
 
 
 -- Insert data into BOARD table
-INSERT INTO `BOARD` (`board_id`, `user_id`, `content`, `access`, `created_date`, `updated_date`)
+INSERT INTO `BOARD` (`board_id`, `user_id`, `content`, `access`, `created_date`, `updated_date`, `category`)
 VALUES
-    (1, 101, 'Board Content 1', 'All', '2024-01-17 12:00:00', '2024-01-17 12:30:00'),
-    (2, 101, 'Board Content 2', 'Follower', '2024-01-17 13:00:00', '2024-01-17 13:30:00'),
-    (3, 102, 'Board Content 3', 'All', '2024-01-17 14:00:00', '2024-01-17 14:30:00'),
-    (4, 102, 'Board Content 4', 'Nobody', '2024-01-17 15:00:00', '2024-01-17 15:30:00'),
-    (5, 103, 'Board Content 5', 'Follower', '2024-01-17 16:00:00', '2024-01-17 16:30:00'),
-    (6, 103, 'Board Content 6', 'All', '2024-01-17 17:00:00', '2024-01-17 17:30:00'),
-    (7, 101, 'Board Content 7', 'Nobody', '2024-01-17 18:00:00', '2024-01-17 18:30:00'),
-    (8, 102, 'Board Content 8', 'All', '2024-01-17 19:00:00', '2024-01-17 19:30:00'),
-    (9, 103, 'Board Content 9', 'Follower', '2024-01-17 20:00:00', '2024-01-17 20:30:00'),
-    (10, 101, 'Board Content 10', 'Nobody', '2024-01-17 21:00:00', '2024-01-17 21:30:00'),
-    (11, 102, 'Board Content 11', 'All', '2024-01-17 22:00:00', '2024-01-17 22:30:00'),
-    (12, 103, 'Board Content 12', 'Follower', '2024-01-17 23:00:00', '2024-01-17 23:30:00'),
-    (13, 101, 'Board Content 13', 'All', '2024-01-18 00:00:00', '2024-01-18 00:30:00'),
-    (14, 102, 'Board Content 14', 'Nobody', '2024-01-18 01:00:00', '2024-01-18 01:30:00'),
-    (15, 103, 'Board Content 15', 'Follower', '2024-01-18 02:00:00', '2024-01-18 02:30:00');
-
+    (1, 101, 'Board Content 1', 'All', '2024-01-17 12:00:00', '2024-01-17 12:30:00', 'One'),
+    (2, 101, 'Board Content 2', 'Follower', '2024-01-17 13:00:00', '2024-01-17 13:30:00', 'Two'),
+    (3, 102, 'Board Content 3', 'All', '2024-01-17 14:00:00', '2024-01-17 14:30:00', 'Three'),
+    (4, 102, 'Board Content 4', 'Nobody', '2024-01-17 15:00:00', '2024-01-17 15:30:00', 'One'),
+    (5, 103, 'Board Content 5', 'Follower', '2024-01-17 16:00:00', '2024-01-17 16:30:00', 'Two'),
+    (6, 103, 'Board Content 6', 'All', '2024-01-17 17:00:00', '2024-01-17 17:30:00', 'Three'),
+    (7, 101, 'Board Content 7', 'Nobody', '2024-01-17 18:00:00', '2024-01-17 18:30:00', 'One'),
+    (8, 102, 'Board Content 8', 'All', '2024-01-17 19:00:00', '2024-01-17 19:30:00', 'Two'),
+    (9, 103, 'Board Content 9', 'Follower', '2024-01-17 20:00:00', '2024-01-17 20:30:00', 'Three'),
+    (10, 101, 'Board Content 10', 'Nobody', '2024-01-17 21:00:00', '2024-01-17 21:30:00', 'One'),
+    (11, 102, 'Board Content 11', 'All', '2024-01-17 22:00:00', '2024-01-17 22:30:00', 'Two'),
+    (12, 103, 'Board Content 12', 'Follower', '2024-01-17 23:00:00', '2024-01-17 23:30:00', 'Three'),
+    (13, 101, 'Board Content 13', 'All', '2024-01-18 00:00:00', '2024-01-18 00:30:00', 'One'),
+    (14, 102, 'Board Content 14', 'Nobody', '2024-01-18 01:00:00', '2024-01-18 01:30:00', 'Two'),
+    (15, 103, 'Board Content 15', 'Follower', '2024-01-18 02:00:00', '2024-01-18 02:30:00', 'Three'),
+    (16, 101, 'Board Content 16', 'All', '2024-01-18 03:00:00', '2024-01-18 03:30:00', 'One'),
+    (17, 101, 'Board Content 17', 'Follower', '2024-01-18 04:00:00', '2024-01-18 04:30:00', 'Two'),
+    (18, 102, 'Board Content 18', 'All', '2024-01-18 05:00:00', '2024-01-18 05:30:00', 'Three');
 
 -- Insert data into COMMENT table
 INSERT INTO `COMMENT` (`comment_id`, `board_id`, `user_id`, `content`, `created_date`, `updated_date`)
@@ -138,10 +140,10 @@ VALUES
 # -- Add 13 more rows...
 #
 # -- Insert data into FOLLOW table
-# INSERT INTO `FOLLOW` (`follow_id`, `following_id`, `follower_id`)
-# VALUES
-#     (1, 501, 101),
-#     (2, 502, 102);
+INSERT INTO `FOLLOW` (`follow_id`, `following_id`, `follower_id`)
+VALUES
+    (1, 101, 102),
+    (2, 102, 103);
 # -- Add 13 more rows...
 #
 # -- Insert data into HISTORY table

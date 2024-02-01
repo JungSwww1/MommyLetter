@@ -19,6 +19,10 @@ public class CommentLikeController extends LikeController<CommentLikeService> {
 		super(commentLikeService);
 	}
 
+	/*
+	댓글 좋아요 생성
+	likeRequest는 commentId와 userId를 받음
+	 */
 	@Override
 	public ResponseEntity<URI> createLike(@Valid @RequestBody CreateLikeRequest likeRequest) {
 		if (likeRequest.checkCommentId(likeRequest)) {

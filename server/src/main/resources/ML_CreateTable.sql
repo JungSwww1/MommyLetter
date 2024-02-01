@@ -1,8 +1,13 @@
 ﻿CREATE TABLE `USER`
 (
     `user_id`      INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+<<<<<<< PATCH SET (56fdd0 :art: Feat: Add Emoticon Features)
     `password`     VARCHAR(20)  NULL,
-    `nickname`     VARCHAR(20)  NULL,
+    `nickname`     VARCHAR(20) CHARACTER SET utf8 NULL,
+=======
+    `password`     VARCHAR(200) NULL,
+    `nickname`     VARCHAR(200) NULL,
+>>>>>>> BASE      (064008 :bug: Fix: fix board, comment controller and add explanation)
     `intro`        VARCHAR(255) NULL,
     `email`        VARCHAR(50)  NULL,
     `gender`       ENUM ('Male', 'Female')            DEFAULT 'Female',
@@ -29,6 +34,7 @@ CREATE TABLE `BOARD`
     `user_id`      INT          NOT NULL,
     `content`      VARCHAR(255) NOT NULL,
     `access`       ENUM ('All', 'Follower', 'Nobody') DEFAULT 'All',
+    `category`     ENUM ('One', 'Two', 'Three')       DEFAULT 'One',
     `created_date` TIMESTAMP    NOT NULL,
     `updated_date` TIMESTAMP    NULL,
     FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`)
@@ -106,7 +112,7 @@ CREATE TABLE `DIRECT_MESSAGE`
     `dm_id`        INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `room_id`      VARCHAR(255) NOT NULL,
     `sender_id`    INT          NOT NULL,
-    `receiver_id`  INT          NOT NULL,
+    `receiver_id`  INT,
     `content`      VARCHAR(255) NOT NULL,
     `created_date` TIMESTAMP    NOT NULL,
     FOREIGN KEY (`sender_id`) REFERENCES `USER` (`user_id`),
@@ -169,3 +175,37 @@ CREATE TABLE `HASHTAG`
     `content`    VARCHAR(30) NOT NULL,
     FOREIGN KEY (`board_id`) REFERENCES `BOARD` (`board_id`)
 );
+
+<<<<<<< PATCH SET (56fdd0 :art: Feat: Add Emoticon Features)
+CREATE TABLE `EMOTICON`
+(
+    `emoticon_id` INT        NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `diary_id`    INT        NOT NULL,
+    `emotion`     ENUM ('Joy', 'Delight', 'Excited', 'Happy', 'Surprise', 'Calm'
+                          , 'Sad', 'Anxious', 'Tired', 'Irritated', 'Angry', 'Lonely'
+                          , 'Clear', 'Cloudy', 'Rain', 'Snow', 'Fog', 'Wind'
+                          , 'Healthy', 'Sick', 'Medicine', 'Diagnosis', 'Hospitalization'
+                          , 'Family', 'Friend', 'Acquaintance', 'Stranger', 'None'
+                          , 'Harmony', 'Quarrel', 'Reconcile', 'Uncomfortable', 'Discord'),
+    FOREIGN KEY (`diary_id`) REFERENCES `DIARY` (`diary_id`)
+);
+=======
+CREATE TABLE `DM_GROUP`
+(
+    `dm_group_id`   INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `dm_group_name` VARCHAR(255) NOT NULL,
+    `user_id`       INT          NOT NULL,
+    `created_date`  TIMESTAMP,
+    `updated_date`  TIMESTAMP,
+    FOREIGN KEY (`user_id`) REFERENCES User (`user_id`)
+);
+
+CREATE TABLE USER_DM_GROUP
+(
+    dm_group_id INT NOT NULL,
+    user_id     INT NOT NULL,
+    PRIMARY KEY (dm_group_id, user_id),
+    FOREIGN KEY (user_id) REFERENCES User (user_id),
+    FOREIGN KEY (dm_group_id) REFERENCES DM_GROUP (dm_group_id)
+);
+>>>>>>> BASE      (064008 :bug: Fix: fix board, comment controller and add explanation)

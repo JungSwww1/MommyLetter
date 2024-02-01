@@ -1,6 +1,6 @@
 package com.ssafy.A509.config;
 
-import com.ssafy.A509.dm.dto.DMRequest;
+import com.ssafy.A509.dm.dto.KafkaDMRequest;
 import com.ssafy.A509.dm.model.KafkaConstants;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 public class KafkaProducerConfig {
 
 	@Bean
-	public ProducerFactory<String, DMRequest> producerFactory() {
+	public ProducerFactory<String, KafkaDMRequest> producerFactory() {
 		return new DefaultKafkaProducerFactory<>(producerConfigs());
 	}
 
@@ -33,7 +33,7 @@ public class KafkaProducerConfig {
 	}
 
 	@Bean
-	public KafkaTemplate<String, DMRequest> kafkaTemplate() {
+	public KafkaTemplate<String, KafkaDMRequest> kafkaTemplate() {
 		return new KafkaTemplate<>(producerFactory());
 	}
 }
