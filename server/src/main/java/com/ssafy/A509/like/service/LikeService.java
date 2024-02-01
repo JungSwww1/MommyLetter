@@ -32,7 +32,7 @@ public abstract class LikeService<T, R extends LikeRepository<?>> {
 	}
 
 	@Transactional
-	public abstract void deleteLike(Long id);
+	public abstract void deleteLike(Long id, Long userId);
 
 	public abstract Long getLikeCount(Long id);
 

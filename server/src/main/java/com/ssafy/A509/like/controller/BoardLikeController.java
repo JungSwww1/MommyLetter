@@ -19,6 +19,10 @@ public class BoardLikeController extends LikeController<BoardLikeService> {
 		super(boardLikeService);
 	}
 
+	/*
+	좋아요 생성
+	likeRequest는 boardId와 userId를 받음
+	 */
 	@Override
 	public ResponseEntity<URI> createLike(@Valid @RequestBody CreateLikeRequest likeRequest) {
 		if (likeRequest.checkBoardId(likeRequest)) {

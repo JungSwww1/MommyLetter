@@ -20,7 +20,7 @@ public class CommentLikeService extends LikeService<CommentService, CommentLikeR
 	}
 
 	@Override
-	public void deleteLike(Long id) {
+	public void deleteLike(Long id, Long userId) {
 		likeRepository.findById(id).ifPresentOrElse(likeRepository::delete, () -> {
 			throw new NoSuchElementException("no such comment-like");
 		});
