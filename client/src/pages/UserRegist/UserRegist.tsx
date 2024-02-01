@@ -52,9 +52,7 @@ const UserRegist =()=> {
         // API
         axios.post('http://localhost:8080/auth/signup', userData)
             .then(response => {
-                console.log('응답 데이터:', response.data);
                 navigate('/login')
-
             })
             .catch(error => {
                 console.error('에러 발생:', error);

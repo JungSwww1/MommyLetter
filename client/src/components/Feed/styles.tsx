@@ -37,6 +37,7 @@ export const LikeIconContainer = styled.div`
 `
 export const CommentContainer = styled.div`
     flex 
+    items-center
     space-x-4
 `
 
@@ -44,4 +45,16 @@ export const TitleWrapper = styled.div`
     flex 
     items-center 
     space-x-4
+`
+
+export const ButtonWrapper = styled.div`
+    flex 
+    w-[23%] 
+    justify-between 
+    items-center
+`
+
+export const CreatedDate = styled.p`
+    text-[80%] 
+    mt-[10%]
 `

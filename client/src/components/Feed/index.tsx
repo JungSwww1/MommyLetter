@@ -5,10 +5,18 @@ import {
     Layout,
     LikeIconContainer,
     PhotoContainer,
-    TitleContainer, TitleWrapper
+    TitleContainer, TitleWrapper,
+    CreatedDate,
+    ButtonWrapper
 } from "@/components/Feed/styles";
 import logo from '@/assets/images/sample1.jpg'
-
+import {localFunction} from "@/components/Feed/ApiFunction";
+import {useEffect, useState} from "react";
+import MultiMessage from "@/assets/icons/multiMessage";
+import ThreeDotMenu from "@/assets/icons/ThreeDotMenu";
+import HeartButton from "@/assets/icons/HeartButton";
+import FeedMessage from "@/assets/icons/FeedMessage";
+import {Link} from "react-router-dom";
 
 interface board {
     boardId: number;
@@ -23,7 +31,24 @@ interface MainFeedProps {
     board: board;
 }
 
+interface likedata {
+    feedId: number;
+    userId: number;
+}
+
 const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
+    const {getNickname} = localFunction()
+    const [nickname, setNickname] = useState<string | null>(null);
+    // 닉네임 용도
+    useEffect(() => {
+        const fetchNickname = async () => {
+            const userNickname = await getNickname(board.userId);
+            setNickname(userNickname);
+        };
+        fetchNickname();
+    }, [board.userId]);
+
+    // 아래는 날짜전환용도
     const createdDateString : string = board.createdDate
     const createdDate:Date = new Date(createdDateString)
     const year: number = createdDate.getFullYear();
@@ -31,21 +56,29 @@ const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
     const day: number = createdDate.getDate();
     const formattedDate: string = `${year}년 ${month}월 ${day}일`;
 
+    //좋아요 버튼 용도
+    const likeData: likedata = {
+        feedId: board.boardId, // boardId를 feedId로 설정
+        userId: board.userId,
+    };
+
     return (
         <Layout>
             <TitleContainer>
                 <TitleWrapper>
                     <img src={logo} alt="Logo" className={"w-[50px] h-[50px] rounded-full"}/>
-                    <p className={"text-[16px] font-bold"}>{`${board.userId}`}</p>
+                    <p className={"text-[16px] font-bold"}>{nickname}</p>
                 </TitleWrapper>
-                <div>
-                    <p>{formattedDate}</p>
-                    <p>icon area</p>
+                <div className={"justify-end"}>
+                    <div className={"flex justify-end items-center"}>
+                        <ThreeDotMenu/>
+                    </div>
+                    <CreatedDate>{formattedDate}</CreatedDate>
                 </div>
             </TitleContainer>
 
             <ContextContainer>
-                <p className="line-clamp-3">
+                <p className="line-clamp-3 text-[80%]">
                     {`${board.content}`}
                 </p>
             </ContextContainer>
@@ -79,12 +112,18 @@ const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
 
             <LikeIconContainer>
                 <p className={"text-[13px] font-bold"}>좋아요 10개</p>
-                <p>icon area</p>
+                <ButtonWrapper>
+                    <HeartButton likedata={likeData}/>
+                    <MultiMessage/>
+                    <Link className={"mt-[8%] h-[90%]"} to={"/message"}><FeedMessage/></Link>
+                </ButtonWrapper>
+
+
             </LikeIconContainer>
 
             <CommentContainer>
-                <p className={"text-[15px] font-bold"}>닉네임</p>
-                <p className={"text-[15px]"}>sadasdasdasdasdasdasdasdasdasdasdss</p>
+                <p className={"text-[90%] font-bold"}>닉네임</p>
+                <p className={"text-[80%]"}>sadasdasdasdasdasdasdasdasdasdasdss</p>
             </CommentContainer>
         </Layout>
     )
