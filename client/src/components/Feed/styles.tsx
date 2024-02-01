@@ -1,10 +1,14 @@
 import styled from "tailwind-styled-components";
 
-export const Layout = styled.div`
- mt-[5%]
- mb-[5%]
- ml-[3%]
- mr-[3%]   
+export const Layout = styled.div` 
+    mt-[5%]
+    mb-[5%]
+    ml-[3%]
+    mr-[3%]
+    bg-[#FFF8EE]
+    shadow 
+    rounded-lg
+    p-4
 `
 
 export const TitleContainer = styled.div`

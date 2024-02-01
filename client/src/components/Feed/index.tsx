@@ -10,28 +10,43 @@ import {
 import logo from '@/assets/images/sample1.jpg'
 
 
+interface board {
+    boardId: number;
+    content: string;
+    createdDate: string;
+    hashTagList: string[];
+    photoList: string[];
+    updatedDate: string;
+    userId: number;
+}
+interface MainFeedProps {
+    board: board;
+}
 
+const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
+    const createdDateString : string = board.createdDate
+    const createdDate:Date = new Date(createdDateString)
+    const year: number = createdDate.getFullYear();
+    const month: number = createdDate.getMonth() + 1; // getMonth()는 0부터 시작하므로 +1
+    const day: number = createdDate.getDate();
+    const formattedDate: string = `${year}년 ${month}월 ${day}일`;
 
-const MainFeed = () => {
     return (
         <Layout>
             <TitleContainer>
                 <TitleWrapper>
                     <img src={logo} alt="Logo" className={"w-[50px] h-[50px] rounded-full"}/>
-                    <p className={"text-[16px] font-bold"}>고씨네 산모</p>
+                    <p className={"text-[16px] font-bold"}>{`${board.userId}`}</p>
                 </TitleWrapper>
                 <div>
-                    <p>2024.01.25</p>
+                    <p>{formattedDate}</p>
                     <p>icon area</p>
                 </div>
             </TitleContainer>
 
             <ContextContainer>
                 <p className="line-clamp-3">
-                    나랏말싸미 듕귁에 달아 문자와로 서르 사맛디 아니할쎄 이런 전차로 어린 백셩이 니르고져 홇베이셔도 마참네 제 뜨들 시러펴디 몯핧 노미하니아
-                    나랏말싸미 듕귁에 달아 문자와로 서르 사맛디 아니할쎄 이런 전차로 어린 백셩이 니르고져 홇베이셔도 마참네 제 뜨들 시러펴디 몯핧 노미하니아
-                    나랏말싸미 듕귁에 달아 문자와로 서르 사맛디 아니할쎄 이런 전차로 어린 백셩이 니르고져 홇베이셔도 마참네 제 뜨들 시러펴디 몯핧 노미하니아
-                    나랏말싸미 듕귁에 달아 문자와로 서르 사맛디 아니할쎄 이런 전차로 어린 백셩이 니르고져 홇베이셔도 마참네 제 뜨들 시러펴디 몯핧 노미하니아
+                    {`${board.content}`}
                 </p>
             </ContextContainer>
 
@@ -46,9 +61,20 @@ const MainFeed = () => {
                     <img src={logo} alt="Logo" className={"w-[50px] h-[50px]"}/>
                 </div>
             </PhotoContainer>
+            <PhotoContainer>
+                {board.photoList.map((photo, index) => (
+                    <div key={index} className="m-2" style={{ width: 'calc(33.333% - 1rem)', float: 'left' }}>
+                        <img src={photo} alt={`Photo ${index + 1}`} className={"w-full h-full object-cover"}/>
+                    </div>
+                ))}
+            </PhotoContainer>
+
+
 
             <HashtagContainer>
-                <p>#hashtag</p>
+                {board.hashTagList.map((hashtag, index) => (
+                    <p key={index}>#{hashtag}</p>
+                ))}
             </HashtagContainer>
 
             <LikeIconContainer>

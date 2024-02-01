@@ -1,76 +1,81 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {useEffect, useRef, useState } from "react";
 import { Layout, MainContainer } from "@/pages/Feed/styles";
-import { allBoardList } from "@/apis/Board/boardApi";
 import axios from "axios";
-import RandomCat from "@/pages/Feed/RandomCat";
 import MainFeed from "@/components/Feed";
 
 interface Board {
-    board_id: number;
-    user_id: number;
+    boardId: number;
     content: string;
+    createdDate: string;
+    hashTagList: string[];
+    photoList: string[];
+    updatedDate: string;
+    userId: number;
 }
 
 const Feed: React.FC = () => {
-    const [boardList, setBoardList] = useState<Board[]>([]);
+    // 모든 데이터를 담아준다
+    const [allBoards, setAllBoards] = useState<Board[]>([]);
+    // 아래는 보여줄 데이터
+    const [displayBoards, setDisplayBoards] = useState<Board[]>([]);
     const [page, setPage] = useState<number>(1);
-    const [load, setLoad] = useState<boolean>(true);
-    const preventRef = useRef<boolean>(false);
+    // 데이터를 불러오고 있는 지의 여부. 데이터 불러오는 동안 중복 방지 용도
+    const [load, setLoad] = useState<boolean>(false);
+    // 페이지 당 보여줄 컨텐츠 수
+    const chunkSize = 8;
+
     const obsRef = useRef<HTMLDivElement | null>(null);
+    // 더 가져올 것이 있는지 확인용도 : 사용자가 끝까지 스크롤하면 false가 되어 데이터 안 보여준다.
+    const hasMore = page * chunkSize < allBoards.length;
 
     useEffect(() => {
-        getBoard();
-        const observer = new IntersectionObserver(obsHandler, { threshold: 0.5 });
-        if (obsRef.current) observer.observe(obsRef.current);
-        return () => {
-            observer.disconnect();
-        };
-    }, [page]);
-
-    const obsHandler: IntersectionObserverCallback = (entries) => {
-        const target = entries[0];
-        if (target.isIntersecting && !preventRef.current) {
-            preventRef.current = true;
-            setPage((prev) => prev + 1);
-        }
-    };
-
-    const getBoard = useCallback(async () => {
-        if (!preventRef.current) {
-            // Fetch data only if not already fetching
+        // Fetch all data initially
+        const fetchData = async () => {
             setLoad(true);
             try {
-                const res = await axios.get(`http://localhost:8080/boards`, {
-                    params: { page },
-                });
-
-                if (res.data && res.data.length > 0) {
-                    setBoardList((prev) => (page === 1 ? [...res.data] : [...prev, ...res.data]));
-                } else {
-                    console.log("No data received from the API");
-                }
+                const res = await axios.get(`http://localhost:8080/boards`);
+                setAllBoards(res.data);
+                // 여기서 보여줄 데이터의 수 설정
+                setDisplayBoards(res.data.slice(0, chunkSize));
             } catch (error) {
                 console.error("Error fetching board data:", error);
             } finally {
                 setLoad(false);
             }
+        };
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(obsHandler, { threshold: 0.5 });
+        if (obsRef.current) observer.observe(obsRef.current);
+        return () => {
+            observer.disconnect();
+        };
+    }, [displayBoards]);
+
+    const obsHandler: IntersectionObserverCallback = (entries) => {
+        const target = entries[0];
+        if (target.isIntersecting && hasMore && !load) {
+            setPage((prev) => prev + 1);
+            const nextItems = allBoards.slice(page * chunkSize, (page + 1) * chunkSize);
+            setDisplayBoards((prevBoards) => [...prevBoards, ...nextItems]);
         }
-    }, [page]);
+    };
 
     return (
         <Layout>
             <MainContainer>
-                {boardList.map((board) => (
-                    <div key={board.board_id} className="h-[500px] board-item">
-                        <p>{`게시물 내용: ${board.content}`}</p>
-                    </div>
+                {displayBoards.map((board) => (
+                    <MainFeed key={board.boardId} board={board}/>
                 ))}
-                {load && <div className="py-3 bg-blue-500 text-center">로딩 중</div>}
-                <div ref={obsRef} className="py-3 bg-red-500 text-white text-center">
-                    옵저버 Element
-                </div>
-                {/*<RandomCat/>*/}
-                {/*<MainFeed/>*/}
+                {load && <div className="py-3 bg-floralwhite text-center">로딩 중</div>}
+                {hasMore && (
+                    // 아래는 관측 지점
+                    <div ref={obsRef} className="invisible py-3">
+                        Observer Element
+                    </div>
+                )}
             </MainContainer>
         </Layout>
     );
