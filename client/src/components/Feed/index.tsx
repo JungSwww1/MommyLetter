@@ -10,13 +10,14 @@ import {
     ButtonWrapper
 } from "@/components/Feed/styles";
 import logo from '@/assets/images/sample1.jpg'
-import {localFunction} from "@/components/Feed/ApiFunction";
 import {useEffect, useState} from "react";
 import MultiMessage from "@/assets/icons/multiMessage";
 import ThreeDotMenu from "@/assets/icons/ThreeDotMenu";
 import FeedHeartButton from "@/assets/icons/FeedHeartButton";
 import FeedMessage from "@/assets/icons/FeedMessage";
 import {Link} from "react-router-dom";
+import {localFunction} from "@/components/Feed/ApiFunction";
+
 
 interface board {
     boardId: number;
