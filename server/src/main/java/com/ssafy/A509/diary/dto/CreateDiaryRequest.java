@@ -29,6 +29,14 @@ public class CreateDiaryRequest {
     private LocalDateTime createdDate;
 
     private List<CreatePhotoRequest> photoList;
+<<<<<<< PATCH SET (c36cdb :art: Feat: Divide Emoticons into 5 Different Tables)
+<<<<<<< PATCH SET (f73de4 :art: Feat: Divide Emoticons into 5 Different Tables)
+
+    private CreateEmoticonRequest emoticon;
+=======
+>>>>>>> BASE      (064008 :bug: Fix: fix board, comment controller and add explanation)
+=======
 
     private List<Emotion> emoticonList;
+>>>>>>> BASE      (12c0ba :art: Feat: Add Emoticon Features)
 }

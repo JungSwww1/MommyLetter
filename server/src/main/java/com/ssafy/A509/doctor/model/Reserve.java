@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -37,12 +38,17 @@ public class Reserve {
 	@JoinColumn(name = "doctor_id")
 	private Doctor doctor;
 
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "reserve_id")
+	private Consult consult;
+
 	private LocalDateTime reserveDate;
 
 	@Builder
-	public Reserve(User user, Doctor doctor, LocalDateTime reserveDate) {
+	public Reserve(User user, Doctor doctor, Consult consult, LocalDateTime reserveDate) {
 		this.user = user;
 		this.doctor = doctor;
+		this.consult = consult;
 		this.reserveDate = reserveDate;
 	}
 }

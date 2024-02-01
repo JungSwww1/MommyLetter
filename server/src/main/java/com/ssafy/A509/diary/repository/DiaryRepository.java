@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
-    List<Diary> findAllByUserUserId(Long userId);
+    List<Diary> findAllByUserUserIdOrderByCreatedDate(Long userId);
 
     List<Diary> findAllByUserUserIdAndCategory(Long userId, Category category);
 }
