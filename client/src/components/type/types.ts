@@ -28,13 +28,11 @@ export interface DirectMessageComponentProps {
     imageUrl: string;
 };
 
-export interface DiaryListProps{
-    date: string;
-    createdTime: string;
-    isUpdate: boolean;
-    feeling: string;
-    content: string;
-    pictures: string[];
+export interface DiaryResponseProps{
+    content:string;
+    emoji:number;
+    photoList:string[];
+    createdDate:string;
 }
 
 

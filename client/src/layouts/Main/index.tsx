@@ -7,7 +7,6 @@ import Feed from "@/pages/Feed/Feed";
 import {Header,Write, Navigation} from "@/components/Menu";
 import './index.css';
 import DiaryMomPage from "@/pages/Diary/DiaryMom/page";
-import WritePage from "@/pages/Diary/DiaryWrite/page";
 import ChatBarComponent from "@/components/ChatBar";
 import DirectMessagePage from "@/pages/DirectMessage/DirectMessageDetail/page";
 import DirectMessageList from "@/pages/DirectMessage/DirectMessageList/page";
@@ -19,6 +18,7 @@ import HistoryPage from "@/pages/History/History/page";
 import HistoryListPage from "@/pages/History/HistoryList/page";
 import ConsultRegist from "@/pages/Consult/ConsultRegist/page";
 import UserEdit from "@/pages/UserEdit/UserEdit";
+import DiaryPage from "@/pages/Diary/page";
 
 
 
@@ -45,8 +45,7 @@ function Main() {
                     <Route path={"/"} element={<Feed/>}/>
 
                     {/*다이어리관련 라우터*/}
-                    <Route path={"/diary/:diaryType"} element={<DiaryMomPage/>}/>
-                    <Route path="/diary/:diaryType/write" element={<WritePage/>} />
+                    <Route path={"/diary/*"} element={<DiaryPage/>}/>
 
                     {/*DM관련 라우터*/}
                     <Route path={"/message"} element={<DirectMessageList/>}/>
