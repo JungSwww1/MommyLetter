@@ -27,6 +27,4 @@ public class CreateDiaryRequest {
   private List<CreatePhotoRequest> photoList;
 
   private CreateEmoticonRequest emoticon;
-
-  private List<Emotion> emoticonList;
 }
