@@ -2,11 +2,12 @@ import React, {useEffect, useState} from "react";
 
 import {DiaryHeader} from "@/components/Diary";
 import DiaryListComponent from "@/components/DiaryList";
-import {DiaryRequestProps} from "@/pages/type/types";
+import {DiaryReadResponseProps} from "@/pages/type/types";
 import {fetchDiary} from "@/apis/diary/DiaryAPI";
+import {DiaryResponseProps} from "@/components/type/types";
 
 const DiaryBabyPage = () => {
-    const [diaryList, setDiaryList] = useState<DiaryRequestProps[]>([]);
+    const [diaryList, setDiaryList] = useState<DiaryResponseProps[]>([]);
     useEffect(() => {
         fetchDiary(101).then((data) => {
             setDiaryList(data);
@@ -17,17 +18,7 @@ const DiaryBabyPage = () => {
     }, []);
 
     return (<div className="w-[100%] h-[100%]">
-        {diaryList
-            .filter((diary) => diary.category === "Baby")
-            .map((diary) => (
-                <DiaryListComponent
-                    key={diary.diaryId}
-                    content={diary.content}
-                    emoji={diary.emoji}
-                    photoList={diary.photoList}
-                    createdDate={diary.createdDate}
-                />
-            ))}
+
     </div>);
 }
 

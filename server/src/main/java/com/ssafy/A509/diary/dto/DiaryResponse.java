@@ -30,7 +30,9 @@ public class DiaryResponse {
 
     @NotBlank
     private LocalDateTime createdDate;
-    private LocalDateTime updatedDate;
 
     private List<PhotoResponse> photoList;
+
+    private EmoticonResponse emoticon;
+
 }

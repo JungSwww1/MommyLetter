@@ -4,12 +4,18 @@ export interface ConsultProps{
     history:string[];
 }
 
-export interface DiaryRequestProps{
+export interface DiaryReadResponseProps{
     category:string;
     content:string;
     diaryId:number;
     emoji:number;
     photoList:string[];
     createdDate:string;
-    updatedDate:string;
+    emoticon: {
+        emotionList: string[];
+        familyList: string[];
+        healthList: string[];
+        peopleList: string[];
+        weatherList: string[];
+    } | null
 }

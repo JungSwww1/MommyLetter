@@ -4,12 +4,13 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import {updateDiary} from "@/apis/diary/DiaryAPI";
 import './index.css';
-import {hasCustomDayCellContent} from "@fullcalendar/core/internal";
+import {DiaryWriteRequestProps} from "@/apis/type/types";
 
 const CalendarComponent = (events: any) => {
 
     const [startProps, setStartProps] = useState({
-        diaryId: 0, content: "", category: "", emoji: 0, photoList: [],
+        diaryId: 0, content: "", category: "", emoji: 0, photoList: [],createdDate:"",
+        emotionList:[],familyList:[],healthList:[],peopleList:[],weatherList:[]
     });
 
 
@@ -21,14 +22,24 @@ const CalendarComponent = (events: any) => {
         setStartProps(info.event.extendedProps);
     };
     const handleEventDrop = (info: any) => {
-        updateDiary({
+        const diary: DiaryWriteRequestProps = {
             diaryId: startProps.diaryId,
             content: startProps.content,
             emoji: startProps.emoji,
-            category: startProps.category,
-            photoList: startProps.photoList.filter((prop)=>{prop==="path"})
-        });
+            createdDate: info.event.startStr.substring(0,19),
+            photoList: startProps.photoList.map((object:any) => object.path),
+            emoticonRequest: {
+                emotionList: (startProps.emotionList ?? []).map((object: any) => object.emotion),
+                familyList: (startProps.familyList ?? []).map((object: any) => object.family),
+                healthList: (startProps.healthList ?? []).map((object: any) => object.health),
+                peopleList: (startProps.peopleList ?? []).map((object: any) => object.people),
+                weatherList: (startProps.weatherList ?? []).map((object: any) => object.weather),
+            },
+        };
+
+        updateDiary(diary);
     };
+
     // 달력 locale을 한글로 설정하면 1일 2일 3일로 "일"이붙여서 나오게되는데 렌더링 후 "일"을 없애주는 함수
     const changeDayCell =(info:any)=>{
         var number = document.createElement("a");

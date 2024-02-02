@@ -1,11 +1,12 @@
 import React, {ReactNode, useEffect, useState} from "react";
 import DiaryListComponent from "@/components/DiaryList";
 import {fetchDiary} from "@/apis/diary/DiaryAPI";
-import {DiaryRequestProps} from "@/pages/type/types";
+import {DiaryReadResponseProps} from "@/pages/type/types";
 import CalendarComponent from "@/components/Calendar";
+import {DiaryResponseProps} from "@/components/type/types";
 
 const DiaryMomPage = () => {
-    const [diaryList, setDiaryList] = useState<DiaryRequestProps[]>([]);
+    const [diaryList, setDiaryList] = useState<DiaryResponseProps[]>([]);
     const [events, setEvents] = useState<any[]>([]);
     const [diaryLists, setdiaryLists] = useState<ReactNode[]>([]);
 
@@ -16,8 +17,9 @@ const DiaryMomPage = () => {
                 const newEvents: any = [];
 
                 // ReactNode 변수
+                console.log(data);
                 const diaryLists: any[] = [];
-                data.forEach((diary: DiaryRequestProps) => {
+                data.forEach((diary: DiaryReadResponseProps) => {
                     if (diary.category === "Mom") {
                         newEvents.push({
                             imageurl: "/assets/images/seungwon.png",
@@ -30,7 +32,13 @@ const DiaryMomPage = () => {
                             photoList: diary.photoList,
                             createdDate: diary.createdDate,
                             category: diary.category,
-                            content: diary.content
+                            content: diary.content,
+                            emotionList: diary.emoticon?.emotionList,
+                            familyList: diary.emoticon?.familyList,
+                            healthList: diary.emoticon?.healthList,
+                            peopleList: diary.emoticon?.peopleList,
+                            weatherList: diary.emoticon?.weatherList,
+
                         });
                         diaryLists.push(<DiaryListComponent
                             key={diary.diaryId}
