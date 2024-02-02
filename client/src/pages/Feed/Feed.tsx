@@ -34,7 +34,7 @@ const Feed: React.FC = () => {
         const fetchData = async () => {
             setLoad(true);
             try {
-                const res = await axios.get(`http://localhost:8080/boards`);
+                const res = await axios.get(`http://i10a509.p.ssafy.io:8081/boards/list/101`);
                 setAllBoards(res.data);
                 // 여기서 보여줄 데이터의 수 설정
                 setDisplayBoards(res.data.slice(0, chunkSize));

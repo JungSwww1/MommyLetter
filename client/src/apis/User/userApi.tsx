@@ -40,6 +40,23 @@ export const nicknameCheck = async (nickname:string)=> {
     }
 }
 
+// 이메일 중복 체크
+export const emailCheckAPI = async (email:string) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/signup/check-email`, {
+            params: { email : email }
+        });
+        const isAvailable = response.data;
+        if (isAvailable) {
+            return Promise.resolve(false);
+        } else {
+            return Promise.resolve(true);
+        }
+    } catch (error) {
+        return Promise.reject(`닉네임 중복을 확인하는 오류 발생: ${error}`);
+    }
+}
+
 const handleApiError = (message:any, error:any) => {
     console.error(`${message}:`, error);
     throw new Error(message);

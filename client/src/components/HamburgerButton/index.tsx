@@ -6,8 +6,8 @@ import Hamburger from "@/assets/icons/Hamburger";
 const HamburgerButton = () => {
     const navigate = useNavigate();
     const logout = () => {
-        localStorage.removeItem('loginInfo');
-        navigate('/login')
+        localStorage.clear();
+        navigate('/login', {replace:true})
     }
 
 const goPage = (param:string) =>{

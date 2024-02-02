@@ -18,12 +18,21 @@
 
 
     const UserEdit = () => {
-        const {nicknameStatus, incomeData,editEditedData, editedData, screenData, edit, checkNickname} = localFunction()
+        const [localUserId, setLocalUserId] = useState(0)
+        //아래는 무한 루프 방지 용도
+        useEffect(() => {
+            const getLocal = localStorage.getItem('Auth');
+            if (getLocal !== null) {
+                const userData = JSON.parse(getLocal);
+                setLocalUserId(userData.userId);
+            }
+        }, []);
 
+        const {nicknameStatus, incomeData,editEditedData, editedData, screenData, edit, checkNickname} = localFunction(localUserId)
         // 컴포넌트가 마운트될 때 초기 데이터 로딩
         useEffect(() => {
-            screenData();
-        }, []);  // 빈 배열을 전달하여 한 번만 실행되도록 설정
+            screenData(localUserId);
+        }, [localUserId]);  // 빈 배열을 전달하여 한 번만 실행되도록 설정
 
         const handleInputChange = (e:any, field:string) => {
             editEditedData({
