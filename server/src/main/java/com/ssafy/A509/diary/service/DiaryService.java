@@ -49,6 +49,7 @@ public class DiaryService {
     private final HealthEmoticonRepository healthEmoticonRepository;
     private final PeopleEmoticonRepository peopleEmoticonRepository;
     private final WeatherEmoticonRepository weatherEmoticonRepository;
+
     //Diary와 DiaryResponse 매핑
     private DiaryResponse getDiaryResponse(Diary diary){
         return modelMapper.map(diary, DiaryResponse.class);
@@ -78,6 +79,7 @@ public class DiaryService {
             .build();
         addPhotos(newDiary, diaryRequest);
         addEmoticons(newDiary, diaryRequest);
+
         Diary save = diaryRepository.save(newDiary);
         return getDiaryResponse(save);
     }
@@ -123,6 +125,8 @@ public class DiaryService {
         if(!deletePhotoList.isEmpty()){
             photoRepository.deleteAllInBatch(deletePhotoList);
         }
+
+
     }
     
     /*
@@ -135,12 +139,16 @@ public class DiaryService {
         UpdateEmoticonRequest newEmoticon = diaryRequest.getEmoticonRequest();
         // 삭제할 이모티콘 리스트
         Emoticon deleteEmoticon = Emoticon.builder().build();
+
+
         updateEmotion(emoticon, newEmoticon,deleteEmoticon);
         updateFamily(emoticon, newEmoticon,deleteEmoticon);
         updateHealth(emoticon, newEmoticon,deleteEmoticon);
         updatePeople(emoticon, newEmoticon,deleteEmoticon);
         updateWeather(emoticon, newEmoticon,deleteEmoticon);
     }
+
+
     private void updateWeather(Emoticon emoticon, UpdateEmoticonRequest newEmoticon, Emoticon deleteEmoticon) {
         List<Weather> newWeatherList = newEmoticon.getWeatherList();
         List<WeatherEmoticon> weatherList = new ArrayList<>(emoticon.getWeatherEmoticon());
@@ -253,6 +261,7 @@ public class DiaryService {
         if(!deleteEmoticon.getFamilyEmoticon().isEmpty()){
             familyEmoticonRepository.deleteAllInBatch(deleteEmoticon.getFamilyEmoticon());
         };
+
     }
     /*
     * 사진 추가
@@ -267,6 +276,8 @@ public class DiaryService {
             }
         });
     }
+
+
     /*
     * 이모티콘 추가
     * */
@@ -331,6 +342,7 @@ public class DiaryService {
             }
         });
     }
+
     private Diary findById(Long diaryId){
         return diaryRepository.findById(diaryId).orElseThrow(()
             -> new NoSuchElementException("No such Diary"));
