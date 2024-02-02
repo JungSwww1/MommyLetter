@@ -15,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/search")
 @Tag(name = "Search", description = "Search API")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SearchController {
 
     @Autowired
