@@ -1,4 +1,7 @@
-﻿﻿CREATE TABLE `USER`
+DROP DATABASE IF EXISTS mommyletter;
+CREATE DATABASE IF NOT EXISTS mommyletter;
+USE mommyletter;
+CREATE TABLE `USER`
 (
     `user_id`      INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `password`     VARCHAR(20)  NULL,
