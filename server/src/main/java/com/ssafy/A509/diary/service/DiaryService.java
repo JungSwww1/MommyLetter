@@ -152,7 +152,7 @@ public class DiaryService {
         //기존 이모티콘
         Emoticon emoticon = diary.getEmoticon();
         //들어온 이모티콘 리스트
-        UpdateEmoticonRequest newEmoticon = diaryRequest.getEmoticonRequest();
+        UpdateEmoticonRequest newEmoticon = diaryRequest.getEmoticon();
         // 삭제할 이모티콘 리스트
         Emoticon deleteEmoticon = Emoticon.builder().build();
 
