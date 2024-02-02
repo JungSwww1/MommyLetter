@@ -74,7 +74,7 @@ const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
             </TitleContainer>
 
             <ContextContainer>
-                <p className="line-clamp-3 text-[80%]">
+                <p className="text-[80%] truncate">
                     {`${board.content}`}
                 </p>
             </ContextContainer>
