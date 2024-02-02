@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Builder
-public class AccountSimpleReponse {
+public class AccountSimpleResponse {
 	private Long userId;
 	private String nickname;
 	private String profilePhoto;

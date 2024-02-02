@@ -1,6 +1,6 @@
 package com.ssafy.A509.dm.service;
 
-import com.ssafy.A509.account.dto.AccountSimpleReponse;
+import com.ssafy.A509.account.dto.AccountSimpleResponse;
 import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.account.repository.AccountRepository;
 import com.ssafy.A509.dm.dto.DMResponse;
@@ -105,15 +105,15 @@ public class GroupDMService {
 			.host(getUserResponse(dmGroup.getHost()))
 			.build();
 
-		Set<AccountSimpleReponse> users = new HashSet<>();
+		Set<AccountSimpleResponse> users = new HashSet<>();
 		dmGroup.getUsers().forEach(user -> users.add(getUserResponse(user)));
 		dmGroupResponse.setUsers(users);
 		return dmGroupResponse;
 	}
 
-	private AccountSimpleReponse getUserResponse(User user) {
+	private AccountSimpleResponse getUserResponse(User user) {
 		UserProfileResponse userProfileResponse = profileService.getUserProfile(user.getUserId());
-		return AccountSimpleReponse
+		return AccountSimpleResponse
 			.builder()
 			.userId(user.getUserId())
 			.nickname(user.getNickname())
