@@ -24,6 +24,6 @@ public class UpdateDiaryRequest {
 
 	private List<String> photoList;
 
-	private UpdateEmoticonRequest emoticonRequest;
+	private UpdateEmoticonRequest emoticon;
 
 }
