@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth/consult-info")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserInfoController {
 
     private final UserInfoService userInfoService;
