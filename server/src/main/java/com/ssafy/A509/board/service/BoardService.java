@@ -1,6 +1,6 @@
 package com.ssafy.A509.board.service;
 
-import com.ssafy.A509.account.dto.AccountSimpleReponse;
+import com.ssafy.A509.account.dto.AccountSimpleResponse;
 import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.account.repository.AccountRepository;
 import com.ssafy.A509.board.dto.BoardResponse;
@@ -155,8 +155,8 @@ public class BoardService {
 		return boardResponse;
 	}
 
-	private AccountSimpleReponse getUserResponse(Board board, UserProfileResponse userProfile) {
-		return AccountSimpleReponse.builder()
+	private AccountSimpleResponse getUserResponse(Board board, UserProfileResponse userProfile) {
+		return AccountSimpleResponse.builder()
 			.nickname(board.getUser().getNickname())
 			.userId(board.getUser().getUserId())
 			.profilePhoto(Optional.ofNullable(userProfile).map(UserProfileResponse::getProfilePhoto).orElse(null))
