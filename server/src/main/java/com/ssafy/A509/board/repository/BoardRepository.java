@@ -13,9 +13,9 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
 	List<Board> findAllByCategory(Category category);
 
-	@Query("SELECT b FROM Board b JOIN b.user u JOIN Follow f ON u.userId = f.follower.userId WHERE b.access = 'Follower' AND f.following.userId = :userId order by b.createdDate DESC ")
+	@Query("SELECT b FROM Board b JOIN b.user u JOIN Follow f ON u.userId = f.follower.userId WHERE b.access = 'Follower' AND f.following.userId = :userId")
 	List<Board> findByAccess(Long userId);
 
-	@Query("select b from Board b where b.access = 'All' order by b.createdDate desc ")
+	@Query("select b from Board b where b.access = 'All'")
 	List<Board> findAllBoard();
 }

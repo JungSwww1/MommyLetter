@@ -38,15 +38,16 @@ public class BoardController {
 
 	/*
 	Access가 All, Follwer 인 모든 피드를 최신순으로 반환
+	미리보기 타입 아님
 	로그인 전용
 	 */
 	@GetMapping("/list/{userId}")
-	public ResponseEntity<List<BoardSimpleResponse>> getAllBoardByUser(@PathVariable Long userId) {
+	public ResponseEntity<List<BoardResponse>> getAllBoardByUser(@PathVariable Long userId) {
 		return ResponseEntity.ok(boardService.getAllBoardByUser(userId));
 	}
 
 	/*
-	회원의 게시물 전체를 조회]
+	회원의 게시물 전체를 조회
 	미리보기 타입
 	 */
 	@GetMapping("/user/{userId}")
@@ -62,13 +63,13 @@ public class BoardController {
 		return ResponseEntity.ok(boardService.getBoard(boardId));
 	}
 
-	/*
-	카테고리 별 게시물 조회
-	 */
-	@GetMapping("/cate/{category}")
-	public ResponseEntity<List<BoardSimpleResponse>> getBoardsByCategory(@NotNull @PathVariable Category category) {
-		return ResponseEntity.ok(boardService.findAllByCategory(category));
-	}
+//	/*
+//	카테고리 별 게시물 조회
+//	 */
+//	@GetMapping("/cate/{category}")
+//	public ResponseEntity<List<BoardSimpleResponse>> getBoardsByCategory(@NotNull @PathVariable Category category) {
+//		return ResponseEntity.ok(boardService.findAllByCategory(category));
+//	}
 
 	/*
 	게시글 업데이트

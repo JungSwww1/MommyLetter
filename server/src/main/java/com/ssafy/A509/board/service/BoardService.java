@@ -18,6 +18,8 @@ import com.ssafy.A509.profile.service.ProfileService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -59,19 +61,20 @@ public class BoardService {
 		return getBoardResponse(board);
 	}
 
-	public List<BoardSimpleResponse> getAllBoardByUser(Long userId) {
-		List<BoardSimpleResponse> boardAll = getAllBoard();
+	public List<BoardResponse> getAllBoardByUser(Long userId) {
+		List<BoardResponse> boardAll = getAllBoard();
 
-		List<BoardSimpleResponse> boardFollwer = boardRepository.findByAccess(userId).stream()
-			.map(this::getBoardSimpleResponse)
+		List<BoardResponse> boardFollwer = boardRepository.findByAccess(userId).stream()
+			.map(this::getBoardResponse)
 			.collect(Collectors.toList());
 
 		boardAll.addAll(boardFollwer);
+		Collections.sort(boardAll, Comparator.comparing(BoardResponse::getCreatedDate).reversed());
 		return boardAll;
 	}
 
-	public List<BoardSimpleResponse> getAllBoard() {
-		return boardRepository.findAll().stream().map(this::getBoardSimpleResponse)
+	public List<BoardResponse> getAllBoard() {
+		return boardRepository.findAllBoard().stream().map(this::getBoardResponse)
 			.collect(Collectors.toList());
 	}
 
