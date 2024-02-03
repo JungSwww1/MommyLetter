@@ -1,21 +1,26 @@
 import React, {useState} from 'react';
+import {useNavigate} from "react-router-dom";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import {updateDiary} from "@/apis/diary/DiaryAPI";
 import './index.css';
 import {DiaryWriteRequestProps} from "@/apis/type/types";
+import WriteModal from "@/components/Modal";
+import {DiaryWrite} from "@/pages/Diary/DiaryWrite";
 
 const CalendarComponent = (events: any) => {
+
+    const [currYear,setCurrYear] = useState("");
+    const [currMonth,setCurrMonth] = useState("");
+    const [currDay,setCurrDay] = useState("");
 
     const [startProps, setStartProps] = useState({
         diaryId: 0, content: "", category: "", emoji: 0, photoList: [],createdDate:"",
         emotionList:[],familyList:[],healthList:[],peopleList:[],weatherList:[]
     });
-
-
+    const navigate = useNavigate();
     const buttonFunction = () => {
-        alert("hello");
     }
     const handleEventDragStart = (info: any) => {
         // dragstart 이벤트 처리
@@ -54,8 +59,17 @@ const CalendarComponent = (events: any) => {
             domNodes:[]
         };
     }
+    const clickDay = (info:any)=>{
+        const curr = new Date(info)
+        setCurrYear(info.getFullYear().toString());
+        setCurrMonth(info.getMonth().toString());
+        setCurrDay(info.getDate().toString());
+        (document.getElementById('my_modal_3') as any).showModal()
+
+    }
     return (
         <div id="calendar-container" className="p-5">
+            <DiaryWrite currYear={currYear} currMonth={currMonth} currDay={currDay}/>
             <FullCalendar
                 locale="ko"
                 plugins={[dayGridPlugin, interactionPlugin]}
@@ -65,6 +79,8 @@ const CalendarComponent = (events: any) => {
                 eventDragStart={handleEventDragStart}
                 events={events}
                 dayCellContent={changeDayCell}
+                navLinks={true}
+                navLinkDayClick={clickDay}
                 eventContent={(eventInfo) => {
                     const {imageurl} = eventInfo.event.extendedProps;
                     return (<div className="flex justify-center" onClick={() => {

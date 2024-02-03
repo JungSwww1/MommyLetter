@@ -1,5 +1,5 @@
 import React from 'react';
-import {MainLayout,BodySection,NaviSection} from './styles';
+import {MainLayout,BodySection} from './styles';
 import {Routes, Route} from 'react-router-dom';
 
 import UserProfile from "@/pages/Profile/UserProfile";
@@ -69,11 +69,6 @@ function Main() {
 
                 </Routes>
             </BodySection>
-            <NaviSection>
-                {!isMessageEndPoint && <Navigation/>}
-                {isMessageEndPoint && <ChatBarComponent/>}
-
-            </NaviSection>
         </MainLayout>
     );
 }

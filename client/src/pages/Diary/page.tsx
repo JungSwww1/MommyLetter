@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Route, Routes, useNavigate} from "react-router-dom";
-import ConsultListPage from "@/pages/Consult/ConsultList/page";
 import DiaryMomPage from "@/pages/Diary/DiaryMom/page";
 import DiaryBabyPage from "@/pages/Diary/DiaryBaby/page";
 
