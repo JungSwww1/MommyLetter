@@ -2,7 +2,7 @@ import React from 'react';
 import {MainLayout,BodySection,NaviSection} from './styles';
 import {Routes, Route} from 'react-router-dom';
 
-import UserProfile from "@/pages/Profile/UserProfile";
+import UserProfile from "@/pages/Profile/Myself/UserProfile";
 import Feed from "@/pages/Feed/Feed";
 import {Header,Write, Navigation} from "@/components/Menu";
 import './index.css';

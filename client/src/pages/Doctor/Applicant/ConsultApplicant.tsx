@@ -8,7 +8,7 @@ import {
 } from "@/pages/Doctor/Applicant/styles";
 import {
     Img,
-} from "@/pages/Profile/styles";
+} from "@/pages/Profile/Myself/styles";
 import logo from "@/assets/images/sample1.jpg";
 
 const ConsultApplicant = () => {

@@ -28,6 +28,9 @@ export const PhotoContainer = styled.div`
 `
 
 export const HashtagContainer = styled.div`
+    flex
+    flex-row
+    flex-wrap
     mb-[2%]
 `
 export const LikeIconContainer = styled.div`
@@ -36,8 +39,6 @@ export const LikeIconContainer = styled.div`
     justify-between
 `
 export const CommentContainer = styled.div`
-    flex 
-    items-center
     space-x-4
 `
 

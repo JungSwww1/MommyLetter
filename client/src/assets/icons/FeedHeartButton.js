@@ -1,20 +1,32 @@
-import React, { useState } from 'react';
-import { localFunction } from "@/components/Feed/ApiFunction";
+import React, {useEffect, useState} from 'react';
+import {boardLikeAPI, sendBoardLikeAPI, sendBoardUnlikeAPI} from "@/apis/Board/boardApi";
 
-const FeedHeartButton = ({ likedata }) => {
+
+
+const FeedHeartButton = ({ likedata, onLikeStatusChange  }) => {
     const [liked, setLiked] = useState(false);
-    const { sendBoardLike } = localFunction();
+
+    useEffect(() => {
+        // likedata를 기반으로 좋아요 상태 초기화
+        const fetchLikeStatus = async () => {
+            const res = await boardLikeAPI(likedata.userId, likedata.boardId);
+            setLiked(res);
+        };
+
+        fetchLikeStatus();
+    }, [likedata.userId, likedata.boardId]);
+
 
     const toggleLike = async () => {
+        const{userId, boardId} = likedata
         if(!liked) {
-            setLiked(liked);
-            const { userId, boardId } = likedata;
-            await sendBoardLike(userId, boardId);
-            console.log('Like status toggled for:', { userId, boardId });
+            setLiked(true);
+            await sendBoardLikeAPI(likedata);
+            onLikeStatusChange(true);
         } else {
-            setLiked(!liked);
-            const{userId, boardId} = likedata
-            await sendBoardUnlike(userId, boardId);
+            setLiked(false);
+            await sendBoardUnlikeAPI(userId, boardId);
+            onLikeStatusChange(false);
         }
     };
 
