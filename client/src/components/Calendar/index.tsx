@@ -8,6 +8,7 @@ import './index.css';
 import {DiaryUpdateRequestProps} from "@/apis/type/types";
 import WriteModal from "@/components/Modal";
 import {DiaryWrite} from "@/pages/Diary/DiaryWrite";
+import {Toast} from "@/components/Toast/Toast";
 
 const CalendarComponent = (events: any) => {
 
@@ -21,6 +22,7 @@ const CalendarComponent = (events: any) => {
     });
     const navigate = useNavigate();
     const buttonFunction = () => {
+        alert("heelo")
     }
     const handleEventDragStart = (info: any) => {
         // dragstart 이벤트 처리
@@ -41,7 +43,7 @@ const CalendarComponent = (events: any) => {
                 weatherList: (startProps.weatherList ?? []).map((object: any) => object.weather),
             },
         };
-
+        console.log(diary);
         updateDiary(diary);
     };
 
@@ -85,7 +87,7 @@ const CalendarComponent = (events: any) => {
                 eventContent={(eventInfo) => {
                     const {imageurl} = eventInfo.event.extendedProps;
                     return (<div className="flex justify-center" onClick={() => {
-                        buttonFunction()
+                        buttonFunction();
                     }}>
                         <img className="h-[10%] w-[50%]" src={imageurl} alt="Event Image"/>
                     </div>);
