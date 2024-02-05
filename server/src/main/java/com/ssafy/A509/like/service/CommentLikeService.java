@@ -20,20 +20,20 @@ public class CommentLikeService extends LikeService<CommentService, CommentLikeR
 	}
 
 	@Override
-	public void deleteLike(Long id, Long userId) {
-		likeRepository.findById(id).ifPresentOrElse(likeRepository::delete, () -> {
+	public void deleteLike(Long commentId, Long userId) {
+		likeRepository.findByComment_CommentIdAndUser_UserId(commentId, userId).ifPresentOrElse(likeRepository::delete, () -> {
 			throw new NoSuchElementException("no such comment-like");
 		});
 	}
 
 	@Override
-	public Long getLikeCount(Long id) {
-		return likeRepository.countByComment_CommentId(id);
+	public Long getLikeCount(Long commentId) {
+		return likeRepository.countByComment_CommentId(commentId);
 	}
 
 	@Override
-	public boolean checkUserLike(Long id, Long userId) {
-		return likeRepository.existsCommentLikeByComment_CommentIdAndUser_UserId(id, userId);
+	public boolean checkUserLike(Long commentId, Long userId) {
+		return likeRepository.existsCommentLikeByComment_CommentIdAndUser_UserId(commentId, userId);
 	}
 
 	@Override
