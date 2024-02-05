@@ -25,6 +25,8 @@ import com.ssafy.A509.diary.repository.FamilyEmoticonRepository;
 import com.ssafy.A509.diary.repository.HealthEmoticonRepository;
 import com.ssafy.A509.diary.repository.PeopleEmoticonRepository;
 import com.ssafy.A509.diary.repository.WeatherEmoticonRepository;
+import com.ssafy.A509.exception.CustomException;
+import com.ssafy.A509.exception.ErrorCode;
 import com.ssafy.A509.photo.dto.UpdatePhotoRequest;
 import com.ssafy.A509.photo.model.Photo;
 import com.ssafy.A509.photo.repository.PhotoRepository;
@@ -49,7 +51,6 @@ public class DiaryService {
     private final ModelMapper modelMapper;
     private final AccountRepository accountRepository;
     private final PhotoRepository photoRepository;
-    private final EmoticonRepository emoticonRepository;
     private final EmotionEmoticonRepository emotionEmoticonRepository;
     private final FamilyEmoticonRepository familyEmoticonRepository;
     private final HealthEmoticonRepository healthEmoticonRepository;
@@ -74,7 +75,7 @@ public class DiaryService {
         return diaryRepository
                 .findById(diaryId)
                 .map(this::getDiaryResponse)
-                .orElseThrow(() -> new NoSuchElementException("No such Diary"));
+                .orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_DIARY));
     }
 
     @Transactional
@@ -411,7 +412,7 @@ public class DiaryService {
 
     private Diary findById(Long diaryId) {
         return diaryRepository.findById(diaryId).orElseThrow(()
-                -> new NoSuchElementException("No such Diary"));
+                -> new CustomException(ErrorCode.NO_SUCH_DIARY));
     }
 
 }
