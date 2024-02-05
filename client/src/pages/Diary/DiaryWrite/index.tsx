@@ -98,10 +98,17 @@ const diaryWrite = () =>{
 }
 const fileChange = (index:number) =>{
     var temp = [];
+<<<<<<< PATCH SET (1c6e68 Merge branch 'feat_seokju_diaryAPI' into frontend)
+    for(let i = 0; i<imgFiles.length;i++){
+        if(i==index) continue;
+        temp.push(imgFiles[i]);
+
+=======
     let imgURL;
     for(let i = 0; i<imgFiles.length;i++){
         if(i==index) continue;
         temp.push(imgFiles[i]);
+>>>>>>> BASE      (e4e540 ✨Feat: Comment Modal and designs)
     }
     setImgFiles(temp);
 }

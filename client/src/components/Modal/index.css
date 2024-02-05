@@ -11,6 +11,10 @@
 .modal-toggle:checked + .modal.modal-backdrop .bottom-sheet {
     transform: translateY(0);
 }
+<<<<<<< PATCH SET (1c6e68 Merge branch 'feat_seokju_diaryAPI' into frontend)
+
+=======
+>>>>>>> BASE      (e4e540 ✨Feat: Comment Modal and designs)
 .scrollBar::-webkit-scrollbar {
     width: 3px; /*스크롤바의 너비*/
 }

@@ -6,7 +6,10 @@ import interactionPlugin from "@fullcalendar/interaction";
 import {updateDiary} from "@/apis/diary/DiaryAPI";
 import './index.css';
 import {DiaryUpdateRequestProps} from "@/apis/type/types";
+<<<<<<< PATCH SET (1c6e68 Merge branch 'feat_seokju_diaryAPI' into frontend)
+=======
 import WriteModal from "@/components/Modal";
+>>>>>>> BASE      (e4e540 ✨Feat: Comment Modal and designs)
 import {DiaryWrite} from "@/pages/Diary/DiaryWrite";
 
 const CalendarComponent = (events: any) => {
