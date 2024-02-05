@@ -6,6 +6,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import {updateDiary} from "@/apis/diary/DiaryAPI";
 import './index.css';
 import {DiaryUpdateRequestProps} from "@/apis/type/types";
+import WriteModal from "@/components/Modal";
 import {DiaryWrite} from "@/pages/Diary/DiaryWrite";
 
 const CalendarComponent = (events: any) => {
