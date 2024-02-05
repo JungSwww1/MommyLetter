@@ -5,10 +5,6 @@ interface Props{
     writeButton: ReactNode|boolean
 }
 const BottomUpModal = ({children,writeButton}:Props) => {
-<<<<<<< PATCH SET (1c6e68 Merge branch 'feat_seokju_diaryAPI' into frontend)
-
-=======
->>>>>>> BASE      (e4e540 ✨Feat: Comment Modal and designs)
     return (
         <div className="w-[100%] h-[100%]">
             <dialog id="my_modal_3" className="modal">
@@ -27,10 +23,4 @@ const BottomUpModal = ({children,writeButton}:Props) => {
     );
 };
 
-<<<<<<< PATCH SET (1c6e68 Merge branch 'feat_seokju_diaryAPI' into frontend)
 export default BottomUpModal;
-
-
-=======
-export default BottomUpModal;
->>>>>>> BASE      (e4e540 ✨Feat: Comment Modal and designs)
