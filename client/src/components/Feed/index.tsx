@@ -7,7 +7,9 @@ import {
     PhotoContainer,
     TitleContainer, TitleWrapper,
     CreatedDate,
-    ButtonWrapper
+    ButtonWrapper,
+    TitleRightWrapper,
+    ThreeDot, CommentWrapper
 } from "@/components/Feed/styles";
 import logo from '@/assets/images/sample1.jpg'
 import {useEffect, useState} from "react";
@@ -51,10 +53,12 @@ interface MainFeedProps {
 const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
     //댓글 가져오는 용도
     const [comments, setComments] = useState<Comment[]>([])
+    const [countComments, setCountComments] = useState<number>(0);
     useEffect(() => {
         const fetchComments = async () => {
             const commentsData = await getAllCommentsAPI(board.boardId);
             setComments(commentsData);
+            setCountComments(commentsData.length);
         }
         fetchComments();
     }, [board.boardId]);
@@ -106,10 +110,10 @@ const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
                     <img src={logo} alt="Logo" className={"w-[50px] h-[50px] rounded-full"}/>
                     <p className={"text-[16px] font-bold"}>{board.accountSimpleReponse.nickname}</p>
                 </TitleWrapper>
-                <div className={"justify-end"}>
-                    <div className={"flex justify-end items-center"}>
+                <TitleRightWrapper>
+                    <ThreeDot>
                         <ThreeDotMenu/>
-                    </div>
+                    </ThreeDot>
                     <CreatedDate>
                         {new Date(board.createdDate).toLocaleDateString('ko-KR', {
                             year: 'numeric',
@@ -117,7 +121,7 @@ const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
                             day: 'numeric'
                         })}
                     </CreatedDate>
-                </div>
+                </TitleRightWrapper>
             </TitleContainer>
 
             <ContextContainer>
@@ -155,20 +159,23 @@ const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
                 <p className={"text-[13px] font-bold my-auto"}>좋아요 {countLike}개</p>
                 <ButtonWrapper>
                     <FeedHeartButton likedata={likeData} onLikeStatusChange={handleLikeStatusChange}/>
-                    <Link className={"mt-[8%] h-[90%]"} to={"#"} onClick={toggleModal1}><MultiMessage/></Link>
+                    <Link className={"mt-[8%] h-[90%]"} to={"#"} onClick={toggleModal}><MultiMessage/></Link>
                     <Link className={"mt-[8%] h-[90%]"} to={"/message"}><FeedMessage/></Link>
                     {showModal && <Modal onClose={toggleModal} comments={comments} boardId={board.boardId}
                                          userId={board.accountSimpleReponse.userId}/>}
 
-                    <Test onClose={toggleModal} comments={comments} boardId={board.boardId} userId={board.accountSimpleReponse.userId}/>
+                    {/*<Test onClose={toggleModal} comments={comments} boardId={board.boardId} userId={board.accountSimpleReponse.userId}/>*/}
 
                 </ButtonWrapper>
             </LikeIconContainer>
             <CommentContainer>
                 {comments.slice(0, 1).map((comment, index) => (
-                    <div key={index} className="flex flex-row mb-2 items-center">
-                        <p className="text-[90%] font-bold mr-[3%]">{comment.nickname}</p>
-                        <p className="w-[75%] text-[80%] truncate">{comment.content}</p>
+                    <div key={comment.commentId} onClick={toggleModal}>
+                        <CommentWrapper key={index}>
+                            <p className="text-[90%] font-bold mr-[3%]">{comment.nickname}</p>
+                            <p className="w-[75%] text-[80%] truncate">{comment.content}</p>
+                        </CommentWrapper>
+                        <Link to={"#"} className={"text-[80%]"}>댓글 {countComments}개 모두 보기</Link>
                     </div>
                 ))}
             </CommentContainer>

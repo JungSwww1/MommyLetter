@@ -42,10 +42,22 @@ export const CommentContainer = styled.div`
     space-x-4
 `
 
+export const CommentWrapper = styled.div`
+    flex flex-row items-center
+`
+
 export const TitleWrapper = styled.div`
     flex 
     items-center 
     space-x-4
+`
+
+export const TitleRightWrapper = styled.div`
+    justify-end
+`
+
+export const ThreeDot = styled.div`
+    flex justify-end items-center
 `
 
 export const ButtonWrapper = styled.div`
