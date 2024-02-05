@@ -5,15 +5,15 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import {updateDiary} from "@/apis/diary/DiaryAPI";
 import './index.css';
-import {DiaryWriteRequestProps} from "@/apis/type/types";
+import {DiaryUpdateRequestProps} from "@/apis/type/types";
 import WriteModal from "@/components/Modal";
 import {DiaryWrite} from "@/pages/Diary/DiaryWrite";
 
 const CalendarComponent = (events: any) => {
 
-    const [currYear,setCurrYear] = useState("");
-    const [currMonth,setCurrMonth] = useState("");
-    const [currDay,setCurrDay] = useState("");
+    const [currYear,setCurrYear] = useState(0);
+    const [currMonth,setCurrMonth] = useState(0);
+    const [currDay,setCurrDay] = useState(0);
 
     const [startProps, setStartProps] = useState({
         diaryId: 0, content: "", category: "", emoji: 0, photoList: [],createdDate:"",
@@ -27,7 +27,7 @@ const CalendarComponent = (events: any) => {
         setStartProps(info.event.extendedProps);
     };
     const handleEventDrop = (info: any) => {
-        const diary: DiaryWriteRequestProps = {
+        const diary: DiaryUpdateRequestProps = {
             diaryId: startProps.diaryId,
             content: startProps.content,
             emoji: startProps.emoji,
@@ -61,9 +61,10 @@ const CalendarComponent = (events: any) => {
     }
     const clickDay = (info:any)=>{
         const curr = new Date(info)
-        setCurrYear(info.getFullYear().toString());
-        setCurrMonth(info.getMonth().toString());
-        setCurrDay(info.getDate().toString());
+        setCurrYear(info.getFullYear());
+
+        setCurrMonth((info.getMonth()+1));
+        setCurrDay(info.getDate());
         (document.getElementById('my_modal_3') as any).showModal()
 
     }
