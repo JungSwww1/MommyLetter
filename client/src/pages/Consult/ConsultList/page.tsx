@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {ProfileComponent} from "@/components/Profile";
 import {
@@ -12,7 +12,13 @@ import DoctorListCardComponent from "@/components/DoctorListCard";
 import sample1 from "@/assets/images/sample1.jpg"
 import sample2 from "@/assets/images/sample2.jpg"
 
+import {ReadDoctorList} from "@/apis/profile/ProfileAPI";
+
+
 const ConsultListPage = () => {
+    useEffect(()=>{
+    console.log(ReadDoctorList);
+    },[])
     return (
         <ConsultListLayout>
             <BackgroundSection>
