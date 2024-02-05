@@ -32,12 +32,7 @@ public class DiaryResponse {
     private LocalDateTime createdDate;
 
     private List<PhotoResponse> photoList;
-<<<<<<< PATCH SET (c36cdb :art: Feat: Divide Emoticons into 5 Different Tables)
-<<<<<<< PATCH SET (f73de4 :art: Feat: Divide Emoticons into 5 Different Tables)
+
     private EmoticonResponse emoticon;
-=======
->>>>>>> BASE      (064008 :bug: Fix: fix board, comment controller and add explanation)
-=======
-    private List<EmoticonResponse> emoticonList;
->>>>>>> BASE      (12c0ba :art: Feat: Add Emoticon Features)
+
 }

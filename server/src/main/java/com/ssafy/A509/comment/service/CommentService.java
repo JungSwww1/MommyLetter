@@ -41,9 +41,21 @@ public class CommentService {
 	}
 
 	public List<CommentResponse> getBoardComment(Long boardId) {
+//		return commentRepository.findAllByBoardBoardId(boardId).stream()
+//			.map(comment -> modelMapper.map(comment, CommentResponse.class)).collect(
+//				Collectors.toList());
 		return commentRepository.findAllByBoardBoardId(boardId).stream()
-			.map(comment -> modelMapper.map(comment, CommentResponse.class)).collect(
-				Collectors.toList());
+				.map(comment -> {
+					CommentResponse response = new CommentResponse();
+					response.setCommentId(comment.getCommentId());
+					response.setNickname(comment.getUser().getNickname());
+					response.setUserId(comment.getUser().getUserId());
+					response.setContent(comment.getContent());
+					response.setCreatedDate(comment.getCreatedDate());
+					response.setUpdatedDate(comment.getUpdatedDate());
+					return response;
+				})
+				.collect(Collectors.toList());
 	}
 
 	@Transactional

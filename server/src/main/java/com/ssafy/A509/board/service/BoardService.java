@@ -1,6 +1,6 @@
 package com.ssafy.A509.board.service;
 
-import com.ssafy.A509.account.dto.AccountSimpleReponse;
+import com.ssafy.A509.account.dto.AccountSimpleResponse;
 import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.account.repository.AccountRepository;
 import com.ssafy.A509.board.dto.BoardResponse;
@@ -10,6 +10,7 @@ import com.ssafy.A509.board.dto.UpdateBoardRequest;
 import com.ssafy.A509.board.model.Board;
 import com.ssafy.A509.board.model.Category;
 import com.ssafy.A509.board.repository.BoardRepository;
+import com.ssafy.A509.hashtag.dto.HashtagResponse;
 import com.ssafy.A509.hashtag.model.Hashtag;
 import com.ssafy.A509.photo.dto.CreatePhotoRequest;
 import com.ssafy.A509.photo.model.Photo;
@@ -18,6 +19,8 @@ import com.ssafy.A509.profile.service.ProfileService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -59,19 +62,20 @@ public class BoardService {
 		return getBoardResponse(board);
 	}
 
-	public List<BoardSimpleResponse> getAllBoardByUser(Long userId) {
-		List<BoardSimpleResponse> boardAll = getAllBoard();
+	public List<BoardResponse> getAllBoardByUser(Long userId) {
+		List<BoardResponse> boardAll = getAllBoard();
 
-		List<BoardSimpleResponse> boardFollwer = boardRepository.findByAccess(userId).stream()
-			.map(this::getBoardSimpleResponse)
+		List<BoardResponse> boardFollwer = boardRepository.findByAccess(userId).stream()
+			.map(this::getBoardResponse)
 			.collect(Collectors.toList());
 
 		boardAll.addAll(boardFollwer);
+		Collections.sort(boardAll, Comparator.comparing(BoardResponse::getCreatedDate).reversed());
 		return boardAll;
 	}
 
-	public List<BoardSimpleResponse> getAllBoard() {
-		return boardRepository.findAll().stream().map(this::getBoardSimpleResponse)
+	public List<BoardResponse> getAllBoard() {
+		return boardRepository.findAllBoard().stream().map(this::getBoardResponse)
 			.collect(Collectors.toList());
 	}
 
@@ -145,15 +149,30 @@ public class BoardService {
 			.collect(Collectors.toList());
 	}
 
+//	private BoardResponse getBoardResponse(Board board) {
+//		BoardResponse boardResponse = modelMapper.map(board, BoardResponse.class);
+//		UserProfileResponse userProfile = profileService.getUserProfile(board.getUser().getUserId());
+//		boardResponse.setAccountSimpleReponse(getUserResponse(board, userProfile));
+//		return boardResponse;
+//	}
+
 	private BoardResponse getBoardResponse(Board board) {
 		BoardResponse boardResponse = modelMapper.map(board, BoardResponse.class);
-		UserProfileResponse userProfile = profileService.getUserProfile(board.getUser().getUserId());
+		User user = board.getUser();
+		UserProfileResponse userProfile = profileService.getUserProfile(user.getUserId());
 		boardResponse.setAccountSimpleReponse(getUserResponse(board, userProfile));
+
+		// 해시태그 목록 추가
+		List<HashtagResponse> hashtagList = board.getHashtagList().stream()
+				.map(hashtag -> HashtagResponse.builder().content(hashtag.getContent()).build())
+				.collect(Collectors.toList());
+		boardResponse.setHashTagList(hashtagList);
+
 		return boardResponse;
 	}
 
-	private AccountSimpleReponse getUserResponse(Board board, UserProfileResponse userProfile) {
-		return AccountSimpleReponse.builder()
+	private AccountSimpleResponse getUserResponse(Board board, UserProfileResponse userProfile) {
+		return AccountSimpleResponse.builder()
 			.nickname(board.getUser().getNickname())
 			.userId(board.getUser().getUserId())
 			.profilePhoto(Optional.ofNullable(userProfile).map(UserProfileResponse::getProfilePhoto).orElse(null))

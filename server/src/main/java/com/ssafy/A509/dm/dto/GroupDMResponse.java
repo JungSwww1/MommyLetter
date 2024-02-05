@@ -1,6 +1,6 @@
 package com.ssafy.A509.dm.dto;
 
-import com.ssafy.A509.account.dto.AccountSimpleReponse;
+import com.ssafy.A509.account.dto.AccountSimpleResponse;
 import java.time.LocalDateTime;
 import java.util.Set;
 import lombok.Builder;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @Builder
 public class GroupDMResponse {
 	String dpGroupName;
-	AccountSimpleReponse host;
-	Set<AccountSimpleReponse> users;
+	AccountSimpleResponse host;
+	Set<AccountSimpleResponse> users;
 	LocalDateTime createdDate;
 }
