@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -13,7 +14,8 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private final String secretKey = "dddddddddddddddddddddddddddddddddddddddddddddd"; // 실제 서비스에서는 보안을 위해 복잡한 키로 지정해주세요!!
+    @Value("${myapp.secret-key}")
+    private String secretKey;
     private static final Logger log = LoggerFactory.getLogger(JwtTokenProvider.class); // Logger 추가
 
     public String createToken(Long userId) {
