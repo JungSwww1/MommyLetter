@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8080/auth";
+const BASE_URL = "http://i10a509.p.ssafy.io:8081/auth";
 
 // 아이디에 해당하는 사용자 가져오기
 export const getUserData = async (userId:number) => {

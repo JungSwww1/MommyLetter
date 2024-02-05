@@ -5,7 +5,6 @@ interface Props{
     writeButton: ReactNode|boolean
 }
 const BottomUpModal = ({children,writeButton}:Props) => {
-
     return (
         <div className="w-[100%] h-[100%]">
             <dialog id="my_modal_3" className="modal">
@@ -25,5 +24,3 @@ const BottomUpModal = ({children,writeButton}:Props) => {
 };
 
 export default BottomUpModal;
-
-

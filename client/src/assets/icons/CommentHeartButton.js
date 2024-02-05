@@ -1,31 +1,28 @@
 import React, {useEffect, useState} from 'react';
-import {boardLikeAPI, sendBoardLikeAPI, sendBoardUnlikeAPI} from "@/apis/Board/boardApi";
+import {commentLikeAPI, sendCommentLikeAPI, sendCommentUnlikeAPI} from "@/apis/Comments/CommentAPI";
 
 
 
-const FeedHeartButton = ({ likedata, onLikeStatusChange  }) => {
+const CommentHeartButton = ({ likedata, onLikeStatusChange  }) => {
     const [liked, setLiked] = useState(false);
-
     useEffect(() => {
         // likedata를 기반으로 좋아요 상태 초기화
         const fetchLikeStatus = async () => {
-            const res = await boardLikeAPI(likedata.userId, likedata.boardId);
+            const res = await commentLikeAPI(likedata.commentId, likedata.userId);
             setLiked(res);
         };
-
         fetchLikeStatus();
-    }, [likedata.userId, likedata.boardId]);
+    }, [likedata.commentId]);
 
 
     const toggleLike = async () => {
-        const{userId, boardId} = likedata
         if(!liked) {
             setLiked(true);
-            await sendBoardLikeAPI(likedata);
+            await sendCommentLikeAPI(likedata);
             onLikeStatusChange(true);
         } else {
             setLiked(false);
-            await sendBoardUnlikeAPI(userId, boardId);
+            await sendCommentUnlikeAPI(likedata.commentId, likedata.userId);
             onLikeStatusChange(false);
         }
     };
@@ -40,4 +37,4 @@ const FeedHeartButton = ({ likedata, onLikeStatusChange  }) => {
     );
 };
 
-export default FeedHeartButton;
+export default CommentHeartButton;

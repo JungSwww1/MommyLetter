@@ -102,8 +102,6 @@ const fileChange = (index:number) =>{
     for(let i = 0; i<imgFiles.length;i++){
         if(i==index) continue;
         temp.push(imgFiles[i]);
-        imgURL = URL.createObjectURL(imgFiles[i]);   // 이미지 URL 생성.
-        console.log(imgURL);
     }
     setImgFiles(temp);
 }

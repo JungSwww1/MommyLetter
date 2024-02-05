@@ -17,10 +17,9 @@ import FeedHeartButton from "@/assets/icons/FeedHeartButton";
 import FeedMessage from "@/assets/icons/FeedMessage";
 import {Link} from "react-router-dom";
 import {countBoardLike} from "@/apis/Board/boardApi";
-import Modal from "@/components/Feed/FeedModal";
-import hashTag from "@/components/HashTag";
+import Modal from "@/components/Feed/CommentModal/CommentModal";
 import {getAllCommentsAPI} from "@/apis/Comments/CommentAPI";
-
+import Test from "@/components/Feed/test";
 
 interface board {
     boardId: number;
@@ -28,7 +27,7 @@ interface board {
     createdDate: string;
     category:string;
     updatedDate: string;
-    hashTagList: string[];
+    hashTagList: { content: string; }[];
     photoList: string[];
     accountSimpleReponse: {
         nickname: string;
@@ -42,13 +41,13 @@ interface Comment {
     content: string;
     createdDate: string;
     updatedDate: string;
-    // 추가: 작성자의 닉네임을 나타내는 필드가 필요하다면 여기에 추가
-    nickname?: string;
+    nickname: string;
 }
 interface MainFeedProps {
     board: board;
 }
 
+// 게시물 좋아요 및 댓글 좋아요는 차후에 localstorage에 있는 userId로 수정해야한다.
 const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
     //댓글 가져오는 용도
     const [comments, setComments] = useState<Comment[]>([])
@@ -61,13 +60,13 @@ const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
     }, [board.boardId]);
 
 
-    //좋아요 버튼 용도
+    //게시물 좋아요 버튼 용도
     const likeData = {
         boardId: board.boardId,
         userId : board.accountSimpleReponse.userId
     };
 
-    // 좋아요 개수를 가져와서 상태 업데이트
+    // 게시물 좋아요 개수를 가져와서 상태 업데이트
     const [countLike, setCountLike] = useState<number>(0);
     useEffect(() => {
         const fetchLikeCount = async () => {
@@ -91,10 +90,17 @@ const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
     const toggleModal = () => {
         setShowModal(!showModal);
     };
+    const toggleModal1 =() => {
+        const modal = document.getElementById('my_modal_3');
+        if (modal instanceof HTMLDialogElement) {
+            modal.showModal();
+        } else {
+            console.error('Element is not a dialog');
+        }
+    }
 
     return (
         <Layout>
-
             <TitleContainer>
                 <TitleWrapper>
                     <img src={logo} alt="Logo" className={"w-[50px] h-[50px] rounded-full"}/>
@@ -105,7 +111,11 @@ const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
                         <ThreeDotMenu/>
                     </div>
                     <CreatedDate>
-                        {new Date(board.createdDate).toLocaleDateString('ko-KR', {year: 'numeric', month: 'long', day: 'numeric'})}
+                        {new Date(board.createdDate).toLocaleDateString('ko-KR', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        })}
                     </CreatedDate>
                 </div>
             </TitleContainer>
@@ -129,7 +139,7 @@ const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
             </PhotoContainer>
             <PhotoContainer>
                 {board.photoList.map((photo, index) => (
-                    <div key={index} className="m-2" style={{ width: 'calc(33.333% - 1rem)', float: 'left' }}>
+                    <div key={index} className="m-2" style={{width: 'calc(33.333% - 1rem)', float: 'left'}}>
                         <img src={photo} alt={`Photo ${index + 1}`} className={"w-full h-full object-cover"}/>
                     </div>
                 ))}
@@ -137,7 +147,7 @@ const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
 
             <HashtagContainer>
                 {board.hashTagList.map((hashtag, index) => (
-                    <p key={index}>#{hashtag}</p>
+                    <p className="mr-[1.5%]" key={index}>#{hashtag.content}</p>
                 ))}
             </HashtagContainer>
 
@@ -145,17 +155,19 @@ const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
                 <p className={"text-[13px] font-bold my-auto"}>좋아요 {countLike}개</p>
                 <ButtonWrapper>
                     <FeedHeartButton likedata={likeData} onLikeStatusChange={handleLikeStatusChange}/>
-                    <Link className={"mt-[8%] h-[90%]"} to={"#"} onClick={toggleModal}><MultiMessage/></Link>
+                    <Link className={"mt-[8%] h-[90%]"} to={"#"} onClick={toggleModal1}><MultiMessage/></Link>
                     <Link className={"mt-[8%] h-[90%]"} to={"/message"}><FeedMessage/></Link>
-                </ButtonWrapper>
-                {/* showModal 상태에 따라 Modal 컴포넌트를 조건부 렌더링 */}
-                {showModal && <Modal onClose={toggleModal} comments={comments} boardId={board.boardId} userId={board.accountSimpleReponse.userId} />}
-            </LikeIconContainer>
+                    {showModal && <Modal onClose={toggleModal} comments={comments} boardId={board.boardId}
+                                         userId={board.accountSimpleReponse.userId}/>}
 
+                    <Test onClose={toggleModal} comments={comments} boardId={board.boardId} userId={board.accountSimpleReponse.userId}/>
+
+                </ButtonWrapper>
+            </LikeIconContainer>
             <CommentContainer>
                 {comments.slice(0, 1).map((comment, index) => (
                     <div key={index} className="flex flex-row mb-2 items-center">
-                        <p className="text-[90%] font-bold mr-[3%]">{comment.userId}</p>
+                        <p className="text-[90%] font-bold mr-[3%]">{comment.nickname}</p>
                         <p className="w-[75%] text-[80%] truncate">{comment.content}</p>
                     </div>
                 ))}

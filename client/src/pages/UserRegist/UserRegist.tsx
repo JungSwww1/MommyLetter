@@ -85,8 +85,6 @@ const UserRegist =()=> {
         }else {
             if (!pressNickname) {alert("닉네임 중복 버튼을 눌러주세요");}
             if (!pressEmail) {alert("이메일 중복 버튼을 눌러주세요");}
-            if (!possibleNickname) {alert("이미 사용 중인 닉네임입니다.");}
-            if (!possibleEmail) {alert("이미 사용 중인 이메일입니다.");}
             if (!passwordMatch) {alert("비밀번호가 일치하지 않습니다.");}
             if (localPassword === '') {alert("비밀번호는 공백이 불가합니다.")}
         }

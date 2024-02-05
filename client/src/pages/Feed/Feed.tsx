@@ -10,7 +10,7 @@
         createdDate: string;
         category:string;
         updatedDate: string;
-        hashTagList: string[];
+        hashTagList: { content: string; }[];
         photoList: string[];
         accountSimpleReponse: {
             nickname: string;

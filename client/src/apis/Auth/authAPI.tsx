@@ -2,7 +2,7 @@ import axios from 'axios'
 import {getUserData} from "@/apis/User/userApi";
 import {useNavigate} from "react-router-dom";
 
-const AUTH_BASE_URL = `http://localhost:8080/auth`
+const AUTH_BASE_URL = `http://i10a509.p.ssafy.io:8081/auth`
 
 interface loginData {
     email : string;
