@@ -75,14 +75,14 @@ public class DiaryService {
         return diaryRepository
                 .findById(diaryId)
                 .map(this::getDiaryResponse)
-                .orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_DIARY));
+                .orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_DIARY, "diaryId : " + diaryId));
     }
 
     @Transactional
     public DiaryResponse createDiary(CreateDiaryRequest diaryRequest) {
         Diary newDiary = Diary.builder()
                 .user(accountRepository.findById(diaryRequest.getUserId())
-                        .orElseThrow())
+                        .orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_ACCOUNT)))
                 .content(diaryRequest.getContent())
                 .category(diaryRequest.getCategory())
                 .emoji(diaryRequest.getEmoji())
@@ -412,7 +412,7 @@ public class DiaryService {
 
     private Diary findById(Long diaryId) {
         return diaryRepository.findById(diaryId).orElseThrow(()
-                -> new CustomException(ErrorCode.NO_SUCH_DIARY));
+                -> new CustomException(ErrorCode.NO_SUCH_DIARY, "diaryId : " + diaryId));
     }
 
 }

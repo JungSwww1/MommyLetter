@@ -53,7 +53,27 @@ public enum ErrorCode {
 
     //******************************* Custom Error CodeList ***************************************
 
-    NO_SUCH_DIARY(200, "1000", "DiaryId does not exist"),
+    INSERT_ERROR(200, "1000", "Insert Transaction Error Exception"),
+
+    UPDATE_ERROR(200, "1001", "Update Transaction Error Exception"),
+
+    DELETE_ERROR(200, "1002", "Delete Transaction Error Exception"),
+
+    NO_SUCH_DIARY(200, "1003", "DiaryId에 대응하는 Diary가 존재하지 않습니다"),
+
+    NO_SUCH_ACCOUNT(200, "1004", "UserId에 대응하는 User가 존재하지 않습니다"),
+
+    NO_SUCH_RESERVE(200, "1005", "ReserveId에 대응하는 Reserve가 존재하지 않습니다"),
+
+    NO_SUCH_DOCTOR(200, "1006", "DoctorId에 대응하는 Doctor가 존재하지 않습니다"),
+
+    NO_SUCH_PRESCRIPTION(200, "1007", "해당 경로에 Prescription이 존재하지 않습니다"),
+
+    NO_SUCH_FILE_FROM_PATH(200, "1008", "해당 경로에 파일이 존재하지 않습니다"),
+
+    NO_CONSULT_DETAIL(200, "1009", "CounselingId에 해당하는 의사 정보가 없습니다"),
+
+    NO_PATIENT_INFO(200, "1010", "ReserveId에 해당하는 환자의 정보가 존재하지 않습니다"),
 
     ; // End
 
