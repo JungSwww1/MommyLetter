@@ -9,7 +9,7 @@ export interface DiaryReadResponseProps{
     content:string;
     diaryId:number;
     emoji:number;
-    photoList:string[];
+    photoList:PhotoProps[];
     createdDate:string;
     emoticon: {
         emotionList: string[];
@@ -19,3 +19,7 @@ export interface DiaryReadResponseProps{
         weatherList: string[];
     } | null
 }
+export interface PhotoProps{
+    path:string;
+}
+

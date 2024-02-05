@@ -31,10 +31,13 @@ export interface DirectMessageComponentProps {
 export interface DiaryResponseProps{
     content:string;
     emoji:number;
-    photoList:string[];
+    photoList:PhotoListProps[];
     createdDate:string;
 }
 
+export interface PhotoListProps{
+    path: string;
+}
 
 export interface ProfileProps{
     name: string;
