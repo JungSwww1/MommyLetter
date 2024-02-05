@@ -25,9 +25,10 @@ import com.ssafy.A509.diary.repository.FamilyEmoticonRepository;
 import com.ssafy.A509.diary.repository.HealthEmoticonRepository;
 import com.ssafy.A509.diary.repository.PeopleEmoticonRepository;
 import com.ssafy.A509.diary.repository.WeatherEmoticonRepository;
-import com.ssafy.A509.photo.dto.CreatePhotoRequest;
+import com.ssafy.A509.photo.dto.UpdatePhotoRequest;
 import com.ssafy.A509.photo.model.Photo;
 import com.ssafy.A509.photo.repository.PhotoRepository;
+import com.ssafy.A509.photo.service.PhotoService;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,7 @@ public class DiaryService {
     private final HealthEmoticonRepository healthEmoticonRepository;
     private final PeopleEmoticonRepository peopleEmoticonRepository;
     private final WeatherEmoticonRepository weatherEmoticonRepository;
+    private final PhotoService photoService;
 
     //Diary와 DiaryResponse 매핑
     private DiaryResponse getDiaryResponse(Diary diary){
@@ -116,22 +118,24 @@ public class DiaryService {
     * */
     public void updatePhoto(Diary diary, UpdateDiaryRequest diaryRequest){
         //사진리스트 수정
-        List<Photo> photoList = new ArrayList<>(diary.getPhotoList());
-        List<String> newPhotoList = Optional.ofNullable(diaryRequest.getPhotoList())
+        List<Photo> temp = new ArrayList<>(diary.getPhotoList());
+        List<Photo> photoList = Optional.ofNullable(temp).orElseGet(ArrayList::new);
+        List<UpdatePhotoRequest> newPhotoList = Optional.ofNullable(diaryRequest.getPhotoList())
             .orElseGet(ArrayList::new);
         List<Photo> deletePhotoList = new ArrayList<>();
 
         //사진 추가
+        //photoId를 가지고 있으면 기존의 것, 없으면 새로운 것
         newPhotoList.stream()
-            .filter(newPhoto -> photoList.stream()
-                .noneMatch(existingPhoto -> existingPhoto.getPath().equals(newPhoto)))
-            .map(newPhoto -> Photo.builder().path(newPhoto).build())
+            .filter(newPhoto -> newPhoto.getPhotoId() == null)
+            .map(newPhoto -> Photo.builder().path(photoService.getImagePath(newPhoto.getPhoto())).build())
             .forEach(diary::addPhoto);
 
         //사진 삭제
         photoList.stream()
             .filter(existingPhoto -> newPhotoList.stream()
-                .noneMatch(newPhoto -> newPhoto.equals(existingPhoto.getPath())))
+                .filter(newPhoto -> newPhoto.getPhotoId() != null)
+                .noneMatch(newPhoto -> newPhoto.getPhotoId().equals(existingPhoto.getPhotoId())))
             .forEach(
                 photo -> {
                     diary.getPhotoList().remove(photo);
@@ -150,9 +154,17 @@ public class DiaryService {
     * */
     public void updateEmoticon(Diary diary, UpdateDiaryRequest diaryRequest){
         //기존 이모티콘
-        Emoticon emoticon = diary.getEmoticon();
+//        Emoticon emoticon = diary.getEmoticon();
+        Emoticon emoticon = Optional.ofNullable(diary.getEmoticon())
+            .orElseGet(() -> Emoticon.builder().build());
         //들어온 이모티콘 리스트
+<<<<<<< PATCH SET (bcdd0a :art: Feat: Add photo features to Diary)
+//        UpdateEmoticonRequest newEmoticon = diaryRequest.getEmoticon();
+        UpdateEmoticonRequest newEmoticon = Optional.ofNullable(diaryRequest.getEmoticon())
+            .orElseGet(() -> UpdateEmoticonRequest.builder().build());
+=======
         UpdateEmoticonRequest newEmoticon = diaryRequest.getEmoticon();
+>>>>>>> BASE      (19271c :bug: delete tests, fix DiaryService)
         // 삭제할 이모티콘 리스트
         Emoticon deleteEmoticon = Emoticon.builder().build();
 
@@ -164,7 +176,7 @@ public class DiaryService {
     }
 
     private void updateWeather(Emoticon emoticon, UpdateEmoticonRequest newEmoticon, Emoticon deleteEmoticon) {
-        List<Weather> newWeatherList = newEmoticon.getWeatherList();
+        List<Weather> newWeatherList = Optional.ofNullable(newEmoticon.getWeatherList()).orElseGet(ArrayList::new);
         List<WeatherEmoticon> weatherList = new ArrayList<>(emoticon.getWeatherEmoticon());
 
         newWeatherList.stream()
@@ -304,9 +316,10 @@ public class DiaryService {
     * */
     private void addPhotos(Diary diary, CreateDiaryRequest diaryRequest) {
         Optional.ofNullable(diaryRequest.getPhotoList()).ifPresent(list -> {
-            for(CreatePhotoRequest photoRequest : list) {
+            List<String> pathList = photoService.getImagePathList(list);
+            for(String path : pathList) {
                 Photo photo = Photo.builder()
-                    .path(photoRequest.getPath())
+                    .path(path)
                     .build();
 
                 diary.addPhoto(photo);
