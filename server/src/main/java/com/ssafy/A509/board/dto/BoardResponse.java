@@ -3,6 +3,7 @@ package com.ssafy.A509.board.dto;
 import com.ssafy.A509.account.dto.AccountSimpleResponse;
 import com.ssafy.A509.board.model.Access;
 import com.ssafy.A509.board.model.Category;
+import com.ssafy.A509.hashtag.dto.HashtagResponse;
 import com.ssafy.A509.photo.dto.CreatePhotoRequest;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,6 +26,6 @@ public class BoardResponse {
 	private Category category;
 	private LocalDateTime createdDate;
 	private LocalDateTime updatedDate;
-	private List<String> hashTagList;
+	private List<HashtagResponse> hashTagList;
 	private List<CreatePhotoRequest> photoList;
 }

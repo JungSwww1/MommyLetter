@@ -10,6 +10,7 @@ import com.ssafy.A509.board.dto.UpdateBoardRequest;
 import com.ssafy.A509.board.model.Board;
 import com.ssafy.A509.board.model.Category;
 import com.ssafy.A509.board.repository.BoardRepository;
+import com.ssafy.A509.hashtag.dto.HashtagResponse;
 import com.ssafy.A509.hashtag.model.Hashtag;
 import com.ssafy.A509.photo.dto.CreatePhotoRequest;
 import com.ssafy.A509.photo.model.Photo;
@@ -148,10 +149,25 @@ public class BoardService {
 			.collect(Collectors.toList());
 	}
 
+//	private BoardResponse getBoardResponse(Board board) {
+//		BoardResponse boardResponse = modelMapper.map(board, BoardResponse.class);
+//		UserProfileResponse userProfile = profileService.getUserProfile(board.getUser().getUserId());
+//		boardResponse.setAccountSimpleReponse(getUserResponse(board, userProfile));
+//		return boardResponse;
+//	}
+
 	private BoardResponse getBoardResponse(Board board) {
 		BoardResponse boardResponse = modelMapper.map(board, BoardResponse.class);
-		UserProfileResponse userProfile = profileService.getUserProfile(board.getUser().getUserId());
+		User user = board.getUser();
+		UserProfileResponse userProfile = profileService.getUserProfile(user.getUserId());
 		boardResponse.setAccountSimpleReponse(getUserResponse(board, userProfile));
+
+		// 해시태그 목록 추가
+		List<HashtagResponse> hashtagList = board.getHashtagList().stream()
+				.map(hashtag -> HashtagResponse.builder().content(hashtag.getContent()).build())
+				.collect(Collectors.toList());
+		boardResponse.setHashTagList(hashtagList);
+
 		return boardResponse;
 	}
 
