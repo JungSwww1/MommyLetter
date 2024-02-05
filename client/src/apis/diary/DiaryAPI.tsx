@@ -10,9 +10,17 @@ import {DiaryWriteRequestProps,DiaryUpdateRequestProps} from "@/apis/type/types"
 
 // 일기 생성 함수
 export const createDiary = async (data: DiaryWriteRequestProps) => {
-    await axios.post('/diary', data).
-    then((response)=>console.log(response.data)).
-    catch((error)=>console.log(error.response.data.message))
+
+    try{
+        const res = await axios.post('/diary', data)
+        console.log(res);
+} catch (err:any) {
+    console.log('Register err : ', err.response);
+    const statusCode = err.response.status; // 400
+    const statusText = err.response.statusText; // Bad Request
+    const message = err.response.data.message[0]; // id should not be empty
+    console.log(`${statusCode} - ${statusText} - ${message}`);
+}
 };
 
 // 특정 사용자의 일기를 가져오는 함수

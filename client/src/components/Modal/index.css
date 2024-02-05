@@ -11,6 +11,7 @@
 .modal-toggle:checked + .modal.modal-backdrop .bottom-sheet {
     transform: translateY(0);
 }
+
 .scrollBar::-webkit-scrollbar {
     width: 3px; /*스크롤바의 너비*/
 }

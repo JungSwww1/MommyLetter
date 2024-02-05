@@ -6,12 +6,6 @@ export const DiaryLayout = styled.div`
     m-3
 `;
 
-export const Select = styled.select`
-    w-[200px]
-    h-[42px]
-    justify-center
-    text-center
-    `;
 
 export const Img = styled.img`
     w-[50px]
@@ -25,4 +19,11 @@ export const Label = styled.label`
     bg-yellow-500
     rounded
     cursor-pointer
+    `
+
+export const Button = styled.label`
+    duration-200
+    active:scale-90
+    hover:bg-gray-400
+    rounded-xl
     `
