@@ -1,5 +1,5 @@
 import React from "react";
-import {DiaryResponseProps} from "@/components/type/types";
+import {DiaryResponseProps,PhotoListProps} from "@/components/type/types";
 
 export const DiaryListComponent = ({content,emoji,photoList,createdDate }:DiaryResponseProps) => {
     const date = new Date(createdDate);
@@ -22,7 +22,7 @@ export const DiaryListComponent = ({content,emoji,photoList,createdDate }:DiaryR
                     <img
                         key={index}
                         className="w-[200px] h-[150px] mt-5 mr-3"
-                        src={photo}
+                        src={photo.path}
                         alt={`Picture ${index + 1}`}/>
                 ))}
             </div>

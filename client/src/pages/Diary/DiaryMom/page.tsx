@@ -17,7 +17,6 @@ const DiaryMomPage = () => {
                 const newEvents: any = [];
 
                 // ReactNode 변수
-                console.log(data);
                 const diaryLists: any[] = [];
                 data.forEach((diary: DiaryReadResponseProps) => {
                     if (diary.category === "Mom") {
@@ -49,6 +48,7 @@ const DiaryMomPage = () => {
                         />);
                     }
                 });
+                console.log(diaryLists);
                 setEvents(newEvents);
                 setdiaryLists(diaryLists);
             });
