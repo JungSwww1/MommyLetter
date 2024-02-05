@@ -1,10 +1,14 @@
 import React, {useEffect, useRef, useState} from "react";
-import {Img, Label, Select} from './styles';
+import {Img, Label, Button} from './styles';
 import BottomUpModal from "@/components/Modal";
 import {fileExtensionValid} from "@/pages/Common/FileUpload";
 import {createDiary} from "@/apis/diary/DiaryAPI";
 import {DiaryWriteRequestProps} from "@/apis/type/types";
 import {ReactComponent as CircleX} from "@/assets/icons/circleX.svg";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {useParams} from "react-router-dom";
+import {Toast} from "@/components/Toast/Toast";
 
 interface DateProps {
     currYear: number;
@@ -20,7 +24,7 @@ export const DiaryWrite = ({currYear, currMonth, currDay}: DateProps) => {
     const [selectedMonth, setSelectedMonth] = useState(currMonth);
     const [selectedDay, setSelectedDay] = useState(currDay);
     const [endDay, setEndDay] = useState<number>(0);
-    const [emotion, setEmotion] = useState(0);
+    const [emotion, setEmotion] = useState(99);
     const [content, setContent] = useState("");
 
     useEffect(() => {
@@ -64,16 +68,19 @@ export const DiaryWrite = ({currYear, currMonth, currDay}: DateProps) => {
                 })
             ).then((results) => {
                 setImgFiles([...imgFiles, ...results]);
+                console.log(imgFiles)
             });
         }
     };
 const diaryWrite = () =>{
+    const createdDate = new Date(selectedYear, selectedMonth - 1, selectedDay);
+
     const writeInfo: DiaryWriteRequestProps = {
         userId: 101,
         content: content,
         category: "Baby",
-        createdDate: new Date().toISOString(), // 수정: Date.now().toString()을 new Date().toISOString()로 수정
-        emoji: 0,
+        createdDate: createdDate.toISOString(),
+        emoji: emotion,
         photoList: [
             { path: "/assets/images/seungwon.png" },
             { path: "/assets/images/seungwon.png" },
@@ -88,14 +95,24 @@ const diaryWrite = () =>{
         emoticonList: ["Joy"]
     };
     createDiary(writeInfo).then((response)=>{
-        console.log(response);
-        alert("작성되었습니다.")
+        if(content===""){
+            Toast.error("내용을 입력하세요")
+            return;
+        }
+        Toast.success("작성되었습니다.");
+
+        setTimeout(()=>{
+            document.getElementById("closeBtn")?.click(); // 모달닫기
+        },800)
     }).catch(
         (error)=>{
             console.log(error);
         }
     );
+
 }
+
+
 const fileChange = (index:number) =>{
     var temp = [];
     for(let i = 0; i<imgFiles.length;i++){
@@ -105,31 +122,34 @@ const fileChange = (index:number) =>{
     }
     setImgFiles(temp);
 }
+const clickedEmotion = (num:number) =>{
+    setEmotion(num);
+}
     const writeButton = <button className="btn btn-ghost bg-user" onClick={diaryWrite}>작성하기</button>
     const children = <div className="flex flex-col ml-5 mt-5 w-[98%] h-[100%]">
 
-        <p className="text-[15px] font-bold text-black">날짜 선택</p>
-        <div className="flex justify-around">
-            <Select onChange={e => setSelectedYear(Number(e.target.value))} value={currYear}>
-                {years.map((year, index) => (<option key={index} value={year}
-                >{year} </option>))}
-            </Select>
-            <Select onChange={e => setSelectedMonth(Number(e.target.value))} value={currMonth}>
-                {months.map((month, index) => (<option key={index} value={month}>{month}</option>))}
-            </Select>
-            <Select onChange={e => setSelectedDay(Number(e.target.value))} value={currDay}>
-                {days.map((day, index) => (<option key={index} value={day}>{day}</option>))}
-            </Select>
+        <ToastContainer style={{}} position={"top-center"} hideProgressBar={true} autoClose={300}/>
+        <p className="text-[15px] font-bold text-black">선택 날짜</p>
+        <div className="flex justify-around mb-3">
+            <p className="font-bold">{currYear}</p>
+            <p className="font-bold">{currMonth}</p>
+            <p className="font-bold">{currDay}</p>
+
         </div>
         <p className="text-[15px] font-bold text-black mt-5"> 오늘의 기분 </p>
 
         <div className="flex justify-around">
 
-            <button onClick={()=>{}}><Img src="/assets/images/sample_angry.png"/></button>
-            <button><Img src="/assets/images/sample_bad.png"/></button>
-            <button><Img src="/assets/images/sample_good.png"/></button>
-            <button><Img src="/assets/images/sample_soso.png"/></button>
-            <button><Img src="/assets/images/sample_tired.png"/></button>
+            <Button className={emotion === 1 ? "bg-red-300" : ""} onClick={()=>{clickedEmotion(1)}}>
+                <Img src="/assets/images/sample_angry.png"/></Button>
+            <Button className={emotion === 2 ? "bg-blue-300" : ""} onClick={()=>{clickedEmotion(2)}}>
+                <Img src="/assets/images/sample_bad.png"/></Button>
+            <Button className={emotion === 3 ? "bg-amber-300" : ""} onClick={()=>{clickedEmotion(3)}}>
+                <Img src="/assets/images/sample_good.png"/></Button>
+            <Button className={emotion === 4 ? "bg-green-300" : ""} onClick={()=>{clickedEmotion(4)}}>
+                <Img src="/assets/images/sample_soso.png"/></Button>
+            <Button className={emotion === 5 ? "bg-purple-300" : ""} onClick={()=>{clickedEmotion(5)}}>
+                <Img src="/assets/images/sample_tired.png"/></Button>
         </div>
         <br/>
         <div className="h-[30%]">
@@ -139,16 +159,19 @@ const fileChange = (index:number) =>{
         <div >
             <div className="flex justify-between">
             <Label htmlFor="input-file">업로드</Label><p className="text-gray-400">※ 10MB 이하 png,jpg,jpeg파일</p>
-            <input type="file" id="input-file"
+            <input type="file" multiple id="input-file"
                    className="signup-profileImg-input"
-                   accept="/assets/images/*"
+                   accept="image/jpg,image/png,image/jpeg,image/gif"
                    onChange={saveImgFiles}
                    ref={imgRef}
                    style={{display: "none"}}/>
             </div>
+
+
             <div className="flex">
                 {imgFiles.length > 0 ? (
                     imgFiles.map((imgFile, index) => (
+
                         <div>
                             <button className="relative top-1/4 hover:bg-gray-400 hover:rounded-lg active:scale-90" onClick={()=>{fileChange(index)}}><CircleX/></button>
                             <img
