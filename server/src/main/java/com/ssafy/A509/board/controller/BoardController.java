@@ -4,7 +4,6 @@ import com.ssafy.A509.board.dto.BoardResponse;
 import com.ssafy.A509.board.dto.BoardSimpleResponse;
 import com.ssafy.A509.board.dto.CreateBoardRequest;
 import com.ssafy.A509.board.dto.UpdateBoardRequest;
-import com.ssafy.A509.board.model.Category;
 import com.ssafy.A509.board.service.BoardService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
