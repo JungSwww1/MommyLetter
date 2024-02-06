@@ -1,11 +1,11 @@
-package com.ssafy.A509.config;
+package com.ssafy.A509.kafka.config;
 
-import com.ssafy.A509.dm.dto.KafkaDMRequest;
-import com.ssafy.A509.dm.model.KafkaConstants;
+import com.ssafy.A509.kafka.dto.KafkaConstants;
+import com.ssafy.A509.kafka.dto.KafkaDMRequest;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.common.serialization.IntegerDeserializer;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -17,7 +17,6 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 @EnableKafka
 @Configuration
 public class KafkaConsumerConfig {
-
 	@Bean
 	public ConcurrentKafkaListenerContainerFactory<String, KafkaDMRequest> kafkaListenerContainerFactory() {
 		ConcurrentKafkaListenerContainerFactory<String, KafkaDMRequest> factory = new ConcurrentKafkaListenerContainerFactory<>();
@@ -30,9 +29,11 @@ public class KafkaConsumerConfig {
 		Map<String, Object> consumerProps = new HashMap<>();
 		consumerProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaConstants.KAFKA_BROKER);
 		consumerProps.put(ConsumerConfig.GROUP_ID_CONFIG, KafkaConstants.GROUP_ID);
-		consumerProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, IntegerDeserializer.class.getName());
+		consumerProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
 		consumerProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class.getName());
-		consumerProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+		consumerProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+		consumerProps.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
+
 
 		return new DefaultKafkaConsumerFactory<>(consumerProps);
 	}

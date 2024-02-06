@@ -2,9 +2,8 @@ package com.ssafy.A509.dm.controller;
 
 import com.ssafy.A509.dm.dto.DMRequest;
 import com.ssafy.A509.dm.dto.DMResponse;
-import com.ssafy.A509.dm.dto.KafkaDMRequest;
-import com.ssafy.A509.dm.dto.OtherUserResponse;
 import com.ssafy.A509.dm.service.DMService;
+import com.ssafy.A509.kafka.dto.KafkaDMRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -25,8 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
+@Tag(name = "DM", description = "1:1 채팅 API")
 @Slf4j
-@Tag(name = "DM", description = "DM API")
 @RequestMapping("/dm")
 public class DMController {
 
@@ -34,34 +33,49 @@ public class DMController {
 	private final DMService dmService;
 	private final ModelMapper modelMapper;
 
-	// url/app/message로 들어오면 topic/public을 구독하고 있는 사람에게 전송
+
+	// url/app/message로 들어오면 sub/dm을 구독하고 있는 사람에게 전송
 //	@MessageMapping("/message")
 //	@Payload
 	@PostMapping
 	public void sendMessage(@Valid @RequestBody DMRequest dmRequest) {
-		log.info("content = {}", dmRequest.getContent());
+		log.info("dmRequest={}", dmRequest);
 		String roomId = getRoomId(dmRequest);
 		dmRequest.createTimeStamp();
 		dmRequest.setRoomId(roomId);
-		dmService.saveDm(dmRequest);
 		KafkaDMRequest kafkaDMRequest = modelMapper.map(dmRequest, KafkaDMRequest.class);
-		kafkaTemplate.send(roomId, kafkaDMRequest);
-	}
-
-
-	@GetMapping("/{userId}")
-	public ResponseEntity<List<OtherUserResponse>> getDMList(@NotNull @PathVariable Long userId) {
-		return ResponseEntity.ok(dmService.findAllDMList(userId));
+		kafkaTemplate.send("dm", dmRequest.getReceiverId().toString(), kafkaDMRequest);
+		log.info("send={}", dmRequest);
+		dmService.saveDm(dmRequest);
 	}
 
 	@GetMapping("/{user1Id}/{user2Id}")
+	public ResponseEntity<Void> startDM(@NotNull @PathVariable Long user1Id, @NotNull @PathVariable Long user2Id) {
+		String roomId = getMessageKey(user1Id, user2Id);
+		dmService.createChatRoom(user1Id, user2Id, roomId);
+		return ResponseEntity.ok().build();
+	}
+
+//	@GetMapping("/{userId}")
+//	public ResponseEntity<List<DMResponse>> getDMList(@NotNull @PathVariable Long userId) {
+//		return ResponseEntity.ok(dmService.findAllDMList(userId));
+//	}
+
+	@GetMapping("/list/{user1Id}/{user2Id}")
 	public ResponseEntity<List<DMResponse>> getListByUsers(@NotNull @PathVariable Long user1Id,
 		@NotNull @PathVariable Long user2Id) {
 		return ResponseEntity.ok(dmService.getListByUsers(user1Id, user2Id));
 	}
 
+
+
 	private String getRoomId(DMRequest dmRequest) {
 		return "chat_" + Math.min(dmRequest.getSenderId(), dmRequest.getReceiverId()) + "_" + Math.max(
 			dmRequest.getSenderId(), dmRequest.getReceiverId());
+	}
+
+	private String getMessageKey(Long user1Id, Long user2Id) {
+		return "chat_" + Math.min(user1Id, user2Id) + "_" + Math.max(
+			user1Id, user2Id);
 	}
 }

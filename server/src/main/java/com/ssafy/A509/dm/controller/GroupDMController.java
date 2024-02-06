@@ -1,10 +1,9 @@
 package com.ssafy.A509.dm.controller;
 
-import com.ssafy.A509.dm.dto.DMResponse;
 import com.ssafy.A509.dm.dto.GroupDMRequest;
 import com.ssafy.A509.dm.dto.GroupDMResponse;
-import com.ssafy.A509.dm.dto.KafkaDMRequest;
 import com.ssafy.A509.dm.service.GroupDMService;
+import com.ssafy.A509.kafka.dto.KafkaDMRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -27,20 +26,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
-@Tag(name = "GroupDM", description = "GroupDM API")
+@Tag(name = "GroupChat", description = "그룹채팅 API")
 @RequestMapping("/dm/group")
 public class GroupDMController {
+
 	private final KafkaTemplate<String, KafkaDMRequest> kafkaTemplate;
 	private final GroupDMService groupDMService;
 	private final ModelMapper modelMapper;
 
+	// url/pub/message로 들어오면 sub/groupChat을 구독하고 있는 사람에게 전송
+//	@MessageMapping("/message")
+//	@Payload
 	@PostMapping
 	public void sendMessageToGroup(@Valid @RequestBody GroupDMRequest groupDMRequest) {
 		groupDMRequest.createTimeStamp();
-		groupDMService.saveGroupDm(groupDMRequest);
 		KafkaDMRequest kafkaDMRequest = modelMapper.map(groupDMRequest, KafkaDMRequest.class);
 		kafkaDMRequest.setRoomId(groupDMRequest.getRoomId().toString());
-		kafkaTemplate.send(kafkaDMRequest.getRoomId(), kafkaDMRequest);
+		kafkaTemplate.send("group-chat",kafkaDMRequest.getRoomId(), kafkaDMRequest);
+		groupDMService.saveGroupDm(groupDMRequest);
 	}
 
 	@GetMapping("/list/{userId}")
@@ -49,7 +52,7 @@ public class GroupDMController {
 	}
 
 	@GetMapping("/{groupId}")
-	public ResponseEntity<List<DMResponse>> getGroupDM(@PathVariable Long groupId) {
+	public ResponseEntity<List<GroupDMRequest>> getGroupDM(@PathVariable Long groupId) {
 		return ResponseEntity.ok(groupDMService.getListByGroupId(groupId));
 	}
 
