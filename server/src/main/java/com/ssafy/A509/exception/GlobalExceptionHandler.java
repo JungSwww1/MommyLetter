@@ -3,6 +3,7 @@ package com.ssafy.A509.exception;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.NoSuchElementException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -143,6 +144,16 @@ public class GlobalExceptionHandler {
         log.error("handleCustomException", ex);
         final ErrorResponse response = ErrorResponse.of(ex.getErrorCode(), ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
+    }
+
+    /*
+    * [Exception] 데이터베이스에 있는 데이터와 중복되는 데이터를 insert, update할 때
+    * */
+    @ExceptionHandler(DuplicateKeyException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicateKeyException(DuplicateKeyException ex) {
+        log.error("handleDuplicateKeyException", ex);
+        final ErrorResponse response = ErrorResponse.of(ErrorCode.DUPLICATE_KEY_ERROR, ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
 }

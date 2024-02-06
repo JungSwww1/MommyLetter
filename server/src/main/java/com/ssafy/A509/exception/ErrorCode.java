@@ -51,6 +51,9 @@ public enum ErrorCode {
     // 서버가 처리 할 방법을 모르는 경우 발생
     INTERNAL_SERVER_ERROR(500, "G999", "Internal Server Error Exception"),
 
+    // 데이터 중복
+    DUPLICATE_KEY_ERROR(400, "G012", "이미 존재하는 값입니다"),
+
     //******************************* Custom Error CodeList ***************************************
 
     INSERT_ERROR(200, "1000", "Insert Transaction Error Exception"),
@@ -91,6 +94,24 @@ public enum ErrorCode {
     NO_USER_INFO_CREATED(200, "1017", "UserId에 대응하는 UserInfo가 없습니다"),
 
     NO_SUCH_USER_INFO(200, "1018", "UserInfoId에 대응하는 UserInfo가 없습니다"),
+
+    NO_SUCH_BOARD(200, "1019", "boardId에 대응하는 게시글이 존재하지 않습니다"),
+
+    NO_COMMENT_USER(200, "1020", "해당 댓글을 작성한 사용자를 알 수 없습니다"),
+
+    NO_SUCH_COMMENT(200, "1021", "commentId에 대응하는 댓글이 존재하지 않습니다"),
+
+    NO_SUCH_FOLLOWER(200, "1202", "followerUserId에 대응하는 팔로워가 없습니다"),
+
+    UNABLE_FOLLOW_YOURSELF(200, "1203", "자시 자신을 follow할 수 없습니다"),
+
+    ALREADY_FOLLOWING_USER(200, "1204", "해당 유저를 이미 follow 중입니다"),
+
+    NOT_FOLLOWING_USER(200, "1205", "해당 유저와 follow 중이 아닙니다"),
+
+    NO_SUCH_BOARD_LIKE(200, "1206", "해당 게시물의 좋아요는 없습니다"),
+
+    NO_SUCH_COMMENT_LIKE(200, "1207", "해당 댓글의 좋아요는 없습니다"),
 
     ; // End
 
