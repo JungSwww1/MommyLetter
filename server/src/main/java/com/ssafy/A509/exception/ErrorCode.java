@@ -75,6 +75,23 @@ public enum ErrorCode {
 
     NO_PATIENT_INFO(200, "1010", "ReserveId에 해당하는 환자의 정보가 존재하지 않습니다"),
 
+    CONTENT_TYPE_IMAGE_MISMATCH(200, "1011", "해당 파일의 content type이 이미지가 아닙니다"),
+
+    UNABLE_TO_UPLOAD_FILE(200, "1012", "해당 경로에 파일을 업로드할 수 없습니다"),
+
+    NO_SUCH_PROFILE(200, "1013", "UserId에 대응하는 Profile이 존재하지 않습니다"),
+
+    NOT_DOCTOR(200, "1014", "UserId에 대응하는 Doctor가 없습니다"),
+
+    ROLE_IS_NOT_COMMON(200, "1015", "해당 User의 Role이 Common이 아닙니다"),
+
+    // 비밀번호가 일치하지 않는 경우
+    ILLEGAL_ARGUMENT_ERROR(401, "1016", "비밀번호가 일치하지 않습니다"),
+
+    NO_USER_INFO_CREATED(200, "1017", "UserId에 대응하는 UserInfo가 없습니다"),
+
+    NO_SUCH_USER_INFO(200, "1018", "UserInfoId에 대응하는 UserInfo가 없습니다"),
+
     ; // End
 
 
