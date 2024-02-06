@@ -6,12 +6,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.net.URI;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/likes/boards")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @Tag(name = "BoardLike", description = "BoardLike API")
 public class BoardLikeController extends LikeController<BoardLikeService> {
 

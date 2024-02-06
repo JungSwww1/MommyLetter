@@ -44,10 +44,6 @@ public class Diary {
     private Emoticon emoticon;
 
     @Setter
-    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL)
-    private List<Emoticon> emoticonList = new ArrayList<>();
-
-    @Setter
     private String content;
 
     @Enumerated(EnumType.STRING)

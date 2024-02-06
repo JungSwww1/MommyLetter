@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 @Tag(name = "User", description = "User API")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AccountController {
     private final AccountService accountService;
 
