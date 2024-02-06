@@ -1,4 +1,5 @@
 package com.ssafy.A509.diary.service;
+
 import com.ssafy.A509.account.repository.AccountRepository;
 import com.ssafy.A509.diary.dto.CreateDiaryRequest;
 import com.ssafy.A509.diary.dto.CreateEmoticonRequest;
@@ -39,9 +40,11 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
 @Service
 @RequiredArgsConstructor
 public class DiaryService {
+
     private final DiaryRepository diaryRepository;
     private final ModelMapper modelMapper;
     private final AccountRepository accountRepository;
@@ -58,12 +61,14 @@ public class DiaryService {
     private DiaryResponse getDiaryResponse(Diary diary) {
         return modelMapper.map(diary, DiaryResponse.class);
     }
+
     //일기 리스트 전체 조회
     public List<DiaryResponse> getAllDiary(Long userId) {
         return diaryRepository.findAllByUserUserIdOrderByCreatedDate(userId).stream()
                 .map(diary -> modelMapper.map(diary, DiaryResponse.class))
                 .collect(Collectors.toList());
     }
+
     //특정 일기 조회
     public DiaryResponse getDiary(Long diaryId) {
         return diaryRepository
@@ -71,6 +76,7 @@ public class DiaryService {
                 .map(this::getDiaryResponse)
                 .orElseThrow(() -> new NoSuchElementException("No such Diary"));
     }
+
     @Transactional
     public DiaryResponse createDiary(CreateDiaryRequest diaryRequest) {
         Diary newDiary = Diary.builder()
@@ -86,22 +92,29 @@ public class DiaryService {
         addEmoticons(newDiary, diaryRequest);
 
         Diary save = diaryRepository.save(newDiary);
+
         return getDiaryResponse(save);
     }
+
     @Transactional
     public void updateDiary(UpdateDiaryRequest diaryRequest) {
         Diary diary = findById(diaryRequest.getDiaryId());
         diary.setContent(diaryRequest.getContent());
         diary.setEmoji(diaryRequest.getEmoji());
         diary.setCreatedDate(diaryRequest.getCreatedDate());
+
         updatePhoto(diary, diaryRequest);
+
         updateEmoticon(diary, diaryRequest);
+
         diaryRepository.save(diary);
     }
+
     @Transactional
     public void deleteDiary(Long diaryId) {
         diaryRepository.delete(findById(diaryId));
     }
+
     /*
      * 사진 업데이트
      * */
@@ -112,6 +125,7 @@ public class DiaryService {
         List<UpdatePhotoRequest> newPhotoList = Optional.ofNullable(diaryRequest.getPhotoList())
                 .orElseGet(ArrayList::new);
         List<Photo> deletePhotoList = new ArrayList<>();
+
         //사진 추가
         //photoId를 가지고 있으면 기존의 것, 없으면 새로운 것
         newPhotoList.stream()
@@ -134,7 +148,6 @@ public class DiaryService {
         if (!deletePhotoList.isEmpty()) {
             photoRepository.deleteAllInBatch(deletePhotoList);
         }
-
 
     }
 
@@ -160,10 +173,10 @@ public class DiaryService {
         updateWeather(emoticon, newEmoticon, deleteEmoticon);
     }
 
-
     private void updateWeather(Emoticon emoticon, UpdateEmoticonRequest newEmoticon, Emoticon deleteEmoticon) {
         List<Weather> newWeatherList = Optional.ofNullable(newEmoticon.getWeatherList()).orElseGet(ArrayList::new);
         List<WeatherEmoticon> weatherList = new ArrayList<>(emoticon.getWeatherEmoticon());
+
         newWeatherList.stream()
                 .filter(newWeather -> emoticon.getWeatherEmoticon().stream()
                         .noneMatch(existingWeather -> existingWeather.getWeather().equals(newWeather)))
@@ -185,9 +198,11 @@ public class DiaryService {
         }
         ;
     }
+
     private void updatePeople(Emoticon emoticon, UpdateEmoticonRequest newEmoticon, Emoticon deleteEmoticon) {
         List<People> newPeopleList = newEmoticon.getPeopleList();
         List<PeopleEmoticon> peopleList = new ArrayList<>(emoticon.getPeopleEmoticon());
+
         newPeopleList.stream()
                 .filter(newPeople -> emoticon.getPeopleEmoticon().stream()
                         .noneMatch(existingPeople -> existingPeople.getPeople().equals(newPeople)))
@@ -211,9 +226,11 @@ public class DiaryService {
         ;
 
     }
+
     private void updateHealth(Emoticon emoticon, UpdateEmoticonRequest newEmoticon, Emoticon deleteEmoticon) {
         List<Health> newHealthList = newEmoticon.getHealthList();
         List<HealthEmoticon> healthList = new ArrayList<>(emoticon.getHealthEmoticon());
+
         newHealthList.stream()
                 .filter(
                         newHealth ->
@@ -242,6 +259,7 @@ public class DiaryService {
     private void updateEmotion(Emoticon emoticon, UpdateEmoticonRequest newEmoticon, Emoticon deleteEmoticon) {
         List<Emotion> newEmotionList = newEmoticon.getEmotionList();
         List<EmotionEmoticon> emotionList = new ArrayList<>(emoticon.getEmotionEmoticon());
+
         //추가
         newEmotionList.stream()
                 .filter(newEmotion -> emoticon.getEmotionEmoticon().stream()
@@ -269,6 +287,7 @@ public class DiaryService {
     private void updateFamily(Emoticon emoticon, UpdateEmoticonRequest newEmoticon, Emoticon deleteEmoticon) {
         List<Family> newFamilyList = newEmoticon.getFamilyList();
         List<FamilyEmoticon> familyList = new ArrayList<>(emoticon.getFamilyEmoticon());
+
         newFamilyList.stream()
                 .filter(
                         newFamily ->
@@ -294,6 +313,7 @@ public class DiaryService {
         ;
 
     }
+
     /*
      * 사진 추가
      * */
@@ -309,7 +329,6 @@ public class DiaryService {
             }
         });
     }
-
 
     /*
      * 이모티콘 추가
@@ -336,7 +355,9 @@ public class DiaryService {
                         .build();
 
                 emoticon.addEmotion(emotionEmoticon);
+
             }
+
         });
     }
 
@@ -392,4 +413,5 @@ public class DiaryService {
         return diaryRepository.findById(diaryId).orElseThrow(()
                 -> new NoSuchElementException("No such Diary"));
     }
+
 }

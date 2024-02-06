@@ -1,5 +1,7 @@
 package com.ssafy.A509.photo.service;
 
+import com.ssafy.A509.exception.CustomException;
+import com.ssafy.A509.exception.ErrorCode;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -37,23 +39,17 @@ public class PhotoService {
 		}
 
 		for(MultipartFile uploadFile : uploadFiles){
-			// 이미지 파일만 업로드
-			if (!Objects.requireNonNull(uploadFile.getContentType()).startsWith("image")) {
-				return null;
-			}
 
-			//파일 원본 이름
-			String originalName = uploadFile.getOriginalFilename();
-			//중복을 회피하기 위한 파일 이름 변경
-			String savedName = UUID.randomUUID().toString() + "_" + originalName;
-			Path savePath = Paths.get(uploadPath + File.separator + savedName);
+			Path savePath = makePath(uploadFile);
 
 			//이미지 저장
 			try{
 				uploadFile.transferTo(savePath);
 				resultPath.add(savePath.toString());
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
+				throw new CustomException(ErrorCode.UNABLE_TO_UPLOAD_FILE,
+					"uploadPath: " + uploadPath);
 			}
 
 		}
@@ -69,19 +65,31 @@ public class PhotoService {
 			System.out.println("파일 생성: " + mkdir);
 		}
 
-		//파일 원본 이름
-		String originalName = uploadFile.getOriginalFilename();
-		//중복을 회피하기 위한 파일 이름 변경
-		String savedName = UUID.randomUUID().toString() + "_" + originalName;
-		Path savePath = Paths.get(uploadPath + File.separator + savedName);
+		Path savePath = makePath(uploadFile);
 
 		try{
 			uploadFile.transferTo(savePath);
 			return savePath.toString();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+			throw new CustomException(ErrorCode.UNABLE_TO_UPLOAD_FILE,
+				"uploadPath: " + uploadPath);
 		}
-		return null;
 	}
+
+	private Path makePath(MultipartFile uploadFile){
+		// 이미지 파일만 업로드
+		if (!Objects.requireNonNull(uploadFile.getContentType()).startsWith("image")) {
+			throw new CustomException(ErrorCode.CONTENT_TYPE_IMAGE_MISMATCH,
+				"Content Type: " + uploadFile.getContentType());
+		}
+
+		//파일 원본 이름
+		String originalName = uploadFile.getOriginalFilename();
+		//중복을 회피하기 위한 파일 이름 변경
+		String savedName = UUID.randomUUID().toString() + "_" + originalName;
+		return Paths.get(uploadPath + File.separator + savedName);
+	}
+
 
 }

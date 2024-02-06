@@ -2,6 +2,8 @@ package com.ssafy.A509.like.service;
 
 import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.account.repository.AccountRepository;
+import com.ssafy.A509.exception.CustomException;
+import com.ssafy.A509.exception.ErrorCode;
 import com.ssafy.A509.like.dto.CreateLikeRequest;
 import com.ssafy.A509.like.repository.LikeRepository;
 import jakarta.transaction.Transactional;
@@ -22,7 +24,7 @@ public abstract class LikeService<T, R extends LikeRepository<?>> {
 
 	public User getUser(Long userId) {
 		return accountRepository.findById(userId)
-			.orElseThrow(() -> new NoSuchElementException("no such user"));
+			.orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_ACCOUNT, "userId: " + userId));
 	}
 
 	@Transactional
