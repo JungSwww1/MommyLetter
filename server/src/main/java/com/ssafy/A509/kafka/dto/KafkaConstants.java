@@ -1,4 +1,4 @@
-package com.ssafy.A509.dm.model;
+package com.ssafy.A509.kafka.dto;
 
 public class KafkaConstants {
     public static final String GROUP_ID = "group";
