@@ -119,6 +119,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     private static DoctorProfileCardsResponse getDoctorProfileCardsResponse(Profile doctorProfile) {
         return DoctorProfileCardsResponse.builder()
+                .doctorId(doctorProfile.getUser().getDoctor().getDoctorId())
                 .name(doctorProfile.getUser().getDoctor().getName())
                 .location(doctorProfile.getUser().getDoctor().getLocation())
                 .department(doctorProfile.getUser().getDoctor().getDepartment())

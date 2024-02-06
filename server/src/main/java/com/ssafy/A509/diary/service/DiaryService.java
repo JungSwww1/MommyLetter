@@ -121,8 +121,7 @@ public class DiaryService {
      * */
     public void updatePhoto(Diary diary, UpdateDiaryRequest diaryRequest) {
         //사진리스트 수정
-        List<Photo> temp = new ArrayList<>(diary.getPhotoList());
-        List<Photo> photoList = Optional.ofNullable(temp).orElseGet(ArrayList::new);
+        List<Photo> photoList = new ArrayList<>(diary.getPhotoList());
         List<UpdatePhotoRequest> newPhotoList = Optional.ofNullable(diaryRequest.getPhotoList())
                 .orElseGet(ArrayList::new);
         List<Photo> deletePhotoList = new ArrayList<>();
