@@ -237,5 +237,12 @@ CREATE TABLE USER_CHAT_GROUP
     FOREIGN KEY (chat_group_id) REFERENCES CHAT_GROUP (chat_group_id)
 );
 
+CREATE TABLE UNREAD_NOTIFICATION
+(
+    notification_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id     INT NOT NULL,
+    dm_id     VARCHAR(100) NOT NULL
+);
+
 
 

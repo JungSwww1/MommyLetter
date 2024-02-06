@@ -20,8 +20,8 @@ public class MessageController {
 		summary = "채팅 읽음",
 		description = "채팅 엔티티의 채팅 읽음 카운트 -1"
 	)
-	@GetMapping("/message/read/{dmId}")
-	public ResponseEntity<Void> reduceReadCount(@PathVariable String dmId) {
+	@GetMapping("/message/read/{dmId}/{userId}")
+	public ResponseEntity<Void> reduceReadCount(@PathVariable String dmId, @PathVariable Long userId) {
 		messageService.readMessage(dmId);
 		return ResponseEntity.ok().build();
 	}
