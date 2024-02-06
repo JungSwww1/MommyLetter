@@ -2,9 +2,11 @@ import {CheckBox, Img, Input, LoginButton, Main, RegisterButton, StyleLink} from
 import {useState} from "react";
 import {useNavigate } from "react-router-dom"
 import logo from '@/assets/images/logo_white.png'
+import {loginAPI} from '@/apis/Auth/authAPI'
+
 const LoginPage = () => {
     const navigate = useNavigate();
-    const [id, setId] = useState("")
+    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [autoLogin, setAutoLogin] = useState(false)
 
@@ -12,15 +14,12 @@ const LoginPage = () => {
     const userRegist = ()=> {
         navigate("/join")
     }
-    const loginFunc = () => {
-        const loginInfo = {
-            id,
-            password,
-            autoLogin
-        };
-        localStorage.setItem('loginInfo', JSON.stringify(loginInfo));
+    const loginFunc = async () => {
+        const loginInfo = {email, password};
+        await loginAPI(loginInfo);
         navigate('/', {replace:true})
     }
+
     return (
         <Main>
             {/*아래는 로고 들어갈 영역*/}
@@ -29,7 +28,7 @@ const LoginPage = () => {
             <Input
                 type="text"
                 placeholder={"아이디를 입력해주세요"}
-                onChange={e => setId(e.target.value)}
+                onChange={e => setEmail(e.target.value)}
                 className="top-[350px]"
             />
 

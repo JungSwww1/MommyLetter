@@ -1,6 +1,7 @@
 import styled from "tailwind-styled-components";
 
 export const Layout = styled.div`
+    w-[100%]
 `
 
 export const BackgroundImg = styled.img`

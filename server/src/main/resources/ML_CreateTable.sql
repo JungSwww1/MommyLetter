@@ -1,4 +1,7 @@
-﻿CREATE TABLE `USER`
+DROP DATABASE IF EXISTS mommyletter;
+CREATE DATABASE IF NOT EXISTS mommyletter;
+USE mommyletter;
+CREATE TABLE `USER`
 (
     `user_id`      INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `password`     VARCHAR(200)  NULL,
@@ -10,7 +13,6 @@
     `created_date` TIMESTAMP    NOT NULL,
     `updated_date` TIMESTAMP    NULL
 );
-
 CREATE TABLE `DIARY`
 (
     `diary_id`     INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -21,7 +23,6 @@ CREATE TABLE `DIARY`
     `created_date` TIMESTAMP    NOT NULL,
     FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`)
 );
-
 CREATE TABLE `BOARD`
 (
     `board_id`     INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -33,8 +34,6 @@ CREATE TABLE `BOARD`
     `updated_date` TIMESTAMP    NULL,
     FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`)
 );
-
-
 CREATE TABLE USER_INFO
 (
     user_info_id     BIGINT   NOT NULL AUTO_INCREMENT, -- 새로운 기본 키
@@ -49,7 +48,6 @@ CREATE TABLE USER_INFO
     PRIMARY KEY (user_info_id),                        -- 기본 키 지정
     FOREIGN KEY (user_id) REFERENCES USER (user_id)    -- 외래 키 제약 조건
 );
-
 CREATE TABLE `DOCTOR`
 (
     `doctor_id`  INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -60,7 +58,6 @@ CREATE TABLE `DOCTOR`
     `valid_time` VARCHAR(200) NULL,
     FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`)
 );
-
 CREATE TABLE IF NOT EXISTS `PROFILE`
 (
     `profile_id`       INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -69,8 +66,6 @@ CREATE TABLE IF NOT EXISTS `PROFILE`
     `background_photo` VARCHAR(255) NULL,
     FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`)
 );
-
-
 CREATE TABLE `COMMENT`
 (
     `comment_id`   INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -82,7 +77,6 @@ CREATE TABLE `COMMENT`
     FOREIGN KEY (`board_id`) REFERENCES `BOARD` (`board_id`),
     FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`)
 );
-
 CREATE TABLE `COMMENT_LIKE`
 (
     `comment_like_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -91,7 +85,6 @@ CREATE TABLE `COMMENT_LIKE`
     FOREIGN KEY (`comment_id`) REFERENCES `COMMENT` (`comment_id`),
     FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`)
 );
-
 CREATE TABLE `BOARD_LIKE`
 (
     `board_like_id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -100,7 +93,6 @@ CREATE TABLE `BOARD_LIKE`
     FOREIGN KEY (`board_id`) REFERENCES `BOARD` (`board_id`),
     FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`)
 );
-
 CREATE TABLE `DIRECT_MESSAGE`
 (
     `dm_id`        INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -112,7 +104,6 @@ CREATE TABLE `DIRECT_MESSAGE`
     FOREIGN KEY (`sender_id`) REFERENCES `USER` (`user_id`),
     FOREIGN KEY (`receiver_id`) REFERENCES `USER` (`user_id`)
 );
-
 CREATE TABLE `RESERVE`
 (
     `reserve_id`   INT       NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -122,7 +113,6 @@ CREATE TABLE `RESERVE`
     FOREIGN KEY (`doctor_id`) REFERENCES `DOCTOR` (`doctor_id`),
     FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`)
 );
-
 CREATE TABLE `CONSULT`
 (
     `counseling_id`     INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -132,7 +122,6 @@ CREATE TABLE `CONSULT`
     FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`),
     FOREIGN KEY (`reserve_id`) REFERENCES `RESERVE` (`reserve_id`)
 );
-
 CREATE TABLE `FOLLOW`
 (
     `follow_id`    INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -141,7 +130,6 @@ CREATE TABLE `FOLLOW`
     FOREIGN KEY (`following_id`) REFERENCES `USER` (`user_id`),
     FOREIGN KEY (`follower_id`) REFERENCES `USER` (`user_id`)
 );
-
 CREATE TABLE `HISTORY`
 (
     `history_id` INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -149,7 +137,6 @@ CREATE TABLE `HISTORY`
     `content`    VARCHAR(255) NOT NULL,
     FOREIGN KEY (`doctor_id`) REFERENCES `DOCTOR` (`doctor_id`)
 );
-
 CREATE TABLE `PHOTO`
 (
     `photo_id`     INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -161,7 +148,6 @@ CREATE TABLE `PHOTO`
     FOREIGN KEY (`board_id`) REFERENCES `BOARD` (`board_id`),
     FOREIGN KEY (`diary_id`) REFERENCES `DIARY` (`diary_id`)
 );
-
 CREATE TABLE `HASHTAG`
 (
     `hashtag_id` INT         NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -169,14 +155,12 @@ CREATE TABLE `HASHTAG`
     `content`    VARCHAR(30) NOT NULL,
     FOREIGN KEY (`board_id`) REFERENCES `BOARD` (`board_id`)
 );
-
 CREATE TABLE `EMOTICON`
 (
     `emoticon_id` INT        NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `diary_id`    INT        NOT NULL,
     FOREIGN KEY (`diary_id`) REFERENCES `DIARY` (`diary_id`)
 );
-
 CREATE TABLE `EMOTION_EMOTICON`
 (
     `emotion_id`  INT        NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -185,7 +169,6 @@ CREATE TABLE `EMOTION_EMOTICON`
                           , 'Sad', 'Anxious', 'Tired', 'Irritated', 'Angry', 'Lonely'),
     FOREIGN KEY (`emoticon_id`) REFERENCES `EMOTICON` (`emoticon_id`)
 );
-
 CREATE TABLE `FAMILY_EMOTICON`
 (
     `family_id`   INT        NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -193,7 +176,6 @@ CREATE TABLE `FAMILY_EMOTICON`
     `family`      ENUM ('Harmony', 'Quarrel', 'Reconcile', 'Uncomfortable', 'Discord'),
     FOREIGN KEY (`emoticon_id`) REFERENCES `EMOTICON` (`emoticon_id`)
 );
-
 CREATE TABLE `HEALTH_EMOTICON`
 (
     `health_id`   INT        NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -201,7 +183,6 @@ CREATE TABLE `HEALTH_EMOTICON`
     `health`      ENUM ('Healthy', 'Sick', 'Medicine', 'Diagnosis', 'Hospitalization'),
     FOREIGN KEY (`emoticon_id`) REFERENCES `EMOTICON` (`emoticon_id`)
 );
-
 CREATE TABLE `PEOPLE_EMOTICON`
 (
     `people_id`   INT        NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -209,7 +190,6 @@ CREATE TABLE `PEOPLE_EMOTICON`
     `people`      ENUM ('Family', 'Friend', 'Acquaintance', 'Stranger', 'None'),
     FOREIGN KEY (`emoticon_id`) REFERENCES `EMOTICON` (`emoticon_id`)
 );
-
 CREATE TABLE `WEATHER_EMOTICON`
 (
     `weather_id`   INT        NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -217,7 +197,6 @@ CREATE TABLE `WEATHER_EMOTICON`
     `weather`      ENUM ('Clear', 'Cloudy', 'Rain', 'Snow', 'Fog', 'Wind'),
     FOREIGN KEY (`emoticon_id`) REFERENCES `EMOTICON` (`emoticon_id`)
 );
-
 CREATE TABLE `DM_GROUP`
 (
     `dm_group_id`   INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -227,7 +206,6 @@ CREATE TABLE `DM_GROUP`
     `updated_date`  TIMESTAMP,
     FOREIGN KEY (`user_id`) REFERENCES User (`user_id`)
 );
-
 CREATE TABLE USER_DM_GROUP
 (
     dm_group_id INT NOT NULL,
@@ -236,4 +214,3 @@ CREATE TABLE USER_DM_GROUP
     FOREIGN KEY (user_id) REFERENCES User (user_id),
     FOREIGN KEY (dm_group_id) REFERENCES DM_GROUP (dm_group_id)
 );
-

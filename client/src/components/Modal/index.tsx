@@ -1,24 +1,26 @@
-import React from 'react';
-import  './index.css'
-const WriteModal = () => {
-    return (
-        <div>
-            {/* You can open the modal using document.getElementById('ID').showModal() method */}
-            <button className="btn" onClick={()=>(document.getElementById('my_modal_3') as any).showModal()}>open modal</button>
+import React, {ReactNode} from 'react';
+import './index.css'
+
+interface Props {
+    children: ReactNode;
+    writeButton: ReactNode | boolean
+}
+
+const BottomUpModal = ({children, writeButton}: Props) => {
+
+    return (<div className="w-[100%] h-[100%]">
             <dialog id="my_modal_3" className="modal">
-                <div className="modal-box bottom-sheet">
-                    <form method="dialog">
-                        {/* if there is a button in form, it will close the modal */}
-                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                    </form>
-                    <h3 className="font-bold text-lg">Hello!</h3>
-                    <p className="py-4">Press ESC key or click on ✕ button to close</p>
+                <div className="modal-box bottom-sheet max-w-none max-w-full h-[100%] scrollBar">
+                    <div className="flex justify-between">
+                        <form method="dialog" >
+                            <button id="closeBtn" className="btn btn-sm btn-circle btn-ghost right-2 top-2">✕</button>
+                        </form>
+                        {writeButton}
+                    </div>
+                    {children}
                 </div>
             </dialog>
-        </div>
-    );
+        </div>);
 };
 
-export default WriteModal;
-
-
+export default BottomUpModal;
