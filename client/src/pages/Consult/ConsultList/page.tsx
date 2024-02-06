@@ -3,39 +3,51 @@ import {Link} from 'react-router-dom';
 import {ProfileComponent} from "@/components/Profile";
 import {
     BackgroundSection,
+    Button,
     ConsultListLayout,
     DoctorListSection,
-    ProfileSection,
-    Button
+    ProfileSection
 } from "@/pages/Consult/ConsultList/styles";
 import DoctorListCardComponent from "@/components/DoctorListCard";
 import sample1 from "@/assets/images/sample1.jpg"
 import sample2 from "@/assets/images/sample2.jpg"
 
 import {ReadDoctorList} from "@/apis/profile/ProfileAPI";
-
+import {DoctorProfileProps} from "@/pages/type/types";
 
 const ConsultListPage = () => {
-    useEffect(()=>{
-    console.log(ReadDoctorList);
-    },[])
-    return (
-        <ConsultListLayout>
-            <BackgroundSection>
-                <img src={sample1}/>
-            </BackgroundSection>
+    const [doctorList, setDoctorList] = useState<DoctorProfileProps[]>()
+    useEffect(() => {
+        const result = ReadDoctorList().then((doctorList) => {
+            setDoctorList(doctorList);
+        })
+    }, [])
 
-            <ProfileSection>
-                <ProfileComponent name="고승민" intro="고추장아빠(15개월)"/>
-            </ProfileSection>
+    return (<ConsultListLayout>
+        <BackgroundSection>
+            <img src={sample1}/>
+        </BackgroundSection>
 
-            <DoctorListSection>
-                <Link to="1"><Button><DoctorListCardComponent name="오은영" gender="여성" department="가정의학" img={sample2} date="23.01.02"/></Button></Link>
-                <Link to="2"><Button><DoctorListCardComponent name="오은영" gender="여성" department="가정의학" img={sample2} date="23.01.02"/></Button></Link>
+        <ProfileSection>
+            <ProfileComponent name="고승민" intro="고추장아빠(15개월)"/>
+        </ProfileSection>
 
+        <DoctorListSection>
+            {doctorList?.map((doctor: DoctorProfileProps, index) => (
+                <Link to={index.toString()} key={index}>
+                    <Button>
+                        <DoctorListCardComponent
+                            name={doctor.name}
+                            gender="여성"
+                            department={doctor.department}
+                            img={doctor.profilePhoto}
+                            date="23.01.02"
+                        />
+                    </Button>
+                </Link>
+            ))}
         </DoctorListSection>
-</ConsultListLayout>)
-    ;
+    </ConsultListLayout>);
 };
 
 export default ConsultListPage;
