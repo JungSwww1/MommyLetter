@@ -23,8 +23,9 @@ export const CardBox=styled.div`
 
 export const Img = styled.img`
     rounded-[100%]
-    h-[100%]
-    w-[25%]
+    
+    w-[30%]
+    aspect-[1]
 `;
 
 export const List = styled.ul`
