@@ -23,8 +23,8 @@ const goPage = (param:string) =>{
                 <Item><Link to="/consult">상담하기</Link></Item>
                 <Item><Link to="/history">상담기록</Link></Item>
                 <Item><a>회원정보수정</a></Item>
-                <Item><a>상담정보 등록/수정</a></Item>
-                <Button onClick={logout}>로그아웃 들어가자</Button>
+                <Item><Link to="/consultRegist">상담정보 등록/수정</Link></Item>
+                <Button onClick={logout}>로그아웃</Button>
             </List>
         </HamburgerLayout>
     );
