@@ -5,6 +5,8 @@ import com.ssafy.A509.account.dto.UpdateAccountRequest;
 import com.ssafy.A509.account.dto.AccountResponse;
 import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.account.repository.AccountRepository;
+import com.ssafy.A509.exception.CustomException;
+import com.ssafy.A509.exception.ErrorCode;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -70,7 +72,7 @@ public class AccountService {
     // 특정 userId를 가진 유저를 검색
     public AccountResponse getAccount(Long userId){
         return accountRepository.findById(userId).map(this::getAccountResponse).
-            orElseThrow(() -> new NoSuchElementException("No Such User"));
+            orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_ACCOUNT, "userId: " + userId));
     }
 
     public List<AccountResponse> getAllAccount(){
@@ -82,7 +84,7 @@ public class AccountService {
     @Transactional
     public void updateAccount(Long userId, UpdateAccountRequest accountRequest) {
         User user = accountRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchElementException("해당 userId를 가진 사용자가 없습니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_ACCOUNT, "userId: " + userId));
 
         if (accountRequest.getNickname() != null) {
             user.setNickname(accountRequest.getNickname());
@@ -99,11 +101,11 @@ public class AccountService {
     @Transactional
     public void updateAccountPassword(Long userId, UpdateAccountRequest accountRequest) {
         User user = accountRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchElementException("해당 userId를 가진 사용자가 없습니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_ACCOUNT, "userId: " + userId));
 
         // 암호화 비밀번호 비교
         if (!passwordEncoder.matches(accountRequest.getCurrentPassword(), user.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new CustomException(ErrorCode.ILLEGAL_ARGUMENT_ERROR);
         }
 
 //        // 평문 암호 비교
@@ -121,7 +123,7 @@ public class AccountService {
     public void deleteAccount(Long userId){
         accountRepository.findById(userId)
             .ifPresentOrElse(accountRepository::delete, () -> {
-              throw new NoSuchElementException("No such user");
+              throw new CustomException(ErrorCode.NO_SUCH_ACCOUNT, "userId: " + userId);
             });
     }
 

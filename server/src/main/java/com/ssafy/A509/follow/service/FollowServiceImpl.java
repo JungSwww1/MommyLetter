@@ -2,6 +2,8 @@ package com.ssafy.A509.follow.service;
 
 import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.account.repository.AccountRepository;
+import com.ssafy.A509.exception.CustomException;
+import com.ssafy.A509.exception.ErrorCode;
 import com.ssafy.A509.follow.dto.FollowRequestDTO;
 import com.ssafy.A509.follow.dto.FollowerListResponseDTO;
 import com.ssafy.A509.follow.dto.FollowingListResponseDTO;
@@ -30,17 +32,19 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public void followUser(Long followerUserId, FollowRequestDTO followRequestDTO) {
         User follower = accountRepository.findById(followerUserId)
-                .orElseThrow(() -> new NotFoundException("Follower not found with id: " + followerUserId));
+                .orElseThrow(()
+                    -> new CustomException(ErrorCode.NO_SUCH_FOLLOWER, "followerUserId: " + followerUserId));
 
         User followingUser = accountRepository.findById(followRequestDTO.getUserId())
-                .orElseThrow(() -> new NotFoundException("User to follow not found with id: " + followRequestDTO.getUserId()));
+                .orElseThrow(()
+                    -> new CustomException(ErrorCode.NO_SUCH_ACCOUNT, "userId: " + followRequestDTO.getUserId()));
 
         if (followerUserId.equals(followRequestDTO.getUserId())) {
-            throw new IllegalArgumentException("Cannot follow yourself.");
+            throw new CustomException(ErrorCode.UNABLE_FOLLOW_YOURSELF);
         }
 
         if (isAlreadyFollowing(followerUserId, followRequestDTO.getUserId())) {
-            throw new IllegalArgumentException("Already following the user.");
+            throw new CustomException(ErrorCode.ALREADY_FOLLOWING_USER);
         }
 
         Follow follow = new Follow();
@@ -52,7 +56,7 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public void unfollowUser(Long followerUserId, FollowRequestDTO followRequestDTO) {
         Follow follow = followRepository.findByFollowerUserIdAndFollowingUserId(followerUserId, followRequestDTO.getUserId())
-                .orElseThrow(() -> new NotFoundException("Not following the user."));
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOLLOWING_USER));
 
         followRepository.delete(follow);
     }

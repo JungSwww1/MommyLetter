@@ -7,7 +7,8 @@ import lombok.Getter;
 @Builder
 @Getter
 public class DoctorProfileCardsResponse {
-
+    @NotBlank
+    private Long doctorId;
     @NotBlank
     private String name;
     @NotBlank
