@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DMResponse {
+	String id;
 	Long senderId;
 	Long receiverId;
 	String createdDate;
