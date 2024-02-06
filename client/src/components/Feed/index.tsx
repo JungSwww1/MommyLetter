@@ -12,17 +12,17 @@ import {
     ThreeDot, CommentWrapper
 } from "@/components/Feed/styles";
 import logo from '@/assets/images/sample1.jpg'
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import MultiMessage from "@/assets/icons/multiMessage";
 import ThreeDotMenu from "@/assets/icons/ThreeDotMenu";
 import FeedHeartButton from "@/assets/icons/FeedHeartButton";
-import FeedMessage from "@/assets/icons/FeedMessage";
 import {Link} from "react-router-dom";
 import {countBoardLike} from "@/apis/Board/boardApi";
 import Modal from "@/components/Feed/CommentModal/CommentModal";
 import {getAllCommentsAPI} from "@/apis/Comments/CommentAPI";
-import Test from "@/components/Feed/test";
-
+import {FormatDate} from "@/components/Feed/LocalFunction";
+import Menu from "@/components/Feed/FeedMenuModal/FeedMenuModal";
+import "@/components/Feed/FeedMenuModal/Modal.css"
 interface board {
     boardId: number;
     content: string;
@@ -46,28 +46,30 @@ interface Comment {
     nickname: string;
 }
 interface MainFeedProps {
+    authUserId : number;
     board: board;
 }
 
-// 게시물 좋아요 및 댓글 좋아요는 차후에 localstorage에 있는 userId로 수정해야한다.
-const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
+const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
+
     //댓글 가져오는 용도
     const [comments, setComments] = useState<Comment[]>([])
     const [countComments, setCountComments] = useState<number>(0);
     useEffect(() => {
         const fetchComments = async () => {
             const commentsData = await getAllCommentsAPI(board.boardId);
-            setComments(commentsData);
-            setCountComments(commentsData.length);
+            const sortedComments = commentsData.sort((a:any, b:any) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
+            setComments(sortedComments);
+            setCountComments(sortedComments.length);
         }
         fetchComments();
-    }, [board.boardId]);
+    }, [board.boardId, comments]);
 
 
     //게시물 좋아요 버튼 용도
     const likeData = {
         boardId: board.boardId,
-        userId : board.accountSimpleReponse.userId
+        userId : authUserId
     };
 
     // 게시물 좋아요 개수를 가져와서 상태 업데이트
@@ -94,15 +96,22 @@ const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
     const toggleModal = () => {
         setShowModal(!showModal);
     };
-    const toggleModal1 =() => {
-        const modal = document.getElementById('my_modal_3');
-        if (modal instanceof HTMLDialogElement) {
-            modal.showModal();
-        } else {
-            console.error('Element is not a dialog');
-        }
-    }
+    
+    // 메뉴용 모달 상태 관리
+    const [showMenu, setShowMenu] = useState(false);
+    const toggleMenu = () => {
+        setShowMenu(!showMenu);
+    };
 
+
+    // 수정하기와 삭제하기에 대한 함수 정의
+    const handleEdit = () => {
+        // 수정 로직
+    };
+
+    const handleDelete = () => {
+        // 삭제 로직
+    };
     return (
         <Layout>
             <TitleContainer>
@@ -111,15 +120,20 @@ const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
                     <p className={"text-[16px] font-bold"}>{board.accountSimpleReponse.nickname}</p>
                 </TitleWrapper>
                 <TitleRightWrapper>
-                    <ThreeDot>
-                        <ThreeDotMenu/>
-                    </ThreeDot>
+                    <div className={"flex justify-end items-center relative"}>
+                        {Number(authUserId) === Number(board.accountSimpleReponse.userId) ? (
+                            <>
+                            <button onClick={toggleMenu}><ThreeDotMenu/></button>
+                            {showMenu && (
+                                <div className="MenuModal absolute top-full right-0 z-100">
+                                    <Menu onEdit={handleEdit} onDelete={handleDelete} onClose={toggleMenu} />
+                                </div>
+                            )}
+                            </>
+                            ) : (<></>)}
+                    </div>
                     <CreatedDate>
-                        {new Date(board.createdDate).toLocaleDateString('ko-KR', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                        })}
+                        {FormatDate(board.createdDate)}
                     </CreatedDate>
                 </TitleRightWrapper>
             </TitleContainer>
@@ -156,18 +170,15 @@ const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
             </HashtagContainer>
 
             <LikeIconContainer>
-                <p className={"text-[13px] font-bold my-auto"}>좋아요 {countLike}개</p>
+                <p className={"text-[90%] font-bold my-auto"}>좋아요 {countLike}개</p>
                 <ButtonWrapper>
                     <FeedHeartButton likedata={likeData} onLikeStatusChange={handleLikeStatusChange}/>
-                    <Link className={"mt-[8%] h-[90%]"} to={"#"} onClick={toggleModal}><MultiMessage/></Link>
-                    <Link className={"mt-[8%] h-[90%]"} to={"/message"}><FeedMessage/></Link>
+                    <Link className={"ml-[15%] mt-[8%] h-[90%]"} to={"#"} onClick={toggleModal}><MultiMessage/></Link>
                     {showModal && <Modal onClose={toggleModal} comments={comments} boardId={board.boardId}
-                                         userId={board.accountSimpleReponse.userId}/>}
-
-                    {/*<Test onClose={toggleModal} comments={comments} boardId={board.boardId} userId={board.accountSimpleReponse.userId}/>*/}
-
+                                         userId={authUserId}/>}
                 </ButtonWrapper>
             </LikeIconContainer>
+
             <CommentContainer>
                 {comments.slice(0, 1).map((comment, index) => (
                     <div key={comment.commentId} onClick={toggleModal}>
@@ -179,7 +190,6 @@ const MainFeed: React.FC<MainFeedProps>  = ({board}) => {
                     </div>
                 ))}
             </CommentContainer>
-
 
         </Layout>
     )

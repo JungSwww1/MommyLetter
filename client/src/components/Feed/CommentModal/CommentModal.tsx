@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import './Modal.css';
 import CommentHeartButton from "@/assets/icons/CommentHeartButton";
-import {countCommentLikeAPI} from "@/apis/Comments/CommentAPI";
+import {addCommentAPI, countCommentLikeAPI, deleteCommentAPI, updateCommentAPI} from "@/apis/Comments/CommentAPI";
 import Message from "@/assets/icons/message";
 import {
     CommentContainer,
@@ -11,6 +11,8 @@ import {
     Submit,
     SubWrapper
 } from "@/components/Feed/CommentModal/styles";
+import {FormatDate} from "@/components/Feed/LocalFunction";
+
 
 interface ModalProps {
     onClose: () => void;
@@ -29,6 +31,12 @@ interface Comment {
 }
 
 const Modal: FC<ModalProps> = ({ onClose, comments , boardId, userId}) => {
+    const [sortedComments, setSortedComments] = useState<Comment[]>([]);
+    // comments props가 변경될 때마다 오래된 순으로 정렬
+    useEffect(() => {
+        const sorted = [...comments].sort((a, b) => new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime());
+        setSortedComments(sorted);
+    }, [comments]);
 
     // 좋아요 개수를 가져와서 상태 업데이트
     const [countLikes, setCountLikes] = useState<{[key: number]: number}>({});
@@ -56,35 +64,6 @@ const Modal: FC<ModalProps> = ({ onClose, comments , boardId, userId}) => {
         });
     };
 
-    //작성일 표시 용도
-    const formatDate = (dateString:string) => {
-        const date = new Date(dateString);
-        const now = new Date();
-        const difference = now.getTime() - date.getTime();
-
-        const minutes = Math.floor(difference / (1000 * 60));
-        const hours = Math.floor(difference / (1000 * 60 * 60));
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const weeks = Math.floor(difference / (1000 * 60 * 60 * 24 * 7));
-
-        if (minutes < 60) {
-            return `${minutes}분 전`;
-        } else if (hours < 24) {
-            return `${hours}시간 전`;
-        } else if (days < 7) {
-            return `${days}일 전`;
-        } else if (weeks < 4) {
-            return `${weeks}주 전`;
-        } else {
-            return date.toLocaleDateString('ko-KR', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-        }
-    };
-
-
     const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
         if (e.target === e.currentTarget) {
             onClose();
@@ -107,18 +86,24 @@ const Modal: FC<ModalProps> = ({ onClose, comments , boardId, userId}) => {
         setEditingComment({ commentId: comment.commentId, content: comment.content });
         setInputValue(comment.content); // 입력 필드에 선택한 댓글의 내용을 표시
     };
-    const handleSubmit = async () => {
-        if (editingComment) {
-            // 댓글 수정 로직을 여기에 추가
-            // 예: updateCommentAPI(editingComment.commentId, inputValue);
 
+    // 이건 input 제출 버튼
+    const handleSubmit = async () => {
+        const data = {userId : userId, boardId: boardId, content:inputValue}
+        if (editingComment) {
+            updateCommentAPI(editingComment.commentId, inputValue)
             setEditingComment(null); // 수정 상태 해제
         } else {
-            // 새 댓글 추가 로직을 여기에 추가
-            // 예: addCommentAPI(boardId, userId, inputValue);
+            addCommentAPI(data)
         }
         setInputValue(''); // 입력 필드 초기화
     };
+
+    // 삭제 버튼 클릭
+    const handleDeleteClick = (commentId:number) => {
+        deleteCommentAPI(commentId)
+        alert("삭제 완료")
+    }
 
     return (
         <div className={`modal-backdrop ${showModal ? 'show' : ''}`}  onClick={handleBackdropClick}>
@@ -126,7 +111,7 @@ const Modal: FC<ModalProps> = ({ onClose, comments , boardId, userId}) => {
                 <span className="modal-close" onClick={onClose}>&times;</span>
                 {/* 이 위까지 모달 작동을 위한 CSS 부분 */}
                 {/* 하단은 댓글 부분 */}
-                {comments.map((comment, index) => (
+                {sortedComments.map((comment, index) => (
                     <CommentContainer key={index}>
                         <MainContainer>
                             <CommentHeartButton likedata={{boardId:boardId, userId:userId, commentId:comment.commentId}}
@@ -139,10 +124,10 @@ const Modal: FC<ModalProps> = ({ onClose, comments , boardId, userId}) => {
                             <SubWrapper>
                                 <p>좋아요 {countLikes[comment.commentId] || 0}개</p>
                                 <SubDiv>
-                                    {userId ===comment.userId ? (
+                                    {Number(userId) === Number(comment.userId) ? (
                                         <>
-                                        <p className={"mr-[3%] cursor-pointer"} onClick={() => handleEditClick(comment)}>수정</p>
-                                        <p className={"mr-[3%]"}>삭제</p>
+                                        <p className={"mr-[3%] cursor-pointer"} onClick={()=>handleEditClick(comment)}>수정</p>
+                                        <button className={"mr-[3%] cursur-pointer"} onClick={()=>handleDeleteClick(comment.commentId)}>삭제</button>
                                         </>
                                     ) : (
                                         <>
@@ -152,7 +137,7 @@ const Modal: FC<ModalProps> = ({ onClose, comments , boardId, userId}) => {
                                     )}
                                 </SubDiv>
                             </SubWrapper>
-                            <p>{formatDate(comment.createdDate)}</p>
+                            <p>{FormatDate(comment.createdDate)}</p>
                         </SubContainer>
                     </CommentContainer>
                 ))}

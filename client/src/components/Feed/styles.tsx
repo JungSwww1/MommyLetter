@@ -6,7 +6,7 @@ export const Layout = styled.div`
     ml-[3%]
     mr-[3%]
     bg-[#FFF8EE]
-    shadow 
+    shadow-xl 
     rounded-lg
     p-4
 `
@@ -61,9 +61,8 @@ export const ThreeDot = styled.div`
 `
 
 export const ButtonWrapper = styled.div`
-    flex 
-    w-[25%] 
-    justify-between 
+    flex
+    mr-[5%]
     items-center
 `
 

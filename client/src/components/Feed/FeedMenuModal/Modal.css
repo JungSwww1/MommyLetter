@@ -1,0 +1,14 @@
+.ThreeDot {
+    position: relative; /* 상위 요소 위치 설정 */
+}
+
+.MenuModal {
+    position: absolute;
+    top: 100%; /* ThreeDotMenu 바로 아래에 위치하도록 설정 */
+    right: 330%; /* ThreeDotMenu 왼쪽 정렬 */
+}
+
+.horizontal-text {
+    writing-mode: horizontal-tb;
+    transform: none;
+}
