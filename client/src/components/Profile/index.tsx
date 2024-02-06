@@ -11,7 +11,7 @@ export const ProfileComponent = ({name,intro}:ProfileProps) => {
     return (
             <ContentBox>
                 <ProfileSection>
-                    <img className="rounded-[100%] h-[100%] w-[30%]" src={sample2}/>
+                    <img className="rounded-[100%] h-[100%] aspect-[1]" src={sample2}/>
                     <p className="mb-3 font-bold">{name}</p>
                     <p className="text-xs">{intro}</p>
                 </ProfileSection>
