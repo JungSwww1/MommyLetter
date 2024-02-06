@@ -4,6 +4,8 @@ import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.account.repository.AccountRepository;
 import com.ssafy.A509.comment.model.Comment;
 import com.ssafy.A509.comment.service.CommentService;
+import com.ssafy.A509.exception.CustomException;
+import com.ssafy.A509.exception.ErrorCode;
 import com.ssafy.A509.like.dto.CreateLikeRequest;
 import com.ssafy.A509.like.model.CommentLike;
 import com.ssafy.A509.like.repository.CommentLikeRepository;
@@ -22,7 +24,7 @@ public class CommentLikeService extends LikeService<CommentService, CommentLikeR
 	@Override
 	public void deleteLike(Long commentId, Long userId) {
 		likeRepository.findByComment_CommentIdAndUser_UserId(commentId, userId).ifPresentOrElse(likeRepository::delete, () -> {
-			throw new NoSuchElementException("no such comment-like");
+			throw new CustomException(ErrorCode.NO_SUCH_COMMENT_LIKE);
 		});
 	}
 
