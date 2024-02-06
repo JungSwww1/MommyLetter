@@ -42,6 +42,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -79,17 +80,34 @@ public class DiaryService {
     }
 
     @Transactional
-    public DiaryResponse createDiary(CreateDiaryRequest diaryRequest) {
+//    public DiaryResponse createDiary(CreateDiaryRequest diaryRequest) {
+//        Diary newDiary = Diary.builder()
+//                .user(accountRepository.findById(diaryRequest.getUserId())
+//                        .orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_ACCOUNT)))
+//                .content(diaryRequest.getContent())
+//                .category(diaryRequest.getCategory())
+//                .emoji(diaryRequest.getEmoji())
+//                .createdDate(diaryRequest.getCreatedDate())
+//                .build();
+//
+//        addPhotos(newDiary, diaryRequest);
+//        addEmoticons(newDiary, diaryRequest);
+//
+//        Diary save = diaryRepository.save(newDiary);
+//
+//        return getDiaryResponse(save);
+//    }
+    public DiaryResponse createDiary(CreateDiaryRequest diaryRequest, List<MultipartFile> uploadFiles) {
         Diary newDiary = Diary.builder()
-                .user(accountRepository.findById(diaryRequest.getUserId())
-                        .orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_ACCOUNT)))
-                .content(diaryRequest.getContent())
-                .category(diaryRequest.getCategory())
-                .emoji(diaryRequest.getEmoji())
-                .createdDate(diaryRequest.getCreatedDate())
-                .build();
+            .user(accountRepository.findById(diaryRequest.getUserId())
+                .orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_ACCOUNT)))
+            .content(diaryRequest.getContent())
+            .category(diaryRequest.getCategory())
+            .emoji(diaryRequest.getEmoji())
+            .createdDate(diaryRequest.getCreatedDate())
+            .build();
 
-        addPhotos(newDiary, diaryRequest);
+        addPhotos(newDiary, uploadFiles);
         addEmoticons(newDiary, diaryRequest);
 
         Diary save = diaryRepository.save(newDiary);
@@ -317,13 +335,25 @@ public class DiaryService {
     /*
      * 사진 추가
      * */
-    private void addPhotos(Diary diary, CreateDiaryRequest diaryRequest) {
-        Optional.ofNullable(diaryRequest.getPhotoList()).ifPresent(list -> {
-            List<String> pathList = photoService.getImagePathList(list);
+//    private void addPhotos(Diary diary, CreateDiaryRequest diaryRequest) {
+//        Optional.ofNullable(diaryRequest.getPhotoList()).ifPresent(list -> {
+//            List<String> pathList = photoService.getImagePathList(list);
+//            for (String path : pathList) {
+//                Photo photo = Photo.builder()
+//                        .path(path)
+//                        .build();
+//
+//                diary.addPhoto(photo);
+//            }
+//        });
+//    }
+    private void addPhotos(Diary diary, List<MultipartFile> uploadFiles) {
+        Optional.ofNullable(uploadFiles).ifPresent(fileList -> {
+            List<String> pathList = photoService.getImagePathList(fileList);
             for (String path : pathList) {
                 Photo photo = Photo.builder()
-                        .path(path)
-                        .build();
+                    .path(path)
+                    .build();
 
                 diary.addPhoto(photo);
             }

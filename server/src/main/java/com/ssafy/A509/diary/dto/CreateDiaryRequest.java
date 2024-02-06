@@ -27,7 +27,7 @@ public class CreateDiaryRequest {
   @NotNull(message = "생성날짜가 존재하지 않습니다")
   private LocalDateTime createdDate;
 
-  private List<MultipartFile> photoList;
+//  private List<MultipartFile> photoList;
 
   private CreateEmoticonRequest emoticon;
 }
