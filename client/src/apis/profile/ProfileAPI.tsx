@@ -5,7 +5,7 @@ const axios = LocalAxios();
 
 export const ReadDoctorList = async () => {
     try {
-        const res = await axios.post('/profile/doctors')
+        const res = await axios.get('/profiles/doctors')
         return res.data;
     } catch (err: any) {
         console.log('Register err : ', err.response);
