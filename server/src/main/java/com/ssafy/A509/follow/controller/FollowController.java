@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/follows")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class FollowController {
     private final FollowService followService;
 

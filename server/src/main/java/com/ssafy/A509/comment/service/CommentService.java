@@ -7,6 +7,8 @@ import com.ssafy.A509.comment.dto.CommentResponse;
 import com.ssafy.A509.comment.dto.CreateCommentRequest;
 import com.ssafy.A509.comment.model.Comment;
 import com.ssafy.A509.comment.repository.CommentRepository;
+import com.ssafy.A509.exception.CustomException;
+import com.ssafy.A509.exception.ErrorCode;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -29,7 +31,7 @@ public class CommentService {
 	@Transactional
 	public Long createComment(CreateCommentRequest commentRequest) {
 		User user = accountRepository.findById(commentRequest.getUserId())
-			.orElseThrow(() -> new NoSuchElementException("No value present"));
+			.orElseThrow(() -> new CustomException(ErrorCode.NO_COMMENT_USER));
 
 		Comment buildComment = Comment.builder()
 			.content(commentRequest.getContent())
@@ -41,9 +43,21 @@ public class CommentService {
 	}
 
 	public List<CommentResponse> getBoardComment(Long boardId) {
+//		return commentRepository.findAllByBoardBoardId(boardId).stream()
+//			.map(comment -> modelMapper.map(comment, CommentResponse.class)).collect(
+//				Collectors.toList());
 		return commentRepository.findAllByBoardBoardId(boardId).stream()
-			.map(comment -> modelMapper.map(comment, CommentResponse.class)).collect(
-				Collectors.toList());
+				.map(comment -> {
+					CommentResponse response = new CommentResponse();
+					response.setCommentId(comment.getCommentId());
+					response.setNickname(comment.getUser().getNickname());
+					response.setUserId(comment.getUser().getUserId());
+					response.setContent(comment.getContent());
+					response.setCreatedDate(comment.getCreatedDate());
+					response.setUpdatedDate(comment.getUpdatedDate());
+					return response;
+				})
+				.collect(Collectors.toList());
 	}
 
 	@Transactional
@@ -59,6 +73,7 @@ public class CommentService {
 	}
 
 	public Comment findById(Long commentId) {
-		return commentRepository.findById(commentId).orElseThrow(() -> new NoSuchElementException("no such comment"));
+		return commentRepository.findById(commentId).orElseThrow(()
+			-> new CustomException(ErrorCode.NO_SUCH_COMMENT));
 	}
 }

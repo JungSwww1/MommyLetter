@@ -5,6 +5,7 @@ import com.ssafy.A509.diary.model.Family;
 import com.ssafy.A509.diary.model.Health;
 import com.ssafy.A509.diary.model.People;
 import com.ssafy.A509.diary.model.Weather;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,9 +13,9 @@ import lombok.Getter;
 @Getter
 @Builder
 public class UpdateEmoticonRequest {
-	List<Emotion> emotionList;
-	List<Family> familyList;
-	List<Health> healthList;
-	List<People> peopleList;
-	List<Weather> weatherList;
+	List<Emotion> emotionList = new ArrayList<>();
+	List<Family> familyList = new ArrayList<>();
+	List<Health> healthList = new ArrayList<>();
+	List<People> peopleList = new ArrayList<>();
+	List<Weather> weatherList = new ArrayList<>();
 }

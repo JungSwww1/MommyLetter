@@ -101,7 +101,8 @@ VALUES
 INSERT INTO `COMMENT` (`comment_id`, `board_id`, `user_id`, `content`, `created_date`, `updated_date`)
 VALUES
     (1, 1, 101, 'Comment 1', '2024-01-17 12:00:00', '2024-01-17 12:30:00'),
-    (2, 2, 102, 'Comment 2', '2024-01-17 13:00:00', '2024-01-17 13:30:00');
+    (2, 2, 102, 'Comment 2', '2024-01-17 13:00:00', '2024-01-17 13:30:00'),
+    (3, 2, 102, 'Comment 3', '2024-01-17 13:00:00', '2024-01-17 13:30:00');
 -- Add 13 more rows...
 -- Insert data into COMMENT_LIKE table
 INSERT INTO `COMMENT_LIKE` (`comment_like_id`, `comment_id`, `user_id`)
