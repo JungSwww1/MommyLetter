@@ -11,6 +11,8 @@ import com.ssafy.A509.doctor.dto.ReserveResponse;
 import com.ssafy.A509.doctor.model.Consult;
 import com.ssafy.A509.doctor.repository.ConsultRepository;
 import com.ssafy.A509.doctor.repository.ReserveRepository;
+import com.ssafy.A509.exception.CustomException;
+import com.ssafy.A509.exception.ErrorCode;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -62,6 +64,9 @@ public class DoctorService {
 	public PatientResponse getPatientInfo(Long reserveId){
 		PatientResponse patientResponse = accountRepository
 			.findPatientByReserveReserveId(reserveId);
+		if(patientResponse == null){
+   			throw new CustomException(ErrorCode.NO_PATIENT_INFO, "reserveId: " + reserveId);
+		}
 
 		long reserveCount =
 			getReserveCount(patientResponse.getUserId(), patientResponse.getDoctorId());
@@ -98,14 +103,15 @@ public class DoctorService {
 	public ConsultResponse createConsult(CreateConsultRequest consultRequest){
 		Consult newConsult = Consult.builder()
 			.user(accountRepository.findById(consultRequest.getUserId())
-				.orElseThrow())
+				.orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_ACCOUNT)))
 			.reserve(reserveRepository.findById(consultRequest.getReserveId())
-				.orElseThrow())
+				.orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_RESERVE)))
 			.prescriptionPath(consultRequest.getPrescriptionPath())
 			.build();
 
 		return getConsultResponse(consultRepository.save(newConsult));
 
 	}
+
 
 }

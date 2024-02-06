@@ -10,14 +10,20 @@ import com.ssafy.A509.doctor.model.Reserve;
 import com.ssafy.A509.doctor.repository.ConsultRepository;
 import com.ssafy.A509.doctor.repository.DoctorRepository;
 import com.ssafy.A509.doctor.repository.ReserveRepository;
+import com.ssafy.A509.exception.CustomException;
+import com.ssafy.A509.exception.ErrorCode;
 import jakarta.transaction.Transactional;
-import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
 import java.util.List;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -39,8 +45,10 @@ public class ConsultService {
 	public ReserveResponse createReserve(CreateReserveResponse reserveResponse){
 		Reserve newReserve =
 			Reserve.builder()
-				.user(accountRepository.findById(reserveResponse.getUserId()).orElseThrow())
-				.doctor(doctorRepository.findById(reserveResponse.getDoctorId()).orElseThrow())
+				.user(accountRepository.findById(reserveResponse.getUserId())
+					.orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_ACCOUNT, "userId: " + reserveResponse.getUserId())))
+				.doctor(doctorRepository.findById(reserveResponse.getDoctorId())
+					.orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_DOCTOR, "reserveId: " + reserveResponse.getDoctorId())))
 				.reserveDate(reserveResponse.getReserveDate())
 				.build();
 
@@ -58,7 +66,7 @@ public class ConsultService {
 	* */
 	@Transactional
 	public void deleteReserve(Long reserveId){
-		reserveRepository.deleteById(reserveId);
+		reserveRepository.delete(findReserveByReserveId(reserveId));
 	}
 
 	/*
@@ -82,6 +90,10 @@ public class ConsultService {
 		//의사 및 상담 정보
 		DoctorConsultCardResponse cardResponse = consultRepository.findDoctorByCounselingId(counselingId);
 
+		if(cardResponse == null){
+			throw new CustomException(ErrorCode.NO_CONSULT_DETAIL, "counselingId" + counselingId);
+		}
+
 		ConsultDetailResponse detailResponse = ConsultDetailResponse.builder()
 			.counselingId(cardResponse.getCounselingId())
 			.userId(cardResponse.getUserId())
@@ -97,27 +109,36 @@ public class ConsultService {
 		return detailResponse;
 
 	}
-	
+
 	/*
 	* 처방전 다운로드
 	* */
 	@Async
 	public InputStreamResource downloadPrescription(String prescriptionPath){
-		try{
-			//resources 폴더 안
-			File file = new ClassPathResource(prescriptionPath).getFile();
-
-			if(file.exists() && !file.isDirectory()){
-				System.out.println("There is a file");
-			}else{
-				System.out.println("There is no file");
-			}
-		}catch (Exception e){
-			e.printStackTrace();
-		}
 		//prescriptionPath 예: "/pdf/sample.pdf"
-		return new InputStreamResource(
-			Objects.requireNonNull(getClass().getResourceAsStream(prescriptionPath)));
+		//절대경로
+		try{
+			Path filePath = Path.of(prescriptionPath);
+			Resource file = new UrlResource(filePath.toUri());
+
+			if(!file.exists()){
+				throw new CustomException(ErrorCode.NO_SUCH_FILE_FROM_PATH, "경로: " + prescriptionPath);
+			}
+
+			InputStream inputStream = new FileInputStream(prescriptionPath);
+
+			return new InputStreamResource(inputStream);
+
+		}catch (MalformedURLException e){
+			throw new CustomException(ErrorCode.NO_SUCH_FILE_FROM_PATH, "경로: " + prescriptionPath);
+		}catch (FileNotFoundException e){
+			throw new CustomException(ErrorCode.NO_SUCH_PRESCRIPTION, "경로: " + prescriptionPath);
+		}
+	}
+
+	private Reserve findReserveByReserveId(Long reserveId) {
+		return reserveRepository.findById(reserveId).orElseThrow(()
+			-> new CustomException(ErrorCode.NO_SUCH_RESERVE, "reserveId : " + reserveId));
 	}
 
 }
