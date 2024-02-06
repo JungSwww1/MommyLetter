@@ -11,6 +11,7 @@ import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -60,7 +61,7 @@ public class DiaryController {
 //		return new ResponseEntity<>(diaryService.createDiary(diaryRequest),HttpStatus.CREATED);
 //    }
 
-    @PostMapping
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<DiaryResponse> createDiary(@Valid @RequestPart CreateDiaryRequest diaryRequest, @RequestPart(required = false) List<MultipartFile> uploadFiles) {
         return new ResponseEntity<>(diaryService.createDiary(diaryRequest, uploadFiles),HttpStatus.CREATED);
     }
