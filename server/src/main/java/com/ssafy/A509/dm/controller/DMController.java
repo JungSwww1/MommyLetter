@@ -4,6 +4,7 @@ import com.ssafy.A509.dm.dto.DMRequest;
 import com.ssafy.A509.dm.dto.DMResponse;
 import com.ssafy.A509.dm.service.DMService;
 import com.ssafy.A509.kafka.dto.KafkaDMRequest;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -38,6 +39,10 @@ public class DMController {
 //	@MessageMapping("/message")
 //	@Payload
 	@PostMapping
+	@Operation(
+		summary = "dm 보내기",
+		description = "메세지를 받아서 kafka에 송신, db에 저장"
+	)
 	public void sendMessage(@Valid @RequestBody DMRequest dmRequest) {
 		log.info("dmRequest={}", dmRequest);
 		String roomId = getRoomId(dmRequest);
@@ -49,6 +54,10 @@ public class DMController {
 		dmService.saveDm(dmRequest);
 	}
 
+	@Operation(
+		summary = "dm 시작",
+		description = "dm이 시작되면 chatGroup 생성(향후 참여 중인 채팅방 관리)"
+	)
 	@GetMapping("/{user1Id}/{user2Id}")
 	public ResponseEntity<Void> startDM(@NotNull @PathVariable Long user1Id, @NotNull @PathVariable Long user2Id) {
 		String roomId = getMessageKey(user1Id, user2Id);
@@ -56,17 +65,19 @@ public class DMController {
 		return ResponseEntity.ok().build();
 	}
 
-//	@GetMapping("/{userId}")
+	//	@GetMapping("/{userId}")
 //	public ResponseEntity<List<DMResponse>> getDMList(@NotNull @PathVariable Long userId) {
 //		return ResponseEntity.ok(dmService.findAllDMList(userId));
 //	}
-
+	@Operation(
+		summary = "채팅 기록 조회",
+		description = "dm 채팅 기록 조회"
+	)
 	@GetMapping("/list/{user1Id}/{user2Id}")
 	public ResponseEntity<List<DMResponse>> getListByUsers(@NotNull @PathVariable Long user1Id,
 		@NotNull @PathVariable Long user2Id) {
 		return ResponseEntity.ok(dmService.getListByUsers(user1Id, user2Id));
 	}
-
 
 
 	private String getRoomId(DMRequest dmRequest) {
