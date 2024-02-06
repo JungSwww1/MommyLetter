@@ -29,7 +29,7 @@ const FeedHeartButton = ({ likedata, onLikeStatusChange  }) => {
 
     return (
         <button
-            className={`${liked ? 'text-red-500' : 'text-white'}`}
+            className={`${liked ? 'text-red-500' : 'text-white'} text-2xl`}
             onClick={toggleLike}
         >
             {liked ? '❤️' : '🤍'}
