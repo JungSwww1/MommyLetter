@@ -21,6 +21,7 @@ export interface PhotoProps {
 }
 
 export interface DoctorProfileProps {
+    doctorId: number;
     name: string;
     location: string;
     department: string;
