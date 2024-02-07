@@ -10,8 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdatePhotoRequest {
-    Long photoId;
-
     @NotNull
-    MultipartFile photo;
+    String path;
 }
