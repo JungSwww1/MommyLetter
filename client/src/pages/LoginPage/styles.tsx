@@ -2,7 +2,8 @@ import styled from "tailwind-styled-components";
 import { Link } from 'react-router-dom';
 
 export const Main = styled.div`
-    relative
+    bg-[#FFDF6D]
+    h-full
 `
 
 export const Input = styled.input`

@@ -56,6 +56,7 @@ function Main() {
 
                     {/*상담관련 라우터*/}
                     <Route path={"/consult"} element={<ConsultListPage/>}/>
+                    <Route path={"/consultRegist"} element={<ConsultRegist/>}/>
                     <Route path={"/consult/:id/"} element={<ConsultPage/>}/>
                     <Route path={"/consult/:id/write"} element={<ConsultRegist/>}/>
 
