@@ -9,7 +9,16 @@ const DiaryBabyPage = () => {
     const [diaryList, setDiaryList] = useState<DiaryResponseProps[]>([]);
     const [events, setEvents] = useState<any[]>([]);
     const [diaryLists, setdiaryLists] = useState<ReactNode[]>([]);
+    const [token, setToken] = useState('');
 
+    useEffect(() => {
+        // 토큰을 로컬 스토리지에서 가져옴
+        const storedToken = localStorage.getItem('token');
+        if (storedToken) {
+            setToken(storedToken);
+        }
+        console.log(storedToken);
+    }, []); // 컴포넌트가 마운트될 때 한 번만 실행
     useEffect(() => {
         fetchDiary(101)
             .then((data) => {
