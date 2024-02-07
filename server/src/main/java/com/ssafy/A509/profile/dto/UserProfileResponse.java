@@ -15,6 +15,8 @@ public class UserProfileResponse {
     private String intro;
     private String backgroundPhoto;
     private String profilePhoto;
+    private int follower;
+    private int following;
 
     public UserProfileResponse(Long userId, String nickname, String profilePhoto) {
         this.userId = userId;

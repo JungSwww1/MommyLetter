@@ -101,17 +101,19 @@ public class User {
 		return new User();
 	}
 
-	@Builder
-	protected User(Long userId, String password, String nickname, String intro, String email,
-		Gender gender, Role role, String profilePhoto, String backgroundPhoto) {
-		this.userId = userId;
-		this.password = password;
-		this.nickname = nickname;
-		this.intro = intro;
-		this.email = email;
-		this.gender = gender;
-		this.role = role;
-	}
+    @Builder
+    protected User(Long userId, String password, String nickname, String intro, String email, String profilePhoto, String backgroundPhoto) {
+        this.userId = userId;
+        this.password = password;
+        this.nickname = nickname;
+        this.intro = intro;
+        this.email = email;
+        this.gender = Gender.Female;
+        this.role = Role.Common;
+        this.profile = Profile.builder()
+                .user(this)
+                .build();
+    }
 
 	public void addGroup(ChatGroup chatGroup) {
 		this.groups.add(chatGroup);

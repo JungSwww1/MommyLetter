@@ -63,6 +63,8 @@ public class ProfileServiceImpl implements ProfileService {
             profileResponse.setIntro(profile.getUser().getIntro());
             profileResponse.setProfilePhoto(profile.getProfilePhoto());
             profileResponse.setBackgroundPhoto(profile.getBackgroundPhoto());
+            profileResponse.setFollower(profile.getUser().getFollowerList().size());
+            profileResponse.setFollowing(profile.getUser().getFollowingList().size());
             return profileResponse;
         }
 //            return modelMapper.map(profile, UserProfileResponse.class);
