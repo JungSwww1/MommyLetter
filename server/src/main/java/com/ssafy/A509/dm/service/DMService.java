@@ -4,6 +4,7 @@ import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.account.repository.AccountRepository;
 import com.ssafy.A509.dm.dto.DMRequest;
 import com.ssafy.A509.dm.dto.DMResponse;
+import com.ssafy.A509.dm.dto.DMUserResponse;
 import com.ssafy.A509.dm.model.ChatGroup;
 import com.ssafy.A509.dm.model.DirectMessage;
 import com.ssafy.A509.dm.repository.ChatGroupRepository;
@@ -11,7 +12,9 @@ import com.ssafy.A509.dm.repository.DMRepository;
 import com.ssafy.A509.unreadNotification.service.UnreadNotificationService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -28,9 +31,16 @@ public class DMService {
 	private final ChatGroupRepository chatGroupRepository;
 	private final UnreadNotificationService notificationService;
 
-	public List<String> findAllDMRoomNameList(Long userId) {
+	public Set<DMUserResponse> findAllDMGroupList(Long userId) {
 		User user = getUserById(userId);
-		return user.getGroups().stream().map(ChatGroup::getChatRoomName).toList();
+		Set<DMUserResponse> chatGroupList = new HashSet<>();
+		user.getGroups().forEach(chatGroup -> {
+			String chatRoomName = chatGroup.getChatRoomName();
+			if (chatRoomName.startsWith("chat_")) {
+				chatGroupList.add(modelMapper.map(chatGroup, DMUserResponse.class));
+			}
+		});
+		return chatGroupList;
 	}
 
 	public List<DMResponse> getListByUsers(Long user1Id, Long user2Id) {
@@ -46,7 +56,7 @@ public class DMService {
 			.content(dmRequest.getContent())
 			.senderId(dmRequest.getSenderId())
 			.receiverId(dmRequest.getReceiverId())
-			.roomId(dmRequest.getRoomId())
+			.chatGroupId(dmRequest.getChatGroupId())
 			.createdDate(dmRequest.getCreatedDate())
 			.readCount(2)
 			.build();
@@ -56,7 +66,7 @@ public class DMService {
 	}
 
 	@Transactional
-	public void createChatRoom(Long user1Id, Long user2Id, String roomId) {
+	public void createChatGroup(Long user1Id, Long user2Id, String roomId) {
 		ChatGroup chatGroup = ChatGroup.builder()
 			.chatRoomName(roomId)
 			.build();

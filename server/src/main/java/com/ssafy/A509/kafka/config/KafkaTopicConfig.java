@@ -39,4 +39,20 @@ public class KafkaTopicConfig {
 			.replicas(2)
 			.build();
 	}
+
+	@Bean
+	public NewTopic enterTopic() {
+		return TopicBuilder.name("enter")
+			.partitions(100)
+			.replicas(1)
+			.build();
+	}
+
+	@Bean
+	public NewTopic groupLeaveTopic() {
+		return TopicBuilder.name("leave")
+			.partitions(100)
+			.replicas(1)
+			.build();
+	}
 }

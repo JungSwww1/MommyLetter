@@ -15,7 +15,7 @@ public class DirectMessage {
 	@Id
 	private String id;
 
-	private String roomId;
+	private String chatGroupId;
 
 	private Long senderId;
 
@@ -28,11 +28,11 @@ public class DirectMessage {
 	private String createdDate;
 
 	@Builder
-	protected DirectMessage(Long senderId, Long receiverId, String content, String roomId, String createdDate, int readCount) {
+	protected DirectMessage(Long senderId, Long receiverId, String content, String chatGroupId, String createdDate, int readCount) {
 		this.senderId = senderId;
 		this.receiverId = receiverId;
 		this.content = content;
-		this.roomId = roomId;
+		this.chatGroupId = chatGroupId;
 		this.createdDate = createdDate;
 		this.readCount = readCount;
 	}
