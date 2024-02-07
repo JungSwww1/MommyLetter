@@ -6,13 +6,13 @@ import com.ssafy.A509.profile.dto.*;
 import com.ssafy.A509.profile.repository.ProfileRepository;
 
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ProfileService {
 
+    String updateProfileImage(Long userId, MultipartFile profileImage);
 
-    void updateProfileImage(ProfileImageRequest profileImageRequest);
-
-    void updateBackgroundImage(ProfileImageRequest profileImageRequest);
+    String updateBackgroundImage(Long userId, MultipartFile backgroundImage);
 
     UserProfileResponse getUserProfile(Long userId);
 

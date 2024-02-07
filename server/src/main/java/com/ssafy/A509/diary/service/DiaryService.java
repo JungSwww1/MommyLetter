@@ -77,7 +77,7 @@ public class DiaryService {
         return diaryRepository
                 .findById(diaryId)
                 .map(this::getDiaryResponse)
-                .orElseThrow(() -> new NoSuchElementException("No such Diary"));
+                .orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_DIARY));
     }
 
     @Transactional
@@ -142,6 +142,9 @@ public class DiaryService {
 
         if (!deletePhotoList.isEmpty()) {
             photoRepository.deleteAllInBatch(deletePhotoList);
+            deletePhotoList.stream().forEach(photo -> {
+                photoService.deleteFile(photo.getPath());
+            });
         }
 
         //사진 추가

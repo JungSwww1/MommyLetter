@@ -21,5 +21,4 @@ public class CreateBoardRequest {
 	@NotNull
 	private Category category;
 	private List<String> hashtagList;
-	private List<CreatePhotoRequest> photoList;
 }

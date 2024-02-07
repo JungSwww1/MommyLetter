@@ -71,20 +71,20 @@ public class ConsultController {
 		return new ResponseEntity<>(consultService.getConsultDetail(counselingId), HttpStatus.OK);
 	}
 
-	@Operation(
-		summary = "처방전을 불러온다",
-		description = "{prescriptionPath}를 통해서 처방전을 불러온다"
-	)
-	@GetMapping("/files")
-	public ResponseEntity<InputStreamResource> getPrescription(@NotBlank String prescriptionPath){
-		consultService.downloadPrescription(prescriptionPath);
-
-		InputStreamResource pdf = consultService.downloadPrescription(prescriptionPath);
-
-    return ResponseEntity.ok()
-		.contentType(MediaType.valueOf("application/pdf"))
-		.body(pdf);
-	}
+//	@Operation(
+//		summary = "처방전을 불러온다",
+//		description = "{prescriptionPath}를 통해서 처방전을 불러온다"
+//	)
+//	@GetMapping("/files")
+//	public ResponseEntity<InputStreamResource> getPrescription(@NotBlank String prescriptionPath){
+//		consultService.downloadPrescription(prescriptionPath);
+//
+//		InputStreamResource pdf = consultService.downloadPrescription(prescriptionPath);
+//
+//    return ResponseEntity.ok()
+//		.contentType(MediaType.valueOf("application/pdf"))
+//		.body(pdf);
+//	}
 
 
 }

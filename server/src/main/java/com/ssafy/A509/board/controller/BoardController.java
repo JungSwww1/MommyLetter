@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,8 +34,9 @@ public class BoardController {
 	private final BoardService boardService;
 
 	@PostMapping
-	public ResponseEntity<URI> createBoard(@Valid @RequestBody CreateBoardRequest boardRequest) {
-		Long boardId = boardService.createBoard(boardRequest);
+	public ResponseEntity<URI> createBoard(@Valid @RequestPart CreateBoardRequest boardRequest,
+		@RequestPart(required = false) List<MultipartFile> uploadFiles) {
+		Long boardId = boardService.createBoard(boardRequest, uploadFiles);
 		return ResponseEntity.created(URI.create("/" + boardId)).build();
 	}
 

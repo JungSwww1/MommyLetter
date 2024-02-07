@@ -3,7 +3,6 @@ package com.ssafy.A509.photo.service;
 import com.ssafy.A509.exception.CustomException;
 import com.ssafy.A509.exception.ErrorCode;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -32,15 +31,11 @@ public class PhotoService {
 		List<String> resultPath = new ArrayList<>();
 
 		//폴더 생성
-		File uploadFolder = new File(uploadPath + newPath);
-		if(!uploadFolder.exists()){
-			boolean mkdir = uploadFolder.mkdirs();
-			System.out.println("파일 생성: " + mkdir);
-		}
+		makeFolder(newPath);
 
 		for(MultipartFile uploadFile : uploadFiles){
 
-			Path savePath = makePath(uploadFile);
+			Path savePath = makeImagePath(uploadFile, newPath);
 
 			//이미지 저장
 			try{
@@ -59,13 +54,9 @@ public class PhotoService {
 
 	public String getImagePath(MultipartFile uploadFile, String newPath){
 		//폴더 생성
-		File uploadFolder = new File(uploadPath + newPath);
-		if(!uploadFolder.exists()){
-			boolean mkdir = uploadFolder.mkdirs();
-			System.out.println("파일 생성: " + mkdir);
-		}
+		makeFolder(newPath);
 
-		Path savePath = makePath(uploadFile);
+		Path savePath = makeImagePath(uploadFile, newPath);
 
 		try{
 			uploadFile.transferTo(savePath);
@@ -77,10 +68,26 @@ public class PhotoService {
 		}
 	}
 
-	private Path makePath(MultipartFile uploadFile){
+	public String getPrescriptionPath(MultipartFile uploadFile, String newPath){
+		//폴더 생성
+		makeFolder(newPath);
+
+		Path savePath = makePrescriptionPath(uploadFile, newPath);
+
+		try{
+			uploadFile.transferTo(savePath);
+			return savePath.toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new CustomException(ErrorCode.UNABLE_TO_UPLOAD_FILE,
+				"uploadPath: " + uploadPath);
+		}
+	}
+
+	private Path makeImagePath(MultipartFile uploadFile, String newPath){
 		// 이미지 파일만 업로드
 		if (!Objects.requireNonNull(uploadFile.getContentType()).startsWith("image")) {
-			throw new CustomException(ErrorCode.CONTENT_TYPE_IMAGE_MISMATCH,
+			throw new CustomException(ErrorCode.CONTENT_TYPE_FILE_MISMATCH,
 				"Content Type: " + uploadFile.getContentType());
 		}
 
@@ -88,7 +95,43 @@ public class PhotoService {
 		String originalName = uploadFile.getOriginalFilename();
 		//중복을 회피하기 위한 파일 이름 변경
 		String savedName = UUID.randomUUID().toString() + "_" + originalName;
-		return Paths.get(uploadPath + File.separator + savedName);
+		return Paths.get(uploadPath + File.separator + newPath + File.separator + savedName);
+	}
+
+	private Path makePrescriptionPath(MultipartFile uploadFile, String newPath){
+		// 이미지 파일만 업로드
+		if (!Objects.requireNonNull(uploadFile.getContentType()).equals("application/pdf")) {
+			throw new CustomException(ErrorCode.CONTENT_TYPE_FILE_MISMATCH,
+				"Content Type: " + uploadFile.getContentType());
+		}
+
+		//파일 원본 이름
+		String originalName = uploadFile.getOriginalFilename();
+		//중복을 회피하기 위한 파일 이름 변경
+		String savedName = UUID.randomUUID().toString() + "_" + originalName;
+		return Paths.get(uploadPath + File.separator + newPath + File.separator + savedName);
+	}
+
+	private void makeFolder(String newPath){
+		File uploadFolder = new File(uploadPath + newPath + "/");
+		if(!uploadFolder.exists()){
+			boolean mkdir = uploadFolder.mkdirs();
+			System.out.println("파일 생성: " + mkdir);
+		}
+	}
+
+	public void deleteFile(String path){
+		try{
+			File file = new File(path);
+			if(file.delete()) {
+				System.out.println("파일이 정상적으로 삭제되었습니다");
+			}else{
+				System.out.println("파일이 삭제되지 않았습니다");
+			}
+		}
+		catch (Exception e){
+			throw new CustomException(ErrorCode.FILE_DELETE_FAILED, "path: " + path);
+		}
 	}
 
 
