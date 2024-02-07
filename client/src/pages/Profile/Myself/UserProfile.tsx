@@ -12,6 +12,7 @@ import {
 import {useEffect, useState} from "react";
 import {getFollowerAPI, getFollowingAPI} from "@/apis/Follow/FollowAPI";
 import {getProfileAPI} from "@/apis/profile/ProfileAPI";
+import {useNavigate} from "react-router-dom";
 
 interface Profile {
     userId:number;
@@ -24,6 +25,7 @@ interface Profile {
 }
 
 const UserProfile = () => {
+    const navigate = useNavigate();
     //아래는 기본적인 유저 정보 가져오기 용도
     //localStorage에서 현재 사용 유저 가져오기
     const getAuthUser = () => {
@@ -57,7 +59,7 @@ const UserProfile = () => {
     const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
     console.log(profileData)
     const profileEdit = () => {
-
+        navigate("/edit")
     }
     return (
         <div>
@@ -73,7 +75,7 @@ const UserProfile = () => {
                 <ProfileContainer>
                     <Img src={logo} alt="Logo"/>
                     <p className={"text-[20px]"}>{profileData.nickname}</p>
-                    <p>고추장 아빠</p>
+                    <p>{profileData.intro}</p>
                     <SubProfileContainer>
                         <div>
                             <p className={'text-[140%]'}>51</p>

@@ -54,7 +54,7 @@ const Feed: React.FC = () => {
                 const res = await axios.get(`http://i10a509.p.ssafy.io:8081/boards/list/${authUserId}`);
                 setAllBoards(res.data);
                 // 여기서 보여줄 데이터의 수 설정
-                console.log(allBoards.length)
+                console.log(allBoards)
                 setDisplayBoards(res.data.slice(0, chunkSize));
             } catch (error) {
                 console.error("피드를 가져오는 중 오류 발생 :", error);

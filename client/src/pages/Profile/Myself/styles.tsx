@@ -44,8 +44,7 @@ export const Img = styled.img`
 
 export const ProfileButton = styled.button`
     btn 
-    w-[45%]
-    h-[30px]
+    w-[38%]
     bg-[#FFE588]
     rounded-2xl
     font-bold
