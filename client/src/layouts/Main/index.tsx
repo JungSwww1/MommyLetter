@@ -1,7 +1,7 @@
 import React from 'react';
 import {MainLayout,BodySection} from './styles';
 import {Routes, Route} from 'react-router-dom';
-
+import OtherProfile from "@/pages/Profile/Others/UserProfile"
 import UserProfile from "@/pages/Profile/Myself/UserProfile";
 import Feed from "@/pages/Feed/Feed";
 import {Header,Write, Navigation} from "@/components/Menu";
@@ -40,6 +40,7 @@ function Main() {
                     <Route path={"/join"} element={<UserRegist/>}/>
                     <Route path={"/edit"} element={<UserEdit/>}/>
                     <Route path={"/profile"} element={<UserProfile/>}/>
+                    <Route path={"/profile/:userId"} element={<OtherProfile/>}/>
 
                     {/*피드관련 라우터*/}
                     <Route path={"/"} element={<Feed/>}/>

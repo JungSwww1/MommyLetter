@@ -3,6 +3,7 @@ import { Layout, MainContainer } from "@/pages/Feed/styles";
 import axios from "axios";
 import MainFeed from "@/components/Feed";
 import LogoWhite from "@/assets/icons/logo";
+import AlertModal from "@/pages/Feed/AlertModal";
 
 interface Board {
     boardId: number;
@@ -53,6 +54,7 @@ const Feed: React.FC = () => {
                 const res = await axios.get(`http://i10a509.p.ssafy.io:8081/boards/list/${authUserId}`);
                 setAllBoards(res.data);
                 // 여기서 보여줄 데이터의 수 설정
+                console.log(allBoards.length)
                 setDisplayBoards(res.data.slice(0, chunkSize));
             } catch (error) {
                 console.error("피드를 가져오는 중 오류 발생 :", error);
@@ -79,9 +81,19 @@ const Feed: React.FC = () => {
             setDisplayBoards((prevBoards) => [...prevBoards, ...nextItems]);
         }
     };
-
+    // const clickModal = () => {
+    //     const modal = document.getElementById('my_modal_1') as HTMLDialogElement | null;
+    //     if (modal) {
+    //         modal.showModal();
+    //     }
+    // }
+    // const returnData = () => {
+    //     console.log('ㄱㄷ셔구')
+    // }
     return (
         <Layout>
+            {/*<button className="btn" onClick={clickModal}>open modal</button>*/}
+            {/*<AlertModal children={'댓글을 삭제하시겠습니까?'} onConfirm={returnData}/>*/}
             <MainContainer>
                 {displayBoards.map((board) => (
                     <MainFeed key={board.boardId} authUserId={authUserId} board={board}/>
