@@ -1,7 +1,6 @@
 import React from 'react';
 import {Route, Routes} from 'react-router-dom';
 import LoginPage from "@/pages/LoginPage/LoginPage";
-import UserRegist from "@/pages/UserRegist/UserRegist";
 import Main from "@/layouts/Main";
 
 function App() {

@@ -15,6 +15,12 @@ interface registData {
     nickname : string;
 }
 
+interface consultData {
+    phone: string;
+    pregnancyStatus: string;
+    extra: string;
+    diaryOpen: boolean;
+}
 
 // 로그인
 export const loginAPI = async (data: loginData) => {
@@ -60,6 +66,16 @@ export const registAPI = async (data:registData) => {
         handleApiError('회원가입하는 중 오류 발생: ', error);
     }
 }
+
+// 상담 정보 등록
+export const addConsultInfoAPI = async (userId:number, data:consultData) => {
+    try {
+        const response = await axios.post(`${AUTH_BASE_URL}/consult-info/${userId}`, data)
+    } catch (error) {
+        handleApiError('상담 정보 등록을 하는 중 오류 발생 : ',error)
+    }
+}
+
 
 const handleApiError = (message:any, error:any) => {
     console.error(`${message}:`, error);
