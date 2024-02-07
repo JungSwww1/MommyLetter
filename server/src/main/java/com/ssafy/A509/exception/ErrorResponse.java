@@ -48,7 +48,6 @@ public class ErrorResponse {
     }
 
     //전송 타입
-
     public static ErrorResponse of(final ErrorCode code, final BindingResult bindingResult) {
         return new ErrorResponse(code, FieldError.of(bindingResult));
     }

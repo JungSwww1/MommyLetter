@@ -11,6 +11,7 @@ import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -52,9 +55,14 @@ public class DiaryController {
         summary = "일기 작성",
         description = "userId, content, category, emoji, createdDate, photoList, emoticon의 내용이 입력되어야 한다"
     )
-    @PostMapping
-    public ResponseEntity<DiaryResponse> createDiary(@Valid @RequestBody CreateDiaryRequest diaryRequest) {
-		return new ResponseEntity<>(diaryService.createDiary(diaryRequest),HttpStatus.CREATED);
+//    @PostMapping
+//    public ResponseEntity<DiaryResponse> createDiary(@Valid @RequestBody CreateDiaryRequest diaryRequest) {
+//		return new ResponseEntity<>(diaryService.createDiary(diaryRequest),HttpStatus.CREATED);
+//    }
+
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<DiaryResponse> createDiary(@Valid @RequestPart CreateDiaryRequest diaryRequest, @RequestPart(required = false) List<MultipartFile> uploadFiles) {
+        return new ResponseEntity<>(diaryService.createDiary(diaryRequest, uploadFiles),HttpStatus.CREATED);
     }
 
     @Operation(

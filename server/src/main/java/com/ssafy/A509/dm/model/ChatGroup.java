@@ -25,13 +25,13 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class DmGroup {
+public class ChatGroup {
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-	private Long dmGroupId;
+	private Long chatGroupId;
 
-	private String dmGroupName;
+	private String chatRoomName;
 
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "user_id")
@@ -44,8 +44,8 @@ public class DmGroup {
 	private LocalDateTime createdDate;
 
 	@Builder
-	public DmGroup(String dmGroupName, User host) {
-		this.dmGroupName = dmGroupName;
+	public ChatGroup(String chatRoomName, User host) {
+		this.chatRoomName = chatRoomName;
 		this.host = host;
 	}
 }

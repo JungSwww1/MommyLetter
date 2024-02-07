@@ -4,6 +4,8 @@ import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.account.repository.AccountRepository;
 import com.ssafy.A509.board.model.Board;
 import com.ssafy.A509.board.service.BoardService;
+import com.ssafy.A509.exception.CustomException;
+import com.ssafy.A509.exception.ErrorCode;
 import com.ssafy.A509.like.dto.CreateLikeRequest;
 import com.ssafy.A509.like.model.BoardLike;
 import com.ssafy.A509.like.repository.BoardLikeRepository;
@@ -22,7 +24,7 @@ public class BoardLikeService extends LikeService<BoardService, BoardLikeReposit
 	@Override
 	public void deleteLike(Long id, Long userId) {
 		likeRepository.findByBoard_BoardIdAndUser_UserId(id, userId).ifPresentOrElse(likeRepository::delete, () -> {
-			throw new NoSuchElementException("no such board-like");
+			throw new CustomException(ErrorCode.NO_SUCH_BOARD_LIKE);
 		});
 	}
 

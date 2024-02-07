@@ -10,6 +10,8 @@ import com.ssafy.A509.board.dto.UpdateBoardRequest;
 import com.ssafy.A509.board.model.Board;
 import com.ssafy.A509.board.model.Category;
 import com.ssafy.A509.board.repository.BoardRepository;
+import com.ssafy.A509.exception.CustomException;
+import com.ssafy.A509.exception.ErrorCode;
 import com.ssafy.A509.hashtag.dto.HashtagResponse;
 import com.ssafy.A509.hashtag.model.Hashtag;
 import com.ssafy.A509.photo.dto.CreatePhotoRequest;
@@ -137,11 +139,13 @@ public class BoardService {
 	}
 
 	public Board findById(Long boardId) {
-		return boardRepository.findById(boardId).orElseThrow(() -> new NoSuchElementException("no such board"));
+		return boardRepository.findById(boardId).orElseThrow(()
+			-> new CustomException(ErrorCode.NO_SUCH_BOARD, "boardId: " + boardId));
 	}
 
 	public User findByUserId(Long userId) {
-		return accountRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("no such user"));
+		return accountRepository.findById(userId).orElseThrow(()
+			-> new CustomException(ErrorCode.NO_SUCH_ACCOUNT, "userId: " + userId));
 	}
 
 	public List<BoardSimpleResponse> findAllByCategory(Category category) {

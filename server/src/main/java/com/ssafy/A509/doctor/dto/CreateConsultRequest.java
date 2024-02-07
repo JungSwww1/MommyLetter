@@ -8,12 +8,12 @@ import lombok.Getter;
 @Getter
 @Builder
 public class CreateConsultRequest {
-	@NotNull
+	@NotNull(message = "userId가 존재하지 않습니다")
 	private Long userId;
 
-	@NotNull
+	@NotNull(message = "reserveId가 존재하지 않습니다")
 	private Long reserveId;
 
-	@NotBlank
+	@NotBlank(message = "처방전이 존재하지 않습니다")
 	private String prescriptionPath;
 }

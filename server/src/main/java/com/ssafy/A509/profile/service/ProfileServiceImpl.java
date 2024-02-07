@@ -1,6 +1,8 @@
 package com.ssafy.A509.profile.service;
 
 import com.ssafy.A509.account.model.Role;
+import com.ssafy.A509.exception.CustomException;
+import com.ssafy.A509.exception.ErrorCode;
 import com.ssafy.A509.profile.dto.*;
 import com.ssafy.A509.profile.model.*;
 import com.ssafy.A509.profile.repository.*;
@@ -28,7 +30,10 @@ public class ProfileServiceImpl implements ProfileService {
             profile.setProfilePhoto(profileImageRequest.getImageUrl());
             profileRepository.save(profile);
         }
-        // Handle the case where the user profile is not found
+        else{ // Handle the case where the user profile is not found
+            throw new CustomException(ErrorCode.NO_SUCH_PROFILE,
+                "userId: " + profileImageRequest.getUserId());
+        }
     }
 
     @Override
@@ -43,26 +48,35 @@ public class ProfileServiceImpl implements ProfileService {
             profileRepository.save(profile);
 
         }
-        // Handle the case where the user profile is not found
+        else{ // Handle the case where the user profile is not found
+            throw new CustomException(ErrorCode.NO_SUCH_PROFILE,
+                "userId: " + profileImageRequest.getUserId());
+        }
     }
 
     @Override
     public UserProfileResponse getUserProfile(Long userId) {
         Profile profile = profileRepository.findByUserId(userId);
 
-        if (profile != null && profile.getUser().getRole() == Role.Common) {
-            UserProfileResponse profileResponse = new UserProfileResponse();
-            profileResponse.setUserId(profile.getUser().getUserId());
-            profileResponse.setNickname(profile.getUser().getNickname());
-            profileResponse.setIntro(profile.getUser().getIntro());
-            profileResponse.setProfilePhoto(profile.getProfilePhoto());
-            profileResponse.setBackgroundPhoto(profile.getBackgroundPhoto());
-            return profileResponse;
+        if (profile != null){
+            if(profile.getUser().getRole() == Role.Common) {
+                UserProfileResponse profileResponse = new UserProfileResponse();
+                profileResponse.setUserId(profile.getUser().getUserId());
+                profileResponse.setNickname(profile.getUser().getNickname());
+                profileResponse.setIntro(profile.getUser().getIntro());
+                profileResponse.setProfilePhoto(profile.getProfilePhoto());
+                profileResponse.setBackgroundPhoto(profile.getBackgroundPhoto());
+                return profileResponse;
+            }else{
+                throw new CustomException(ErrorCode.ROLE_IS_NOT_COMMON, "userId: " + userId);
+            }
 //            return modelMapper.map(profile, UserProfileResponse.class);
         } else {
             System.out.println("일반사용자가 아님");
-            return null;
+            throw new CustomException(ErrorCode.NO_SUCH_PROFILE, "userId: " + userId);
+
         }
+
     }
 
     public List<DoctorProfileCardsResponse> getAllDoctorProfileCards() {
@@ -85,8 +99,7 @@ public class ProfileServiceImpl implements ProfileService {
         if (doctorProfile != null && doctorProfile.getUser().getRole() == Role.Doctor) {
             return getDoctorProfileResponse(doctorProfile);
         } else {
-            System.out.println("의사아님");
-            return null;
+            throw new CustomException(ErrorCode.NOT_DOCTOR, "userId: " + userId);
         }
     }
 
@@ -106,6 +119,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     private static DoctorProfileCardsResponse getDoctorProfileCardsResponse(Profile doctorProfile) {
         return DoctorProfileCardsResponse.builder()
+                .doctorId(doctorProfile.getUser().getDoctor().getDoctorId())
                 .name(doctorProfile.getUser().getDoctor().getName())
                 .location(doctorProfile.getUser().getDoctor().getLocation())
                 .department(doctorProfile.getUser().getDoctor().getDepartment())
