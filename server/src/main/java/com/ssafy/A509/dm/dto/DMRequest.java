@@ -10,15 +10,16 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DMRequest  {
+public class DMRequest {
+
 	@NotNull
 	Long senderId;
 	@NotNull
 	Long receiverId;
 	@NotBlank
 	String content;
-
-	String chatGroupId;
+	@NotNull
+	Long chatGroupId;
 
 	String createdDate;
 

@@ -18,25 +18,29 @@ public class KafkaTopicListener {
 	@KafkaListener(id = "enterListener", topics = "enter")
 	public void listenToEnterTopic(ConsumerRecord<String, KafkaDMRequest> record) {
 		log.info("enter listen ={}", record);
-		messagingTemplate.convertAndSend("/sub/enter", record.value());
+		Long chatGroupId = record.value().getChatGroupId();
+		messagingTemplate.convertAndSend("/sub/enter/" + chatGroupId, record.value());
 	}
 
 	@KafkaListener(id = "leaveListener", topics = "leave")
 	public void listenToLeaveTopic(ConsumerRecord<String, KafkaDMRequest> record) {
 		log.info("leave listen ={}", record);
-		messagingTemplate.convertAndSend("/sub/leave", record.value());
+		Long chatGroupId = record.value().getChatGroupId();
+		messagingTemplate.convertAndSend("/sub/leave/" + chatGroupId, record.value());
 	}
 
 	@KafkaListener(id = "dmListener", topics = "dm")
 	public void listenToDMTopic(ConsumerRecord<String, KafkaDMRequest> record) {
 		log.info("dm listen ={}", record);
+		Long receiverId = record.value().getReceiverId();
 		//  프론트로 보내줘야 함
-		messagingTemplate.convertAndSend("/sub/dm", record.value());
+		messagingTemplate.convertAndSend("/sub/dm/" + receiverId, record.value());
 	}
 
 	@KafkaListener(id = "groupChatListener", topics = "group-chat")
 	public void listenToGroupChatTopic(ConsumerRecord<String, KafkaDMRequest> record) {
 		log.info("group-chat listen ={}", record);
-		messagingTemplate.convertAndSend("/sub/groupChat", record.value());
+		Long chatGroupId = record.value().getChatGroupId();
+		messagingTemplate.convertAndSend("/sub/groupChat/" + chatGroupId, record.value());
 	}
 }

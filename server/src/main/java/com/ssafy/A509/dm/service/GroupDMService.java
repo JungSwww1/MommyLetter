@@ -53,7 +53,7 @@ public class GroupDMService {
 	public void saveGroupDm(GroupMessageRequest groupMessageRequest) {
 		DirectMessage directMessage = DirectMessage.builder()
 			.content(groupMessageRequest.getContent())
-			.chatGroupId(groupMessageRequest.getChatGroupId().toString())
+			.chatGroupId(groupMessageRequest.getChatGroupId())
 			.senderId(groupMessageRequest.getSenderId())
 			.createdDate(groupMessageRequest.getCreatedDate())
 			.readCount(chatGroupRepository.countChatUserByChatGroupId(groupMessageRequest.getChatGroupId()))
@@ -81,8 +81,7 @@ public class GroupDMService {
 	}
 
 	public List<GroupMessageResponse> getListByGroupId(Long groupId) {
-		String roomId = groupId.toString();
-		return dmRepository.findAllByChatGroupId(roomId).stream()
+		return dmRepository.findAllByChatGroupId(groupId).stream()
 			.map(dm -> modelMapper.map(dm, GroupMessageResponse.class))
 			.collect(
 				Collectors.toList());
@@ -114,7 +113,7 @@ public class GroupDMService {
 			.chatGroupId(chatGroup.getChatGroupId())
 			.dpGroupName(chatGroup.getChatRoomName())
 			.createdDate(chatGroup.getCreatedDate())
-			.host(getUserResponse(chatGroup.getHost()))
+			.host(chatGroup.getHost() == null ? null : getUserResponse(chatGroup.getHost()))
 			.build();
 
 		Set<AccountSimpleResponse> users = new HashSet<>();

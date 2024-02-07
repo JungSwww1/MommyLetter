@@ -11,6 +11,7 @@ public class DMResponse {
 	String id;
 	Long senderId;
 	Long receiverId;
+	Long chatGroupId;
 	String createdDate;
 	String content;
 }

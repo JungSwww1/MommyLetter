@@ -1,6 +1,18 @@
 package com.ssafy.A509.kafka.dto;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
+@Component
 public class KafkaConstants {
     public static final String GROUP_ID = "group";
-    public static final String KAFKA_BROKER = "i10a509.p.ssafy.io:9092";
+
+    @Value("${kafka.broker}")
+    public String KAFKA_BROKER;
+
+    @Bean
+    public String KAFKA_BROKER() {
+        return KAFKA_BROKER;
+    }
 }

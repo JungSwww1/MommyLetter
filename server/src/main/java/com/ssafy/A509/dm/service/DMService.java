@@ -66,9 +66,9 @@ public class DMService {
 	}
 
 	@Transactional
-	public void createChatGroup(Long user1Id, Long user2Id, String roomId) {
+	public void createChatGroup(Long user1Id, Long user2Id, String roomName) {
 		ChatGroup chatGroup = ChatGroup.builder()
-			.chatRoomName(roomId)
+			.chatRoomName(roomName)
 			.build();
 
 		ChatGroup save = chatGroupRepository.save(chatGroup);
