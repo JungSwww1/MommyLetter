@@ -1,6 +1,6 @@
 package com.ssafy.A509.account.model;
 
-import com.ssafy.A509.dm.model.DmGroup;
+import com.ssafy.A509.dm.model.ChatGroup;
 import com.ssafy.A509.doctor.model.Reserve;
 import com.ssafy.A509.follow.model.Follow;
 import com.ssafy.A509.profile.model.Profile;
@@ -87,11 +87,11 @@ public class User {
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(
-		name = "user_dm_group",
+		name = "user_chat_group",
 		joinColumns = { @JoinColumn(name = "user_id") },
-		inverseJoinColumns = { @JoinColumn(name = "dm_group_id") }
+		inverseJoinColumns = { @JoinColumn(name = "chat_group_id") }
 	)
-	private Set<DmGroup> groups = new HashSet<>();
+	private Set<ChatGroup> groups = new HashSet<>();
 
 	public static User createUser() {
 		return new User();
@@ -109,11 +109,11 @@ public class User {
 		this.role = role;
 	}
 
-	public void addGroup(DmGroup dmGroup) {
-		this.groups.add(dmGroup);
+	public void addGroup(ChatGroup chatGroup) {
+		this.groups.add(chatGroup);
 	}
 
-	public void removeGroup(DmGroup dmGroup) {
-		this.groups.remove(dmGroup);
+	public void removeGroup(ChatGroup chatGroup) {
+		this.groups.remove(chatGroup);
 	}
 }
