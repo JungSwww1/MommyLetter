@@ -2,6 +2,7 @@ package com.ssafy.A509.dm.controller;
 
 import com.ssafy.A509.dm.dto.DMRequest;
 import com.ssafy.A509.dm.dto.DMResponse;
+import com.ssafy.A509.dm.dto.DMUserResponse;
 import com.ssafy.A509.dm.service.DMService;
 import com.ssafy.A509.kafka.dto.KafkaDMRequest;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -41,13 +43,14 @@ public class DMController {
 	@PostMapping
 	@Operation(
 		summary = "dm 보내기",
-		description = "메세지를 받아서 kafka에 송신, db에 저장"
+		description = "메세지를 받아서 kafka에 송신, db에 저장\n"
+			+ "DMRequest로는 sender, receiver, content만 채워서 보내주면 됨"
 	)
 	public void sendMessage(@Valid @RequestBody DMRequest dmRequest) {
 		log.info("dmRequest={}", dmRequest);
-		String roomId = getRoomId(dmRequest);
+		String chatGroupId = getChatGroupId(dmRequest);
 		dmRequest.createTimeStamp();
-		dmRequest.setRoomId(roomId);
+		dmRequest.setChatGroupId(chatGroupId);
 		KafkaDMRequest kafkaDMRequest = modelMapper.map(dmRequest, KafkaDMRequest.class);
 		kafkaTemplate.send("dm", dmRequest.getReceiverId().toString(), kafkaDMRequest);
 		log.info("send={}", dmRequest);
@@ -56,22 +59,57 @@ public class DMController {
 
 	@Operation(
 		summary = "dm 시작",
-		description = "dm이 시작되면 chatGroup 생성(향후 참여 중인 채팅방 관리)"
+		description = "dm이 시작되면 chatGroup 생성(향후 참여 중인 채팅방 리스트 관리에 사용)"
 	)
 	@GetMapping("/{user1Id}/{user2Id}")
 	public ResponseEntity<Void> startDM(@NotNull @PathVariable Long user1Id, @NotNull @PathVariable Long user2Id) {
-		String roomId = getMessageKey(user1Id, user2Id);
-		dmService.createChatRoom(user1Id, user2Id, roomId);
+		String chatGroupId = getMessageKey(user1Id, user2Id);
+		dmService.createChatGroup(user1Id, user2Id, chatGroupId);
+		return ResponseEntity.ok().build();
+	}
+	@Operation(
+		summary = "채팅방에 입장",
+		description = "채팅방에 들어오면 실시간으로 알림을 보냄"
+	)
+	@GetMapping("/enter/{userId}/{otherUserId}")
+	public ResponseEntity<Void> enterDM(@PathVariable Long userId, @PathVariable Long otherUserId) {
+		KafkaDMRequest dmRequest = KafkaDMRequest.builder()
+			.senderId(userId)
+			.receiverId(otherUserId)
+			.content(userId + "_ENTER_CHATTING_TO_" + otherUserId)
+			.build();
+
+		kafkaTemplate.send("enter", otherUserId.toString(), dmRequest);
+		return ResponseEntity.ok().build();
+	}
+	@Operation(
+		summary = "채팅방에서 퇴장",
+		description = "채팅방에서 나가면 실시간으로 알림을 보냄"
+	)
+	@GetMapping("/leave/{userId}/{otherUserId}")
+	public ResponseEntity<Void> leaveDM(@PathVariable Long userId, @PathVariable Long otherUserId) {
+		KafkaDMRequest dmRequest = KafkaDMRequest.builder()
+			.senderId(userId)
+			.receiverId(otherUserId)
+			.content(userId + "_LEAVE_CHATTING_TO_" + otherUserId)
+			.build();
+
+		kafkaTemplate.send("leave", otherUserId.toString(), dmRequest);
 		return ResponseEntity.ok().build();
 	}
 
-	//	@GetMapping("/{userId}")
-//	public ResponseEntity<List<DMResponse>> getDMList(@NotNull @PathVariable Long userId) {
-//		return ResponseEntity.ok(dmService.findAllDMList(userId));
-//	}
+	@Operation(
+		summary = "참여 중인 dm 리스트 조회",
+		description = "1:1 채팅 리스트 조회"
+	)
+	@GetMapping("/{userId}")
+	public ResponseEntity<Set<DMUserResponse>> getDMChatGroupList(@NotNull @PathVariable Long userId) {
+		return ResponseEntity.ok(dmService.findAllDMGroupList(userId));
+	}
+
 	@Operation(
 		summary = "채팅 기록 조회",
-		description = "dm 채팅 기록 조회"
+		description = "사용자 아이디 2개로 dm 채팅 기록 조회"
 	)
 	@GetMapping("/list/{user1Id}/{user2Id}")
 	public ResponseEntity<List<DMResponse>> getListByUsers(@NotNull @PathVariable Long user1Id,
@@ -80,7 +118,7 @@ public class DMController {
 	}
 
 
-	private String getRoomId(DMRequest dmRequest) {
+	private String getChatGroupId(DMRequest dmRequest) {
 		return "chat_" + Math.min(dmRequest.getSenderId(), dmRequest.getReceiverId()) + "_" + Math.max(
 			dmRequest.getSenderId(), dmRequest.getReceiverId());
 	}

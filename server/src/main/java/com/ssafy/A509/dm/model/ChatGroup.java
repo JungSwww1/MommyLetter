@@ -3,6 +3,7 @@ package com.ssafy.A509.dm.model;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ssafy.A509.account.model.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -38,6 +39,7 @@ public class ChatGroup {
 	private User host;
 
 	@ManyToMany(mappedBy = "groups", fetch = LAZY)
+	@JsonBackReference
 	private Set<User> users = new HashSet<>();
 
 	@CreatedDate

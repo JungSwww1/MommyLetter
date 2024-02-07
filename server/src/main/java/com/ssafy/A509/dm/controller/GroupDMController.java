@@ -1,7 +1,8 @@
 package com.ssafy.A509.dm.controller;
 
-import com.ssafy.A509.dm.dto.GroupDMRequest;
-import com.ssafy.A509.dm.dto.GroupDMResponse;
+import com.ssafy.A509.dm.dto.GroupMessageRequest;
+import com.ssafy.A509.dm.dto.ChatGroupResponse;
+import com.ssafy.A509.dm.dto.GroupMessageResponse;
 import com.ssafy.A509.dm.service.GroupDMService;
 import com.ssafy.A509.kafka.dto.KafkaDMRequest;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,15 +41,16 @@ public class GroupDMController {
 //	@Payload
 	@Operation(
 		summary = "그룹 채팅 발신",
-		description = "kafka 채팅 송신, db 저장"
+		description = "kafka 채팅 송신, db 저장\n"
+			+ "sender, content, chatGroupId 필수"
 	)
 	@PostMapping
-	public void sendMessageToGroup(@Valid @RequestBody GroupDMRequest groupDMRequest) {
-		groupDMRequest.createTimeStamp();
-		KafkaDMRequest kafkaDMRequest = modelMapper.map(groupDMRequest, KafkaDMRequest.class);
-		kafkaDMRequest.setRoomId(groupDMRequest.getRoomId().toString());
-		kafkaTemplate.send("group-chat", kafkaDMRequest.getRoomId(), kafkaDMRequest);
-		groupDMService.saveGroupDm(groupDMRequest);
+	public void sendMessageToGroup(@Valid @RequestBody GroupMessageRequest groupMessageRequest) {
+		groupMessageRequest.createTimeStamp();
+		KafkaDMRequest kafkaDMRequest = modelMapper.map(groupMessageRequest, KafkaDMRequest.class);
+		kafkaDMRequest.setChatGroupId(groupMessageRequest.getChatGroupId().toString());
+		kafkaTemplate.send("group-chat", kafkaDMRequest.getChatGroupId(), kafkaDMRequest);
+		groupDMService.saveGroupDm(groupMessageRequest);
 	}
 
 	@Operation(
@@ -56,7 +58,7 @@ public class GroupDMController {
 		description = "참여 중인 채팅방 리스트 조회"
 	)
 	@GetMapping("/list/{userId}")
-	public ResponseEntity<Set<GroupDMResponse>> groupListByUser(@PathVariable Long userId) {
+	public ResponseEntity<Set<ChatGroupResponse>> groupListByUser(@PathVariable Long userId) {
 		return ResponseEntity.ok(groupDMService.getGroupList(userId));
 	}
 
@@ -65,7 +67,7 @@ public class GroupDMController {
 		description = "채팅방의 채팅 목록 조회"
 	)
 	@GetMapping("/{groupId}")
-	public ResponseEntity<List<GroupDMRequest>> getGroupDM(@PathVariable Long groupId) {
+	public ResponseEntity<List<GroupMessageResponse>> getGroupDM(@PathVariable Long groupId) {
 		return ResponseEntity.ok(groupDMService.getListByGroupId(groupId));
 	}
 
@@ -73,7 +75,7 @@ public class GroupDMController {
 		summary = "채팅방 참여",
 		description = "채팅방 인원에 추가"
 	)
-	@GetMapping("/enter/{groupId}/{userId}")
+	@GetMapping("/welcome/{groupId}/{userId}")
 	public ResponseEntity<Void> enterGroup(@NotNull @PathVariable Long groupId, @NotNull @PathVariable Long userId) {
 		groupDMService.enterGroup(groupId, userId);
 		return ResponseEntity.noContent().build();
@@ -83,7 +85,7 @@ public class GroupDMController {
 		summary = "채팅방 나가기",
 		description = "채팅방 인원에서 삭제"
 	)
-	@DeleteMapping("/leave/{groupId}/{userId}")
+	@DeleteMapping("/delete/{groupId}/{userId}")
 	public ResponseEntity<Void> leaveGroup(@NotNull @PathVariable Long groupId, @NotNull @PathVariable Long userId) {
 		groupDMService.leaveGroup(groupId, userId);
 		return ResponseEntity.noContent().build();
@@ -94,11 +96,11 @@ public class GroupDMController {
 		description = "그룹 채팅방 개설 및 호스트 등록"
 	)
 	@PostMapping("/create")
-	public ResponseEntity<URI> createGroup(@NotNull Long userId, @NotNull @RequestBody String roomName) {
-		Long groupId = groupDMService.createGroup(userId, roomName);
+	public ResponseEntity<URI> createGroup(@NotNull Long userId, @NotNull @RequestBody String chatGroupName) {
+		Long groupId = groupDMService.createGroup(userId, chatGroupName);
 		KafkaDMRequest kafkaDMRequest = new KafkaDMRequest();
-		kafkaDMRequest.setRoomId(groupId.toString());
-		kafkaDMRequest.setContent(roomName + " 채팅방이 개설되었습니다");
+		kafkaDMRequest.setChatGroupId(groupId.toString());
+		kafkaDMRequest.setContent(chatGroupName + " 채팅방이 개설되었습니다");
 		kafkaTemplate.send(groupId.toString(), kafkaDMRequest);
 		return ResponseEntity.created(URI.create("/group/" + groupId)).build();
 	}
@@ -108,9 +110,39 @@ public class GroupDMController {
 		description = "호스트, 참여인원 등"
 	)
 	@GetMapping("/info/{groupId}")
-	public ResponseEntity<GroupDMResponse> getGroupInfo(@NotNull @PathVariable Long groupId) {
+	public ResponseEntity<ChatGroupResponse> getGroupInfo(@NotNull @PathVariable Long groupId) {
 		return ResponseEntity.ok(groupDMService.getGroupById(groupId));
 	}
 
-	// 방장 바꾸기
+	@Operation(
+		summary = "채팅방에 입장",
+		description = "채팅방에 들어오면 실시간으로 알림을 보냄"
+	)
+	@GetMapping("/enter/{userId}/{chatGroupId}")
+	public ResponseEntity<Void> enterChat(@PathVariable Long userId, @PathVariable Long chatGroupId) {
+		KafkaDMRequest dmRequest = KafkaDMRequest.builder()
+			.senderId(userId)
+			.chatGroupId(chatGroupId.toString())
+			.content(userId + "_ENTER_CHATTING_TO_" + chatGroupId)
+			.build();
+
+		kafkaTemplate.send("enter", chatGroupId.toString(), dmRequest);
+		return ResponseEntity.ok().build();
+	}
+
+	@Operation(
+		summary = "채팅방에서 퇴장",
+		description = "채팅방에서 나가면 실시간으로 알림을 보냄"
+	)
+	@GetMapping("/leave/{userId}/{chatGroupId}")
+	public ResponseEntity<Void> leaveChat(@PathVariable Long userId, @PathVariable Long chatGroupId) {
+		KafkaDMRequest dmRequest = KafkaDMRequest.builder()
+			.senderId(userId)
+			.chatGroupId(chatGroupId.toString())
+			.content(userId + "_LEAVE_CHATTING_TO_" + chatGroupId)
+			.build();
+
+		kafkaTemplate.send("leave", chatGroupId.toString(), dmRequest);
+		return ResponseEntity.ok().build();
+	}
 }

@@ -10,7 +10,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class GroupDMResponse {
+public class ChatGroupResponse {
+	Long chatGroupId;
 	String dpGroupName;
 	AccountSimpleResponse host;
 	Set<AccountSimpleResponse> users;

@@ -3,8 +3,9 @@ package com.ssafy.A509.dm.service;
 import com.ssafy.A509.account.dto.AccountSimpleResponse;
 import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.account.repository.AccountRepository;
-import com.ssafy.A509.dm.dto.GroupDMRequest;
-import com.ssafy.A509.dm.dto.GroupDMResponse;
+import com.ssafy.A509.dm.dto.GroupMessageRequest;
+import com.ssafy.A509.dm.dto.ChatGroupResponse;
+import com.ssafy.A509.dm.dto.GroupMessageResponse;
 import com.ssafy.A509.dm.model.ChatGroup;
 import com.ssafy.A509.dm.model.DirectMessage;
 import com.ssafy.A509.dm.repository.ChatGroupRepository;
@@ -49,17 +50,17 @@ public class GroupDMService {
 	}
 
 	@Transactional
-	public void saveGroupDm(GroupDMRequest groupDMRequest) {
+	public void saveGroupDm(GroupMessageRequest groupMessageRequest) {
 		DirectMessage directMessage = DirectMessage.builder()
-			.content(groupDMRequest.getContent())
-			.roomId(groupDMRequest.getRoomId().toString())
-			.senderId(groupDMRequest.getSenderId())
-			.createdDate(groupDMRequest.getCreatedDate())
-			.readCount(chatGroupRepository.countChatUserByChatGroupId(groupDMRequest.getRoomId()))
+			.content(groupMessageRequest.getContent())
+			.chatGroupId(groupMessageRequest.getChatGroupId().toString())
+			.senderId(groupMessageRequest.getSenderId())
+			.createdDate(groupMessageRequest.getCreatedDate())
+			.readCount(chatGroupRepository.countChatUserByChatGroupId(groupMessageRequest.getChatGroupId()))
 			.build();
 
 		DirectMessage save = dmRepository.save(directMessage);
-		ChatGroup group = findById(groupDMRequest.getRoomId());
+		ChatGroup group = findById(groupMessageRequest.getChatGroupId());
 		group.getUsers().forEach(user -> notificationService.createUnread(user.getUserId(), save.getId()));
 	}
 
@@ -79,23 +80,28 @@ public class GroupDMService {
 		accountRepository.save(user);
 	}
 
-	public List<GroupDMRequest> getListByGroupId(Long groupId) {
+	public List<GroupMessageResponse> getListByGroupId(Long groupId) {
 		String roomId = groupId.toString();
-		return dmRepository.findAllByRoomId(roomId).stream()
-			.map(dm -> modelMapper.map(dm, GroupDMRequest.class))
+		return dmRepository.findAllByChatGroupId(roomId).stream()
+			.map(dm -> modelMapper.map(dm, GroupMessageResponse.class))
 			.collect(
 				Collectors.toList());
 	}
 
-	public Set<GroupDMResponse> getGroupList(Long userId) {
+	public Set<ChatGroupResponse> getGroupList(Long userId) {
 		User user = dmService.getUserById(userId);
-		Set<GroupDMResponse> groups = new HashSet<>();
-		user.getGroups().forEach(chatGroup -> groups.add(getGroupResponse(chatGroup)));
+		Set<ChatGroupResponse> groups = new HashSet<>();
+		user.getGroups().forEach(chatGroup -> {
+			if (!chatGroup.getChatRoomName().startsWith("chat_")) {
+				groups.add(getGroupResponse(chatGroup));
+			}
+		});
+
 		return groups;
 	}
 
 
-	public GroupDMResponse getGroupById(Long groupId) {
+	public ChatGroupResponse getGroupById(Long groupId) {
 		return getGroupResponse(findById(groupId));
 	}
 
@@ -103,8 +109,9 @@ public class GroupDMService {
 		return chatGroupRepository.findById(groupId).orElseThrow(() -> new EntityNotFoundException("no such group"));
 	}
 
-	private GroupDMResponse getGroupResponse(ChatGroup chatGroup) {
-		GroupDMResponse dmGroupResponse = GroupDMResponse.builder()
+	private ChatGroupResponse getGroupResponse(ChatGroup chatGroup) {
+		ChatGroupResponse dmGroupResponse = ChatGroupResponse.builder()
+			.chatGroupId(chatGroup.getChatGroupId())
 			.dpGroupName(chatGroup.getChatRoomName())
 			.createdDate(chatGroup.getCreatedDate())
 			.host(getUserResponse(chatGroup.getHost()))

@@ -17,7 +17,7 @@ public interface DMRepository extends MongoRepository<DirectMessage, Long> {
 	List<DirectMessage> findBySenderId(Long senderId);
 	List<DirectMessage> findByReceiverId(Long senderId);
 
-	List<DirectMessage> findAllByRoomId(String roomId);
+	List<DirectMessage> findAllByChatGroupId(String chatGroupId);
 
 	@Query("{'$or': [{'senderId': ?0, 'receiverId': ?1}, {'senderId': ?1, 'receiverId': ?0}]}")
 	List<DirectMessage> getDmListByUsers(Long user1Id, Long user2Id, Sort sort);

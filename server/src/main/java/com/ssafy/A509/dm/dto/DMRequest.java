@@ -18,7 +18,7 @@ public class DMRequest  {
 	@NotBlank
 	String content;
 
-	String roomId;
+	String chatGroupId;
 
 	String createdDate;
 
