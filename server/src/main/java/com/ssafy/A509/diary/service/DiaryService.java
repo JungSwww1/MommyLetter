@@ -98,17 +98,19 @@ public class DiaryService {
         return getDiaryResponse(save);
     }
     @Transactional
-    public void updateDiary(UpdateDiaryRequest diaryRequest) {
+    public DiaryResponse updateDiary(UpdateDiaryRequest diaryRequest, List<MultipartFile> uploadFiles) {
         Diary diary = findById(diaryRequest.getDiaryId());
         diary.setContent(diaryRequest.getContent());
         diary.setEmoji(diaryRequest.getEmoji());
         diary.setCreatedDate(diaryRequest.getCreatedDate());
 
-        updatePhoto(diary, diaryRequest);
+        updatePhoto(diary, diaryRequest, uploadFiles);
 
         updateEmoticon(diary, diaryRequest);
 
-        diaryRepository.save(diary);
+        Diary update = diaryRepository.save(diary);
+
+        return getDiaryResponse(update);
     }
 
     @Transactional
@@ -119,7 +121,7 @@ public class DiaryService {
     /*
      * 사진 업데이트
      * */
-    public void updatePhoto(Diary diary, UpdateDiaryRequest diaryRequest) {
+    public void updatePhoto(Diary diary, UpdateDiaryRequest diaryRequest, List<MultipartFile> uploadFiles) {
         //사진리스트 수정
         List<Photo> temp = new ArrayList<>(diary.getPhotoList());
         List<Photo> photoList = Optional.ofNullable(temp).orElseGet(ArrayList::new);
@@ -127,18 +129,10 @@ public class DiaryService {
                 .orElseGet(ArrayList::new);
         List<Photo> deletePhotoList = new ArrayList<>();
 
-        //사진 추가
-        //photoId를 가지고 있으면 기존의 것, 없으면 새로운 것
-        newPhotoList.stream()
-                .filter(newPhoto -> newPhoto.getPhotoId() == null)
-                .map(newPhoto -> Photo.builder().path(photoService.getImagePath(newPhoto.getPhoto())).build())
-                .forEach(diary::addPhoto);
-
         //사진 삭제
         photoList.stream()
                 .filter(existingPhoto -> newPhotoList.stream()
-                        .filter(newPhoto -> newPhoto.getPhotoId() != null)
-                        .noneMatch(newPhoto -> newPhoto.getPhotoId().equals(existingPhoto.getPhotoId())))
+                        .noneMatch(newPhoto -> newPhoto.getPath().equals(existingPhoto.getPath())))
                 .forEach(
                         photo -> {
                             diary.getPhotoList().remove(photo);
@@ -149,6 +143,9 @@ public class DiaryService {
         if (!deletePhotoList.isEmpty()) {
             photoRepository.deleteAllInBatch(deletePhotoList);
         }
+
+        //사진 추가
+        addPhotos(diary, uploadFiles);
 
     }
 
@@ -318,21 +315,9 @@ public class DiaryService {
     /*
      * 사진 추가
      * */
-//    private void addPhotos(Diary diary, CreateDiaryRequest diaryRequest) {
-//        Optional.ofNullable(diaryRequest.getPhotoList()).ifPresent(list -> {
-//            List<String> pathList = photoService.getImagePathList(list);
-//            for (String path : pathList) {
-//                Photo photo = Photo.builder()
-//                        .path(path)
-//                        .build();
-//
-//                diary.addPhoto(photo);
-//            }
-//        });
-//    }
     private void addPhotos(Diary diary, List<MultipartFile> uploadFiles) {
         Optional.ofNullable(uploadFiles).ifPresent(fileList -> {
-            List<String> pathList = photoService.getImagePathList(fileList);
+            List<String> pathList = photoService.getImagePathList(fileList, "Diary");
             for (String path : pathList) {
                 Photo photo = Photo.builder()
                         .path(path)

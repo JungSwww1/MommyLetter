@@ -55,13 +55,9 @@ public class DiaryController {
         summary = "일기 작성",
         description = "userId, content, category, emoji, createdDate, photoList, emoticon의 내용이 입력되어야 한다"
     )
-//    @PostMapping
-//    public ResponseEntity<DiaryResponse> createDiary(@Valid @RequestBody CreateDiaryRequest diaryRequest) {
-//		return new ResponseEntity<>(diaryService.createDiary(diaryRequest),HttpStatus.CREATED);
-//    }
-
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<DiaryResponse> createDiary(@Valid @RequestPart CreateDiaryRequest diaryRequest, @RequestPart(required = false) List<MultipartFile> uploadFiles) {
+    public ResponseEntity<DiaryResponse> createDiary(@Valid @RequestPart CreateDiaryRequest diaryRequest,
+        @RequestPart(required = false) List<MultipartFile> uploadFiles) {
         return new ResponseEntity<>(diaryService.createDiary(diaryRequest, uploadFiles),HttpStatus.CREATED);
     }
 
@@ -70,10 +66,10 @@ public class DiaryController {
         description = "{diaryId}를 통해서 수정할 일기를 찾는다. content, emoji, photoList, emoticon이 수정될 수 있다.\n"
             + "Request Body 안에도 diaryId가 들어갈 것"
     )
-    @PatchMapping("/{diaryId}")
-    public ResponseEntity<Void> updateDiary(@Valid @RequestBody UpdateDiaryRequest diaryRequest) {
-        diaryService.updateDiary(diaryRequest);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @PatchMapping(value = "/{diaryId}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<DiaryResponse> updateDiary(@Valid @RequestPart UpdateDiaryRequest diaryRequest,
+        @RequestPart(required = false) List<MultipartFile> uploadFiles) {
+        return new ResponseEntity<>(diaryService.updateDiary(diaryRequest, uploadFiles), HttpStatus.OK);
     }
 
     @Operation(

@@ -53,7 +53,6 @@ public class Diary {
     private int emoji;
 
     @Setter
-    @CreatedDate
     private LocalDateTime createdDate;
 
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL)
