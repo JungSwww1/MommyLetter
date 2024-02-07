@@ -1893,6 +1893,84 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fullcalendar/bootstrap5@npm:^6.1.10":
+  version: 6.1.10
+  resolution: "@fullcalendar/bootstrap5@npm:6.1.10"
+  peerDependencies:
+    "@fullcalendar/core": ~6.1.10
+  checksum: b85dffd97cf8d25659b8bf873b7c95d38b8cb270e04b25aa244e5b28bfc4a06e4196c4733c6de089f9b197fc0959f7258f74587a685ad483ec7f77e19a27b26c
+  languageName: node
+  linkType: hard
+
+"@fullcalendar/core@npm:^6.1.10, @fullcalendar/core@npm:~6.1.10":
+  version: 6.1.10
+  resolution: "@fullcalendar/core@npm:6.1.10"
+  dependencies:
+    preact: "npm:~10.12.1"
+  checksum: 3f0dd0de6aff7d80ea91a10455c76e4082b26e8aaacfe3ed94e2e2411ef3b28323c42186ac79a90791eb835eee0d0d1d5b54416f7957a1dab4d9ef0a57145b72
+  languageName: node
+  linkType: hard
+
+"@fullcalendar/daygrid@npm:^6.1.10, @fullcalendar/daygrid@npm:~6.1.10":
+  version: 6.1.10
+  resolution: "@fullcalendar/daygrid@npm:6.1.10"
+  peerDependencies:
+    "@fullcalendar/core": ~6.1.10
+  checksum: 04543281d75dc8a3dceb2e741c3512d1275a96bcb499a40b0f26e2a32e3287f7a5d1ac5cf6367507490f019b6bd9570b25f362d3ffb57a1abf7dbc10ed0a1dca
+  languageName: node
+  linkType: hard
+
+"@fullcalendar/interaction@npm:^6.1.10, @fullcalendar/interaction@npm:~6.1.10":
+  version: 6.1.10
+  resolution: "@fullcalendar/interaction@npm:6.1.10"
+  peerDependencies:
+    "@fullcalendar/core": ~6.1.10
+  checksum: 59ee0934370c7231000ca96b42644219c4c7568ce29a75ad1738771636a89abca2aac61a41d7d099eb5ed2a04af6210dc868f5938a34339645da5127b0ce784b
+  languageName: node
+  linkType: hard
+
+"@fullcalendar/list@npm:~6.1.10":
+  version: 6.1.10
+  resolution: "@fullcalendar/list@npm:6.1.10"
+  peerDependencies:
+    "@fullcalendar/core": ~6.1.10
+  checksum: 49d455f6351a4fe51a8a375061b0ba7f8904b03407a246e5e3ca3cf29ce8631c3164bb5bae02d0041a1021aeb80949ae95114be0233284e4ceceb74f25b8858f
+  languageName: node
+  linkType: hard
+
+"@fullcalendar/multimonth@npm:~6.1.10":
+  version: 6.1.10
+  resolution: "@fullcalendar/multimonth@npm:6.1.10"
+  dependencies:
+    "@fullcalendar/daygrid": "npm:~6.1.10"
+  peerDependencies:
+    "@fullcalendar/core": ~6.1.10
+  checksum: a54807a85347f47225d28ef73aa4210b8a5a560719717cf90efa5e1dc39fa62db1d3abfe4a34cd17fb13ffa59100961f3de924caaac2dfcb9b97ba34ba3e9d0e
+  languageName: node
+  linkType: hard
+
+"@fullcalendar/react@npm:^6.1.10":
+  version: 6.1.10
+  resolution: "@fullcalendar/react@npm:6.1.10"
+  peerDependencies:
+    "@fullcalendar/core": ~6.1.10
+    react: ^16.7.0 || ^17 || ^18
+    react-dom: ^16.7.0 || ^17 || ^18
+  checksum: 0b287e39875b69e99c49a409e3a4b44501329e2ffd0d0f6b6a63ad8f7226f67c8ae5f81e608cf2b0aee3be8c6c0b46de46889890e293b2da44994550cdc8622d
+  languageName: node
+  linkType: hard
+
+"@fullcalendar/timegrid@npm:~6.1.10":
+  version: 6.1.10
+  resolution: "@fullcalendar/timegrid@npm:6.1.10"
+  dependencies:
+    "@fullcalendar/daygrid": "npm:~6.1.10"
+  peerDependencies:
+    "@fullcalendar/core": ~6.1.10
+  checksum: 8560ba73e1badad079a28d2d89232b724804fa3e5663610a880aa8fe0ea5e5786f95c5ff64dc521b782d2a93af8c4e6fec53d978242043fe27d8cb84fee2f0ce
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.11.13":
   version: 0.11.14
   resolution: "@humanwhocodes/config-array@npm:0.11.14"
@@ -2382,6 +2460,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@popperjs/core@npm:^2.9.2":
+  version: 2.11.8
+  resolution: "@popperjs/core@npm:2.11.8"
+  checksum: 4681e682abc006d25eb380d0cf3efc7557043f53b6aea7a5057d0d1e7df849a00e281cd8ea79c902a35a414d7919621fc2ba293ecec05f413598e0b23d5a1e63
+  languageName: node
+  linkType: hard
+
+"@react-oauth/google@npm:^0.12.1":
+  version: 0.12.1
+  resolution: "@react-oauth/google@npm:0.12.1"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: fe23e3c0a4d0b9999fcd7b932b1a42bf94fdab526473931d780d08742455b8861fc647857b3b491e258ecef4a407dbf7321440c0d00890e23059d487795f92fb
+  languageName: node
+  linkType: hard
+
 "@reduxjs/toolkit@npm:^2.0.1":
   version: 2.0.1
   resolution: "@reduxjs/toolkit@npm:2.0.1"
@@ -2819,6 +2914,15 @@ __metadata:
   dependencies:
     "@types/node": "npm:*"
   checksum: eebedbca185ac3c39dd5992ef18d9e2a9f99e7f3c2f52f5561f90e9ed482c5d224c7962db95362712f580ed5713264e777a98d8f0bd8747f4eadf62937baed16
+  languageName: node
+  linkType: hard
+
+"@types/bootstrap@npm:^5":
+  version: 5.2.10
+  resolution: "@types/bootstrap@npm:5.2.10"
+  dependencies:
+    "@popperjs/core": "npm:^2.9.2"
+  checksum: 3e978855eb780df3907e8fe991371dc661c7a8c5b9852a10e33bcf6a909bc1481857aa8786d18b3aa828fb28660145fda0c8648265719e8a97a448b9f0158eae
   languageName: node
   linkType: hard
 
@@ -4075,6 +4179,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios@npm:^1.6.7":
+  version: 1.6.7
+  resolution: "axios@npm:1.6.7"
+  dependencies:
+    follow-redirects: "npm:^1.15.4"
+    form-data: "npm:^4.0.0"
+    proxy-from-env: "npm:^1.1.0"
+  checksum: 131bf8e62eee48ca4bd84e6101f211961bf6a21a33b95e5dfb3983d5a2fe50d9fffde0b57668d7ce6f65063d3dc10f2212cbcb554f75cfca99da1c73b210358d
+  languageName: node
+  linkType: hard
+
 "axobject-query@npm:^3.2.1":
   version: 3.2.1
   resolution: "axobject-query@npm:3.2.1"
@@ -4345,6 +4460,22 @@ __metadata:
   version: 1.0.0
   resolution: "boolbase@npm:1.0.0"
   checksum: e4b53deb4f2b85c52be0e21a273f2045c7b6a6ea002b0e139c744cb6f95e9ec044439a52883b0d74dedd1ff3da55ed140cfdddfed7fb0cccbed373de5dce1bcf
+  languageName: node
+  linkType: hard
+
+"bootstrap-icons@npm:^1.11.3":
+  version: 1.11.3
+  resolution: "bootstrap-icons@npm:1.11.3"
+  checksum: 37eefd418c6bbbb304bdff0f2ed527f82c3c6f331d3e3a7c4aa8bbdbaf7118bb86725b024f85e7d738c613d48c7353cd81c09e58e9d8d34c5633960fdec8410b
+  languageName: node
+  linkType: hard
+
+"bootstrap@npm:^5.3.2":
+  version: 5.3.2
+  resolution: "bootstrap@npm:5.3.2"
+  peerDependencies:
+    "@popperjs/core": ^2.11.8
+  checksum: 0c108d90cee90247db571f07a0fc3718beda58eed2ffed3f2f8ccff66b25a349830dfbeb5e55e6e6fe484fad96c4edb19cb4c5fa5a68b771b2e0f3c400e42dda
   languageName: node
   linkType: hard
 
@@ -4649,10 +4780,17 @@ __metadata:
   resolution: "client@workspace:."
   dependencies:
     "@craco/craco": "npm:^7.1.0"
+    "@fullcalendar/bootstrap5": "npm:^6.1.10"
+    "@fullcalendar/core": "npm:^6.1.10"
+    "@fullcalendar/daygrid": "npm:^6.1.10"
+    "@fullcalendar/interaction": "npm:^6.1.10"
+    "@fullcalendar/react": "npm:^6.1.10"
+    "@react-oauth/google": "npm:^0.12.1"
     "@reduxjs/toolkit": "npm:^2.0.1"
     "@testing-library/jest-dom": "npm:^6.2.0"
     "@testing-library/react": "npm:^13.0.0"
     "@testing-library/user-event": "npm:^13.2.1"
+    "@types/bootstrap": "npm:^5"
     "@types/eslint": "npm:^8"
     "@types/jest": "npm:^27.0.1"
     "@types/node": "npm:^16.7.13"
@@ -4662,12 +4800,17 @@ __metadata:
     "@types/react-router-dom": "npm:^5.3.3"
     "@types/redux-persist": "npm:^4.3.1"
     autoprefixer: "npm:^10.4.16"
+    axios: "npm:^1.6.7"
+    bootstrap: "npm:^5.3.2"
+    bootstrap-icons: "npm:^1.11.3"
     craco-alias: "npm:^3.0.1"
     daisyui: "npm:^4.6.0"
+    dotenv: "npm:^16.4.1"
     eslint: "npm:^8.56.0"
     eslint-config-prettier: "npm:^9.1.0"
     eslint-config-react-app: "npm:^7.0.1"
     eslint-plugin-prettier: "npm:^5.1.3"
+    fullcalendar: "npm:^6.1.10"
     prettier: "npm:^3.2.3"
     react: "npm:^18.2.0"
     react-app-alias: "npm:^2.2.2"
@@ -4675,6 +4818,7 @@ __metadata:
     react-redux: "npm:^9.1.0"
     react-router-dom: "npm:^6.21.2"
     react-scripts: "npm:5.0.1"
+    react-toastify: "npm:^10.0.4"
     redux: "npm:^5.0.1"
     redux-persist: "npm:^6.0.0"
     tailwind-styled-components: "npm:^2.2.0"
@@ -4703,6 +4847,13 @@ __metadata:
     kind-of: "npm:^6.0.2"
     shallow-clone: "npm:^3.0.0"
   checksum: 637753615aa24adf0f2d505947a1bb75e63964309034a1cf56ba4b1f30af155201edd38d26ffe26911adaae267a3c138b344a4947d39f5fc1b6d6108125aa758
+  languageName: node
+  linkType: hard
+
+"clsx@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "clsx@npm:2.1.0"
+  checksum: c09c00ad14f638366ca814097e6cab533dfa1972a358da5b557be487168acbb25b4c1395e89ffa842a8a61ba87a462d2b4885bc9d4f8410b598f3cb339599cdb
   languageName: node
   linkType: hard
 
@@ -5717,6 +5868,13 @@ __metadata:
   version: 10.0.0
   resolution: "dotenv@npm:10.0.0"
   checksum: 2d8d4ba64bfaff7931402aa5e8cbb8eba0acbc99fe9ae442300199af021079eafa7171ce90e150821a5cb3d74f0057721fbe7ec201a6044b68c8a7615f8c123f
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^16.4.1":
+  version: 16.4.1
+  resolution: "dotenv@npm:16.4.1"
+  checksum: ef3d95f48f38146df0881a4b58447ae437d2da3f6d645074b84de4e64ef64ba75fc357c5ed66b3c2b813b5369fdeb6a4777d6ade2d50e54eed6aa06dddc98bc4
   languageName: node
   linkType: hard
 
@@ -6751,7 +6909,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.0.0":
+"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.15.4":
   version: 1.15.5
   resolution: "follow-redirects@npm:1.15.5"
   peerDependenciesMeta:
@@ -6819,6 +6977,17 @@ __metadata:
     combined-stream: "npm:^1.0.8"
     mime-types: "npm:^2.1.12"
   checksum: 1ccc3ae064a080a799923f754d49fcebdd90515a8924f0f54de557540b50e7f1fe48ba5f2bd0435a5664aa2d49729107e6aaf2155a9abf52339474c5638b4485
+  languageName: node
+  linkType: hard
+
+"form-data@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "form-data@npm:4.0.0"
+  dependencies:
+    asynckit: "npm:^0.4.0"
+    combined-stream: "npm:^1.0.8"
+    mime-types: "npm:^2.1.12"
+  checksum: cb6f3ac49180be03ff07ba3ff125f9eba2ff0b277fb33c7fc47569fc5e616882c5b1c69b9904c4c4187e97dd0419dd03b134174756f296dec62041e6527e2c6e
   languageName: node
   linkType: hard
 
@@ -6914,6 +7083,20 @@ __metadata:
   dependencies:
     node-gyp: "npm:latest"
   conditions: os=darwin
+  languageName: node
+  linkType: hard
+
+"fullcalendar@npm:^6.1.10":
+  version: 6.1.10
+  resolution: "fullcalendar@npm:6.1.10"
+  dependencies:
+    "@fullcalendar/core": "npm:~6.1.10"
+    "@fullcalendar/daygrid": "npm:~6.1.10"
+    "@fullcalendar/interaction": "npm:~6.1.10"
+    "@fullcalendar/list": "npm:~6.1.10"
+    "@fullcalendar/multimonth": "npm:~6.1.10"
+    "@fullcalendar/timegrid": "npm:~6.1.10"
+  checksum: c940c2efd4274d53fef3cc9234d95f52b467aed8dde0d81992ba56b28755f0a22793eb2a9d1b9f13e209bbcd4f2f64b27bf4f6f797f896c95586c4aa56245b96
   languageName: node
   linkType: hard
 
@@ -10932,6 +11115,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"preact@npm:~10.12.1":
+  version: 10.12.1
+  resolution: "preact@npm:10.12.1"
+  checksum: c77a55e897dcf298b7aa13637fed29744d3cf6c083f2832856e8551dbf27303c8b6946569736de16b05cba15c0e44ad404beb236ad9e36583a6fc5e2efad7777
+  languageName: node
+  linkType: hard
+
 "prelude-ls@npm:^1.2.1":
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
@@ -11065,6 +11255,13 @@ __metadata:
     forwarded: "npm:0.2.0"
     ipaddr.js: "npm:1.9.1"
   checksum: c3eed999781a35f7fd935f398b6d8920b6fb00bbc14287bc6de78128ccc1a02c89b95b56742bf7cf0362cc333c61d138532049c7dedc7a328ef13343eff81210
+  languageName: node
+  linkType: hard
+
+"proxy-from-env@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "proxy-from-env@npm:1.1.0"
+  checksum: fe7dd8b1bdbbbea18d1459107729c3e4a2243ca870d26d34c2c1bcd3e4425b7bcc5112362df2d93cc7fb9746f6142b5e272fd1cc5c86ddf8580175186f6ad42b
   languageName: node
   linkType: hard
 
@@ -11359,6 +11556,18 @@ __metadata:
   bin:
     react-scripts: bin/react-scripts.js
   checksum: 1776e7139261019eb4a2adece8fb997913040c6b4e9170902ffed95c3ff311ded623189bb1582ecddb3a5a15d6afd871fb68dbed72080d50f635e31c4ff5fff5
+  languageName: node
+  linkType: hard
+
+"react-toastify@npm:^10.0.4":
+  version: 10.0.4
+  resolution: "react-toastify@npm:10.0.4"
+  dependencies:
+    clsx: "npm:^2.1.0"
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 3d31edf81e8b394fd0085615fd7ba9fb9546c7cdae56e5334df67b58d65450c73af14a8fc163f19ceed03cfee7a344d1af1489422536f52c9516ca45e9b61a37
   languageName: node
   linkType: hard
 
