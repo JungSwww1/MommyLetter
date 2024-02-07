@@ -68,8 +68,7 @@ public class ProfileServiceImpl implements ProfileService {
 //            return modelMapper.map(profile, UserProfileResponse.class);
         else {
             System.out.println("일반사용자가 아님");
-            throw new CustomException(ErrorCode.NO_SUCH_PROFILE, "userId: " + userId);
-
+            return null;
         }
 
     }
