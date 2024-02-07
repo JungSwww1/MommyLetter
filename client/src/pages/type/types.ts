@@ -21,9 +21,31 @@ export interface PhotoProps {
 }
 
 export interface DoctorProfileProps {
-    doctorId: number;
     name: string;
     location: string;
     department: string;
     profilePhoto: string;
+}
+
+export interface HistoryListProps{
+    counselingId: number;
+    userId: number;
+    name: string;
+    location: string;
+    department: string;
+    profilePhoto: string;
+    reserveDate: string;
+    prescriptionPath: string;
+}
+
+export interface HistoryDetailProps{
+    counselingId: number;
+    department: string;
+    doctorName: string;
+    location: string;
+    prescriptionPath: string;
+    profilePhoto: string;
+    reserveDate: string;
+    userId: number;
+    userName: string;
 }
