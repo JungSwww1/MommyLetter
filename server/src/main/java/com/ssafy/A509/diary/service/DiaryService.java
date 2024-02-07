@@ -25,8 +25,6 @@ import com.ssafy.A509.diary.repository.FamilyEmoticonRepository;
 import com.ssafy.A509.diary.repository.HealthEmoticonRepository;
 import com.ssafy.A509.diary.repository.PeopleEmoticonRepository;
 import com.ssafy.A509.diary.repository.WeatherEmoticonRepository;
-import com.ssafy.A509.exception.CustomException;
-import com.ssafy.A509.exception.ErrorCode;
 import com.ssafy.A509.photo.dto.UpdatePhotoRequest;
 import com.ssafy.A509.photo.model.Photo;
 import com.ssafy.A509.photo.repository.PhotoRepository;
@@ -42,7 +40,6 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -52,6 +49,7 @@ public class DiaryService {
     private final ModelMapper modelMapper;
     private final AccountRepository accountRepository;
     private final PhotoRepository photoRepository;
+    private final EmoticonRepository emoticonRepository;
     private final EmotionEmoticonRepository emotionEmoticonRepository;
     private final FamilyEmoticonRepository familyEmoticonRepository;
     private final HealthEmoticonRepository healthEmoticonRepository;
@@ -76,38 +74,21 @@ public class DiaryService {
         return diaryRepository
                 .findById(diaryId)
                 .map(this::getDiaryResponse)
-                .orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_DIARY, "diaryId : " + diaryId));
+                .orElseThrow(() -> new NoSuchElementException("No such Diary"));
     }
 
     @Transactional
-//    public DiaryResponse createDiary(CreateDiaryRequest diaryRequest) {
-//        Diary newDiary = Diary.builder()
-//                .user(accountRepository.findById(diaryRequest.getUserId())
-//                        .orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_ACCOUNT)))
-//                .content(diaryRequest.getContent())
-//                .category(diaryRequest.getCategory())
-//                .emoji(diaryRequest.getEmoji())
-//                .createdDate(diaryRequest.getCreatedDate())
-//                .build();
-//
-//        addPhotos(newDiary, diaryRequest);
-//        addEmoticons(newDiary, diaryRequest);
-//
-//        Diary save = diaryRepository.save(newDiary);
-//
-//        return getDiaryResponse(save);
-//    }
-    public DiaryResponse createDiary(CreateDiaryRequest diaryRequest, List<MultipartFile> uploadFiles) {
+    public DiaryResponse createDiary(CreateDiaryRequest diaryRequest) {
         Diary newDiary = Diary.builder()
-            .user(accountRepository.findById(diaryRequest.getUserId())
-                .orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_ACCOUNT)))
-            .content(diaryRequest.getContent())
-            .category(diaryRequest.getCategory())
-            .emoji(diaryRequest.getEmoji())
-            .createdDate(diaryRequest.getCreatedDate())
-            .build();
+                .user(accountRepository.findById(diaryRequest.getUserId())
+                        .orElseThrow())
+                .content(diaryRequest.getContent())
+                .category(diaryRequest.getCategory())
+                .emoji(diaryRequest.getEmoji())
+                .createdDate(diaryRequest.getCreatedDate())
+                .build();
 
-        addPhotos(newDiary, uploadFiles);
+        addPhotos(newDiary, diaryRequest);
         addEmoticons(newDiary, diaryRequest);
 
         Diary save = diaryRepository.save(newDiary);
@@ -139,7 +120,8 @@ public class DiaryService {
      * */
     public void updatePhoto(Diary diary, UpdateDiaryRequest diaryRequest) {
         //사진리스트 수정
-        List<Photo> photoList = new ArrayList<>(diary.getPhotoList());
+        List<Photo> temp = new ArrayList<>(diary.getPhotoList());
+        List<Photo> photoList = Optional.ofNullable(temp).orElseGet(ArrayList::new);
         List<UpdatePhotoRequest> newPhotoList = Optional.ofNullable(diaryRequest.getPhotoList())
                 .orElseGet(ArrayList::new);
         List<Photo> deletePhotoList = new ArrayList<>();
@@ -335,25 +317,13 @@ public class DiaryService {
     /*
      * 사진 추가
      * */
-//    private void addPhotos(Diary diary, CreateDiaryRequest diaryRequest) {
-//        Optional.ofNullable(diaryRequest.getPhotoList()).ifPresent(list -> {
-//            List<String> pathList = photoService.getImagePathList(list);
-//            for (String path : pathList) {
-//                Photo photo = Photo.builder()
-//                        .path(path)
-//                        .build();
-//
-//                diary.addPhoto(photo);
-//            }
-//        });
-//    }
-    private void addPhotos(Diary diary, List<MultipartFile> uploadFiles) {
-        Optional.ofNullable(uploadFiles).ifPresent(fileList -> {
-            List<String> pathList = photoService.getImagePathList(fileList);
+    private void addPhotos(Diary diary, CreateDiaryRequest diaryRequest) {
+        Optional.ofNullable(diaryRequest.getPhotoList()).ifPresent(list -> {
+            List<String> pathList = photoService.getImagePathList(list);
             for (String path : pathList) {
                 Photo photo = Photo.builder()
-                    .path(path)
-                    .build();
+                        .path(path)
+                        .build();
 
                 diary.addPhoto(photo);
             }
@@ -441,7 +411,7 @@ public class DiaryService {
 
     private Diary findById(Long diaryId) {
         return diaryRepository.findById(diaryId).orElseThrow(()
-                -> new CustomException(ErrorCode.NO_SUCH_DIARY, "diaryId : " + diaryId));
+                -> new NoSuchElementException("No such Diary"));
     }
 
 }

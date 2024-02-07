@@ -9,13 +9,8 @@ export const MainLayout = styled.div`
 `
 
 export const BodySection=styled.section`
-    h-[93%]
+    h-[100%]
     max-h-[100%]
     overflow-y-auto
     overflow-x-auto
-    
-`
-
-export const NaviSection=styled.section`
-    h-[7%]
 `

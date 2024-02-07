@@ -1,29 +1,31 @@
-import React,{FC} from "react";
-import DiaryPictures from "@/components/DiaryPictures";
+import React from "react";
+import {DiaryResponseProps,PhotoListProps} from "@/components/type/types";
 
-
-interface DiaryListProps{
-    date: string;
-    createdTime: string;
-    isUpdate: boolean;
-    feeling: string;
-    content: string;
-    pictures: string[];
-}
-
-export const DiaryListComponent: FC<{ props: DiaryListProps }> = ({ props }) => {
-
+export const DiaryListComponent = ({content,emoji,photoList,createdDate }:DiaryResponseProps) => {
+    const date = new Date(createdDate);
+    const letterCheck = (num:number) =>{
+        const parseNum = num.toString();
+        return parseNum.length < 2 ? "0" + parseNum : parseNum;
+    }
     return (
         <div className="p-5">
             <div>
                 <div className="flex justify-between">
-                    <span className="font-bold">{props.date}</span>
-                    <span><img className="h-[40px]" src={props.feeling} alt="Feeling Icon" /></span>
+                    <span className="font-bold">{date.getFullYear()}. {letterCheck(date.getMonth()+1)}.{date.getDate()}</span>
+                    이모지{emoji}
                 </div>
-                <div className="text-gray-400">{props.createdTime}</div>
-                <div>{props.content}</div>
+                <div className="text-gray-400">{letterCheck(date.getHours())}:{letterCheck(date.getMinutes())}</div>
+                <div>{content}</div>
             </div>
-            <DiaryPictures pictures={props.pictures}/>
+            <div className="flex">
+                {photoList.map((photo, index) => (
+                    <img
+                        key={index}
+                        className="w-[200px] h-[150px] mt-5 mr-3"
+                        src={photo.path}
+                        alt={`Picture ${index + 1}`}/>
+                ))}
+            </div>
         </div>
     );
 };

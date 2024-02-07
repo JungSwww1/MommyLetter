@@ -1,0 +1,25 @@
+.fc td, .fc th {
+    border-style: none !important;
+}
+.fc table {
+    border-radius: 40px;
+
+}
+
+.fc-view-container {
+    width: auto;
+}
+.fc-scroller::-webkit-scrollbar {
+    width: 3px;
+}
+
+.fc-scroller::-webkit-scrollbar-thumb {
+    height: 5%;
+    background: #D3D3D3;
+}
+
+.fc-scroller::-webkit-scrollbar-track {
+}
+
+.fc .fc-button-primary {background-color: #FFDF6D !important; border-color: #FFFFFF !important; border-radius: 100% ; }
+

@@ -1,27 +1,64 @@
-import React from "react";
-
-import {DiaryHeader} from "@/components/Diary";
+import React, {ReactNode, useEffect, useState} from "react";
 import DiaryListComponent from "@/components/DiaryList";
+import {fetchDiary} from "@/apis/diary/DiaryAPI";
+import {DiaryReadResponseProps} from "@/pages/type/types";
+import CalendarComponent from "@/components/Calendar";
+import {DiaryResponseProps} from "@/components/type/types";
 
 const DiaryBabyPage = () => {
+    const [diaryList, setDiaryList] = useState<DiaryResponseProps[]>([]);
+    const [events, setEvents] = useState<any[]>([]);
+    const [diaryLists, setdiaryLists] = useState<ReactNode[]>([]);
 
-    const diaryEntryProps = {
-        date: '2024.01.01',
-        createdTime: '13:23',
-        isUpdate: false,
-        feeling: 'path-to-feeling-icon',
-        content: '오늘은 고승민이란 남편이 너무나도 귀찮게 굴어서 화가 났다. 제발 아무것도 안하고 숨만 쉬고 살아도 좋을텐데 왜 저렇게 까부는지 모르겠다...',
-        pictures: ['path-to-image1', 'path-to-image2']
-    };
+    useEffect(() => {
+        fetchDiary(101)
+            .then((data) => {
+                // 달력 라이브러리 변수
+                const newEvents: any = [];
 
-    return (<div className="w-[100%] h-[100%]">
-            <DiaryHeader/>
-                <div className="flex justify-center items-center w-[100%] h-[50%]">
-                    <div className="flex justify-center items-center bg-gray-400 w-[80%] h-[100%]">캘린더</div>
-                </div>
-        <DiaryListComponent props={diaryEntryProps}/>
+                // ReactNode 변수
+                const diaryLists: any[] = [];
+                data.forEach((diary: DiaryReadResponseProps) => {
+                    if (diary.category === "Baby") {
+                        newEvents.push({
+                            imageurl: "/assets/images/seungwon.png",
+                            backgroundColor: "#fffadf",
+                            borderColor: "#fffadf",
+                            diaryId:diary.diaryId,
+                            title: diary.content,
+                            date: diary.createdDate,
+                            emoji: diary.emoji,
+                            photoList: diary.photoList,
+                            createdDate: diary.createdDate,
+                            category: diary.category,
+                            content: diary.content,
+                            emotionList: diary.emoticon?.emotionList,
+                            familyList: diary.emoticon?.familyList,
+                            healthList: diary.emoticon?.healthList,
+                            peopleList: diary.emoticon?.peopleList,
+                            weatherList: diary.emoticon?.weatherList,
 
+                        });
+                        diaryLists.push(<DiaryListComponent
+                            key={diary.diaryId}
+                            content={diary.content}
+                            emoji={diary.emoji}
+                            photoList={diary.photoList}
+                            createdDate={diary.createdDate}
+                        />);
+                    }
+                });
+                setEvents(newEvents);
+                setdiaryLists(diaryLists);
+            });
+    }, []);
+
+
+    return (
+        <div>
+            <CalendarComponent events={events}/>
+            {diaryLists}
         </div>);
-}
+};
 
 export default DiaryBabyPage;

@@ -218,24 +218,22 @@ CREATE TABLE `WEATHER_EMOTICON`
     FOREIGN KEY (`emoticon_id`) REFERENCES `EMOTICON` (`emoticon_id`)
 );
 
-
-CREATE TABLE `CHAT_GROUP`
+CREATE TABLE `DM_GROUP`
 (
-    `chat_group_id`   INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `chat_room_name` VARCHAR(255) NOT NULL,
-    `user_id`       INT,
+    `dm_group_id`   INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `dm_group_name` VARCHAR(255) NOT NULL,
+    `user_id`       INT          NOT NULL,
     `created_date`  TIMESTAMP,
+    `updated_date`  TIMESTAMP,
     FOREIGN KEY (`user_id`) REFERENCES User (`user_id`)
 );
 
-CREATE TABLE USER_CHAT_GROUP
+CREATE TABLE USER_DM_GROUP
 (
-    chat_group_id INT NOT NULL,
+    dm_group_id INT NOT NULL,
     user_id     INT NOT NULL,
-    PRIMARY KEY (chat_group_id, user_id),
+    PRIMARY KEY (dm_group_id, user_id),
     FOREIGN KEY (user_id) REFERENCES User (user_id),
-    FOREIGN KEY (chat_group_id) REFERENCES CHAT_GROUP (chat_group_id)
+    FOREIGN KEY (dm_group_id) REFERENCES DM_GROUP (dm_group_id)
 );
-
-
 

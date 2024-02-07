@@ -1,13 +1,13 @@
 import React from 'react';
 import DirectMessageComponent from "@/components/DirectMessage";
 import WriteModal from "@/components/Modal";
+import ChatBarComponent from "@/components/ChatBar";
 
 
 const DirectMessagePage: React.FC = () => {
     return (
         <div className="flex flex-col h-[100%] w-[100%]">
-            <div className="h-[100%]">
-                <WriteModal/>
+            <div className="h-[90%]">
             <DirectMessageComponent
                 type="chat-start"
                 name="Obi-Wan Kenobi"
@@ -25,6 +25,7 @@ const DirectMessagePage: React.FC = () => {
                 imageUrl="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
             />
             </div>
+
         </div>
     );
 };
