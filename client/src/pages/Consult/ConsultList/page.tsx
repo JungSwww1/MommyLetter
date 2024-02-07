@@ -34,7 +34,8 @@ const ConsultListPage = () => {
 
         <DoctorListSection>
             {doctorList?.map((doctor: DoctorProfileProps, index) => (
-                <Link to={index.toString()} key={index}>
+                <Link to={doctor.doctorId.toString()} key={index}>
+
                     <Button>
                         <DoctorListCardComponent
                             name={doctor.name}

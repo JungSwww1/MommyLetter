@@ -1,14 +1,11 @@
 import React, {useEffect, useRef, useState} from "react";
-import {Img, Label, Button} from './styles';
+import {Button, Img, Label} from './styles';
 import BottomUpModal from "@/components/Modal";
-import {fileExtensionValid} from "@/pages/Common/FileUpload";
 import {createDiary} from "@/apis/diary/DiaryAPI";
-import {DiaryWriteRequestProps} from "@/apis/type/types";
-import {ReactComponent as CircleX} from "@/assets/icons/circleX.svg";
-import { ToastContainer, toast } from 'react-toastify';
+import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {useParams} from "react-router-dom";
 import {Toast} from "@/components/Toast/Toast";
+import {ReactComponent as CircleX} from "@/assets/icons/circleX.svg";
 
 interface DateProps {
     currYear: number;
@@ -16,114 +13,118 @@ interface DateProps {
     currDay: number;
 }
 
+interface UserProps {
+    nickname: string;
+    userId: string;
+}
+
 export const DiaryWrite = ({currYear, currMonth, currDay}: DateProps) => {
-    const [years, setYears] = useState<number[]>([]);
-    const [months, setMonths] = useState<number[]>([]);
-    const [days, setDays] = useState<number[]>([]);
-    const [selectedYear, setSelectedYear] = useState(currYear);
-    const [selectedMonth, setSelectedMonth] = useState(currMonth);
-    const [selectedDay, setSelectedDay] = useState(currDay);
-    const [endDay, setEndDay] = useState<number>(0);
     const [emotion, setEmotion] = useState(99);
     const [content, setContent] = useState("");
+    const [imgFiles, setImgFiles] = useState<File[]>([]);
+    const imgRef = useRef<HTMLInputElement>(null);
+    const [previews, setPreviews] = useState<string[]>([]);
+    const [user, setUser] = useState<UserProps>({nickname: '', userId: ''}); // UserProps로 수정
 
     useEffect(() => {
-        // 현재 날짜 기준으로 최대 년도를 보여준다.
-        const newYears = [];
-        const newMonths = [];
-        for (let i = 2010; i <= currYear + 1; i++) newYears.push(i);
-        for (let i = 1; i <= 12; i++) newMonths.push(i);
-        setYears(newYears);
-        setMonths(newMonths);
-        // 선택된 년도와 월을 확인 후 최대 일을 반환
-        const lastDay = new Date(selectedYear, selectedMonth, 0).getDate();
-        setEndDay(lastDay);
-        const newDays = [];
-        for (let i = 1; i <= lastDay; i++) newDays.push(i);
-        setDays(newDays);
-
-
-
-    }, [selectedYear, selectedMonth, currYear]);
-
-    const [imgFiles, setImgFiles] = useState<string[]>([]);
-    const imgRef = useRef<HTMLInputElement>(null);
-
-    const saveImgFiles = () => {
-        const files = imgRef.current?.files;
-
-        if (files && files.length > 0) {
-            const fileArray: File[] = Array.from(files);
-            const validFiles = fileArray.filter(fileExtensionValid);
-
-            Promise.all(
-                validFiles.map((file) => {
-                    return new Promise<string>((resolve) => {
-                        const reader = new FileReader();
-                        reader.readAsDataURL(file);
-                        reader.onloadend = () => {
-                            resolve(reader.result as string);
-                        };
-                    });
-                })
-            ).then((results) => {
-                setImgFiles([...imgFiles, ...results]);
-                console.log(imgFiles)
-            });
+        const storedAuth = localStorage.getItem('Auth');
+        if (storedAuth) {
+            const parsedAuth: UserProps = JSON.parse(storedAuth);
+            setUser(parsedAuth);
         }
+    }, []);
+    const saveImgFiles = async (e: any) => {
+        const files: FileList = e.target.files;
+
+        // 여러 파일을 순회하면서 처리
+        Array.from(files).forEach(async (file: File) => {
+            const err = checkImage(file);
+            if (err) {
+                console.log(err);
+                return; // 에러 발생시 해당 파일은 건너뜀
+            }
+
+            // 파일이 유효하다면 미리보기 설정 및 파일 설정
+            await setPreviews(prevFiles => [...prevFiles, URL.createObjectURL(file)]);
+            await setImgFiles(imgFiles => [...imgFiles, file]);
+
+        });
     };
-const diaryWrite = () =>{
-    const createdDate = new Date(selectedYear, selectedMonth - 1, selectedDay);
 
-    const writeInfo: DiaryWriteRequestProps = {
-        userId: 101,
-        content: content,
-        category: "Baby",
-        createdDate: createdDate.toISOString(),
-        emoji: emotion,
-        photoList: [
-            { path: "/assets/images/seungwon.png" },
-            { path: "/assets/images/seungwon.png" },
-        ],
-        emoticon: {
-            emotionList: ["Joy"],
-            familyList: ["Harmony"],
-            healthList: ["Healthy"],
-            peopleList: ["Family"],
-            weatherList: ["Clear"],
-        },
-        emoticonList: ["Joy"]
-    };
-    createDiary(writeInfo).then((response)=>{
-        if(content===""){
-            Toast.error("내용을 입력하세요")
-            return;
+    const checkImage = (file: File) => {
+        let err = ""
+        if (!file) return err = "File does not exist."
+        if (file.size > 1024 * 1024) {
+            err = "The largest image size is 1mb."
         }
-        Toast.success("작성되었습니다.");
-
-        setTimeout(()=>{
-            document.getElementById("closeBtn")?.click(); // 모달닫기
-        },800)
-    }).catch(
-        (error)=>{
-            console.log(error);
+        if (file.type !== 'image/jpeg' && file.type !== 'image/png' && file.type != 'image/gif') {
+            err = "Image format is incorrect."
         }
-    );
-
-}
-
-
-const fileChange = (index:number) =>{
-    var temp = [];
-    for(let i = 0; i<imgFiles.length;i++){
-        if(i==index) continue;
-        temp.push(imgFiles[i]);
+        imgFiles.map((imgFile) => {
+            if (file === imgFile) {
+                err = "File does already exist ";
+                return err;
+            }
+        })
+        return err
     }
-    setImgFiles(temp);
-}
-const clickedEmotion = (num:number) =>{
-    setEmotion(num);
-}
+    const diaryWrite = async () => {
+        const createdDate = new Date(currYear, currMonth - 1, currDay);
+        const formData = new FormData();
+        imgFiles.forEach((file) => {
+            formData.append('uploadFiles', file);
+        });
+        // const userId = user ? user.userId : '101';
+        const diaryRequest = {
+            userId: 101,
+            content: content,
+            category: "Baby",
+            createdDate: createdDate.toISOString(),
+            emoji: emotion,
+            emoticon: {
+                emotionList: ["Joy"],
+                familyList: ["Harmony"],
+                healthList: ["Healthy"],
+                peopleList: ["Family"],
+                weatherList: ["Clear"],
+            }
+        }
+
+        formData.append('diaryRequest', new Blob([JSON.stringify(diaryRequest)], {
+            type: "application/json"
+        }));
+
+        createDiary(formData).then((response) => {
+
+            if (content === "") {
+                Toast.error("내용을 입력하세요")
+                return;
+            }
+            Toast.success("작성되었습니다.");
+            setTimeout(() => {
+                document.getElementById("closeBtn")?.click(); // 모달닫기
+            }, 800)
+        }).catch((error) => {
+            console.log(error);
+        });
+
+    }
+
+
+    const fileChange = (index: number) => {
+        var tempImages = [];
+        var tempPreviews = [];
+        for (let i = 0; i < imgFiles.length; i++) {
+            if (i == index) continue;
+            tempImages.push(imgFiles[i]);
+            tempPreviews.push(previews[i]);
+        }
+        setImgFiles(tempImages);
+        setPreviews(tempPreviews);
+    }
+    const clickedEmotion = (num: number) => {
+        setEmotion(num);
+    }
     const writeButton = <button className="btn btn-ghost bg-user" onClick={diaryWrite}>작성하기</button>
     const children = <div className="flex flex-col ml-5 mt-5 w-[98%] h-[100%]">
 
@@ -139,50 +140,55 @@ const clickedEmotion = (num:number) =>{
 
         <div className="flex justify-around">
 
-            <Button className={emotion === 1 ? "bg-red-300" : ""} onClick={()=>{clickedEmotion(1)}}>
+            <Button className={emotion === 1 ? "bg-red-300" : ""} onClick={() => {
+                clickedEmotion(1)
+            }}>
                 <Img src="/assets/images/sample_angry.png"/></Button>
-            <Button className={emotion === 2 ? "bg-blue-300" : ""} onClick={()=>{clickedEmotion(2)}}>
+            <Button className={emotion === 2 ? "bg-blue-300" : ""} onClick={() => {
+                clickedEmotion(2)
+            }}>
                 <Img src="/assets/images/sample_bad.png"/></Button>
-            <Button className={emotion === 3 ? "bg-amber-300" : ""} onClick={()=>{clickedEmotion(3)}}>
+            <Button className={emotion === 3 ? "bg-amber-300" : ""} onClick={() => {
+                clickedEmotion(3)
+            }}>
                 <Img src="/assets/images/sample_good.png"/></Button>
-            <Button className={emotion === 4 ? "bg-green-300" : ""} onClick={()=>{clickedEmotion(4)}}>
+            <Button className={emotion === 4 ? "bg-green-300" : ""} onClick={() => {
+                clickedEmotion(4)
+            }}>
                 <Img src="/assets/images/sample_soso.png"/></Button>
-            <Button className={emotion === 5 ? "bg-purple-300" : ""} onClick={()=>{clickedEmotion(5)}}>
+            <Button className={emotion === 5 ? "bg-purple-300" : ""} onClick={() => {
+                clickedEmotion(5)
+            }}>
                 <Img src="/assets/images/sample_tired.png"/></Button>
         </div>
         <br/>
         <div className="h-[30%]">
-            <textarea onChange={e=>setContent(e.target.value)} placeholder="내용을 입력" className="text-[17px] h-[100%] w-[97%] ext-[#9d9d9d]"/>
+            <textarea onChange={e => setContent(e.target.value)} placeholder="내용을 입력"
+                      className="text-[17px] h-[100%] w-[97%] ext-[#9d9d9d]"/>
         </div>
         <br/>
-        <div >
+        <div>
             <div className="flex justify-between">
-            <Label htmlFor="input-file">업로드</Label><p className="text-gray-400">※ 10MB 이하 png,jpg,jpeg파일</p>
-            <input type="file" multiple id="input-file"
-                   className="signup-profileImg-input"
-                   accept="image/jpg,image/png,image/jpeg,image/gif"
-                   onChange={saveImgFiles}
-                   ref={imgRef}
-                   style={{display: "none"}}/>
+                <Label htmlFor="input-file">업로드</Label><p className="text-gray-400">※ 10MB 이하 png,jpg,jpeg파일</p>
+                <input type="file" id="input-file"
+                       className="signup-profileImg-input"
+                       onChange={saveImgFiles}
+                       ref={imgRef}
+                       multiple
+                       style={{display: "none"}}/>
             </div>
-
-
             <div className="flex">
-                {imgFiles.length > 0 ? (
-                    imgFiles.map((imgFile, index) => (
-
-                        <div>
-                            <button className="relative top-1/4 hover:bg-gray-400 hover:rounded-lg active:scale-90" onClick={()=>{fileChange(index)}}><CircleX/></button>
-                            <img
-                                key={index}
-                                src={imgFile}
-                                alt={`Image ${index}`}
-                                className="mt-5 mr-5 w-[150px] aspect-[1]"
-                            />
-                        </div>
-                    ))
-                ) : null}
+                {previews?.map((preview, index) => (<div key={index} className="mr-2">
+                        <button className="relative top-1/4 ml-1 hover:bg-gray-400 hover:rounded-lg active:scale-90"
+                                onClick={() => {
+                                    fileChange(index)
+                                }}>
+                            <CircleX/>
+                        </button>
+                        <img src={preview} className="w-[150px] aspect-[1]"/>
+                    </div>))}
             </div>
+
         </div>
     </div>
     return (

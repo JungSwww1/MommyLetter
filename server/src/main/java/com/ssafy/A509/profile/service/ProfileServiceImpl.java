@@ -29,10 +29,9 @@ public class ProfileServiceImpl implements ProfileService {
         if (profile != null) {
             profile.setProfilePhoto(profileImageRequest.getImageUrl());
             profileRepository.save(profile);
-        }
-        else{ // Handle the case where the user profile is not found
+        } else { // Handle the case where the user profile is not found
             throw new CustomException(ErrorCode.NO_SUCH_PROFILE,
-                "userId: " + profileImageRequest.getUserId());
+                    "userId: " + profileImageRequest.getUserId());
         }
     }
 
@@ -47,10 +46,9 @@ public class ProfileServiceImpl implements ProfileService {
             // 프로필 저장
             profileRepository.save(profile);
 
-        }
-        else{ // Handle the case where the user profile is not found
+        } else { // Handle the case where the user profile is not found
             throw new CustomException(ErrorCode.NO_SUCH_PROFILE,
-                "userId: " + profileImageRequest.getUserId());
+                    "userId: " + profileImageRequest.getUserId());
         }
     }
 
@@ -58,23 +56,19 @@ public class ProfileServiceImpl implements ProfileService {
     public UserProfileResponse getUserProfile(Long userId) {
         Profile profile = profileRepository.findByUserId(userId);
 
-        if (profile != null){
-            if(profile.getUser().getRole() == Role.Common) {
-                UserProfileResponse profileResponse = new UserProfileResponse();
-                profileResponse.setUserId(profile.getUser().getUserId());
-                profileResponse.setNickname(profile.getUser().getNickname());
-                profileResponse.setIntro(profile.getUser().getIntro());
-                profileResponse.setProfilePhoto(profile.getProfilePhoto());
-                profileResponse.setBackgroundPhoto(profile.getBackgroundPhoto());
-                return profileResponse;
-            }else{
-                throw new CustomException(ErrorCode.ROLE_IS_NOT_COMMON, "userId: " + userId);
-            }
+        if (profile != null && profile.getUser().getRole() == Role.Common) {
+            UserProfileResponse profileResponse = new UserProfileResponse();
+            profileResponse.setUserId(profile.getUser().getUserId());
+            profileResponse.setNickname(profile.getUser().getNickname());
+            profileResponse.setIntro(profile.getUser().getIntro());
+            profileResponse.setProfilePhoto(profile.getProfilePhoto());
+            profileResponse.setBackgroundPhoto(profile.getBackgroundPhoto());
+            return profileResponse;
+        }
 //            return modelMapper.map(profile, UserProfileResponse.class);
-        } else {
+        else {
             System.out.println("일반사용자가 아님");
-            throw new CustomException(ErrorCode.NO_SUCH_PROFILE, "userId: " + userId);
-
+            return null;
         }
 
     }

@@ -48,7 +48,6 @@ const DiaryMomPage = () => {
                         />);
                     }
                 });
-                console.log(diaryLists);
                 setEvents(newEvents);
                 setdiaryLists(diaryLists);
             });
