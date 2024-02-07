@@ -18,7 +18,7 @@ import {DoctorProfileProps} from "@/pages/type/types";
 const ConsultListPage = () => {
     const [doctorList, setDoctorList] = useState<DoctorProfileProps[]>()
     useEffect(() => {
-        const result = ReadDoctorList().then((doctorList) => {
+        ReadDoctorList().then((doctorList) => {
             setDoctorList(doctorList);
         })
     }, [])
@@ -34,12 +34,10 @@ const ConsultListPage = () => {
 
         <DoctorListSection>
             {doctorList?.map((doctor: DoctorProfileProps, index) => (
-                <Link to={doctor.doctorId.toString()} key={index}>
-
+                <Link to={index.toString()} key={index}>
                     <Button>
                         <DoctorListCardComponent
                             name={doctor.name}
-                            gender="여성"
                             department={doctor.department}
                             img={doctor.profilePhoto}
                             date="23.01.02"

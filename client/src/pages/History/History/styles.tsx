@@ -23,9 +23,11 @@ export const DoctorProfileSection=styled.section`
 export const ContextSection=styled.section`
         flex
         flex-col
-        
-        h-[60%]
+        shadow-xl
+        h-[100%%]
         w-[100%]
-        ml-3
+        p-3
+        rounded-t-lg 
+    
     
     `
