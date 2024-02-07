@@ -12,6 +12,7 @@ import {
     SubWrapper
 } from "@/components/Feed/CommentModal/styles";
 import {FormatDate} from "@/components/Feed/LocalFunction";
+import AlertModal from "@/pages/Feed/AlertModal";
 
 
 interface ModalProps {
@@ -99,23 +100,30 @@ const Modal: FC<ModalProps> = ({ onClose, comments , boardId, userId}) => {
         setInputValue(''); // 입력 필드 초기화
     };
 
-    // 삭제 버튼 클릭
+    // 삭제 버튼 클릭1
     const handleDeleteClick = (commentId:number) => {
-        deleteCommentAPI(commentId)
-        alert("삭제 완료")
+        const isConfirmed = window.confirm("댓글을 삭제하시겠습니까?");
+        if (isConfirmed) {
+            deleteCommentAPI(commentId)
+                .then(() => {
+                    alert("삭제 완료");
+                })
+        }
     }
 
     return (
+
         <div className={`modal-backdrop ${showModal ? 'show' : ''}`}  onClick={handleBackdropClick}>
             <div className={`modal-content scrollBar ${showModal ? 'show' : ''}`}>
                 <span className="modal-close" onClick={onClose}>&times;</span>
                 {/* 이 위까지 모달 작동을 위한 CSS 부분 */}
                 {/* 하단은 댓글 부분 */}
-                {sortedComments.map((comment, index) => (
+                {sortedComments .map((comment, index) => (
                     <CommentContainer key={index}>
                         <MainContainer>
-                            <CommentHeartButton likedata={{boardId:boardId, userId:userId, commentId:comment.commentId}}
-                                                onLikeStatusChange={(likedStatus:boolean) => handleLikeStatusChange(comment.commentId, likedStatus)}/>
+                            <CommentHeartButton
+                                likedata={{boardId: boardId, userId: userId, commentId: comment.commentId}}
+                                onLikeStatusChange={(likedStatus: boolean) => handleLikeStatusChange(comment.commentId, likedStatus)}/>
                             <div className={"ml-[2%] mr-[3%]"}>{comment.nickname}</div>
                             <p>{comment.content}</p>
                         </MainContainer>
@@ -126,13 +134,16 @@ const Modal: FC<ModalProps> = ({ onClose, comments , boardId, userId}) => {
                                 <SubDiv>
                                     {Number(userId) === Number(comment.userId) ? (
                                         <>
-                                        <p className={"mr-[3%] cursor-pointer"} onClick={()=>handleEditClick(comment)}>수정</p>
-                                        <button className={"mr-[3%] cursur-pointer"} onClick={()=>handleDeleteClick(comment.commentId)}>삭제</button>
+                                            <p className={"mr-[3%] cursor-pointer"}
+                                               onClick={() => handleEditClick(comment)}>수정</p>
+                                            <button className={"mr-[3%] cursur-pointer"}
+                                                    onClick={()=>handleDeleteClick(comment.commentId)}>삭제
+                                            </button>
                                         </>
                                     ) : (
                                         <>
-                                        <div className="mr-[3%] invisible">수정</div>
-                                        <div className="mr-[3%] invisible">삭제</div>
+                                            <div className="mr-[3%] invisible">수정</div>
+                                            <div className="mr-[3%] invisible">삭제</div>
                                         </>
                                     )}
                                 </SubDiv>

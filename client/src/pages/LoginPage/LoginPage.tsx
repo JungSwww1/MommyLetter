@@ -18,6 +18,7 @@ const LoginPage = () => {
         const loginInfo = {email, password};
         await loginAPI(loginInfo);
         navigate('/', {replace:true})
+        window.location.reload()
     }
 
     return (
@@ -32,21 +33,22 @@ const LoginPage = () => {
                        onChange={e => setEmail(e.target.value)}
                 />
                 <input placeholder="비밀번호를 입력해주세요"
+                       type="password"
                        className="w-[80%] p-3 pl-6 rounded-3xl mb-[4%] shadow-custom-inner"
                        onChange={e => setPassword(e.target.value)}
                 />
                 <button onClick={loginFunc} className="btn border-[#533C00] w-[80%] p-3 bg-[#533C00] hover:bg-[#808080] text-[#FFF8EE] rounded-3xl shadow-custom-outer">로그인</button>
             </div>
             <div className={"flex flex-row justify-center mb-[8%]"}>
-                <div className={"flex flex-row justify-evenly w-[18%] mr-[8%]"}>
-                    <input type="checkbox" className="rounded-full mt-[5%]" onChange={(e) => setAutoLogin(e.target.checked)}/>
-                    <p>자동로그인</p>
-                </div>
-                <div className={"flex flex-row justify-evenly w-[32%]"}>
-                    <Link to={"/example"}>아이디 찾기</Link>
-                    <p>|</p>
-                    <Link to={"/example"}>비밀번호 찾기</Link>
-                </div>
+                {/*<div className={"flex flex-row w-[18%] mr-[8%]"}>*/}
+                {/*    <input type="checkbox" className="rounded-full mt-[5%]" onChange={(e) => setAutoLogin(e.target.checked)}/>*/}
+                {/*    <p>자동로그인</p>*/}
+                {/*</div>*/}
+                {/*<div className={"flex flex-row justify-evenly w-[32%]"}>*/}
+                {/*    <Link to={"/example"}>아이디 찾기</Link>*/}
+                {/*    <p>|</p>*/}
+                {/*    <Link to={"/example"}>비밀번호 찾기</Link>*/}
+                {/*</div>*/}
             </div>
             <div className={"flex justify-end w-[90%]"}>
                 <button onClick={userRegist} className={"btn w-[30%] border-[#533C00] p-3 bg-[#533C00] hover:bg-[#808080] text-[#FFF8EE] rounded-3xl shadow-custom-outer"}>회원가입</button>

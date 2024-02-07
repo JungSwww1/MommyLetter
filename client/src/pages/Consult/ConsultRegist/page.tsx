@@ -38,7 +38,7 @@ const ConsultRegist = () => {
 
     const submitConsult = () => {
         // 입력 필드 및 선택 필드 검증
-        if (!phone || !ssnFront || !ssnBack || !selectedOption || !isToggled || !isToggled1) {
+        if (!consultName || !phone || !ssnFront || !ssnBack || !selectedOption || !isToggled || !isToggled1) {
             let errorMessage = "다음 필드를 확인해주세요:\n";
             if (!consultName) errorMessage += "- 이름\n";
             if (!phone) errorMessage += "- 전화번호\n";
@@ -53,7 +53,6 @@ const ConsultRegist = () => {
 
         const data = {
             phone: phone,
-            ssn: `${ssnFront}-${ssnBack}`,
             pregnancyStatus: selectedOption,
             extra: extra,
             diaryOpen: isToggled

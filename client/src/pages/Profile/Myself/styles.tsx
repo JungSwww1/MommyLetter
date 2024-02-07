@@ -43,9 +43,14 @@ export const Img = styled.img`
 `
 
 export const ProfileButton = styled.button`
+    btn 
     w-[45%]
     h-[30px]
     bg-[#FFE588]
-    rounded-[5px]
+    rounded-2xl
     font-bold
+    hover:bg-[#533C00]
+    hover:text-white
+    shadow-custom-outer
+    border-[#FFE588]
 `
