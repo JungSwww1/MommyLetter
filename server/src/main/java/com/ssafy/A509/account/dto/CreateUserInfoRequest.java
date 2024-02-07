@@ -17,11 +17,11 @@ import lombok.*;
 @Builder
 public class CreateUserInfoRequest {
 
-//    @NotBlank(message = "실명은 필수 입력 값입니다.")
-//    private String name;
-//
-//    @NotBlank(message = "주민등록번호는 필수 입력 값입니다.")
-//    private String ssn;
+    @NotBlank(message = "실명은 필수 입력 값입니다.")
+    private String name;
+
+    @NotBlank(message = "주민등록번호는 필수 입력 값입니다.")
+    private String ssn;
 
     @NotBlank(message = "전화번호는 필수 입력 값입니다.")
     private String phone;
