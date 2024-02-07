@@ -37,23 +37,22 @@ public class DMController {
 	private final ModelMapper modelMapper;
 
 
-	// url/app/message로 들어오면 sub/dm을 구독하고 있는 사람에게 전송
+	//
 //	@MessageMapping("/message")
 //	@Payload
 	@PostMapping
 	@Operation(
 		summary = "dm 보내기",
-		description = "메세지를 받아서 kafka에 송신, db에 저장\n"
-			+ "DMRequest로는 sender, receiver, content만 채워서 보내주면 됨"
+		description = """
+			메세지를 받아서 kafka에 송신, db에 저장
+			DMRequest로는 sender, receiver, content, chatGroupId만 채워서 보내주면 됨
+			url/app/message로 보내야 함"""
 	)
 	public void sendMessage(@Valid @RequestBody DMRequest dmRequest) {
 		log.info("dmRequest={}", dmRequest);
-		String chatGroupId = getChatGroupId(dmRequest);
 		dmRequest.createTimeStamp();
-		dmRequest.setChatGroupId(chatGroupId);
 		KafkaDMRequest kafkaDMRequest = modelMapper.map(dmRequest, KafkaDMRequest.class);
 		kafkaTemplate.send("dm", dmRequest.getReceiverId().toString(), kafkaDMRequest);
-		log.info("send={}", dmRequest);
 		dmService.saveDm(dmRequest);
 	}
 
@@ -61,12 +60,13 @@ public class DMController {
 		summary = "dm 시작",
 		description = "dm이 시작되면 chatGroup 생성(향후 참여 중인 채팅방 리스트 관리에 사용)"
 	)
-	@GetMapping("/{user1Id}/{user2Id}")
+	@GetMapping("/start/{user1Id}/{user2Id}")
 	public ResponseEntity<Void> startDM(@NotNull @PathVariable Long user1Id, @NotNull @PathVariable Long user2Id) {
-		String chatGroupId = getMessageKey(user1Id, user2Id);
-		dmService.createChatGroup(user1Id, user2Id, chatGroupId);
+		String chatGroupName = getMessageKey(user1Id, user2Id);
+		dmService.createChatGroup(user1Id, user2Id, chatGroupName);
 		return ResponseEntity.ok().build();
 	}
+
 	@Operation(
 		summary = "채팅방에 입장",
 		description = "채팅방에 들어오면 실시간으로 알림을 보냄"
@@ -82,6 +82,7 @@ public class DMController {
 		kafkaTemplate.send("enter", otherUserId.toString(), dmRequest);
 		return ResponseEntity.ok().build();
 	}
+
 	@Operation(
 		summary = "채팅방에서 퇴장",
 		description = "채팅방에서 나가면 실시간으로 알림을 보냄"
@@ -115,12 +116,6 @@ public class DMController {
 	public ResponseEntity<List<DMResponse>> getListByUsers(@NotNull @PathVariable Long user1Id,
 		@NotNull @PathVariable Long user2Id) {
 		return ResponseEntity.ok(dmService.getListByUsers(user1Id, user2Id));
-	}
-
-
-	private String getChatGroupId(DMRequest dmRequest) {
-		return "chat_" + Math.min(dmRequest.getSenderId(), dmRequest.getReceiverId()) + "_" + Math.max(
-			dmRequest.getSenderId(), dmRequest.getReceiverId());
 	}
 
 	private String getMessageKey(Long user1Id, Long user2Id) {

@@ -4,6 +4,7 @@ import com.ssafy.A509.kafka.dto.KafkaConstants;
 import com.ssafy.A509.kafka.dto.KafkaDMRequest;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +17,10 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 
 @EnableKafka
 @Configuration
+@RequiredArgsConstructor
 public class KafkaProducerConfig {
+
+	private final KafkaConstants kafkaConstants;
 
 	@Bean
 	public ProducerFactory<String, KafkaDMRequest> producerFactory() {
@@ -26,7 +30,7 @@ public class KafkaProducerConfig {
 	@Bean
 	public Map<String, Object> producerConfigs() {
 		Map<String, Object> props = new HashMap<>();
-		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaConstants.KAFKA_BROKER);
+		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConstants.KAFKA_BROKER);
 		// Leader Replica와 다른 1개의 복제가 받으면 성공
 		props.put(ProducerConfig.ACKS_CONFIG, "all");
 		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);

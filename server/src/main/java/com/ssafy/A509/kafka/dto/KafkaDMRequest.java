@@ -14,7 +14,7 @@ public class KafkaDMRequest implements Serializable {
 
 	Long senderId;
 	Long receiverId;
+	Long chatGroupId;
 	String content;
-	String chatGroupId;
 	String createdDate;
 }

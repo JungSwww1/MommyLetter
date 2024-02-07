@@ -48,8 +48,8 @@ public class GroupDMController {
 	public void sendMessageToGroup(@Valid @RequestBody GroupMessageRequest groupMessageRequest) {
 		groupMessageRequest.createTimeStamp();
 		KafkaDMRequest kafkaDMRequest = modelMapper.map(groupMessageRequest, KafkaDMRequest.class);
-		kafkaDMRequest.setChatGroupId(groupMessageRequest.getChatGroupId().toString());
-		kafkaTemplate.send("group-chat", kafkaDMRequest.getChatGroupId(), kafkaDMRequest);
+		kafkaDMRequest.setChatGroupId(groupMessageRequest.getChatGroupId());
+		kafkaTemplate.send("group-chat", kafkaDMRequest.getChatGroupId() + "", kafkaDMRequest);
 		groupDMService.saveGroupDm(groupMessageRequest);
 	}
 
@@ -99,7 +99,7 @@ public class GroupDMController {
 	public ResponseEntity<URI> createGroup(@NotNull Long userId, @NotNull @RequestBody String chatGroupName) {
 		Long groupId = groupDMService.createGroup(userId, chatGroupName);
 		KafkaDMRequest kafkaDMRequest = new KafkaDMRequest();
-		kafkaDMRequest.setChatGroupId(groupId.toString());
+		kafkaDMRequest.setChatGroupId(groupId);
 		kafkaDMRequest.setContent(chatGroupName + " 채팅방이 개설되었습니다");
 		kafkaTemplate.send(groupId.toString(), kafkaDMRequest);
 		return ResponseEntity.created(URI.create("/group/" + groupId)).build();
@@ -122,7 +122,7 @@ public class GroupDMController {
 	public ResponseEntity<Void> enterChat(@PathVariable Long userId, @PathVariable Long chatGroupId) {
 		KafkaDMRequest dmRequest = KafkaDMRequest.builder()
 			.senderId(userId)
-			.chatGroupId(chatGroupId.toString())
+			.chatGroupId(chatGroupId)
 			.content(userId + "_ENTER_CHATTING_TO_" + chatGroupId)
 			.build();
 
@@ -138,7 +138,7 @@ public class GroupDMController {
 	public ResponseEntity<Void> leaveChat(@PathVariable Long userId, @PathVariable Long chatGroupId) {
 		KafkaDMRequest dmRequest = KafkaDMRequest.builder()
 			.senderId(userId)
-			.chatGroupId(chatGroupId.toString())
+			.chatGroupId(chatGroupId)
 			.content(userId + "_LEAVE_CHATTING_TO_" + chatGroupId)
 			.build();
 
