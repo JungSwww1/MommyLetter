@@ -3,6 +3,7 @@ package com.ssafy.A509.like.model;
 import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.comment.model.Comment;
 import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @AttributeOverride(name = "id", column = @Column(name = "comment_like_id"))
 public class CommentLike extends Like {
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "comment_id")
 	private Comment comment;
 

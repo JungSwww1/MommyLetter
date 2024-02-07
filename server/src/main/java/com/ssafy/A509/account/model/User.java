@@ -1,5 +1,9 @@
 package com.ssafy.A509.account.model;
 
+import static jakarta.persistence.FetchType.LAZY;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ssafy.A509.dm.model.ChatGroup;
 import com.ssafy.A509.doctor.model.Reserve;
 import com.ssafy.A509.follow.model.Follow;
@@ -10,7 +14,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -66,26 +69,27 @@ public class User {
 	@LastModifiedDate
 	private LocalDateTime updatedDate;
 
-	@OneToMany(mappedBy = "follower")
+	@OneToMany(mappedBy = "follower", fetch = LAZY)
 	private List<Follow> followingList;
 
-	@OneToMany(mappedBy = "following")
+	@OneToMany(mappedBy = "following", fetch = LAZY)
 	private List<Follow> followerList;
 
 	//    @JsonBackReference
-	@OneToOne(mappedBy = "user")
+	@OneToOne(mappedBy = "user", fetch = LAZY)
 	private Doctor doctor;
 
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = LAZY)
 	private Profile profile;
 
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = LAZY)
 	private UserInfo userInfo;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = LAZY)
 	private List<Reserve> reserve = new ArrayList<>();
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = LAZY)
+	@JsonManagedReference
 	@JoinTable(
 		name = "user_chat_group",
 		joinColumns = { @JoinColumn(name = "user_id") },
