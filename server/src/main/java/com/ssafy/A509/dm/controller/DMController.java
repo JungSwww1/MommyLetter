@@ -7,7 +7,6 @@ import com.ssafy.A509.dm.service.DMService;
 import com.ssafy.A509.kafka.dto.KafkaDMRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
@@ -16,11 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,9 +37,9 @@ public class DMController {
 
 
 	//
-//	@MessageMapping("/message")
+//
 //	@Payload
-	@PostMapping
+//	@PostMappin
 	@Operation(
 		summary = "dm 보내기",
 		description = """
@@ -48,7 +47,8 @@ public class DMController {
 			DMRequest로는 sender, receiver, content, chatGroupId만 채워서 보내주면 됨
 			url/app/message로 보내야 함"""
 	)
-	public void sendMessage(@Valid @RequestBody DMRequest dmRequest) {
+	@MessageMapping("/message")
+	public void sendMessage(@Payload DMRequest dmRequest) {
 		log.info("dmRequest={}", dmRequest);
 		dmRequest.createTimeStamp();
 		KafkaDMRequest kafkaDMRequest = modelMapper.map(dmRequest, KafkaDMRequest.class);

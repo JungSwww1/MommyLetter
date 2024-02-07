@@ -41,7 +41,7 @@ public class BoardController {
 	}
 
 	/*
-	Access가 All, Follwer 인 모든 피드를 최신순으로 반환
+	Access가 All, Follower 인 모든 피드를 최신순으로 반환
 	미리보기 타입 아님
 	로그인 전용
 	 */

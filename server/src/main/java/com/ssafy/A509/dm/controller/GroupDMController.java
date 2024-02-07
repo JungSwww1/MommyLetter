@@ -1,13 +1,12 @@
 package com.ssafy.A509.dm.controller;
 
-import com.ssafy.A509.dm.dto.GroupMessageRequest;
 import com.ssafy.A509.dm.dto.ChatGroupResponse;
+import com.ssafy.A509.dm.dto.GroupMessageRequest;
 import com.ssafy.A509.dm.dto.GroupMessageResponse;
 import com.ssafy.A509.dm.service.GroupDMService;
 import com.ssafy.A509.kafka.dto.KafkaDMRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.util.List;
@@ -16,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,9 +44,11 @@ public class GroupDMController {
 		summary = "그룹 채팅 발신",
 		description = "kafka 채팅 송신, db 저장\n"
 			+ "sender, content, chatGroupId 필수"
+			+ "app/dm/group/message로 보내야 함"
 	)
-	@PostMapping
-	public void sendMessageToGroup(@Valid @RequestBody GroupMessageRequest groupMessageRequest) {
+//	@PostMapping
+	@MessageMapping("/message")
+	public void sendMessageToGroup(@Payload GroupMessageRequest groupMessageRequest) {
 		groupMessageRequest.createTimeStamp();
 		KafkaDMRequest kafkaDMRequest = modelMapper.map(groupMessageRequest, KafkaDMRequest.class);
 		kafkaDMRequest.setChatGroupId(groupMessageRequest.getChatGroupId());
