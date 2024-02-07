@@ -25,6 +25,8 @@ import com.ssafy.A509.diary.repository.FamilyEmoticonRepository;
 import com.ssafy.A509.diary.repository.HealthEmoticonRepository;
 import com.ssafy.A509.diary.repository.PeopleEmoticonRepository;
 import com.ssafy.A509.diary.repository.WeatherEmoticonRepository;
+import com.ssafy.A509.exception.CustomException;
+import com.ssafy.A509.exception.ErrorCode;
 import com.ssafy.A509.photo.dto.UpdatePhotoRequest;
 import com.ssafy.A509.photo.model.Photo;
 import com.ssafy.A509.photo.repository.PhotoRepository;
@@ -40,6 +42,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -78,24 +81,22 @@ public class DiaryService {
     }
 
     @Transactional
-    public DiaryResponse createDiary(CreateDiaryRequest diaryRequest) {
+    public DiaryResponse createDiary(CreateDiaryRequest diaryRequest, List<MultipartFile> uploadFiles) {
         Diary newDiary = Diary.builder()
                 .user(accountRepository.findById(diaryRequest.getUserId())
-                        .orElseThrow())
+                        .orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_ACCOUNT)))
                 .content(diaryRequest.getContent())
                 .category(diaryRequest.getCategory())
                 .emoji(diaryRequest.getEmoji())
                 .createdDate(diaryRequest.getCreatedDate())
                 .build();
 
-        addPhotos(newDiary, diaryRequest);
+        addPhotos(newDiary, uploadFiles);
         addEmoticons(newDiary, diaryRequest);
 
         Diary save = diaryRepository.save(newDiary);
-
         return getDiaryResponse(save);
     }
-
     @Transactional
     public void updateDiary(UpdateDiaryRequest diaryRequest) {
         Diary diary = findById(diaryRequest.getDiaryId());
@@ -317,9 +318,21 @@ public class DiaryService {
     /*
      * 사진 추가
      * */
-    private void addPhotos(Diary diary, CreateDiaryRequest diaryRequest) {
-        Optional.ofNullable(diaryRequest.getPhotoList()).ifPresent(list -> {
-            List<String> pathList = photoService.getImagePathList(list);
+//    private void addPhotos(Diary diary, CreateDiaryRequest diaryRequest) {
+//        Optional.ofNullable(diaryRequest.getPhotoList()).ifPresent(list -> {
+//            List<String> pathList = photoService.getImagePathList(list);
+//            for (String path : pathList) {
+//                Photo photo = Photo.builder()
+//                        .path(path)
+//                        .build();
+//
+//                diary.addPhoto(photo);
+//            }
+//        });
+//    }
+    private void addPhotos(Diary diary, List<MultipartFile> uploadFiles) {
+        Optional.ofNullable(uploadFiles).ifPresent(fileList -> {
+            List<String> pathList = photoService.getImagePathList(fileList);
             for (String path : pathList) {
                 Photo photo = Photo.builder()
                         .path(path)
