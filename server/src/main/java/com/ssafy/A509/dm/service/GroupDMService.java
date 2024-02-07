@@ -11,6 +11,7 @@ import com.ssafy.A509.dm.repository.ChatGroupRepository;
 import com.ssafy.A509.dm.repository.DMRepository;
 import com.ssafy.A509.profile.dto.UserProfileResponse;
 import com.ssafy.A509.profile.service.ProfileService;
+import com.ssafy.A509.unreadNotification.service.UnreadNotificationService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.HashSet;
@@ -32,6 +33,7 @@ public class GroupDMService {
 	private final DMRepository dmRepository;
 	private final ProfileService profileService;
 	private final ModelMapper modelMapper;
+	private final UnreadNotificationService notificationService;
 
 	@Transactional
 	public Long createGroup(Long userId, String chatGroupName) {
@@ -56,7 +58,9 @@ public class GroupDMService {
 			.readCount(chatGroupRepository.countChatUserByChatGroupId(groupDMRequest.getRoomId()))
 			.build();
 
-		dmRepository.save(directMessage);
+		DirectMessage save = dmRepository.save(directMessage);
+		ChatGroup group = findById(groupDMRequest.getRoomId());
+		group.getUsers().forEach(user -> notificationService.createUnread(user.getUserId(), save.getId()));
 	}
 
 	@Transactional

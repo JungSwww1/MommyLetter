@@ -8,6 +8,7 @@ import com.ssafy.A509.dm.model.ChatGroup;
 import com.ssafy.A509.dm.model.DirectMessage;
 import com.ssafy.A509.dm.repository.ChatGroupRepository;
 import com.ssafy.A509.dm.repository.DMRepository;
+import com.ssafy.A509.unreadNotification.service.UnreadNotificationService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -25,6 +26,7 @@ public class DMService {
 	private final ModelMapper modelMapper;
 	private final AccountRepository accountRepository;
 	private final ChatGroupRepository chatGroupRepository;
+	private final UnreadNotificationService notificationService;
 
 	public List<String> findAllDMRoomNameList(Long userId) {
 		User user = getUserById(userId);
@@ -48,7 +50,9 @@ public class DMService {
 			.createdDate(dmRequest.getCreatedDate())
 			.readCount(2)
 			.build();
-		dmRepository.save(directMessage);
+
+		DirectMessage save = dmRepository.save(directMessage);
+		notificationService.createUnread(save.getReceiverId(), save.getId());
 	}
 
 	@Transactional
