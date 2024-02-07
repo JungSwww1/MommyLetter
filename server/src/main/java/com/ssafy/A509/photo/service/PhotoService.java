@@ -27,12 +27,12 @@ public class PhotoService {
 	* 사진이 없는 경우에는 Empty
 	* 사진이 아닌 파일의 경우 null
 	* */
-	public List<String> getImagePathList(List<MultipartFile> uploadFiles){
+	public List<String> getImagePathList(List<MultipartFile> uploadFiles, String newPath){
 
 		List<String> resultPath = new ArrayList<>();
 
 		//폴더 생성
-		File uploadFolder = new File(uploadPath);
+		File uploadFolder = new File(uploadPath + newPath);
 		if(!uploadFolder.exists()){
 			boolean mkdir = uploadFolder.mkdirs();
 			System.out.println("파일 생성: " + mkdir);
@@ -57,9 +57,9 @@ public class PhotoService {
 		return resultPath;
 	}
 
-	public String getImagePath(MultipartFile uploadFile){
+	public String getImagePath(MultipartFile uploadFile, String newPath){
 		//폴더 생성
-		File uploadFolder = new File(uploadPath);
+		File uploadFolder = new File(uploadPath + newPath);
 		if(!uploadFolder.exists()){
 			boolean mkdir = uploadFolder.mkdirs();
 			System.out.println("파일 생성: " + mkdir);
