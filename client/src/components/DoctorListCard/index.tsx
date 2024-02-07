@@ -7,14 +7,14 @@ import {DoctorListCardComponentProps} from "@/components/type/types";
 const DoctorListCardComponent = ({img, date, name, department}: DoctorListCardComponentProps) => {
     return (
 
-        <CardListLayout>
-            <CardBox>
+        <CardListLayout >
+            <CardBox >
 
                 <Img src={img} alt="User"/>
                 <List>
                     <div className="flex flex-col text-sm w-[50%]">
-                        <Item className="font-bold">{date}</Item>
-                        <Item className="">{name}</Item>
+                        <Item className="font-bold">{name}</Item>
+                        <Item className="">{date}</Item>
                         <Item>{department}</Item>
                     </div>
                     <ButtonBox>
