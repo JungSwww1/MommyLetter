@@ -16,6 +16,7 @@ import com.ssafy.A509.hashtag.dto.HashtagResponse;
 import com.ssafy.A509.hashtag.model.Hashtag;
 import com.ssafy.A509.photo.dto.CreatePhotoRequest;
 import com.ssafy.A509.photo.model.Photo;
+import com.ssafy.A509.photo.service.PhotoService;
 import com.ssafy.A509.profile.dto.UserProfileResponse;
 import com.ssafy.A509.profile.service.ProfileService;
 import jakarta.persistence.EntityNotFoundException;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @Service
@@ -38,10 +40,11 @@ public class BoardService {
 	private final BoardRepository boardRepository;
 	private final AccountRepository accountRepository;
 	private final ProfileService profileService;
+	private final PhotoService photoService;
 	private final ModelMapper modelMapper;
 
 	@Transactional
-	public Long createBoard(CreateBoardRequest boardRequest) {
+	public Long createBoard(CreateBoardRequest boardRequest, List<MultipartFile> uploadFiles) {
 		// 사용자 찾아오기
 		User user = findByUserId(boardRequest.getUserId());
 		// 게시글 생성
@@ -51,7 +54,7 @@ public class BoardService {
 		// 해시태그 추가
 		addHashtags(board, boardRequest);
 		// 사진 추가
-		addPhotos(board, boardRequest);
+		addPhotos(board, uploadFiles);
 		// 게시물 저장
 		Board save = boardRepository.save(board);
 
@@ -114,13 +117,19 @@ public class BoardService {
 
 	@Transactional
 	public void deleteBoard(Long boardId) {
+		Board board = findById(boardId);
+		if(!board.getPhotoList().isEmpty()){
+			board.getPhotoList().stream().forEach(photo -> {
+				photoService.deleteFile(photo.getPath());
+			});
+		}
 		boardRepository.delete(findById(boardId));
 	}
 
-	private void addPhotos(Board board, CreateBoardRequest boardRequest) {
-		Optional.ofNullable(boardRequest.getPhotoList()).ifPresent(list -> {
-			for (CreatePhotoRequest photoRequest : list) {
-				Photo photo = Photo.builder().path(photoRequest.getPath()) // 사진 받아서 가공해서 사이즈 넣어주기
+	private void addPhotos(Board board, List<MultipartFile> uploadFiles) {
+		Optional.ofNullable(uploadFiles).ifPresent(list -> {
+			for (MultipartFile uploadFile : list) {
+				Photo photo = Photo.builder().path(photoService.getImagePath(uploadFile, "board")) // 사진 받아서 가공해서 사이즈 넣어주기
 					.build();
 
 				board.addPhoto(photo);

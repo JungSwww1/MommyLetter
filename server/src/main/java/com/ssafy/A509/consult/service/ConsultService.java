@@ -6,6 +6,7 @@ import com.ssafy.A509.consult.dto.ConsultDetailResponse;
 import com.ssafy.A509.consult.dto.CreateReserveResponse;
 import com.ssafy.A509.consult.dto.DoctorConsultCardResponse;
 import com.ssafy.A509.doctor.dto.ReserveResponse;
+import com.ssafy.A509.doctor.model.Consult;
 import com.ssafy.A509.doctor.model.Reserve;
 import com.ssafy.A509.doctor.repository.ConsultRepository;
 import com.ssafy.A509.doctor.repository.DoctorRepository;
@@ -66,6 +67,9 @@ public class ConsultService {
 	* */
 	@Transactional
 	public void deleteReserve(Long reserveId){
+		if(!consultRepository.existsByReserveReserveId(reserveId)){
+			throw new CustomException(ErrorCode.RESERVE_CONSULT_EXIST);
+		}
 		reserveRepository.delete(findReserveByReserveId(reserveId));
 	}
 
@@ -113,28 +117,28 @@ public class ConsultService {
 	/*
 	* 처방전 다운로드
 	* */
-	@Async
-	public InputStreamResource downloadPrescription(String prescriptionPath){
-		//prescriptionPath 예: "/pdf/sample.pdf"
-		//절대경로
-		try{
-			Path filePath = Path.of(prescriptionPath);
-			Resource file = new UrlResource(filePath.toUri());
-
-			if(!file.exists()){
-				throw new CustomException(ErrorCode.NO_SUCH_FILE_FROM_PATH, "경로: " + prescriptionPath);
-			}
-
-			InputStream inputStream = new FileInputStream(prescriptionPath);
-
-			return new InputStreamResource(inputStream);
-
-		}catch (MalformedURLException e){
-			throw new CustomException(ErrorCode.NO_SUCH_FILE_FROM_PATH, "경로: " + prescriptionPath);
-		}catch (FileNotFoundException e){
-			throw new CustomException(ErrorCode.NO_SUCH_PRESCRIPTION, "경로: " + prescriptionPath);
-		}
-	}
+//	@Async
+//	public InputStreamResource downloadPrescription(String prescriptionPath){
+//		//prescriptionPath 예: "/pdf/sample.pdf"
+//		//절대경로
+//		try{
+//			Path filePath = Path.of(prescriptionPath);
+//			Resource file = new UrlResource(filePath.toUri());
+//
+//			if(!file.exists()){
+//				throw new CustomException(ErrorCode.NO_SUCH_FILE_FROM_PATH, "경로: " + prescriptionPath);
+//			}
+//
+//			InputStream inputStream = new FileInputStream(prescriptionPath);
+//
+//			return new InputStreamResource(inputStream);
+//
+//		}catch (MalformedURLException e){
+//			throw new CustomException(ErrorCode.NO_SUCH_FILE_FROM_PATH, "경로: " + prescriptionPath);
+//		}catch (FileNotFoundException e){
+//			throw new CustomException(ErrorCode.NO_SUCH_PRESCRIPTION, "경로: " + prescriptionPath);
+//		}
+//	}
 
 	private Reserve findReserveByReserveId(Long reserveId) {
 		return reserveRepository.findById(reserveId).orElseThrow(()

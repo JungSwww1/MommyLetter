@@ -9,16 +9,20 @@ import com.ssafy.A509.doctor.dto.CreateConsultRequest;
 import com.ssafy.A509.doctor.dto.PatientResponse;
 import com.ssafy.A509.doctor.dto.ReserveResponse;
 import com.ssafy.A509.doctor.model.Consult;
+import com.ssafy.A509.doctor.model.Reserve;
 import com.ssafy.A509.doctor.repository.ConsultRepository;
 import com.ssafy.A509.doctor.repository.ReserveRepository;
 import com.ssafy.A509.exception.CustomException;
 import com.ssafy.A509.exception.ErrorCode;
+import com.ssafy.A509.photo.service.PhotoService;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +33,7 @@ public class DoctorService {
 	private final ModelMapper modelMapper;
 	private final DiaryRepository diaryRepository;
 	private final ConsultRepository consultRepository;
+	private final PhotoService photoService;
 
 	/**
 	 * 의사 상담 예약 캘린더 조회
@@ -100,13 +105,21 @@ public class DoctorService {
 	 * consult 테이블에 삽입한다
 	 * */
 	@Transactional
-	public ConsultResponse createConsult(CreateConsultRequest consultRequest){
+	public ConsultResponse createConsult(CreateConsultRequest consultRequest, MultipartFile prescription){
+		//실제로 상담이 있었는지 확인
+		Reserve reserve = reserveRepository.findById(consultRequest.getReserveId())
+			.orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_RESERVE, "reserveId: " + consultRequest.getReserveId()));
+		//상담을 신청한 유저와 받는 유저가 같은지 확인
+		if(!Objects.equals(reserve.getUser().getUserId(), consultRequest.getUserId())){
+			throw new CustomException(ErrorCode.RESERVE_MISMATCH_USER, "userId: " + consultRequest.getUserId());
+		}
+
 		Consult newConsult = Consult.builder()
 			.user(accountRepository.findById(consultRequest.getUserId())
 				.orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_ACCOUNT)))
 			.reserve(reserveRepository.findById(consultRequest.getReserveId())
 				.orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_RESERVE)))
-			.prescriptionPath(consultRequest.getPrescriptionPath())
+			.prescriptionPath(photoService.getPrescriptionPath(prescription, "prescription"))
 			.build();
 
 		return getConsultResponse(consultRepository.save(newConsult));

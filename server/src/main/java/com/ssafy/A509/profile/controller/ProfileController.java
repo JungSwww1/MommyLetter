@@ -4,10 +4,12 @@ package com.ssafy.A509.profile.controller;
 import com.ssafy.A509.profile.dto.*;
 import com.ssafy.A509.profile.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/profiles")
@@ -18,15 +20,18 @@ public class ProfileController {
     private ProfileService profileService;
 
     @PostMapping("/profileImage/{userId}")
-    public ResponseEntity<Void> updateProfileImage(@RequestBody ProfileImageRequest profileImageRequest) {
-        profileService.updateProfileImage(profileImageRequest);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> updateProfileImage(@PathVariable Long userId, @RequestParam
+        MultipartFile profileImage) {
+        return new ResponseEntity<>(profileService.updateProfileImage(userId, profileImage),
+            HttpStatus.OK);
     }
 
+
     @PostMapping("/backgroundImage/{userId}")
-    public ResponseEntity<Void> updateBackgroundImage(@RequestBody ProfileImageRequest profileImageRequest) {
-        profileService.updateBackgroundImage(profileImageRequest);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> updateBackgroundImage(@PathVariable Long userId, @RequestParam
+        MultipartFile backgroundImage) {
+
+        return new ResponseEntity<>(profileService.updateBackgroundImage(userId, backgroundImage), HttpStatus.OK);
     }
 
     @GetMapping("/{userId}")

@@ -78,7 +78,7 @@ public enum ErrorCode {
 
     NO_PATIENT_INFO(200, "1010", "ReserveId에 해당하는 환자의 정보가 존재하지 않습니다"),
 
-    CONTENT_TYPE_IMAGE_MISMATCH(200, "1011", "해당 파일의 content type이 이미지가 아닙니다"),
+    CONTENT_TYPE_FILE_MISMATCH(200, "1011", "해당 파일의 content type이 올바르지 않습니다"),
 
     UNABLE_TO_UPLOAD_FILE(200, "1012", "해당 경로에 파일을 업로드할 수 없습니다"),
 
@@ -112,6 +112,12 @@ public enum ErrorCode {
     NO_SUCH_BOARD_LIKE(200, "1206", "해당 게시물의 좋아요는 없습니다"),
 
     NO_SUCH_COMMENT_LIKE(200, "1207", "해당 댓글의 좋아요는 없습니다"),
+
+    FILE_DELETE_FAILED(200, "1208", "파일의 삭제가 정상적으로 이루어지지 않았습니다"),
+
+    RESERVE_MISMATCH_USER(400, "1209", "상담을 받는 유저와 처방을 받는 유저가 일치하지 않습니다"),
+
+    RESERVE_CONSULT_EXIST(400, "1210", "이미 상담을 받았습니다"),
 
     ; // End
 

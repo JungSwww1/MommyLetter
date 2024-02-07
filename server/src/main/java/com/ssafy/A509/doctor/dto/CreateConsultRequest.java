@@ -13,7 +13,4 @@ public class CreateConsultRequest {
 
 	@NotNull(message = "reserveId가 존재하지 않습니다")
 	private Long reserveId;
-
-	@NotBlank(message = "처방전이 존재하지 않습니다")
-	private String prescriptionPath;
 }
