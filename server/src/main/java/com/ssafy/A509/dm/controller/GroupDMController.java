@@ -47,6 +47,10 @@ public class GroupDMController {
 			+ "app/dm/group/message로 보내야 함"
 	)
 //	@PostMapping
+<<<<<<< PATCH SET (8b7668 :sparkles: Feat: add description)
+//	public void sendMessageToGroup(@Valid @RequestBody GroupMessageRequest groupMessageRequest) {
+=======
+>>>>>>> BASE      (c10484 :sparkles: Feat: add message list condition for createdDate)
 	@MessageMapping("/groupMessage")
 	public void sendMessageToGroup(@Payload GroupMessageRequest groupMessageRequest) {
 		groupMessageRequest.createTimeStamp();
@@ -67,7 +71,7 @@ public class GroupDMController {
 
 	@Operation(
 		summary = "채팅 조회",
-		description = "채팅방의 채팅 목록 조회, 사용자의 그룹 가입 날짜 기준"
+		description = "채팅방의 채팅 목록 조회, 사용자의 그룹 가입 날짜 이후 목록만 조회됨"
 	)
 	@GetMapping("/{groupId}/{userId}")
 	public ResponseEntity<List<GroupMessageResponse>> getGroupDM(@PathVariable Long groupId, @PathVariable Long userId) {
