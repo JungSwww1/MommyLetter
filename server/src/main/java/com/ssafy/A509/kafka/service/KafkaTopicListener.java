@@ -25,6 +25,11 @@ public class KafkaTopicListener {
 	private final Map<Long, List<Long>> onlineUserMap = new ConcurrentHashMap<>();
 	private final DMService dmService;
 
+	/*
+	입장에 대한 리스너
+	/sub/enter/ + chatGroupId 로 입장자의 정보가 송신됨
+	/sub/readCount/ + chatGroupId 로 map<메시지ID, 안읽은 사람 수> 가 전송됨
+	 */
 	@KafkaListener(id = "enterListener", topics = "enter")
 	public void listenToEnterTopic(ConsumerRecord<String, KafkaDMRequest> record) {
 		log.info("enter listen ={}", record);
@@ -41,6 +46,10 @@ public class KafkaTopicListener {
 		setUnreadCount(record, chatGroupId);
 	}
 
+	/*
+	퇴장에 대한 리스너
+	/sub/leave/ + chatGroupId 로 퇴장자의 정보가 송신됨
+ 	*/
 	@KafkaListener(id = "leaveListener", topics = "leave")
 	public void listenToLeaveTopic(ConsumerRecord<String, KafkaDMRequest> record) {
 		log.info("leave listen ={}", record);
@@ -52,9 +61,13 @@ public class KafkaTopicListener {
 		 */
 		List<Long> userList = onlineUserMap.get(chatGroupId);
 		userList.remove(record.value().getSenderId());
-		System.out.println("userList = " + userList);
 	}
 
+	/*
+	1:1 채팅 발신 리스너
+	/sub/dm/ + chatGroupId 로 채팅 발신 정보가 송신됨
+	/sub/readCount/ + chatGroupId 로 map<메시지ID, 안읽은 사람 수> 가 전송됨
+ 	*/
 	@KafkaListener(id = "dmListener", topics = "dm")
 	public void listenToDMTopic(ConsumerRecord<String, KafkaDMRequest> record) {
 		log.info("dm listen ={}", record);
@@ -67,6 +80,11 @@ public class KafkaTopicListener {
 		setUnreadCount(chatGroupId);
 	}
 
+	/*
+	그룹 채팅 발신 리스너
+	/sub/groupChat/ + chatGroupId 로 채팅 발신 정보가 송신됨
+	/sub/readCount/ + chatGroupId 로 map<메시지ID, 안읽은 사람 수> 가 전송됨
+ 	*/
 	@KafkaListener(id = "groupChatListener", topics = "group-chat")
 	public void listenToGroupChatTopic(ConsumerRecord<String, KafkaDMRequest> record) {
 		log.info("group-chat listen ={}", record);
@@ -89,7 +107,6 @@ public class KafkaTopicListener {
 			userList = onlineUserMap.get(chatGroupId);
 		}
 		userList.add(record.value().getSenderId());
-		System.out.println("enter userList = " + userList);
 	}
 
 	private void setUnreadCount(ConsumerRecord<String, KafkaDMRequest> record, Long chatGroupId) {
@@ -104,10 +121,7 @@ public class KafkaTopicListener {
 	private void setUnreadCount(Long chatGroupId) {
 		DirectMessage directMessage = dmService.getLatestMessage(chatGroupId);
 		List<Long> userList = onlineUserMap.get(chatGroupId);
-		System.out.println("userList = " + userList);
-		;
 		int cnt = dmService.readMessageAndGetCount(directMessage, userList);
-		System.out.println(cnt);
 		Map<String, Integer> readMap = new HashMap<>();
 		readMap.put(directMessage.getId(), cnt);
 
