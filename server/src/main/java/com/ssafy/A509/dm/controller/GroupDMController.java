@@ -47,10 +47,7 @@ public class GroupDMController {
 			+ "app/dm/group/message로 보내야 함"
 	)
 //	@PostMapping
-<<<<<<< PATCH SET (8b7668 :sparkles: Feat: add description)
 //	public void sendMessageToGroup(@Valid @RequestBody GroupMessageRequest groupMessageRequest) {
-=======
->>>>>>> BASE      (c10484 :sparkles: Feat: add message list condition for createdDate)
 	@MessageMapping("/groupMessage")
 	public void sendMessageToGroup(@Payload GroupMessageRequest groupMessageRequest) {
 		groupMessageRequest.createTimeStamp();
