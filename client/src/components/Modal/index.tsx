@@ -23,4 +23,5 @@ const BottomUpModal = ({children, writeButton}: Props) => {
         </div>);
 };
 
+
 export default BottomUpModal;

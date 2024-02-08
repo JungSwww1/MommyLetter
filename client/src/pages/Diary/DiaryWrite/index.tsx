@@ -6,6 +6,7 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {Toast} from "@/components/Toast/Toast";
 import {ReactComponent as CircleX} from "@/assets/icons/circleX.svg";
+import {useParams} from "react-router-dom";
 
 interface DateProps {
     currYear: number;
@@ -26,6 +27,7 @@ export const DiaryWrite = ({currYear, currMonth, currDay}: DateProps) => {
     const [previews, setPreviews] = useState<string[]>([]);
     const [user, setUser] = useState<UserProps>({nickname: '', userId: ''}); // UserProps로 수정
 
+    const param = useParams()["*"];
     useEffect(() => {
         const storedAuth = localStorage.getItem('Auth');
         if (storedAuth) {
@@ -69,16 +71,17 @@ export const DiaryWrite = ({currYear, currMonth, currDay}: DateProps) => {
         return err
     }
     const diaryWrite = async () => {
-        const createdDate = new Date(currYear, currMonth - 1, currDay);
+        const createdDate = new Date(currYear, currMonth - 1, currDay+1);
+        console.log(createdDate);
         const formData = new FormData();
         imgFiles.forEach((file) => {
             formData.append('uploadFiles', file);
         });
-        // const userId = user ? user.userId : '101';
+        const category = param ? param?.charAt(0).toUpperCase() + param?.substring(1,) : "Mom";
         const diaryRequest = {
-            userId: 101,
+            userId: user.userId,
             content: content,
-            category: "Baby",
+            category: category,
             createdDate: createdDate.toISOString(),
             emoji: emotion,
             emoticon: {
@@ -100,7 +103,11 @@ export const DiaryWrite = ({currYear, currMonth, currDay}: DateProps) => {
                 Toast.error("내용을 입력하세요")
                 return;
             }
+
             Toast.success("작성되었습니다.");
+            setContent("");
+            setEmotion(0);
+            setImgFiles([]);
             setTimeout(() => {
                 document.getElementById("closeBtn")?.click(); // 모달닫기
             }, 800)
@@ -179,14 +186,14 @@ export const DiaryWrite = ({currYear, currMonth, currDay}: DateProps) => {
             </div>
             <div className="flex">
                 {previews?.map((preview, index) => (<div key={index} className="mr-2">
-                        <button className="relative top-1/4 ml-1 hover:bg-gray-400 hover:rounded-lg active:scale-90"
-                                onClick={() => {
-                                    fileChange(index)
-                                }}>
-                            <CircleX/>
-                        </button>
-                        <img src={preview} className="w-[150px] aspect-[1]"/>
-                    </div>))}
+                    <button className="relative top-1/4 ml-1 hover:bg-gray-400 hover:rounded-lg active:scale-90"
+                            onClick={() => {
+                                fileChange(index)
+                            }}>
+                        <CircleX/>
+                    </button>
+                    <img src={preview} className="w-[150px] aspect-[1]"/>
+                </div>))}
             </div>
 
         </div>
