@@ -52,8 +52,8 @@ public class DMController {
 		log.info("dmRequest={}", dmRequest);
 		dmRequest.createTimeStamp();
 		KafkaDMRequest kafkaDMRequest = modelMapper.map(dmRequest, KafkaDMRequest.class);
-		kafkaTemplate.send("dm", dmRequest.getReceiverId().toString(), kafkaDMRequest);
 		dmService.saveDm(dmRequest);
+		kafkaTemplate.send("dm", dmRequest.getReceiverId().toString(), kafkaDMRequest);
 	}
 
 	@Operation(

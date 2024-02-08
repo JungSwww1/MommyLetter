@@ -53,8 +53,8 @@ public class GroupDMController {
 		groupMessageRequest.createTimeStamp();
 		KafkaDMRequest kafkaDMRequest = modelMapper.map(groupMessageRequest, KafkaDMRequest.class);
 		kafkaDMRequest.setChatGroupId(groupMessageRequest.getChatGroupId());
-		kafkaTemplate.send("group-chat", kafkaDMRequest.getChatGroupId() + "", kafkaDMRequest);
 		groupDMService.saveGroupDm(groupMessageRequest);
+		kafkaTemplate.send("group-chat", kafkaDMRequest.getChatGroupId() + "", kafkaDMRequest);
 	}
 
 	@Operation(

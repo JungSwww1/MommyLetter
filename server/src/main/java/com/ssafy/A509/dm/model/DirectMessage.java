@@ -1,6 +1,9 @@
 package com.ssafy.A509.dm.model;
 
 import jakarta.persistence.Id;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,23 +26,29 @@ public class DirectMessage {
 
 	private String content;
 
-	private int readCount;
+	private Set<Long> readUser = new HashSet<>();
 
-	private String createdDate;
+	private int unreadCount;
+
+	private LocalDateTime createdDate;
 
 	@Builder
-	protected DirectMessage(Long senderId, Long receiverId, String content, Long chatGroupId, String createdDate, int readCount) {
+	protected DirectMessage(Long senderId, Long receiverId, String content, Long chatGroupId, LocalDateTime createdDate,
+		int unreadCount) {
 		this.senderId = senderId;
 		this.receiverId = receiverId;
 		this.content = content;
 		this.chatGroupId = chatGroupId;
 		this.createdDate = createdDate;
-		this.readCount = readCount;
+		this.unreadCount = unreadCount;
 	}
 
-	public void reduceReadCount() {
-		if (this.readCount > 0) {
-			this.readCount --;
+	public int addReader(Long userId) {
+		if (!this.readUser.contains(userId)) {
+			unreadCount--;
+			this.readUser.add(userId);
 		}
+
+		return unreadCount;
 	}
 }
