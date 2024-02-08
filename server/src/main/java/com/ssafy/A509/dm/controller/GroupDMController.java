@@ -67,11 +67,11 @@ public class GroupDMController {
 
 	@Operation(
 		summary = "채팅 조회",
-		description = "채팅방의 채팅 목록 조회"
+		description = "채팅방의 채팅 목록 조회, 사용자의 그룹 가입 날짜 기준"
 	)
-	@GetMapping("/{groupId}")
-	public ResponseEntity<List<GroupMessageResponse>> getGroupDM(@PathVariable Long groupId) {
-		return ResponseEntity.ok(groupDMService.getListByGroupId(groupId));
+	@GetMapping("/{groupId}/{userId}")
+	public ResponseEntity<List<GroupMessageResponse>> getGroupDM(@PathVariable Long groupId, @PathVariable Long userId) {
+		return ResponseEntity.ok(groupDMService.getListByGroupAndUser(groupId, userId));
 	}
 
 	@Operation(

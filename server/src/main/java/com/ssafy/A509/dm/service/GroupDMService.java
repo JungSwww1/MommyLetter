@@ -8,8 +8,10 @@ import com.ssafy.A509.dm.dto.ChatGroupResponse;
 import com.ssafy.A509.dm.dto.GroupMessageResponse;
 import com.ssafy.A509.dm.model.ChatGroup;
 import com.ssafy.A509.dm.model.DirectMessage;
+import com.ssafy.A509.dm.model.UserChatGroup;
 import com.ssafy.A509.dm.repository.ChatGroupRepository;
 import com.ssafy.A509.dm.repository.DMRepository;
+import com.ssafy.A509.dm.repository.UserChatGroupRepository;
 import com.ssafy.A509.profile.dto.UserProfileResponse;
 import com.ssafy.A509.profile.service.ProfileService;
 import com.ssafy.A509.unreadNotification.service.UnreadNotificationService;
@@ -35,6 +37,7 @@ public class GroupDMService {
 	private final ProfileService profileService;
 	private final ModelMapper modelMapper;
 	private final UnreadNotificationService notificationService;
+	private final UserChatGroupRepository userChatGroupRepository;
 
 	@Transactional
 	public Long createGroup(Long userId, String chatGroupName) {
@@ -80,8 +83,11 @@ public class GroupDMService {
 		accountRepository.save(user);
 	}
 
-	public List<GroupMessageResponse> getListByGroupId(Long groupId) {
-		return dmRepository.findAllByChatGroupId(groupId).stream()
+	public List<GroupMessageResponse> getListByGroupAndUser(Long groupId, Long userId) {
+		UserChatGroup userChatGroup = userChatGroupRepository.findByUserUserIdAndChatGroupChatGroupId(userId,
+			groupId);
+		return dmRepository.findAllByChatGroupIdAndCreatedDateGreaterThanEqual(groupId, userChatGroup.getJoinDate())
+			.stream()
 			.map(dm -> modelMapper.map(dm, GroupMessageResponse.class))
 			.collect(
 				Collectors.toList());

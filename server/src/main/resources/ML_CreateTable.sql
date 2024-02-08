@@ -228,15 +228,6 @@ CREATE TABLE `CHAT_GROUP`
     FOREIGN KEY (`user_id`) REFERENCES User (`user_id`)
 );
 
-CREATE TABLE USER_CHAT_GROUP
-(
-    chat_group_id INT NOT NULL,
-    user_id     INT NOT NULL,
-    PRIMARY KEY (chat_group_id, user_id),
-    FOREIGN KEY (user_id) REFERENCES User (user_id),
-    FOREIGN KEY (chat_group_id) REFERENCES CHAT_GROUP (chat_group_id)
-);
-
 CREATE TABLE UNREAD_NOTIFICATION
 (
     notification_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -244,3 +235,12 @@ CREATE TABLE UNREAD_NOTIFICATION
     dm_id     VARCHAR(100) NOT NULL
 );
 
+CREATE TABLE USER_CHAT_GROUP
+(
+    chat_group_id INT NOT NULL,
+    user_id     INT NOT NULL,
+    join_date TIMESTAMP,
+    PRIMARY KEY (chat_group_id, user_id),
+    FOREIGN KEY (chat_group_id) REFERENCES CHAT_GROUP(chat_group_id),
+    FOREIGN KEY (user_id) REFERENCES USER(user_id)
+);

@@ -5,6 +5,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ssafy.A509.account.model.User;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
@@ -38,7 +39,7 @@ public class ChatGroup {
 	@JoinColumn(name = "user_id")
 	private User host;
 
-	@ManyToMany(mappedBy = "groups", fetch = LAZY)
+	@ManyToMany(mappedBy = "groups", fetch = LAZY, cascade = CascadeType.ALL)
 	@JsonBackReference
 	private Set<User> users = new HashSet<>();
 
@@ -50,4 +51,5 @@ public class ChatGroup {
 		this.chatRoomName = chatRoomName;
 		this.host = host;
 	}
+
 }
