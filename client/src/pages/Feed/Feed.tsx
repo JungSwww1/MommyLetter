@@ -4,6 +4,8 @@ import axios from "axios";
 import MainFeed from "@/components/Feed";
 import LogoWhite from "@/assets/icons/logo";
 import AlertModal from "@/pages/Feed/AlertModal";
+import FeedAddButton from "@/assets/icons/FeedAddButton";
+import Menu from "@/pages/Feed/AddModal/FeedMenuModal";
 
 interface Board {
     boardId: number;
@@ -90,6 +92,16 @@ const Feed: React.FC = () => {
     // const returnData = () => {
     //     console.log('ㄱㄷ셔구')
     // }
+    const [showMenu, setShowMenu] = useState(false);
+    const toggleMenu = () => {
+        setShowMenu(!showMenu);
+    };
+    const addFeed = () => {
+        alert("h")
+    }
+    const sort = () => {
+        alert("h")
+    }
     return (
         <Layout>
             {/*<button className="btn" onClick={clickModal}>open modal</button>*/}
@@ -110,6 +122,14 @@ const Feed: React.FC = () => {
                         Observer Element
                     </div>
                 )}
+                <div className="fixed bottom-10 ml-[35%]" onClick={toggleMenu}>
+                    <FeedAddButton />
+                    {showMenu && (
+                        <div className="MenuModal absolute top-full right-0 z-100">
+                            <Menu onEdit={addFeed} onDelete={sort} onClose={toggleMenu} />
+                        </div>
+                    )}
+                </div>
             </MainContainer>
         </Layout>
     );

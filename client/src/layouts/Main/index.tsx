@@ -19,6 +19,7 @@ import HistoryListPage from "@/pages/History/HistoryList/page";
 import ConsultRegist from "@/pages/Consult/ConsultRegist/page";
 import UserEdit from "@/pages/UserEdit/UserEdit";
 import DiaryPage from "@/pages/Diary/page";
+import FeedAddButton from "@/assets/icons/FeedAddButton";
 
 
 
