@@ -20,13 +20,20 @@ const CalendarComponent = (events: any) => {
         diaryId: 0, content: "", category: "", emoji: 0, photoList: [],createdDate:"",
         emotionList:[],familyList:[],healthList:[],peopleList:[],weatherList:[]
     });
-    const navigate = useNavigate();
+    var emojiArr:string[] = [];
+    emojiArr[0] = "/assets/images/sample_angry.png";
+    emojiArr[1] = "/assets/images/sample_bad.png";
+    emojiArr[2] = "/assets/images/sample_good.png";
+    emojiArr[3] = "/assets/images/sample_soso.png";
+    emojiArr[4] = "/assets/images/sample_tired.png";
+
     const buttonFunction = () => {
         alert("heelo")
     }
     const handleEventDragStart = (info: any) => {
         // dragstart 이벤트 처리
         setStartProps(info.event.extendedProps);
+        console.log(info.event.extendedProps);
     };
     const handleEventDrop = (info: any) => {
         const diary: DiaryUpdateRequestProps = {
@@ -85,11 +92,11 @@ const CalendarComponent = (events: any) => {
                 navLinks={true}
                 navLinkDayClick={clickDay}
                 eventContent={(eventInfo) => {
-                    const {imageurl} = eventInfo.event.extendedProps;
+                    const {emoji} = eventInfo.event.extendedProps;
                     return (<div className="flex justify-center" onClick={() => {
                         buttonFunction();
                     }}>
-                        <img className="h-[10%] w-[50%]" src={imageurl} alt="Event Image"/>
+                        <img className="h-[10%] w-[50%]" src={emojiArr[emoji]} alt="Event Image"/>
                     </div>);
                 }}
                 headerToolbar={{
