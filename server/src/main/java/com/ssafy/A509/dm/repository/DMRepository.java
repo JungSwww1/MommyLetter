@@ -1,6 +1,8 @@
 package com.ssafy.A509.dm.repository;
 
 import com.ssafy.A509.dm.model.DirectMessage;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Sort;
