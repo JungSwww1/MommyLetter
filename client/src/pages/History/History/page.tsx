@@ -8,7 +8,7 @@ import {fetchHistoryDetail} from "@/apis/history/HistoryAPI";
 import {HistoryDetailProps} from "@/pages/type/types";
 import DoctorListCard from "@/components/DoctorListCard";
 
-import { Document, Page } from 'react-pdf';
+
 
 
 const HistoryPage = () => {
