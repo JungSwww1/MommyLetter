@@ -47,7 +47,7 @@ public class GroupDMController {
 			+ "app/dm/group/message로 보내야 함"
 	)
 //	@PostMapping
-	@MessageMapping("/message")
+	@MessageMapping("/groupMessage")
 	public void sendMessageToGroup(@Payload GroupMessageRequest groupMessageRequest) {
 		groupMessageRequest.createTimeStamp();
 		KafkaDMRequest kafkaDMRequest = modelMapper.map(groupMessageRequest, KafkaDMRequest.class);
