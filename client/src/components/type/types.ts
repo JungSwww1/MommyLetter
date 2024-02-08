@@ -6,7 +6,6 @@ export interface DoctorListCardComponentProps{
     date: string;
     img: string;
     name: string;
-    gender: string;
     department: string;
 };
 
