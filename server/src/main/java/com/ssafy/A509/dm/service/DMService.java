@@ -12,8 +12,11 @@ import com.ssafy.A509.dm.repository.DMRepository;
 import com.ssafy.A509.unreadNotification.service.UnreadNotificationService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +53,10 @@ public class DMService {
 				Collectors.toList());
 	}
 
+	public DirectMessage getLatestMessage(Long chatGroupId) {
+		return dmRepository.findFirstByChatGroupIdOrderByCreatedDateDesc(chatGroupId);
+	}
+
 	@Transactional
 	public void saveDm(DMRequest dmRequest) {
 		DirectMessage directMessage = DirectMessage.builder()
@@ -58,7 +65,7 @@ public class DMService {
 			.receiverId(dmRequest.getReceiverId())
 			.chatGroupId(dmRequest.getChatGroupId())
 			.createdDate(dmRequest.getCreatedDate())
-			.readCount(2)
+			.unreadCount(2)
 			.build();
 
 		DirectMessage save = dmRepository.save(directMessage);
@@ -83,6 +90,29 @@ public class DMService {
 		accountRepository.save(user1);
 		user2.addGroup(chatGroup);
 		accountRepository.save(user2);
+	}
+
+	public List<DirectMessage> getChatListByTime(Long chatGroupId, LocalDateTime time) {
+		return dmRepository.findChatsBeforeDateAndGroupWithUnreadCount(chatGroupId, time);
+	}
+
+	@Transactional
+	public Map<String, Integer> readMessageAndGetList(List<DirectMessage> messages, Long userId) {
+		Map<String, Integer> map = new HashMap<>();
+		messages.forEach(directMessage -> {
+			int cnt = directMessage.addReader(userId);
+			map.put(directMessage.getId(), cnt);
+			dmRepository.save(directMessage);
+		});
+
+		return map;
+	}
+
+	@Transactional
+	public int readMessageAndGetCount(DirectMessage message, List<Long> users) {
+		users.forEach(message::addReader);
+		dmRepository.save(message);
+		return message.getUnreadCount();
 	}
 
 	protected User getUserById(Long userId) {
