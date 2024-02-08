@@ -9,10 +9,11 @@ import {
     ProfileContainer,
     SubProfileContainer
 } from "@/pages/Profile/Myself/styles";
+import {useParams} from "react-router-dom";
 
 const UserProfile = () => {
     const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-
+    const param = useParams().userId
     return (
         <div>
             {/* 본문 */}
@@ -26,7 +27,7 @@ const UserProfile = () => {
                 {/* 사용자 프로필 부분 */}
                 <ProfileContainer>
                     <Img src={logo} alt="Logo"/>
-                    <p className={"text-[20px]"}>고승민</p>
+                    <p className={"text-[20px]"}>{param}</p>
                     <p>고추장 아빠</p>
                     <SubProfileContainer>
                         <div>

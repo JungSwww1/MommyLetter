@@ -4,7 +4,6 @@ export interface DiaryWriteRequestProps{
     category: string;
     emoji:number;
     createdDate:string;
-    photoList: PhotoProps[];
     emoticon: {
         emotionList: string[];
         familyList: string[];
@@ -15,9 +14,6 @@ export interface DiaryWriteRequestProps{
     emoticonList: string[];
 }
 
-export interface PhotoProps{
-    path: string;
-}
 export interface DiaryUpdateRequestProps {
     diaryId: number;
     content: string;

@@ -1,30 +1,40 @@
-import React, {ReactNode, useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import DiaryListComponent from "@/components/DiaryList";
-import {fetchDiary} from "@/apis/diary/DiaryAPI";
-import {DiaryReadResponseProps} from "@/pages/type/types";
+import { fetchDiary } from "@/apis/diary/DiaryAPI";
+import { DiaryReadResponseProps } from "@/pages/type/types";
 import CalendarComponent from "@/components/Calendar";
-import {DiaryResponseProps} from "@/components/type/types";
+import { DiaryResponseProps } from "@/components/type/types";
 
-const DiaryBabyPage = () => {
-    const [diaryList, setDiaryList] = useState<DiaryResponseProps[]>([]);
+interface UserProps {
+    nickname: string;
+    userId: string;
+}
+
+const DiaryMomPage = () => {
     const [events, setEvents] = useState<any[]>([]);
-    const [diaryLists, setdiaryLists] = useState<ReactNode[]>([]);
+    const [diaryList, setDiaryList] = useState<React.ReactNode[]>([]);
+    const [user, setUser] = useState<UserProps>({ nickname: '', userId: '' });
 
     useEffect(() => {
-        fetchDiary(101)
-            .then((data) => {
-                // 달력 라이브러리 변수
-                const newEvents: any = [];
+        const storedAuth = localStorage.getItem('Auth');
+        if (storedAuth) {
+            const parsedAuth: UserProps = JSON.parse(storedAuth);
+            setUser(parsedAuth);
+        }
+    }, []);
 
-                // ReactNode 변수
-                const diaryLists: any[] = [];
+    useEffect(() => {
+        fetchDiary(Number(user.userId))
+            .then((data) => {
+                const newEvents: any[] = [];
+                const newDiaryList: React.ReactNode[] = [];
                 data.forEach((diary: DiaryReadResponseProps) => {
                     if (diary.category === "Baby") {
                         newEvents.push({
                             imageurl: "/assets/images/seungwon.png",
                             backgroundColor: "#fffadf",
                             borderColor: "#fffadf",
-                            diaryId:diary.diaryId,
+                            diaryId: diary.diaryId,
                             title: diary.content,
                             date: diary.createdDate,
                             emoji: diary.emoji,
@@ -37,28 +47,29 @@ const DiaryBabyPage = () => {
                             healthList: diary.emoticon?.healthList,
                             peopleList: diary.emoticon?.peopleList,
                             weatherList: diary.emoticon?.weatherList,
-
                         });
-                        diaryLists.push(<DiaryListComponent
-                            key={diary.diaryId}
-                            content={diary.content}
-                            emoji={diary.emoji}
-                            photoList={diary.photoList}
-                            createdDate={diary.createdDate}
-                        />);
+                        newDiaryList.push(
+                            <DiaryListComponent
+                                key={diary.diaryId}
+                                content={diary.content}
+                                emoji={diary.emoji}
+                                photoList={diary.photoList}
+                                createdDate={diary.createdDate}
+                            />
+                        );
                     }
                 });
                 setEvents(newEvents);
-                setdiaryLists(diaryLists);
+                setDiaryList(newDiaryList);
             });
-    }, []);
-
+    }, [user]); // Changed dependency to user
 
     return (
         <div>
             <CalendarComponent events={events}/>
-            {diaryLists}
-        </div>);
+            {diaryList}
+        </div>
+    );
 };
 
-export default DiaryBabyPage;
+export default DiaryMomPage;

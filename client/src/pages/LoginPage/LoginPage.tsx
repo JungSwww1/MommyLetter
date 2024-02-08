@@ -1,8 +1,8 @@
-import {CheckBox, Img, Input, LoginButton, Main, RegisterButton, StyleLink} from "@/pages/LoginPage/styles";
+import {Main} from "@/pages/LoginPage/styles";
 import {useState} from "react";
-import {useNavigate } from "react-router-dom"
-import logo from '@/assets/images/logo_white.png'
+import {Link, useNavigate} from "react-router-dom"
 import {loginAPI} from '@/apis/Auth/authAPI'
+import MainLogo from "@/assets/icons/MainLogo";
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -18,56 +18,42 @@ const LoginPage = () => {
         const loginInfo = {email, password};
         await loginAPI(loginInfo);
         navigate('/', {replace:true})
+        window.location.reload()
     }
 
     return (
         <Main>
-            {/*아래는 로고 들어갈 영역*/}
-            <Img src={logo} alt="Logo"/>
-            {/*아이디 입력*/}
-            <Input
-                type="text"
-                placeholder={"아이디를 입력해주세요"}
-                onChange={e => setEmail(e.target.value)}
-                className="top-[350px]"
-            />
+            <div className={"invisible"}>Logo Fix</div>
+            <div className={"flex justify-center mt-[17%] mb-[4%]"}>
+                <MainLogo/>
+            </div>
+            <div className={"flex flex-col items-center mb-[8%]"}>
+                <input placeholder="이메일을 입력해주세요"
+                       className="w-[80%] p-3 pl-6 rounded-3xl mb-[4%] shadow-custom-inner"
+                       onChange={e => setEmail(e.target.value)}
+                />
+                <input placeholder="비밀번호를 입력해주세요"
+                       type="password"
+                       className="w-[80%] p-3 pl-6 rounded-3xl mb-[4%] shadow-custom-inner"
+                       onChange={e => setPassword(e.target.value)}
+                />
+                <button onClick={loginFunc} className="btn border-[#533C00] w-[80%] p-3 bg-[#533C00] hover:bg-[#808080] text-[#FFF8EE] rounded-3xl shadow-custom-outer">로그인</button>
+            </div>
+            <div className={"flex flex-row justify-center mb-[8%]"}>
+                {/*<div className={"flex flex-row w-[18%] mr-[8%]"}>*/}
+                {/*    <input type="checkbox" className="rounded-full mt-[5%]" onChange={(e) => setAutoLogin(e.target.checked)}/>*/}
+                {/*    <p>자동로그인</p>*/}
+                {/*</div>*/}
+                {/*<div className={"flex flex-row justify-evenly w-[32%]"}>*/}
+                {/*    <Link to={"/example"}>아이디 찾기</Link>*/}
+                {/*    <p>|</p>*/}
+                {/*    <Link to={"/example"}>비밀번호 찾기</Link>*/}
+                {/*</div>*/}
+            </div>
+            <div className={"flex justify-end w-[90%]"}>
+                <button onClick={userRegist} className={"btn w-[30%] border-[#533C00] p-3 bg-[#533C00] hover:bg-[#808080] text-[#FFF8EE] rounded-3xl shadow-custom-outer"}>회원가입</button>
+            </div>
 
-            {/*비밀번호 입력*/}
-            <Input
-                type="password"
-                placeholder={"비밀번호를 입력해주세요"}
-                onChange={e => setPassword(e.target.value)}
-                className="top-[400px]"
-            />
-
-            {/*로그인 버튼*/}
-            <LoginButton onClick={loginFunc}>
-                로그인
-            </LoginButton>
-
-            {/* 자동 로그인 체크박스 */}
-            <CheckBox
-                type="checkbox"
-                onChange={(e) => setAutoLogin(e.target.checked)}
-            />
-            <p className="absolute left-[33%] top-[526px] text-[13px] text-left text-[#a0a0a0]">
-                자동로그인
-            </p>
-
-            {/*아이디 찾기*/}
-            <StyleLink to="/findId" className="left-[50%]">
-                아이디 찾기
-            </StyleLink>
-
-            {/*비밀번호 찾기*/}
-            <StyleLink to="/findPassword" className="left-[59.5%]">
-                비밀번호 찾기
-            </StyleLink>
-
-            {/*회원가입*/}
-            <RegisterButton onClick={userRegist}>
-                회원가입
-            </RegisterButton>
         </Main>
     )
 }

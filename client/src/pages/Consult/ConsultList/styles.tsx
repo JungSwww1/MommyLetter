@@ -24,12 +24,10 @@ export const DoctorListSection=styled.section`
     
     `
 export const Button=styled.button`
-    btn
-    h-[30%]
     w-[100%]
-    border-transparent
-    bg-transparent
-    shadow-none
-    hover:border-transparent
-    hover:bg-transparent
+    hover:bg-gray-200
+    hover:rounded-lg
+    active:scale-90
+    duration-300
+    
     `

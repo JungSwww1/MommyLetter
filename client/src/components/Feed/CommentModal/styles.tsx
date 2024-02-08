@@ -2,7 +2,9 @@ import styled from "tailwind-styled-components";
 import './Modal.css';
 
 export const CommentContainer = styled.div`
-    mb-[4%] ml-[2%]    
+    mt-[4%]
+    mb-[4%] 
+    ml-[2%]    
 `
 
 export const MainContainer = styled.div`
@@ -30,10 +32,11 @@ export const InputContainer = styled.div`
     flex 
     modal-input-container 
     items-center
+    justify-center
 `
 
 export const Submit = styled.button`
     modal-submit-btn 
     btn 
-    bg-blue-400 hover:bg-blue-500
+    bg-[#FFDF6D] hover:bg-blue-500
 `
