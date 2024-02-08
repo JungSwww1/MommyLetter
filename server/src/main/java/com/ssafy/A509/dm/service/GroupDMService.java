@@ -59,7 +59,7 @@ public class GroupDMService {
 			.chatGroupId(groupMessageRequest.getChatGroupId())
 			.senderId(groupMessageRequest.getSenderId())
 			.createdDate(groupMessageRequest.getCreatedDate())
-			.readCount(chatGroupRepository.countChatUserByChatGroupId(groupMessageRequest.getChatGroupId()))
+			.unreadCount(chatGroupRepository.countChatUserByChatGroupId(groupMessageRequest.getChatGroupId()))
 			.build();
 
 		DirectMessage save = dmRepository.save(directMessage);

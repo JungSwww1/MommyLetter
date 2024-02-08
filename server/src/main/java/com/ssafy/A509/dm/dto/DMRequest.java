@@ -21,9 +21,9 @@ public class DMRequest {
 	@NotNull
 	Long chatGroupId;
 
-	String createdDate;
+	LocalDateTime createdDate;
 
 	public void createTimeStamp() {
-		this.createdDate = LocalDateTime.now().toString();
+		this.createdDate = LocalDateTime.now();
 	}
 }

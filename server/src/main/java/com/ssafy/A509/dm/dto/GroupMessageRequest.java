@@ -19,9 +19,9 @@ public class GroupMessageRequest {
 
 	Long chatGroupId;
 
-	String createdDate;
+	LocalDateTime createdDate;
 
 	public void createTimeStamp() {
-		this.createdDate = LocalDateTime.now().toString();
+		this.createdDate = LocalDateTime.now();
 	}
 }
