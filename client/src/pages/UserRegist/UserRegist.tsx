@@ -79,7 +79,7 @@ const UserRegist =()=> {
         // API
         if(pressNickname && pressEmail && possibleNickname && possibleEmail && passwordMatch && localPassword !== '') {
             await registAPI(userData)
-            await navigate("/")
+            await navigate("/login")
             setPressEmail(false)
             setPressNickname(false)
         }else {
