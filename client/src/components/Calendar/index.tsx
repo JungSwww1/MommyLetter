@@ -1,15 +1,11 @@
 import React, {useState} from 'react';
-import {useNavigate} from "react-router-dom";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import {updateDiary} from "@/apis/diary/DiaryAPI";
 import './index.css';
 import {DiaryUpdateRequestProps} from "@/apis/type/types";
-import WriteModal from "@/components/Modal";
 import {DiaryWrite} from "@/pages/Diary/DiaryWrite";
-import {Toast} from "@/components/Toast/Toast";
-
 const CalendarComponent = (events: any) => {
 
     const [currYear,setCurrYear] = useState(0);
@@ -17,8 +13,8 @@ const CalendarComponent = (events: any) => {
     const [currDay,setCurrDay] = useState(0);
 
     const [startProps, setStartProps] = useState({
-        diaryId: 0, content: "", category: "", emoji: 0, photoList: [],createdDate:"",
-        emotionList:[],familyList:[],healthList:[],peopleList:[],weatherList:[]
+        diaryId: 0, content: "", category: "", emoji: 0, uploadFiles: [],createdDate:"",
+        emotionList:[],familyList:[],healthList:[],peopleList:[],weatherList:[],userId:0
     });
     var emojiArr:string[] = [];
     emojiArr[0] = "/assets/images/sample_angry.png";
@@ -33,16 +29,19 @@ const CalendarComponent = (events: any) => {
     const handleEventDragStart = (info: any) => {
         // dragstart 이벤트 처리
         setStartProps(info.event.extendedProps);
-        console.log(info.event.extendedProps);
     };
     const handleEventDrop = (info: any) => {
-        const diary: DiaryUpdateRequestProps = {
+        const formData = new FormData();
+        startProps.uploadFiles.map((object:any) => object.path).forEach((file) => {
+            formData.append('uploadFiles', file);
+        });
+        const diaryRequest: DiaryUpdateRequestProps = {
             diaryId: startProps.diaryId,
             content: startProps.content,
             emoji: startProps.emoji,
             createdDate: info.event.startStr.substring(0,19),
-            photoList: startProps.photoList.map((object:any) => object.path),
-            emoticonRequest: {
+            photoList: [],
+            emoticon: {
                 emotionList: (startProps.emotionList ?? []).map((object: any) => object.emotion),
                 familyList: (startProps.familyList ?? []).map((object: any) => object.family),
                 healthList: (startProps.healthList ?? []).map((object: any) => object.health),
@@ -50,8 +49,11 @@ const CalendarComponent = (events: any) => {
                 weatherList: (startProps.weatherList ?? []).map((object: any) => object.weather),
             },
         };
-        console.log(diary);
-        updateDiary(diary);
+        formData.append('diaryRequest', new Blob([JSON.stringify(diaryRequest)], {
+            type: "application/json"
+        }));
+
+        updateDiary(startProps.userId,formData);
     };
 
     // 달력 locale을 한글로 설정하면 1일 2일 3일로 "일"이붙여서 나오게되는데 렌더링 후 "일"을 없애주는 함수

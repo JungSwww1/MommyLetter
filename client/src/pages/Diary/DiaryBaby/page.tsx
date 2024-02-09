@@ -31,17 +31,15 @@ const DiaryMomPage = () => {
                 data.forEach((diary: DiaryReadResponseProps) => {
                     if (diary.category === "Baby") {
                         newEvents.push({
-                            imageurl: "/assets/images/seungwon.png",
                             backgroundColor: "#fffadf",
                             borderColor: "#fffadf",
                             diaryId: diary.diaryId,
-                            title: diary.content,
+                            content: diary.content,
                             date: diary.createdDate,
                             emoji: diary.emoji,
-                            photoList: diary.photoList,
-                            createdDate: diary.createdDate,
+                            uploadFiles: diary.photoList,
                             category: diary.category,
-                            content: diary.content,
+                            userId:user.userId,
                             emotionList: diary.emoticon?.emotionList,
                             familyList: diary.emoticon?.familyList,
                             healthList: diary.emoticon?.healthList,
@@ -59,11 +57,12 @@ const DiaryMomPage = () => {
                         );
                     }
                 });
+
                 setEvents(newEvents);
                 setDiaryList(newDiaryList);
             });
     }, [user]); // Changed dependency to user
-
+    console.log(diaryList);
     return (
         <div>
             <CalendarComponent events={events}/>

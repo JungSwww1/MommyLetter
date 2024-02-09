@@ -103,7 +103,10 @@ export const DiaryWrite = ({currYear, currMonth, currDay}: DateProps) => {
                 Toast.error("내용을 입력하세요")
                 return;
             }
-
+            if(emotion ===99){
+                Toast.error("이모지를 클릭해주세요")
+                return;
+            }
             Toast.success("작성되었습니다.");
             setContent("");
             setEmotion(0);

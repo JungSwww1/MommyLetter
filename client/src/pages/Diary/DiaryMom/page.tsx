@@ -31,17 +31,15 @@ const DiaryMomPage = () => {
                 data.forEach((diary: DiaryReadResponseProps) => {
                     if (diary.category === "Mom") {
                         newEvents.push({
-                            imageurl: "/assets/images/seungwon.png",
                             backgroundColor: "#fffadf",
                             borderColor: "#fffadf",
                             diaryId: diary.diaryId,
-                            title: diary.content,
+                            content: diary.content,
                             date: diary.createdDate,
                             emoji: diary.emoji,
-                            photoList: diary.photoList,
-                            createdDate: diary.createdDate,
+                            uploadFiles: diary.photoList,
                             category: diary.category,
-                            content: diary.content,
+                            userId:user.userId,
                             emotionList: diary.emoticon?.emotionList,
                             familyList: diary.emoticon?.familyList,
                             healthList: diary.emoticon?.healthList,
@@ -60,7 +58,7 @@ const DiaryMomPage = () => {
                     }
                 });
                 setEvents(newEvents);
-                setDiaryList(newDiaryList);
+                setDiaryList(newDiaryList.reverse());
             });
     }, [user]); // Changed dependency to user
 
