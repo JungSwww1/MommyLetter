@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @AttributeOverride(name = "id", column = @Column(name = "comment_like_id"))
 public class CommentLike extends Like {
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "comment_id")
 	private Comment comment;
 
