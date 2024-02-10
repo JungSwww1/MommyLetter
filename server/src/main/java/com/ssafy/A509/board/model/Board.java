@@ -1,6 +1,7 @@
 package com.ssafy.A509.board.model;
 
 import com.ssafy.A509.account.model.User;
+import com.ssafy.A509.comment.model.Comment;
 import com.ssafy.A509.hashtag.model.Hashtag;
 import com.ssafy.A509.like.model.BoardLike;
 import com.ssafy.A509.like.model.Like;
@@ -71,6 +72,9 @@ public class Board {
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<BoardLike> likes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 
     @Builder
     protected Board(String content, Access access, User user, Category category) {
