@@ -16,9 +16,12 @@ const LoginPage = () => {
     }
     const loginFunc = async () => {
         const loginInfo = {email, password};
-        await loginAPI(loginInfo);
-        navigate('/', {replace:true})
-        window.location.reload()
+        const result = await loginAPI(loginInfo);
+        if(!result) {alert("비밀번호를 다시 확인해주세요")}
+        else {
+            navigate('/', {replace:true})
+            window.location.reload()
+        }
     }
 
     return (
@@ -31,11 +34,13 @@ const LoginPage = () => {
                 <input placeholder="이메일을 입력해주세요"
                        className="w-[80%] p-3 pl-6 rounded-3xl mb-[4%] shadow-custom-inner"
                        onChange={e => setEmail(e.target.value)}
+                       onKeyDown={e => e.key === 'Enter' && loginFunc()}
                 />
                 <input placeholder="비밀번호를 입력해주세요"
                        type="password"
                        className="w-[80%] p-3 pl-6 rounded-3xl mb-[4%] shadow-custom-inner"
                        onChange={e => setPassword(e.target.value)}
+                       onKeyDown={e => e.key === 'Enter' && loginFunc()}
                 />
                 <button onClick={loginFunc} className="btn border-[#533C00] w-[80%] p-3 bg-[#533C00] hover:bg-[#808080] text-[#FFF8EE] rounded-3xl shadow-custom-outer">로그인</button>
             </div>

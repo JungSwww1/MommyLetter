@@ -1,7 +1,13 @@
 import React, { FC, useEffect, useState } from 'react';
 import './Modal.css';
 import CommentHeartButton from "@/assets/icons/CommentHeartButton";
-import {addCommentAPI, countCommentLikeAPI, deleteCommentAPI, updateCommentAPI} from "@/apis/Comments/CommentAPI";
+import {
+    addCommentAPI,
+    countCommentLikeAPI,
+    deleteCommentAPI,
+    getAllCommentsAPI,
+    updateCommentAPI
+} from "@/apis/Comments/CommentAPI";
 import Message from "@/assets/icons/message";
 import {
     CommentContainer,
@@ -17,7 +23,6 @@ import AlertModal from "@/pages/Feed/AlertModal";
 
 interface ModalProps {
     onClose: () => void;
-    comments : Comment[];
     boardId: number;
     userId : number;
 }
@@ -31,13 +36,24 @@ interface Comment {
     nickname: string;
 }
 
-const Modal: FC<ModalProps> = ({ onClose, comments , boardId, userId}) => {
-    const [sortedComments, setSortedComments] = useState<Comment[]>([]);
+const Modal: FC<ModalProps> = ({ onClose , boardId, userId}) => {
+    // const [sortedComments, setSortedComments] = useState<Comment[]>([]);
     // comments props가 변경될 때마다 오래된 순으로 정렬
+    // useEffect(() => {
+    //     const sorted = [...comments].sort((a, b) => new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime());
+    //     setSortedComments(sorted);
+    // }, [comments]);
+    const [comments, setComments] = useState<Comment[]>([]);
+    const [event, setEvent] = useState(0)
+    const fetchComments = async () => {
+        const commentsData = await getAllCommentsAPI(boardId);
+        setComments(commentsData);
+    };
+
+    // 컴포넌트 마운트 시 댓글 목록 불러오기
     useEffect(() => {
-        const sorted = [...comments].sort((a, b) => new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime());
-        setSortedComments(sorted);
-    }, [comments]);
+        fetchComments();
+    }, [event]);
 
     // 좋아요 개수를 가져와서 상태 업데이트
     const [countLikes, setCountLikes] = useState<{[key: number]: number}>({});
@@ -90,24 +106,31 @@ const Modal: FC<ModalProps> = ({ onClose, comments , boardId, userId}) => {
 
     // 이건 input 제출 버튼
     const handleSubmit = async () => {
-        const data = {userId : userId, boardId: boardId, content:inputValue}
-        if (editingComment) {
-            updateCommentAPI(editingComment.commentId, inputValue)
-            setEditingComment(null); // 수정 상태 해제
+        if (inputValue.trim() === '') {
+            alert("댓글을 입력해주세요")
+            return;
         } else {
-            addCommentAPI(data)
+            const data = {userId : userId, boardId: boardId, content:inputValue}
+            if (editingComment) {
+                await updateCommentAPI(editingComment.commentId, inputValue)
+                setEditingComment(null); // 수정 상태 해제
+            } else {
+                await addCommentAPI(data)
+                await setEvent(1)
+            }
+            setInputValue(''); // 입력 필드 초기화
+            await fetchComments();
         }
-        setInputValue(''); // 입력 필드 초기화
     };
 
     // 삭제 버튼 클릭1
-    const handleDeleteClick = (commentId:number) => {
+    const handleDeleteClick = async (commentId:number) => {
         const isConfirmed = window.confirm("댓글을 삭제하시겠습니까?");
         if (isConfirmed) {
-            deleteCommentAPI(commentId)
-                .then(() => {
-                    alert("삭제 완료");
-                })
+            await deleteCommentAPI(commentId); // 댓글 삭제 API 호출
+            alert("삭제 완료");
+            await fetchComments();
+            await setEvent(2)
         }
     }
 
@@ -118,7 +141,7 @@ const Modal: FC<ModalProps> = ({ onClose, comments , boardId, userId}) => {
                 <span className="modal-close" onClick={onClose}>&times;</span>
                 {/* 이 위까지 모달 작동을 위한 CSS 부분 */}
                 {/* 하단은 댓글 부분 */}
-                {sortedComments .map((comment, index) => (
+                {comments .map((comment, index) => (
                     <CommentContainer key={index}>
                         <MainContainer>
                             <CommentHeartButton
