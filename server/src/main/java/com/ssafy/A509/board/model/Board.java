@@ -2,6 +2,8 @@ package com.ssafy.A509.board.model;
 
 import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.hashtag.model.Hashtag;
+import com.ssafy.A509.like.model.BoardLike;
+import com.ssafy.A509.like.model.Like;
 import com.ssafy.A509.photo.model.Photo;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -15,9 +17,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,53 +37,56 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class Board {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long boardId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long boardId;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Photo> photoList = new ArrayList<>();
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Photo> photoList = new ArrayList<>();
 
-	@Setter
-	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Hashtag> hashtagList = new ArrayList<>();
+    @Setter
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Hashtag> hashtagList = new ArrayList<>();
 
-	@Setter
-	private String content;
+    @Setter
+    private String content;
 
-	@Setter
-	@Enumerated(EnumType.STRING)
-	private Access access;
+    @Setter
+    @Enumerated(EnumType.STRING)
+    private Access access;
 
-	@Setter
-	@Enumerated(EnumType.STRING)
-	private Category category;
+    @Setter
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
-	@CreatedDate
-	private LocalDateTime createdDate;
+    @CreatedDate
+    private LocalDateTime createdDate;
 
-	@LastModifiedDate
-	private LocalDateTime updatedDate;
+    @LastModifiedDate
+    private LocalDateTime updatedDate;
 
-	@Builder
-	protected Board(String content, Access access, User user, Category category) {
-		this.content = content;
-		this.access = access;
-		this.user = user;
-		this.category = category;
-	}
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<BoardLike> likes = new ArrayList<>();
 
-	public void addPhoto(Photo photo) {
-		this.photoList.add(photo);
-		photo.setBoard(this);
-	}
+    @Builder
+    protected Board(String content, Access access, User user, Category category) {
+        this.content = content;
+        this.access = access;
+        this.user = user;
+        this.category = category;
+    }
 
-	public void addHashtag(Hashtag hashtag) {
-		this.hashtagList.add(hashtag);
-		hashtag.setBoard(this);
-	}
+    public void addPhoto(Photo photo) {
+        this.photoList.add(photo);
+        photo.setBoard(this);
+    }
+
+    public void addHashtag(Hashtag hashtag) {
+        this.hashtagList.add(hashtag);
+        hashtag.setBoard(this);
+    }
 }
