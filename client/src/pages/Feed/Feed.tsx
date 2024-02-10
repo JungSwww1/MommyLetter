@@ -6,21 +6,9 @@ import LogoWhite from "@/assets/icons/logo";
 import AlertModal from "@/pages/Feed/AlertModal";
 import FeedAddButton from "@/assets/icons/FeedAddButton";
 import Menu from "@/pages/Feed/AddModal/FeedMenuModal";
+import {FeedWrite} from "@/components/Feed/FeedWriteModal/FeedWrite"
+import {BoardProps} from "@/pages/type/types";
 
-interface Board {
-    boardId: number;
-    content: string;
-    createdDate: string;
-    category:string;
-    updatedDate: string;
-    hashTagList: { content: string; }[];
-    photoList: string[];
-    accountSimpleReponse: {
-        nickname: string;
-        userId : number;
-        profilePhoto: string;
-    };
-}
 
 const Feed: React.FC = () => {
     // localStorage에서 유저 가져오기
@@ -35,9 +23,9 @@ const Feed: React.FC = () => {
     const [authUserId, setAuthUserId] = useState<number>(getAuthUserId());
 
     // 모든 데이터를 담아준다
-    const [allBoards, setAllBoards] = useState<Board[]>([]);
+    const [allBoards, setAllBoards] = useState<BoardProps[]>([]);
     // 아래는 보여줄 데이터
-    const [displayBoards, setDisplayBoards] = useState<Board[]>([]);
+    const [displayBoards, setDisplayBoards] = useState<BoardProps[]>([]);
     const [page, setPage] = useState<number>(1);
     // 데이터를 불러오고 있는 지의 여부. 데이터 불러오는 동안 중복 방지 용도
     const [load, setLoad] = useState<boolean>(false);
@@ -55,8 +43,6 @@ const Feed: React.FC = () => {
             try {
                 const res = await axios.get(`http://i10a509.p.ssafy.io:8081/boards/list/${authUserId}`);
                 setAllBoards(res.data);
-                // 여기서 보여줄 데이터의 수 설정
-                console.log(allBoards)
                 setDisplayBoards(res.data.slice(0, chunkSize));
             } catch (error) {
                 console.error("피드를 가져오는 중 오류 발생 :", error);
@@ -83,29 +69,19 @@ const Feed: React.FC = () => {
             setDisplayBoards((prevBoards) => [...prevBoards, ...nextItems]);
         }
     };
-    // const clickModal = () => {
-    //     const modal = document.getElementById('my_modal_1') as HTMLDialogElement | null;
-    //     if (modal) {
-    //         modal.showModal();
-    //     }
-    // }
-    // const returnData = () => {
-    //     console.log('ㄱㄷ셔구')
-    // }
+
     const [showMenu, setShowMenu] = useState(false);
     const toggleMenu = () => {
         setShowMenu(!showMenu);
     };
     const addFeed = () => {
-        alert("h")
+        (document.getElementById('my_modal_3') as any).showModal()
     }
     const sort = () => {
         alert("h")
     }
     return (
         <Layout>
-            {/*<button className="btn" onClick={clickModal}>open modal</button>*/}
-            {/*<AlertModal children={'댓글을 삭제하시겠습니까?'} onConfirm={returnData}/>*/}
             <MainContainer>
                 {displayBoards.map((board) => (
                     <MainFeed key={board.boardId} authUserId={authUserId} board={board}/>
@@ -130,6 +106,7 @@ const Feed: React.FC = () => {
                         </div>
                     )}
                 </div>
+                <FeedWrite/>
             </MainContainer>
         </Layout>
     );

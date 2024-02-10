@@ -14,12 +14,11 @@ import DoctorListCard from "@/components/DoctorListCard";
 const HistoryPage = () => {
     const param = useParams()
     const [historyDetail, setHistoryDetail] = useState<HistoryDetailProps>()
-    useEffect(() => {
-        console.log(param.id);
-        fetchHistoryDetail(Number(param.id)).then((response) => {
-            setHistoryDetail(response);
-        })
-    }, [param.id])
+    // useEffect(() => {
+    //     fetchHistoryDetail(Number(param.id)).then((response) => {
+    //         setHistoryDetail(response);
+    //     })
+    // }, [param.id])
     console.log(historyDetail);
     return (<HistoryLayout>
         <BackPageSection>
@@ -32,7 +31,8 @@ const HistoryPage = () => {
         </DoctorProfileSection>
         {historyDetail && <div
             className="flex flex-col w-[100%] h-[100%] p-3 rounded-tl-[20px] rounded-tr-[20px] bg-[#fffaf2]"
-            style={{boxShadow: "0px -4px 4px 0 rgba(0,0,0,0.25)"}}>
+            // style={{boxShadow: "0px -4px 4px 0 rgba(0,0,0,0.25)"}}
+        >
             <div className="h-[20%]">
                 <span className="font-bold mt-5 mb-3 text-pointColor">환자명</span>
                 <p>{historyDetail.userName}</p>

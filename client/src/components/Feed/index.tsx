@@ -17,43 +17,23 @@ import MultiMessage from "@/assets/icons/multiMessage";
 import ThreeDotMenu from "@/assets/icons/ThreeDotMenu";
 import FeedHeartButton from "@/assets/icons/FeedHeartButton";
 import {Link} from "react-router-dom";
-import {countBoardLike} from "@/apis/Board/boardApi";
+import {countBoardLike, deleteBoardAPI} from "@/apis/Board/boardApi";
 import Modal from "@/components/Feed/CommentModal/CommentModal";
 import {getAllCommentsAPI} from "@/apis/Comments/CommentAPI";
 import {FormatDate} from "@/components/Feed/LocalFunction";
 import Menu from "@/components/Feed/FeedMenuModal/FeedMenuModal";
 import "@/components/Feed/FeedMenuModal/Modal.css"
-interface board {
-    boardId: number;
-    content: string;
-    createdDate: string;
-    category:string;
-    updatedDate: string;
-    hashTagList: { content: string; }[];
-    photoList: string[];
-    accountSimpleReponse: {
-        nickname: string;
-        userId : number;
-        profilePhoto: string;
-    };
-}
-interface Comment {
-    commentId: number;
-    userId: number;
-    content: string;
-    createdDate: string;
-    updatedDate: string;
-    nickname: string;
-}
+import {FeedEdit} from "@/components/Feed/FeedEditModal/FeedEdit";
+import {BoardProps, CommentProps} from "@/pages/type/types";
+
 interface MainFeedProps {
     authUserId : number;
-    board: board;
+    board: BoardProps;
 }
 
 const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
-
     //댓글 가져오는 용도
-    const [comments, setComments] = useState<Comment[]>([])
+    const [comments, setComments] = useState<CommentProps[]>([])
     const [countComments, setCountComments] = useState<number>(0);
     useEffect(() => {
         const fetchComments = async () => {
@@ -63,7 +43,7 @@ const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
             setCountComments(sortedComments.length);
         }
         fetchComments();
-    }, [board.boardId, comments]);
+    }, [board.boardId]);
 
 
     //게시물 좋아요 버튼 용도
@@ -96,7 +76,7 @@ const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
     const toggleModal = () => {
         setShowModal(!showModal);
     };
-    
+
     // 메뉴용 모달 상태 관리
     const [showMenu, setShowMenu] = useState(false);
     const toggleMenu = () => {
@@ -106,12 +86,13 @@ const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
 
     // 수정하기와 삭제하기에 대한 함수 정의
     const handleEdit = () => {
-        // 수정 로직
+        (document.getElementById('my_modal_2') as any).showModal()
+    };
+    const handleDelete = async () => {
+        await deleteBoardAPI(board.boardId)
+        // await window.location.reload()
     };
 
-    const handleDelete = () => {
-        // 삭제 로직
-    };
     return (
         <Layout>
             <TitleContainer>
@@ -139,7 +120,7 @@ const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
             </TitleContainer>
 
             <ContextContainer>
-                <p className="text-[80%] whitespace-normal break-words">
+                <p className="text-[100%] whitespace-normal break-words">
                     {`${board.content}`}
                 </p>
             </ContextContainer>
@@ -156,9 +137,9 @@ const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
                 </div>
             </PhotoContainer>
             <PhotoContainer>
-                {board.photoList.map((photo, index) => (
+                {board.photoList.map((photo, index) =>(
                     <div key={index} className="m-2" style={{width: 'calc(33.333% - 1rem)', float: 'left'}}>
-                        <img src={photo} alt={`Photo ${index + 1}`} className={"w-full h-full object-cover"}/>
+                        <img src={photo.path} alt={`Photo ${index + 1}`} className={"w-full h-full object-cover"}/>
                     </div>
                 ))}
             </PhotoContainer>
@@ -174,7 +155,7 @@ const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
                 <ButtonWrapper>
                     <FeedHeartButton likedata={likeData} onLikeStatusChange={handleLikeStatusChange}/>
                     <Link className={"ml-[15%] mt-[8%] h-[90%]"} to={"#"} onClick={toggleModal}><MultiMessage/></Link>
-                    {showModal && <Modal onClose={toggleModal} comments={comments} boardId={board.boardId}
+                    {showModal && <Modal onClose={toggleModal} boardId={board.boardId}
                                          userId={authUserId}/>}
                 </ButtonWrapper>
             </LikeIconContainer>
@@ -190,7 +171,10 @@ const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
                     </div>
                 ))}
             </CommentContainer>
-
+            <FeedEdit boardId={board.boardId} boardContent={board.content}
+                      boardAccess={board.access} boardCategory={board.category}
+                      boardHashTagList={board.hashTagList}
+            />
         </Layout>
     )
 }
