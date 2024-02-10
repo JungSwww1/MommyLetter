@@ -26,8 +26,8 @@ const Menu:React.FC<MenuProps> = ({ onEdit, onDelete, onClose  }) => {
 
     return (
         <div ref={menuRef} className="flex flex-row absolute shadow-md rounded" onClick={(e) => e.stopPropagation()}>
-            <button className="btn cursor-pointer bg-yellow-100 hover:bg-yellow-300 text-neutral-600" onClick={onEdit}>수정</button>
-            <button className="btn cursor-pointer bg-yellow-100 hover:bg-yellow-300 text-neutral-600" onClick={onDelete}>삭제</button>
+            <button className="btn cursor-pointer bg-MenuColor hover:bg-yellow-300 text-white hover:text-MenuColor" onClick={onEdit}>수정</button>
+            <button className="btn cursor-pointer bg-MenuColor hover:bg-yellow-300 text-white hover:text-MenuColor" onClick={onDelete}>삭제</button>
         </div>
     );
 };

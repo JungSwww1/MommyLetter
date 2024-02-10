@@ -11,8 +11,8 @@ const FeedAddButton = () => {
             </g>
             <defs>
                 <filter id="filter0_d_0_1" x="8" y="12" width="32" height="32" filterUnits="userSpaceOnUse"
-                        color-interpolation-filters="sRGB">
-                    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        colorInterpolationFilters="sRGB">
+                    <feFlood floodOpacity="0" result="BackgroundImageFix"/>
                     <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
                                    result="hardAlpha"/>
                     <feOffset dy="4"/>
