@@ -93,7 +93,6 @@ const UserProfile = () => {
 
                     <SubProfileContainer>
                         <ProfileButton onClick={profileEdit}>프로필 편집</ProfileButton>
-                        <ProfileButton>프로필 공유</ProfileButton>
                     </SubProfileContainer>
 
                     {/* 게시물 부분 */}

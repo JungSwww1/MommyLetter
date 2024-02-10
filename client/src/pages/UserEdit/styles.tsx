@@ -35,10 +35,11 @@ export const CheckButton = styled.div`
     w-[20%]
     h-[10px]
     mt-[4%]
-    bg-yellow-300
+    bg-MenuColor
     shadow-md
     rounded-full
     text-[90%]
+    
 `
 
 export const Submit = styled.button`

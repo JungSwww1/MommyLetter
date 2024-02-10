@@ -7,6 +7,7 @@ export const Layout = styled.div`
 `
 
 export const Container = styled.div`
+    flex flex-col
     mb-[6%]
 `
 
@@ -23,49 +24,62 @@ export const EmailWrapper = styled.div`
 `
 
 export const EmailInput = styled.input`
-    w-[450%]
+    w-[45%]
     bg-white
-    shadow-inner
-    md:shadow md:w-[45%] md:h-9 md:rounded-2xl
+    shadow-custom-inner
+    border-b-2
+    p-2
     pl-[4%]
     text-[90%]
+    rounded-xl
 `
 
 export const DefaultInput = styled.input`
-    bg-white 
-    shadow-inner 
-    md:shadow md:w-[100%] md:h-9 md:rounded-2xl
+    bg-white
+    shadow-custom-inner
+    border-b-2
+    p-2
     pl-[4%]
     mb-[3%]
+    w-[60%]
     text-[90%]
+    rounded-xl
 `
 
 export const CheckButton = styled.button`
-    w-[27%]
-    h-[36px] 
+    btn
+    w-[18%]
+    h-[10px] 
     bg-yellow-400 
-    shadow-md 
+    shadow-custom-outer
     rounded-[18px]
+    border-user
     text-[80%]
     text-[#533C00]
+    hover:bg-MenuColor
+    hover:text-white
     font-bold
 `
 
 export const RegisterButton = styled.button`
+    btn
     w-[27%]
     h-[36px]
     bg-[#533C00]
-    shadow-md
     rounded-[18px]
     text-[90%]
     text-white
+    border-MenuColor
+    shadow-custom-outer
+    hover:bg-user
+    hover:text-MenuColor
 `
 
 export const Title = styled.p`
     text-[15px]
     font-bold
     text-[#533C00]
-    mb-[2%]
+    mb-[3%]
 `
 export const MainTitle = styled.p`
     text-[20px] 

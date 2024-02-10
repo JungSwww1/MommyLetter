@@ -26,16 +26,24 @@ export const BasicInput = styled.input`
     w-[94%]
     ml-[3%]
     mb-[5%]
-    border-b-2 border-[#8C8C8C]
+    shadow-custom-inner
     text-[100%]
+    rounded-xl
+    border-b-2
+    p-3
 `
 
 export const NumberInput = styled.input`
     w-[40%]
-    border-b-2 border-[#8C8C8C]
+    shadow-custom-inner
+    rounded-xl
+    border-b-2
+    p-3
 `
 
 export const Button = styled.button`
+    shadow-custom-outer
+    border-[#FFDF6D]
     btn
     cursor-pointer 
     text-[#533C00]
@@ -49,6 +57,8 @@ export const Button = styled.button`
 `
 
 export const Submit = styled.button`
+    shadow-custom-outer
+    border-[#533C00]
     text-white
     btn
     w-[25%]
