@@ -44,7 +44,7 @@ public class GroupDMController {
 		summary = "그룹 채팅 발신",
 		description = "kafka 채팅 송신, db 저장\n"
 			+ "sender, content, chatGroupId 필수"
-			+ "app/dm/group/message로 보내야 함"
+			+ "url/dm/group/groupMessage로 보내야 함"
 	)
 //	@PostMapping
 //	public void sendMessageToGroup(@Valid @RequestBody GroupMessageRequest groupMessageRequest) {

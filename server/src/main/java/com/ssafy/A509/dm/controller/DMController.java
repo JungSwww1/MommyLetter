@@ -48,7 +48,7 @@ public class DMController {
             description = """
                     메세지를 받아서 kafka에 송신, db에 저장
                     DMRequest로는 sender, receiver, content, chatGroupId만 채워서 보내주면 됨
-                    url/app/message로 보내야 함"""
+                    url/dm/message로 보내야 함"""
     )
     @MessageMapping("/message")
     public void sendMessage(@Payload DMRequest dmRequest) {
