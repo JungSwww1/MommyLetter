@@ -122,12 +122,16 @@ const CalendarComponent: React.FC<CalendarProps> = ({ events, refreshDiary, diar
         );
 
         // 일치하는 일지가 없으면 모달을 열음
-        if (!isDiaryExist) {
-            (document.getElementById('my_modal_3') as any).showModal();
-        } else {
-            // 모달을 열지 않음
+        if(isDiaryExist){
             alert("이미 해당 날짜에 작성된 일지가 있습니다.");
+            return;
         }
+        if(info>=new Date()){
+            alert("미래의 일기는 작성할 수 없음");
+            return;
+        }
+        (document.getElementById('my_modal_3') as any).showModal();
+
     }
     const handleEventAllow = (dropInfo:any) => {
         // dropInfo로부터 옮기려는 날짜 정보를 추출
@@ -139,9 +143,9 @@ const CalendarComponent: React.FC<CalendarProps> = ({ events, refreshDiary, diar
             dropDate.getMonth() + 1 === new Date(diary.createdDate).getMonth() + 1 &&
             dropDate.getDate() === new Date(diary.createdDate).getDate()
         );
-
+        console.log(new Date());
         // 이미 일정이 있는 경우 false
-        return !isDiaryExist;
+        return !isDiaryExist && dropDate <= new Date();
     };
     return (
         <div id="calendar-container" className="p-5">
