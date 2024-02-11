@@ -3,10 +3,6 @@ import LocalAxios from "@/util/localAxios";
 import {DiaryUpdateRequestProps, DiaryWriteRequestProps} from "@/apis/type/types";
 import {useEffect, useState} from "react";
 
-interface User{
-    nickname:string;
-    userId:number;
-}
 
 // axios 객체 생성
 const axios = LocalAxios();
