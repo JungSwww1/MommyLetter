@@ -1,19 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import DiaryListComponent from "@/components/DiaryList";
-import { fetchDiary } from "@/apis/diary/DiaryAPI";
-import { DiaryReadResponseProps } from "@/pages/type/types";
+import {deleteDiary, fetchDiary} from "@/apis/diary/DiaryAPI";
+import {DiaryReadResponseProps} from "@/pages/type/types";
 import CalendarComponent from "@/components/Calendar";
-import { DiaryResponseProps } from "@/components/type/types";
+import {ReactComponent as Trash} from "@/assets/icons/trash.svg";
+import {ReactComponent as Edit} from "@/assets/icons/edit.svg";
+import {DiaryUpdate} from "@/pages/Diary/DiaryUpdate";
 
 interface UserProps {
     nickname: string;
     userId: string;
 }
 
-const DiaryMomPage = () => {
+const DiaryBabyPage = () => {
     const [events, setEvents] = useState<any[]>([]);
-    const [diaryList, setDiaryList] = useState<React.ReactNode[]>([]);
-    const [user, setUser] = useState<UserProps>({ nickname: '', userId: '' });
+    const [diaryList, setDiaryList] = useState<DiaryReadResponseProps[]>([]);
+    const [displayedDiaryList, setDisplayedDiaryList] = useState<DiaryReadResponseProps[]>([]);
+    const [categoryDiaryList, setCategoryDiaryList] = useState<DiaryReadResponseProps[]>([]);
+    const [user, setUser] = useState<UserProps>({nickname: '', userId: ''});
+    const [modal, setModal] = useState(false);
+    const [selectedDiaryId, setSelectedDiaryId] = useState<number>(0);
+    const [selectedDiary, setSelectedDiary] = useState<DiaryReadResponseProps>();
+
+    const [currYear, setCurrYear] = useState(0);
+    const [currMonth, setCurrMonth] = useState(0);
+    const [currDay, setCurrDay] = useState(0);
 
     useEffect(() => {
         const storedAuth = localStorage.getItem('Auth');
@@ -23,51 +34,115 @@ const DiaryMomPage = () => {
         }
     }, []);
 
-    useEffect(() => {
+
+    const editButton = async (diary: DiaryReadResponseProps) => {
+        setSelectedDiary(diary);
+        const tempDate = new Date(diary.createdDate);
+        setCurrYear(tempDate.getFullYear());
+        setCurrMonth((tempDate.getMonth() + 1));
+        setCurrDay(tempDate.getDate());
+        showModal();
+    }
+
+    const showModal = () => {
+        if (selectedDiary) (document.getElementById('diary_update') as any).showModal()
+    }
+
+    const deleteButton = (diaryId: number) => {
+        setSelectedDiaryId(diaryId);
+        setModal(true);
+    }
+
+    const deleteDiaryButton = () => {
+
+        deleteDiary(selectedDiaryId);
+        const temp = diaryList.filter((diary) => diary.diaryId !== selectedDiaryId);
+        setDiaryList(temp);
+        alert("db문제로 삭제안됨")
+        setModal(false);
+    }
+    const deleteLayout = (
+
+        <div className="flex justify-center items-center">
+            {/* 배경 */}
+            <div className="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-10"></div>
+            {/* 내용 */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
+                <div className="bg-white p-8 rounded-lg shadow-lg">
+                    <p className="text-gray-700 font-bold">해당 일기를 삭제하시겠습니까?</p>
+                    <br/>
+                    <hr/>
+                    <div className="flex justify-between">
+                        <button className="btn w-[40%]" onClick={() => setModal(false)}>취소</button>
+                        <button className="btn bg-red-300 w-[40%]" onClick={() => deleteDiaryButton()}>삭제</button>
+                    </div>
+                </div>
+            </div>
+        </div>);
+    const refreshDiary = () => {
         fetchDiary(Number(user.userId))
             .then((data) => {
-                const newEvents: any[] = [];
-                const newDiaryList: React.ReactNode[] = [];
-                data.forEach((diary: DiaryReadResponseProps) => {
-                    if (diary.category === "Mom") {
-                        newEvents.push({
-                            backgroundColor: "#fffadf",
-                            borderColor: "#fffadf",
-                            diaryId: diary.diaryId,
-                            content: diary.content,
-                            date: diary.createdDate,
-                            emoji: diary.emoji,
-                            uploadFiles: diary.photoList,
-                            category: diary.category,
-                            userId:user.userId,
-                            emotionList: diary.emoticon?.emotionList,
-                            familyList: diary.emoticon?.familyList,
-                            healthList: diary.emoticon?.healthList,
-                            peopleList: diary.emoticon?.peopleList,
-                            weatherList: diary.emoticon?.weatherList,
-                        });
-                        newDiaryList.push(
-                            <DiaryListComponent
-                                key={diary.diaryId}
-                                content={diary.content}
-                                emoji={diary.emoji}
-                                photoList={diary.photoList}
-                                createdDate={diary.createdDate}
-                            />
-                        );
-                    }
-                });
-                setEvents(newEvents);
-                setDiaryList(newDiaryList.reverse());
+                setDiaryList(data);
             });
-    }, [user]); // Changed dependency to user
+    }
+    useEffect(() => {
+        refreshDiary();
+    }, [user]);
 
-    return (
-        <div>
-            <CalendarComponent events={events}/>
-            {diaryList}
-        </div>
-    );
+    useEffect(() => {
+        const newEvents: any[] = [];
+        setCategoryDiaryList(diaryList.filter((diary) => diary.category === "Mom"));
+        diaryList.forEach((diary) => {
+            if (diary.category === "Mom") {
+                newEvents.push({
+                    backgroundColor: "#fffadf",
+                    borderColor: "#fffadf",
+                    diaryId: diary.diaryId,
+                    content: diary.content,
+                    date: diary.createdDate,
+                    emoji: diary.emoji,
+                    uploadFiles: diary.photoList,
+                    category: diary.category,
+                    userId: user.userId,
+                    emotionList: diary.emoticon?.emotionList,
+                    familyList: diary.emoticon?.familyList,
+                    healthList: diary.emoticon?.healthList,
+                    peopleList: diary.emoticon?.peopleList,
+                    weatherList: diary.emoticon?.weatherList,
+                });
+            }
+        });
+        setDisplayedDiaryList(categoryDiaryList);
+        setEvents(newEvents);
+    }, [diaryList, user]);
+
+    return (<div>
+
+        {selectedDiary ? <DiaryUpdate currYear={currYear} currMonth={currMonth} currDay={currDay} diary={selectedDiary}
+                                      refreshDiary={refreshDiary}/> : null}
+        <CalendarComponent events={events} refreshDiary={refreshDiary} diaryList={categoryDiaryList}
+                           setDiaryList={setCategoryDiaryList} setDisplayedDiaryList={setDisplayedDiaryList}/>
+        {modal && deleteLayout}
+
+        {displayedDiaryList.sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()).map((diary) => (
+            <div key={diary.diaryId}
+                 className="flex flex-col w-[100%] hover:bg-gray-200 duration-300 rounded-[10px] bg-[#fffaf2] shadow-2xl ml-2 mb-3 mr-5">
+
+                <div className="flex h-[10%] justify-end mt-3 z-10">
+                    <button onClick={() => editButton(diary)}><Edit className="mr-4 hover:scale-150 duration-300"/>
+                    </button>
+                    <button onClick={() => deleteButton(diary.diaryId)}><Trash
+                        className="mr-3 hover:scale-150 duration-300"/></button>
+                </div>
+                <DiaryListComponent
+                    content={diary.content}
+                    emoji={diary.emoji}
+                    photoList={diary.photoList}
+                    createdDate={diary.createdDate}
+                />
+
+            </div>))}
+    </div>);
 };
 
-export default DiaryMomPage;
+export default DiaryBabyPage;
