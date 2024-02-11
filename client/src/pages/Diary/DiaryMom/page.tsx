@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import DiaryListComponent from "@/components/DiaryList";
-import {deleteDiary, fetchDiary} from "@/apis/diary/DiaryAPI";
+import {deleteDiary} from "@/apis/diary/DiaryAPI";
 import {DiaryReadResponseProps} from "@/pages/type/types";
 import CalendarComponent from "@/components/Calendar";
 import {ReactComponent as Trash} from "@/assets/icons/trash.svg";
@@ -12,12 +12,20 @@ interface UserProps {
     userId: string;
 }
 
-const DiaryBabyPage = () => {
+interface Props {
+    diaryList: DiaryReadResponseProps[];
+    setDiaryList: (e: any) => void;
+    refreshDiary: () => void;
+    user: UserProps;
+
+}
+
+const DiaryBabyPage: React.FC<Props> = ({diaryList, setDiaryList, refreshDiary, user}) => {
     const [events, setEvents] = useState<any[]>([]);
-    const [diaryList, setDiaryList] = useState<DiaryReadResponseProps[]>([]);
+
     const [displayedDiaryList, setDisplayedDiaryList] = useState<DiaryReadResponseProps[]>([]);
     const [categoryDiaryList, setCategoryDiaryList] = useState<DiaryReadResponseProps[]>([]);
-    const [user, setUser] = useState<UserProps>({nickname: '', userId: ''});
+
     const [modal, setModal] = useState(false);
     const [selectedDiaryId, setSelectedDiaryId] = useState<number>(0);
     const [selectedDiary, setSelectedDiary] = useState<DiaryReadResponseProps>();
@@ -25,15 +33,6 @@ const DiaryBabyPage = () => {
     const [currYear, setCurrYear] = useState(0);
     const [currMonth, setCurrMonth] = useState(0);
     const [currDay, setCurrDay] = useState(0);
-
-    useEffect(() => {
-        const storedAuth = localStorage.getItem('Auth');
-        if (storedAuth) {
-            const parsedAuth: UserProps = JSON.parse(storedAuth);
-            setUser(parsedAuth);
-        }
-    }, []);
-
 
     const editButton = async (diary: DiaryReadResponseProps) => {
         setSelectedDiary(diary);
@@ -79,15 +78,6 @@ const DiaryBabyPage = () => {
                 </div>
             </div>
         </div>);
-    const refreshDiary = () => {
-        fetchDiary(Number(user.userId))
-            .then((data) => {
-                setDiaryList(data);
-            });
-    }
-    useEffect(() => {
-        refreshDiary();
-    }, [user]);
 
     useEffect(() => {
         const newEvents: any[] = [];
