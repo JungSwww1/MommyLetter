@@ -49,3 +49,28 @@ export interface HistoryDetailProps{
     userId: number;
     userName: string;
 }
+
+export interface BoardProps {
+    boardId: number;
+    content: string;
+    access : string;
+    createdDate: string;
+    category:string;
+    updatedDate: string;
+    hashTagList: { content: string; }[];
+    photoList: { path: string; }[];
+    accountSimpleReponse: {
+        nickname: string;
+        userId : number;
+        profilePhoto: string;
+    };
+}
+
+export interface CommentProps {
+    commentId: number;
+    userId: number;
+    content: string;
+    createdDate: string;
+    updatedDate: string;
+    nickname: string;
+}

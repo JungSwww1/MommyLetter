@@ -78,7 +78,7 @@ const ConsultRegist = () => {
                                  value={ssnFront}
                                  onChange={(e) => setSsnFront(e.target.value)}
                     />
-                    <p>-</p>
+                    <p className={"text-[190%]"}>-</p>
                     <NumberInput type="password"
                                  placeholder={"주민등록번호 뒷자리"}
                                  maxLength={7}
