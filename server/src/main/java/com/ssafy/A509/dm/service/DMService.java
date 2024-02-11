@@ -46,27 +46,31 @@ public class DMService {
 		return chatGroupList;
 	}
 
-	public List<DMResponse> getListByUsers(Long user1Id, Long user2Id) {
-		return dmRepository.getDmListByUsers(user1Id, user2Id, Sort.by(Sort.Direction.DESC, "createdDate")).stream()
-			.map(dm -> modelMapper.map(dm, DMResponse.class))
-			.collect(
-				Collectors.toList());
+	public List<DMResponse> getChatList(Long chaGroupId) {
+		return dmRepository.getDmListByChatGroupId(chaGroupId, Sort.by(Sort.Direction.DESC, "createdDate")).stream()
+				.map(dm -> modelMapper.map(dm, DMResponse.class))
+				.collect(
+						Collectors.toList());
 	}
 
 	public DirectMessage getLatestMessage(Long chatGroupId) {
 		return dmRepository.findFirstByChatGroupIdOrderByCreatedDateDesc(chatGroupId);
 	}
 
+	public ChatGroup getChatGroup(String chatRoomName) {
+		return chatGroupRepository.findChatGroupByChatRoomName(chatRoomName);
+	}
+
 	@Transactional
 	public void saveDm(DMRequest dmRequest) {
 		DirectMessage directMessage = DirectMessage.builder()
-			.content(dmRequest.getContent())
-			.senderId(dmRequest.getSenderId())
-			.receiverId(dmRequest.getReceiverId())
-			.chatGroupId(dmRequest.getChatGroupId())
-			.createdDate(dmRequest.getCreatedDate())
-			.unreadCount(2)
-			.build();
+				.content(dmRequest.getContent())
+				.senderId(dmRequest.getSenderId())
+				.receiverId(dmRequest.getReceiverId())
+				.chatGroupId(dmRequest.getChatGroupId())
+				.createdDate(dmRequest.getCreatedDate())
+				.unreadCount(2)
+				.build();
 
 		DirectMessage save = dmRepository.save(directMessage);
 		notificationService.createUnread(save.getReceiverId(), save.getId());
@@ -75,8 +79,8 @@ public class DMService {
 	@Transactional
 	public void createChatGroup(Long user1Id, Long user2Id, String roomName) {
 		ChatGroup chatGroup = ChatGroup.builder()
-			.chatRoomName(roomName)
-			.build();
+				.chatRoomName(roomName)
+				.build();
 
 		ChatGroup save = chatGroupRepository.save(chatGroup);
 		enterGroup(user1Id, user2Id, save);
