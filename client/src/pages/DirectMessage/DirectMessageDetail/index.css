@@ -1,0 +1,11 @@
+.scrollBar::-webkit-scrollbar {
+    width: 3px; /*스크롤바의 너비*/
+}
+
+.scrollBar::-webkit-scrollbar-thumb {
+    height: 5%; /* 스크롤바의 길이 */
+    background: #D3D3D3;
+}
+
+.scrollBar::-webkit-scrollbar-track {
+}
