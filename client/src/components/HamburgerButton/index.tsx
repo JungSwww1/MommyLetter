@@ -19,7 +19,7 @@ const goPage = (param:string) =>{
             <List tabIndex={0}>
                 {/*Consult에 있는 Card리팩토링 후 재사용하여 넣을 예정*/}
                 <h1>프로필 카드가 들어갈 곳</h1>
-                <Item><Link to="/search">검색</Link></Item>
+                <Item><Link to="/search/nickname">검색</Link></Item>
                 <Item><Link to="/consult">상담하기</Link></Item>
                 <Item><Link to="/history">상담기록</Link></Item>
                 <Item><Link to="/profile">회원정보</Link></Item>

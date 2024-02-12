@@ -126,6 +126,7 @@ const CalendarComponent: React.FC<CalendarProps> = ({ events, refreshDiary, diar
             alert("이미 해당 날짜에 작성된 일지가 있습니다.");
             return;
         }
+        console.log(new Date())
         if(info>=new Date()){
             alert("미래의 일기는 작성할 수 없음");
             return;
@@ -145,6 +146,7 @@ const CalendarComponent: React.FC<CalendarProps> = ({ events, refreshDiary, diar
         );
         console.log(new Date());
         // 이미 일정이 있는 경우 false
+
         return !isDiaryExist && dropDate <= new Date();
     };
     return (

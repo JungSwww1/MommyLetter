@@ -18,6 +18,8 @@ interface UpdateProps {
     currDay: number;
     refreshDiary: () => void;
     diary: DiaryReadResponseProps;
+    setDiaryList: (e:any)=>void;
+    diaryList:DiaryReadResponseProps[];
 }
 
 interface UserProps {
@@ -131,6 +133,8 @@ export const DiaryUpdate: React.FC<UpdateProps> = (props) => {
             Toast.error("이모지를 클릭해주세요")
             return;
         }
+
+        // props.setDiaryList(tempDiaryList);
         updateDiary(user.userId,formData).then((response) => {
 
 
@@ -138,6 +142,7 @@ export const DiaryUpdate: React.FC<UpdateProps> = (props) => {
 
             setTimeout(() => {
                 document.getElementById("updateCloseBtn")?.click(); // 모달닫기
+
 
             }, 800)
         }).catch((error) => {
