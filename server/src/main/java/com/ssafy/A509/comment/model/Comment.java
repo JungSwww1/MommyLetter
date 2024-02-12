@@ -40,7 +40,7 @@ public class Comment {
     private String content;
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column
     private LocalDateTime createdDate;
 
     @LastModifiedDate
