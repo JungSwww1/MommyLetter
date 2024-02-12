@@ -3,13 +3,15 @@ import './index.css'
 
 interface Props {
     children: ReactNode;
-    writeButton: ReactNode | boolean
+    writeButton: ReactNode | boolean;
+    boardId:number;
 }
 
-const BottomUpModal = ({children, writeButton}: Props) => {
-
-    return (<div className="w-[100%] h-[100%]">
-            <dialog id="my_modal_2" className="modal">
+const BottomUpModal = ({children, writeButton, boardId}: Props) => {
+    const dialogId = `my_modal_${boardId + 10}`;
+    return (
+        <div className="w-[100%] h-[100%]">
+            <dialog id={dialogId} className="modal">
                 <div className="modal-box bottom-sheet max-w-none max-w-full h-[100%] scrollBar">
                     <div className="flex justify-between">
                         <form method="dialog" >
@@ -20,7 +22,8 @@ const BottomUpModal = ({children, writeButton}: Props) => {
                     {children}
                 </div>
             </dialog>
-        </div>);
+        </div>
+    );
 };
 
 

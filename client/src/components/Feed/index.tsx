@@ -32,6 +32,7 @@ interface MainFeedProps {
 }
 
 const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
+
     //댓글 가져오는 용도
     const [comments, setComments] = useState<CommentProps[]>([])
     const [countComments, setCountComments] = useState<number>(0);
@@ -82,15 +83,16 @@ const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
     const toggleMenu = () => {
         setShowMenu(!showMenu);
     };
-
-
+    const [editBoard, setEditBoard] = useState<BoardProps | null>(null);
+    const dialogId = `my_modal_${board.boardId + 10}`;
     // 수정하기와 삭제하기에 대한 함수 정의
-    const handleEdit = () => {
-        (document.getElementById('my_modal_2') as any).showModal()
+    const handleEdit = async () => {
+        await setEditBoard(board);
+        await (document.getElementById(dialogId) as any).showModal();
     };
     const handleDelete = async () => {
         await deleteBoardAPI(board.boardId)
-        // await window.location.reload()
+        await window.location.reload()
     };
 
     return (
@@ -171,10 +173,15 @@ const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
                     </div>
                 ))}
             </CommentContainer>
-            <FeedEdit boardId={board.boardId} boardContent={board.content}
-                      boardAccess={board.access} boardCategory={board.category}
-                      boardHashTagList={board.hashTagList}
-            />
+            {editBoard && (
+                <FeedEdit
+                    boardId={editBoard.boardId}
+                    boardContent={editBoard.content}
+                    boardAccess={editBoard.access}
+                    boardCategory={editBoard.category}
+                    boardHashTagList={editBoard.hashTagList}
+                />
+            )}
         </Layout>
     )
 }

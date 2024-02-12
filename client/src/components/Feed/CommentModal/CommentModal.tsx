@@ -37,12 +37,6 @@ interface Comment {
 }
 
 const Modal: FC<ModalProps> = ({ onClose , boardId, userId}) => {
-    // const [sortedComments, setSortedComments] = useState<Comment[]>([]);
-    // comments props가 변경될 때마다 오래된 순으로 정렬
-    // useEffect(() => {
-    //     const sorted = [...comments].sort((a, b) => new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime());
-    //     setSortedComments(sorted);
-    // }, [comments]);
     const [comments, setComments] = useState<Comment[]>([]);
     const [event, setEvent] = useState(0)
     const fetchComments = async () => {
@@ -123,7 +117,7 @@ const Modal: FC<ModalProps> = ({ onClose , boardId, userId}) => {
         }
     };
 
-    // 삭제 버튼 클릭1
+    // 삭제 버튼 클릭
     const handleDeleteClick = async (commentId:number) => {
         const isConfirmed = window.confirm("댓글을 삭제하시겠습니까?");
         if (isConfirmed) {

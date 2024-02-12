@@ -11,6 +11,7 @@ const config = {
 };
 // 게시물 등록
 export const writeBoardAPI = async (data:FormData) => {
+    console.log(data)
     try {
         const response = await axios.post(`/boards`, data, config)
     } catch (error) {
@@ -28,7 +29,12 @@ export const deleteBoardAPI = async (boardId:number) => {
 }
 
 //게시물 수정
-export const editBoardAPI = async (boardId:number, data:editBoardRequestProps) => {
+export const editBoardAPI = async (boardId: number, data: {
+    access: string;
+    hashtagList: string[];
+    category: string;
+    content: string
+}) => {
     try {
         const response = await axios.patch(`/boards/${boardId}`, data)
     } catch (error) {
