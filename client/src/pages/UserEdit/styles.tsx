@@ -21,22 +21,26 @@ export const Title = styled.div`
 
 export const EditButton = styled.button`
     btn
-    hover:bg-floralwhite
+    hover:bg-MenuColor
+    hover:text-white
     w-[40%] 
     h-[10px] 
-    bg-yellow-300 
-    shadow-md 
+    bg-yellow-300
+    shadow-custom-outer
     rounded-xl
 `
 
 export const CheckButton = styled.div`
     btn
-    hover:bg-floralwhite
+    text-white
+    hover:bg-user
+    hover:text-MenuColor
+    border-MenuColor
     w-[20%]
     h-[10px]
     mt-[4%]
     bg-MenuColor
-    shadow-md
+    shadow-custom-outer
     rounded-full
     text-[90%]
     
@@ -44,12 +48,14 @@ export const CheckButton = styled.div`
 
 export const Submit = styled.button`
     btn
-    hover:bg-black
+    hover:bg-user
+    hover:text-MenuColor
     w-[27%]
     h-[40px]
     mr-[7%]
     bg-yellow-800
-    shadow-md  
+    border-yellow-800
+    shadow-custom-outer
     rounded-full
     text-[white]
 `
