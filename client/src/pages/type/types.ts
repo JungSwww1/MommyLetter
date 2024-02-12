@@ -74,3 +74,4 @@ export interface CommentProps {
     updatedDate: string;
     nickname: string;
 }
+

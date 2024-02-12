@@ -4,7 +4,7 @@ import {ReactComponent as Search} from '@/assets/icons/search.svg'
 import {fetchHashtag, fetchNickname} from "@/apis/search/SearchAPI";
 import HashTagComponent from "@/components/Search/HashTag";
 import NicknameComponent from "@/components/Search/Nickname";
-import {useWebSocket} from "@/hooks/useWebSocket";
+
 
 interface NicknameProps {
 

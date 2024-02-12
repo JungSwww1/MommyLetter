@@ -44,7 +44,10 @@ const DiaryPage = () => {
         refreshDiary();
     }, [user]);
 
-    return (<div className="h-[100%] w-[100%]">
+    return (
+
+
+        <div className="h-[100%] w-[100%]">
         <section className="flex justify-between m-3">
             <span className="font-bold text-xl">{isToggled ? "육아일기" : "산모일기"}</span>
             {/* On Off 버튼 */}
