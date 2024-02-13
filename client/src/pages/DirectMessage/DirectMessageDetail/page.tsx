@@ -38,7 +38,7 @@ const DirectMessageDetailPage = () => {
 
         connect(roomNumber);
         return () => disConnect();
-    }, [roomNumber]);
+    }, [roomNumber,opponent]);
     useEffect(() => {
 
         fetchDMList(Number(user["userId"])).then((response) => {
@@ -47,6 +47,7 @@ const DirectMessageDetailPage = () => {
             const chatGroupName = result.chatRoomName.split("_")
             const opponentId = chatGroupName[2] == user["userId"] ? Number(chatGroupName[1]) : Number(chatGroupName[2]);
             setOpponent(opponentId);
+
             enterDM(Number(user["userId"]), opponentId);
             var opponentNickname = "";
             var opponentProfilePhoto = "";
@@ -60,7 +61,7 @@ const DirectMessageDetailPage = () => {
                 myNickname = response.nickname;
                 myProfilePhoto = response.profilePhoto;
             })
-            fetchChatList(Number(user["userId"]), opponentId).then((response) => {
+            fetchChatList(Number(user["userId"]), opponentId) .then((response) => {
                 response.forEach((chat: DMProps) => {
                     const tempChat: DMProps = {
                         senderId: chat.senderId,
@@ -77,15 +78,17 @@ const DirectMessageDetailPage = () => {
 
         })
         console.log(chatList);
-    }, []);
+    }, [opponent]);
 
 
 
-    const connect = (roomNumber:number) => {
-        console.log(roomNumber);
+
+    const connect = (roomNumber:number) =>{
         const clientdata = new Stomp.Client({
             brokerURL: "ws://localhost:8080/ws",
-            connectHeaders: {},
+            connectHeaders:{}
+            // MommyLetterWS.getInstance().header
+            ,
             debug: function (str) {
                 console.log(str);
             },
@@ -93,7 +96,7 @@ const DirectMessageDetailPage = () => {
             heartbeatIncoming: 4000,
             heartbeatOutgoing: 4000,
         });
-
+        console.log(roomNumber);
 
         clientdata.onConnect = function () {
             clientdata.subscribe("/sub/enter/" + roomNumber, callback);
@@ -105,24 +108,25 @@ const DirectMessageDetailPage = () => {
 
     }
     const callback = function (message:any) {
+
+        console.log(message.body);
         if (message.body) {
             let msg = JSON.parse(message.body);
-            setChatList((chats:DMProps[]) => [...chats, msg]);
+            setChatList((chats:any) => [...chats, msg]);
         }
-        console.log(chatList);
-
+        console.log(chatList)
     };
 
 
-
     const sendChat = () => {
-        if (chat === "") {
+        if (!chat || !user["userId"] || !opponent) {
             return;
         }
+
         client?.publish({
             destination: "/pub/message",
             body: JSON.stringify({
-                senderId:user["userId"],
+                senderId:Number(user["userId"]),
                 receiverId:opponent,
                 content:chat,
                 chatGroupId:roomNumber,
@@ -131,7 +135,6 @@ const DirectMessageDetailPage = () => {
 
         setChat("");
     };
-
 
     const disConnect = () => {
         // 연결 끊기
