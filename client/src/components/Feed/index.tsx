@@ -139,11 +139,13 @@ const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
                 </div>
             </PhotoContainer>
             <PhotoContainer>
-                {board.photoList.map((photo, index) =>(
+                {board.photoList.map((photo, index) =>{
+                    console.log(photo.path); // photo.path 값을 콘솔에 출력
+                    return(
                     <div key={index} className="m-2" style={{width: 'calc(33.333% - 1rem)', float: 'left'}}>
-                        <img src={photo.path} alt={`Photo ${index + 1}`} className={"w-full h-full object-cover"}/>
+                        <img src={`${photo.path}`} alt={`Photo ${index + 1}`} className={"w-full h-full object-cover"}/>
                     </div>
-                ))}
+                )})}
             </PhotoContainer>
 
             <HashtagContainer>
