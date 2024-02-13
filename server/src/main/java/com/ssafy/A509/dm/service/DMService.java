@@ -79,7 +79,7 @@ public class DMService {
 	}
 
 	@Transactional
-	public void createChatGroup(Long user1Id, Long user2Id, String roomName) {
+	public Long createChatGroup(Long user1Id, Long user2Id, String roomName) {
 		checkExistGroup(roomName);
 
 		ChatGroup chatGroup = ChatGroup.builder()
@@ -88,6 +88,8 @@ public class DMService {
 
 		ChatGroup save = chatGroupRepository.save(chatGroup);
 		enterGroup(user1Id, user2Id, save);
+
+		return save.getChatGroupId();
 	}
 
 	@Transactional
