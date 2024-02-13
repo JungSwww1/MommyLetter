@@ -15,6 +15,7 @@
     import {useEffect, useState} from "react";
     import {localFunction} from "@/pages/UserEdit/ApiFunction";
     import axios from "axios";
+    import PasswordChange from "@/pages/UserEdit/PasswordChange/PasswordChange";
 
 
     const UserEdit = () => {
@@ -72,7 +73,9 @@
         const backgroundChange = ()=>{
 
         }
-
+        const pwdChange = () => {
+            (document.getElementById('my_modal_1') as any).showModal()
+        }
         return (
             <Layout>
                 <Container>
@@ -124,8 +127,9 @@
 
                     {/* password change and User withdrawal */}
                     <SubContainer>
-                        <Wrapper>
-                            <StyleLink to="/passwordChange">비밀번호 변경</StyleLink>
+                        <Wrapper onClick={pwdChange}>
+                            <StyleLink to="#">비밀번호 변경</StyleLink>
+                            <PasswordChange userId={localUserId} nickname={incomeData.localNickname} intro={incomeData.localIntro}/>
                         </Wrapper>
                         <Wrapper>
                             <StyleLink to="/withdrawal">회원탈퇴</StyleLink>

@@ -58,3 +58,11 @@ export interface editBoardRequestProps {
     category: string;
     hashTagList: string[];
 }
+
+export interface pwdChangeRequestProps {
+    userId:number;
+    nickname:string;
+    intro:string;
+    currentPassword:string;
+    newPassword:string;
+}

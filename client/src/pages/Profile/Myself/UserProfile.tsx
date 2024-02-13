@@ -43,7 +43,7 @@ const UserProfile = () => {
     })
     useEffect(()=>{
         const fetchProfileData = async () => {
-            const data = await getProfileAPI(101); // 예를 들어 사용자 ID가 101인 경우
+            const data = await getProfileAPI(authUser.userId); // 예를 들어 사용자 ID가 101인 경우
             setProfileData(data);
         };
         fetchProfileData();
