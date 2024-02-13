@@ -1,5 +1,6 @@
 package com.ssafy.A509.hashtag.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ssafy.A509.board.model.Board;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -25,6 +26,7 @@ public class Hashtag {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "board_id")
+	@JsonBackReference
 	@Setter
 	private Board board;
 

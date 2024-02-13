@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 public interface ChatGroupRepository extends JpaRepository<ChatGroup, Long> {
 	@Query("SELECT SIZE(c.users) FROM ChatGroup c WHERE c.chatGroupId = :chatGroupId")
 	int countChatUserByChatGroupId(Long chatGroupId);
+
+	ChatGroup findChatGroupByChatRoomName(String chatRoomName);
 }

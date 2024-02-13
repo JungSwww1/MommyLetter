@@ -86,12 +86,12 @@ public class ProfileServiceImpl implements ProfileService {
         return doctorCards;
     }
     @Override
-    public DoctorProfileResponse getDoctorProfile(Long userId) {
-        Profile doctorProfile = profileRepository.findByUserId(userId);
+    public DoctorProfileResponse getDoctorProfile(Long doctorId) {
+        Profile doctorProfile = profileRepository.findByUserDoctorDoctorId(doctorId);
         if (doctorProfile != null && doctorProfile.getUser().getRole() == Role.Doctor) {
             return getDoctorProfileResponse(doctorProfile);
         } else {
-            throw new CustomException(ErrorCode.NOT_DOCTOR, "userId: " + userId);
+            throw new CustomException(ErrorCode.NO_SUCH_DOCTOR, "doctorId: " + doctorId);
         }
     }
     private static DoctorProfileResponse getDoctorProfileResponse(Profile doctorProfile) {

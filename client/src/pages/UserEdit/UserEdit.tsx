@@ -52,7 +52,7 @@
 
                     if (file) {
                         const formData = new FormData();
-                        formData.append('profileImage', file);
+                        formData.append('uploadFiles', file);
 
                         const response = await axios.post('백엔드_API_URL', formData, {
                             headers: {

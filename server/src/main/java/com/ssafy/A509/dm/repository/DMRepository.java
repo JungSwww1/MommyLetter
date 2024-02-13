@@ -25,7 +25,6 @@ public interface DMRepository extends MongoRepository<DirectMessage, Long> {
 	@Query("{ 'chatGroupId': ?0, 'createdDate': { $lt: ?1 }, 'unreadCount': { $ne: 0 } }")
 	List<DirectMessage> findChatsBeforeDateAndGroupWithUnreadCount(Long chatGroupId, LocalDateTime createdDate);
 
-	@Query("{'$or': [{'senderId': ?0, 'receiverId': ?1}, {'senderId': ?1, 'receiverId': ?0}]}")
-	List<DirectMessage> getDmListByUsers(Long user1Id, Long user2Id, Sort sort);
+	List<DirectMessage> getDmListByChatGroupId(Long chatGroupId, Sort sort);
 
 }

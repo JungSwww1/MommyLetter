@@ -33,20 +33,20 @@ public class Comment {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "board_id")
     private Board board;
 
     private String content;
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column
     private LocalDateTime createdDate;
 
     @LastModifiedDate
     private LocalDateTime updatedDate;
 
-    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CommentLike> likes = new ArrayList<>();
 
     @Builder

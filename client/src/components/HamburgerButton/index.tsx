@@ -5,9 +5,10 @@ import Hamburger from "@/assets/icons/Hamburger";
 
 const HamburgerButton = () => {
     const navigate = useNavigate();
-    const logout = () => {
-        localStorage.clear();
-        navigate('/login', {replace:true})
+    const logout = async () => {
+        await localStorage.clear();
+        await navigate('/login', {replace:true})
+        await window.location.reload()
     }
 
 const goPage = (param:string) =>{

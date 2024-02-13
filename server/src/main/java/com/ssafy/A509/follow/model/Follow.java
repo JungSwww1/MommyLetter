@@ -1,5 +1,6 @@
 package com.ssafy.A509.follow.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ssafy.A509.account.model.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -17,11 +18,13 @@ public class Follow {
     @Column(name = "follow_id")
     private Long followId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "following_id", referencedColumnName = "user_id")
+    @JsonBackReference
     private User following;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "follower_id", referencedColumnName = "user_id")
+    @JsonBackReference
     private User follower;
 }
