@@ -43,17 +43,19 @@ const DirectMessageList = () => {
             for (const dm of dmList) {
                 const chatGroupName = dm.chatRoomName.split("_")
                 const opponentId = chatGroupName[2] == user["userId"] ? Number(chatGroupName[1]) : Number(chatGroupName[2]);
-
+                console.log(chatGroupName);
                 console.log(opponentId);
                 const profileRes = await getProfileAPI(opponentId);
-                const chatListRes = await fetchChatList(Number(user["userId"]), opponentId);
-                console.log(user["userId"])
-                console.log(opponentId);
-                console.log(chatListRes);
-                const chatListResEntity = { content: chatListRes[0].content, createdDate: chatListRes[0].createdDate};
 
-                const response: OpponentResProps = { ...profileRes, ...chatListResEntity, chatGroupId: dm.chatGroupId };
-                opponentsData.push(response);
+                const chatListRes = await fetchChatList(Number(user["userId"]), opponentId);
+
+
+                if(chatListRes[0]){
+                    const chatListResEntity = { content: chatListRes[0].content, createdDate: chatListRes[0].createdDate};
+                    const response: OpponentResProps = { ...profileRes, ...chatListResEntity, chatGroupId: dm.chatGroupId };
+                    opponentsData.push(response);
+                }
+
             }
 
             setOpponents(opponentsData);
@@ -64,7 +66,7 @@ const DirectMessageList = () => {
 
     return (
         <div className="flex flex-col justify-center items-center w-[100%]">
-            {opponents.map((opponent, index) => (
+            {opponents && opponents.map((opponent, index) => (
                 <Link key={index} className="w-[100%] hover:bg-gray-100" to={`${opponent.chatGroupId}`}>
                     <DirectMessageCard profileUrl={opponent.profilePhoto} nickname={opponent.nickname} content={opponent.content} date={new Date(opponents[0].createdDate).getTime().toString()} chatGroupId={opponent.chatGroupId}/>
                 </Link>
