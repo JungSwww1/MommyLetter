@@ -35,10 +35,11 @@ const DirectMessageDetailPage = () => {
     const chatUlRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-
-        connect(roomNumber);
+        if(roomNumber) {
+            connect(roomNumber);
+        }
         return () => disConnect();
-    }, [roomNumber,opponent]);
+    }, [roomNumber]);
     useEffect(() => {
 
         fetchDMList(Number(user["userId"])).then((response) => {
@@ -78,7 +79,7 @@ const DirectMessageDetailPage = () => {
 
         })
         console.log(chatList);
-    }, [opponent]);
+    }, []);
 
 
 
