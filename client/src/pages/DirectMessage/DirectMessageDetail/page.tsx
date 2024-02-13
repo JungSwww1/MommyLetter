@@ -118,6 +118,11 @@ const DirectMessageDetailPage = () => {
         console.log(chatList)
     };
 
+    const handleOnKeyPress= (e:any) =>{
+        if (e.key === 'Enter') {
+            sendChat();
+        }
+    }
 
     const sendChat = () => {
         if (!chat || !user["userId"] || !opponent) {
@@ -177,7 +182,7 @@ const DirectMessageDetailPage = () => {
             {chatList.map((chat, index) => (
                 <DirectMessage key={index} type={chat.senderId === Number(user["userId"])} name={chat.nickname}
                                time={new Date(chat.createdDate).toString()}
-                               message={chat.content} status={""} imageUrl={"/assets/images/potato.png"}
+                               message={chat.content} status={""} imageUrl={`${chat.profilePhoto  ? "/userimages/"+chat.profilePhoto.substring(72,) : "/assets/images/default_image.png"}`}
                 />))}
 
 
@@ -188,7 +193,8 @@ const DirectMessageDetailPage = () => {
                 <button><Camera className="mr-3"/></button>
                 <input type="text" onChange={(e) => setChat(e.target.value)} className="w-[90%] bg-gray-300"
                        placeholder="메시지 보내기..."
-                       value={chat}/>
+                       value={chat}
+                       onKeyUp={handleOnKeyPress}/>
                 <button><Picture/></button>
                 <button onClick={sendChat}>확인</button>
             </div>
