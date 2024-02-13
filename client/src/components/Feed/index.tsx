@@ -143,7 +143,7 @@ const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
                     console.log(photo.path.substring(41)); // photo.path 값을 콘솔에 출력
                     return(
                     <div key={index} className="m-2" style={{width: 'calc(33.333% - 1rem)', float: 'left'}}>
-                        <img src={`${photo.path.substring(41)}`} alt={`Photo ${index + 1}`} className={"w-full h-full object-cover"}/>
+                        <img src={`${process.env.PUBLIC_URL}/${photo.path.substring(44)}`} alt={`Photo ${index + 1}`} className={"w-full h-full object-cover"}/>
                     </div>
                 )})}
             </PhotoContainer>
