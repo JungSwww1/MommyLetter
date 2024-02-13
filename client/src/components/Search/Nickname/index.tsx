@@ -15,12 +15,8 @@ const NicknameComponent: React.FC<{ nicknameList: NicknameProps[] }> = ({ nickna
     const move= (userId:number) => {
         navigate(`/profile/${userId}`)
     }
-    const onSelect = (e:any) =>{
-        console.log(e);
-    }
     return (
         <div className="w-[100%]">
-            <input type="file" onChange={onSelect} />
             {nicknameList.map((nicknameItem, index) => (
                 <div key={index} className="flex justify-between items-center ml-5 h-[10%] w-[100%] " >
                     <img src={nicknameItem.profilePhoto} className="w-[15%]  rounded-full"/>

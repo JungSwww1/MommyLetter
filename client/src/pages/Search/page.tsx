@@ -27,7 +27,7 @@ const SearchPage = () => {
     const [nicknameList, setNicknameList] = useState<NicknameProps[]>()
     const [hashtagList, setHashtagList] = useState<HashtagProps[]>()
     const param = useParams()["*"];
-
+    const [isChecked, setIsChecked] = useState<number>(0)
 
     useEffect(()=>{
 
@@ -41,9 +41,12 @@ const SearchPage = () => {
         fetchHashtag(inputData).then((response) => {
             setHashtagList(response);
         });
-        
+
         console.log(nicknameList);
 
+    }
+    const changeBg = (state:number) => {
+        setIsChecked(state);
     }
     return (<div className="flex flex-col w-[100%] h-[100%]">
         <div
@@ -52,8 +55,10 @@ const SearchPage = () => {
             <button onClick={searchData}><Search/></button>
         </div>
         <div className="flex justify-around p-3">
-            <Link to={"/search/nickname"} className="hover:text-MenuColor hover:font-bold">닉네임</Link>
-            <Link to={"/search/hashtag"} className="hover:text-MenuColor hover:font-bold">태그</Link>
+
+                <Link to={"/search/nickname"} onClick={()=>{changeBg(1)}} className={`hover:text-MenuColor hover:font-bold ${isChecked == 1 && "font-bold text-MenuColor"}`}>닉네임</Link>
+
+            <Link to={"/search/hashtag"} onClick={()=>{changeBg(2)}} className={`hover:text-MenuColor hover:font-bold ${isChecked == 2 && "font-bold text-MenuColor"}`}>태그</Link>
         </div>
         <hr/>
         <div className="flex justify-center mt-3">
