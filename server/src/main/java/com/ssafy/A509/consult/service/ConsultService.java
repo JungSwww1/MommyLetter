@@ -67,7 +67,7 @@ public class ConsultService {
 	* */
 	@Transactional
 	public void deleteReserve(Long reserveId){
-		if(!consultRepository.existsByReserveReserveId(reserveId)){
+		if(consultRepository.existsByReserveReserveId(reserveId)){
 			throw new CustomException(ErrorCode.RESERVE_CONSULT_EXIST);
 		}
 		reserveRepository.delete(findReserveByReserveId(reserveId));
