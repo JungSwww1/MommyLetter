@@ -22,6 +22,22 @@ const BottomUpModal = ({children, writeButton}: Props) => {
             </dialog>
         </div>);
 };
+export const UpdateBottomUpModal = ({children, writeButton}: Props) => {
+    return (<div className="w-[100%] h-[100%]">
+        <dialog id="diary_update" className="modal">
+            <div className="modal-box bottom-sheet max-w-none max-w-full h-[100%] scrollBar">
+                <div className="flex justify-between">
+                    <form method="dialog" >
+                        <button id="updateCloseBtn" className="btn btn-sm btn-circle btn-ghost right-2 top-2">✕</button>
+                    </form>
+                    {writeButton}
+                </div>
+                {children}
+            </div>
+        </dialog>
+    </div>);
+};
+
 
 
 export default BottomUpModal;

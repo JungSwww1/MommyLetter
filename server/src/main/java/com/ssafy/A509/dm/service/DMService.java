@@ -118,9 +118,12 @@ public class DMService {
 
 	@Transactional
 	public int readMessageAndGetCount(DirectMessage message, List<Long> users) {
-		users.forEach(message::addReader);
-		dmRepository.save(message);
-		return message.getUnreadCount();
+		if(users!=null) {
+			users.forEach(message::addReader);
+			dmRepository.save(message);
+		}
+			return message.getUnreadCount();
+
 	}
 
 	public void checkExistGroup(String chatGroupName) {

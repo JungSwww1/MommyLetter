@@ -7,11 +7,21 @@ import 'react-toastify/dist/ReactToastify.css';
 import {Toast} from "@/components/Toast/Toast";
 import {ReactComponent as CircleX} from "@/assets/icons/circleX.svg";
 import {useParams} from "react-router-dom";
+import {DiaryWriteRequestProps} from "@/apis/type/types";
 
 interface DateProps {
     currYear: number;
     currMonth: number;
     currDay: number;
+    refreshDiary: () => void;
+}
+
+interface UpdateProps {
+    currYear: number;
+    currMonth: number;
+    currDay: number;
+    refreshDiary: () => void;
+    diary: DiaryWriteRequestProps;
 }
 
 interface UserProps {
@@ -19,21 +29,30 @@ interface UserProps {
     userId: string;
 }
 
-export const DiaryWrite = ({currYear, currMonth, currDay}: DateProps) => {
+export const DiaryWrite: React.FC<DateProps> = (props) => {
     const [emotion, setEmotion] = useState(99);
     const [content, setContent] = useState("");
     const [imgFiles, setImgFiles] = useState<File[]>([]);
     const imgRef = useRef<HTMLInputElement>(null);
     const [previews, setPreviews] = useState<string[]>([]);
     const [user, setUser] = useState<UserProps>({nickname: '', userId: ''}); // UserProps로 수정
-
+    const {currYear, currMonth, currDay, refreshDiary} = props;
     const param = useParams()["*"];
+
+
+    const emojiArr: string[] = [];
+    const path = "/assets/images/"
+    const emotionImg = ["1sad.png", "2lonely.png", "3irritated.png", "4tired.png", "5angry.png", "6soso.png", "7delight.png", "8calm.png", "9delight.png", "10excited.png"]
+    for (let i = 0; i < 10; i++) {
+        emojiArr[i] = path + emotionImg[i];
+    }
     useEffect(() => {
         const storedAuth = localStorage.getItem('Auth');
         if (storedAuth) {
             const parsedAuth: UserProps = JSON.parse(storedAuth);
             setUser(parsedAuth);
         }
+
     }, []);
     const saveImgFiles = async (e: any) => {
         const files: FileList = e.target.files;
@@ -70,12 +89,22 @@ export const DiaryWrite = ({currYear, currMonth, currDay}: DateProps) => {
         })
         return err
     }
+    // X버튼을 눌렀을때 EventListener
+    const closeBtn = document.getElementById('closeBtn');
+    closeBtn?.addEventListener('click', function () {
+        setContent("");
+        setEmotion(99);
+        setImgFiles([]);
+        setPreviews([]);
+    });
     const diaryWrite = async () => {
-        const createdDate = new Date(currYear, currMonth - 1, currDay+1);
-        console.log(createdDate);
+        const createdDate = new Date(currYear, currMonth - 1, currDay + 1);
+
         const formData = new FormData();
+
         imgFiles.forEach((file) => {
             formData.append('uploadFiles', file);
+
         });
         const category = param ? param?.charAt(0).toUpperCase() + param?.substring(1,) : "Mom";
         const diaryRequest = {
@@ -97,20 +126,25 @@ export const DiaryWrite = ({currYear, currMonth, currDay}: DateProps) => {
             type: "application/json"
         }));
 
+        if (content === "") {
+            Toast.error("내용을 입력하세요")
+            return;
+        }
+        if (emotion === 99) {
+            Toast.error("이모지를 클릭해주세요")
+            return;
+        }
         createDiary(formData).then((response) => {
 
-            if (content === "") {
-                Toast.error("내용을 입력하세요")
-                return;
-            }
-
-            Toast.success("작성되었습니다.");
             setContent("");
-            setEmotion(0);
+            setEmotion(99);
             setImgFiles([]);
+            setPreviews([]);
             setTimeout(() => {
+                Toast.success("작성되었습니다.");
                 document.getElementById("closeBtn")?.click(); // 모달닫기
-            }, 800)
+                refreshDiary();
+            }, 500)
         }).catch((error) => {
             console.log(error);
         });
@@ -133,45 +167,39 @@ export const DiaryWrite = ({currYear, currMonth, currDay}: DateProps) => {
         setEmotion(num);
     }
     const writeButton = <button className="btn btn-ghost bg-user" onClick={diaryWrite}>작성하기</button>
-    const children = <div className="flex flex-col ml-5 mt-5 w-[98%] h-[100%]">
+    const children = <div className="flex flex-col ml-2 mt-5 w-[98%] h-[100%]">
 
         <ToastContainer style={{}} position={"top-center"} hideProgressBar={true} autoClose={300}/>
-        <p className="text-[15px] font-bold text-black">선택 날짜</p>
+
+
+        <p className="text-[15px] font-bold text-black">날짜</p>
         <div className="flex justify-around mb-3">
             <p className="font-bold">{currYear}</p>
             <p className="font-bold">{currMonth}</p>
             <p className="font-bold">{currDay}</p>
-
         </div>
-        <p className="text-[15px] font-bold text-black mt-5"> 오늘의 기분 </p>
 
-        <div className="flex justify-around">
+        <p className="text-[15px] font-bold text-black mt-5"> 어떤 하루였나요? </p>
 
-            <Button className={emotion === 1 ? "bg-red-300" : ""} onClick={() => {
-                clickedEmotion(1)
-            }}>
-                <Img src="/assets/images/sample_angry.png"/></Button>
-            <Button className={emotion === 2 ? "bg-blue-300" : ""} onClick={() => {
-                clickedEmotion(2)
-            }}>
-                <Img src="/assets/images/sample_bad.png"/></Button>
-            <Button className={emotion === 3 ? "bg-amber-300" : ""} onClick={() => {
-                clickedEmotion(3)
-            }}>
-                <Img src="/assets/images/sample_good.png"/></Button>
-            <Button className={emotion === 4 ? "bg-green-300" : ""} onClick={() => {
-                clickedEmotion(4)
-            }}>
-                <Img src="/assets/images/sample_soso.png"/></Button>
-            <Button className={emotion === 5 ? "bg-purple-300" : ""} onClick={() => {
-                clickedEmotion(5)
-            }}>
-                <Img src="/assets/images/sample_tired.png"/></Button>
+        <div className="flex justify-around ">
+            {emojiArr.slice(0, 5).map((emoji, index) => (
+                <Button key={index} className={emotion === index ? "bg-gray-300" : ""}
+                        onClick={() => clickedEmotion(index)}>
+                    <Img src={`${emoji}`}/>
+                </Button>))}
+        </div>
+
+        <div className="flex justify-around ">
+            {emojiArr.slice(5, 10).map((emoji, index) => (
+                <Button key={index} className={emotion === index + 5 ? "bg-gray-300" : ""}
+                        onClick={() => clickedEmotion(index + 5)}>
+                    <Img src={`${emoji}`}/>
+                </Button>))}
         </div>
         <br/>
         <div className="h-[30%]">
             <textarea onChange={e => setContent(e.target.value)} placeholder="내용을 입력"
-                      className="text-[17px] h-[100%] w-[97%] ext-[#9d9d9d]"/>
+                      className="text-[17px] h-[100%] w-[97%] ext-[#9d9d9d]" value={content}/>
         </div>
         <br/>
         <div>

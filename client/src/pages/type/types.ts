@@ -74,3 +74,13 @@ export interface CommentProps {
     updatedDate: string;
     nickname: string;
 }
+
+export interface ProfileProps {
+    userId:number;
+    nickname:string;
+    intro:string;
+    backgroundPhoto:string;
+    profilePhoto: string;
+    follower:number;
+    following:number;
+}
