@@ -3,6 +3,7 @@ package com.ssafy.A509.account.model;
 import static jakarta.persistence.FetchType.LAZY;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ssafy.A509.dm.model.ChatGroup;
 import com.ssafy.A509.doctor.model.Reserve;
@@ -22,11 +23,13 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,63 +46,65 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class User {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "user_id", insertable = false, updatable = false)
-	private Long userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", insertable = false, updatable = false)
+    private Long userId;
 
-	private String password;
+    private String password;
 
-	private String nickname;
+    private String nickname;
 
-	private String intro;
+    private String intro;
 
-	private String email;
+    private String email;
 
-	@Enumerated(EnumType.STRING)
-	private Gender gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
-	@Enumerated(EnumType.STRING)
-	private Role role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-	@CreatedDate
-	@Column(updatable = false)
-	private LocalDateTime createdDate;
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdDate;
 
-	@LastModifiedDate
-	private LocalDateTime updatedDate;
+    @LastModifiedDate
+    private LocalDateTime updatedDate;
 
-	@OneToMany(mappedBy = "follower", fetch = LAZY)
-	private List<Follow> followingList;
+    @OneToMany(mappedBy = "follower", orphanRemoval = true)
+	@JsonManagedReference
+    private List<Follow> followingList;
 
-	@OneToMany(mappedBy = "following", fetch = LAZY)
-	private List<Follow> followerList;
+    @OneToMany(mappedBy = "following", orphanRemoval = true)
+	@JsonManagedReference
+    private List<Follow> followerList;
 
-	//    @JsonBackReference
-	@OneToOne(mappedBy = "user", fetch = LAZY)
-	private Doctor doctor;
+    //    @JsonBackReference
+    @OneToOne(mappedBy = "user", fetch = LAZY, orphanRemoval = true)
+    private Doctor doctor;
 
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = LAZY)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = LAZY, orphanRemoval = true)
 	private Profile profile;
 
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = LAZY)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = LAZY)
 	private UserInfo userInfo;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = LAZY)
-	private List<Reserve> reserve = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = LAZY)
+    private List<Reserve> reserve = new ArrayList<>();
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = LAZY)
-	@JsonManagedReference
-	@JoinTable(
-		name = "user_chat_group",
-		joinColumns = { @JoinColumn(name = "user_id") },
-		inverseJoinColumns = { @JoinColumn(name = "chat_group_id") }
-	)
-	private Set<ChatGroup> groups = new HashSet<>();
+    @ManyToMany(cascade = CascadeType.ALL, fetch = LAZY)
+    @JsonManagedReference
+    @JoinTable(
+            name = "user_chat_group",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "chat_group_id")}
+    )
+    private Set<ChatGroup> groups = new HashSet<>();
 
-	public static User createUser() {
-		return new User();
-	}
+    public static User createUser() {
+        return new User();
+    }
 
     @Builder
     protected User(Long userId, String password, String nickname, String intro, String email, String profilePhoto, String backgroundPhoto) {
@@ -115,11 +120,11 @@ public class User {
                 .build();
     }
 
-	public void addGroup(ChatGroup chatGroup) {
-		this.groups.add(chatGroup);
-	}
+    public void addGroup(ChatGroup chatGroup) {
+        this.groups.add(chatGroup);
+    }
 
-	public void removeGroup(ChatGroup chatGroup) {
-		this.groups.remove(chatGroup);
-	}
+    public void removeGroup(ChatGroup chatGroup) {
+        this.groups.remove(chatGroup);
+    }
 }

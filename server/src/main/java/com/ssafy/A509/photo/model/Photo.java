@@ -1,5 +1,6 @@
 package com.ssafy.A509.photo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ssafy.A509.board.model.Board;
 import com.ssafy.A509.diary.model.Diary;
 import jakarta.annotation.Nullable;
@@ -36,6 +37,7 @@ public class Photo {
 	@Setter
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "board_id")
+	@JsonBackReference
 	@Nullable
 	private Board board;
 

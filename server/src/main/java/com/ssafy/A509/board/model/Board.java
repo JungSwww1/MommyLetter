@@ -1,5 +1,6 @@
 package com.ssafy.A509.board.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.comment.model.Comment;
 import com.ssafy.A509.hashtag.model.Hashtag;
@@ -47,10 +48,12 @@ public class Board {
     private User user;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Photo> photoList = new ArrayList<>();
 
     @Setter
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Hashtag> hashtagList = new ArrayList<>();
 
     @Setter
@@ -70,10 +73,10 @@ public class Board {
     @LastModifiedDate
     private LocalDateTime updatedDate;
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BoardLike> likes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
     @Builder
