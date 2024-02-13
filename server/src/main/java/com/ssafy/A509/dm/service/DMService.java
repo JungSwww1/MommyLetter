@@ -128,6 +128,14 @@ public class DMService {
 
 	}
 
+	public List<DMResponse> getListByUsers(Long user1Id, Long user2Id) {
+		return dmRepository.getDmListByUsers(user1Id, user2Id, Sort.by(Sort.Direction.DESC, "createdDate")).stream()
+			.map(dm -> modelMapper.map(dm, DMResponse.class))
+			.collect(
+				Collectors.toList());
+	}
+
+
 	public void checkExistGroup(String chatGroupName) {
 		if (getChatGroup(chatGroupName) != null) {
 			throw new CustomException(ErrorCode.DUPLICATE_KEY_ERROR);
