@@ -1,5 +1,6 @@
 package com.ssafy.A509.diary.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -34,24 +35,24 @@ public class Emoticon {
 	@JoinColumn(name = "diary_id")
 	private Diary diary;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "emoticon_id")
+	@OneToMany(mappedBy="emoticon",  cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
 	private List<EmotionEmoticon> emotionEmoticon = new ArrayList<>();
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "emoticon_id")
+	@OneToMany(mappedBy="emoticon",  cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
 	private List<FamilyEmoticon> familyEmoticon = new ArrayList<>();
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "emoticon_id")
+	@OneToMany(mappedBy="emoticon",  cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
 	private List<HealthEmoticon> healthEmoticon = new ArrayList<>();
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "emoticon_id")
+	@OneToMany(mappedBy="emoticon",  cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
 	private List<PeopleEmoticon> peopleEmoticon = new ArrayList<>();
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "emoticon_id")
+	@OneToMany(mappedBy="emoticon",  cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
 	private List<WeatherEmoticon> weatherEmoticon = new ArrayList<>();
 
 	@Builder

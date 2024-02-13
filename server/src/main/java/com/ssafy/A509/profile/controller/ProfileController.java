@@ -47,8 +47,8 @@ public class ProfileController {
     }
 
     @GetMapping("/doctors/{userId}")
-    public ResponseEntity<DoctorProfileResponse> getDoctorProfile(@PathVariable Long userId) {
-        DoctorProfileResponse doctorProfile = profileService.getDoctorProfile(userId);
+    public ResponseEntity<DoctorProfileResponse> getDoctorProfile(@PathVariable Long doctorId) {
+        DoctorProfileResponse doctorProfile = profileService.getDoctorProfile(doctorId);
         return ResponseEntity.ok(doctorProfile);
     }
 }
