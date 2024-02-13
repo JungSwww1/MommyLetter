@@ -9,6 +9,8 @@ import com.ssafy.A509.dm.model.ChatGroup;
 import com.ssafy.A509.dm.model.DirectMessage;
 import com.ssafy.A509.dm.repository.ChatGroupRepository;
 import com.ssafy.A509.dm.repository.DMRepository;
+import com.ssafy.A509.exception.CustomException;
+import com.ssafy.A509.exception.ErrorCode;
 import com.ssafy.A509.unreadNotification.service.UnreadNotificationService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -48,9 +50,9 @@ public class DMService {
 
 	public List<DMResponse> getChatList(Long chaGroupId) {
 		return dmRepository.getDmListByChatGroupId(chaGroupId, Sort.by(Sort.Direction.DESC, "createdDate")).stream()
-				.map(dm -> modelMapper.map(dm, DMResponse.class))
-				.collect(
-						Collectors.toList());
+			.map(dm -> modelMapper.map(dm, DMResponse.class))
+			.collect(
+				Collectors.toList());
 	}
 
 	public DirectMessage getLatestMessage(Long chatGroupId) {
@@ -64,13 +66,13 @@ public class DMService {
 	@Transactional
 	public void saveDm(DMRequest dmRequest) {
 		DirectMessage directMessage = DirectMessage.builder()
-				.content(dmRequest.getContent())
-				.senderId(dmRequest.getSenderId())
-				.receiverId(dmRequest.getReceiverId())
-				.chatGroupId(dmRequest.getChatGroupId())
-				.createdDate(dmRequest.getCreatedDate())
-				.unreadCount(2)
-				.build();
+			.content(dmRequest.getContent())
+			.senderId(dmRequest.getSenderId())
+			.receiverId(dmRequest.getReceiverId())
+			.chatGroupId(dmRequest.getChatGroupId())
+			.createdDate(dmRequest.getCreatedDate())
+			.unreadCount(2)
+			.build();
 
 		DirectMessage save = dmRepository.save(directMessage);
 		notificationService.createUnread(save.getReceiverId(), save.getId());
@@ -78,9 +80,11 @@ public class DMService {
 
 	@Transactional
 	public void createChatGroup(Long user1Id, Long user2Id, String roomName) {
+		checkExistGroup(roomName);
+
 		ChatGroup chatGroup = ChatGroup.builder()
-				.chatRoomName(roomName)
-				.build();
+			.chatRoomName(roomName)
+			.build();
 
 		ChatGroup save = chatGroupRepository.save(chatGroup);
 		enterGroup(user1Id, user2Id, save);
@@ -120,6 +124,12 @@ public class DMService {
 		}
 			return message.getUnreadCount();
 
+	}
+
+	public void checkExistGroup(String chatGroupName) {
+		if (getChatGroup(chatGroupName) != null) {
+			throw new CustomException(ErrorCode.DUPLICATE_KEY_ERROR);
+		}
 	}
 
 	protected User getUserById(Long userId) {
