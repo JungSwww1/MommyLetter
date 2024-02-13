@@ -25,7 +25,7 @@ export const loginAPI = async (data:loginDataRequestProps) => {
             const userId = payloadObj.sub;
 
             const fullData = await getUserData(userId);
-            const userData = { nickname: fullData.nickname, userId: userId };
+            const userData = { nickname: fullData.nickname, userId: userId, email:fullData.email };
             localStorage.setItem('Auth', JSON.stringify(userData));
             return Promise.resolve(true);
         }
@@ -56,7 +56,8 @@ export const addConsultInfoAPI = async (userId:number, data:consultDataRequestPr
 //비밀번호 수정
 export const pwdChangeAPI = async (userId:number, data:pwdChangeRequestProps) => {
     try {
-        const response = await axios.patch(`auth/changepwd/${userId}, data`)
+        const response = await axios.patch(`auth/changepwd/${userId}`, data)
+        return response
     } catch (error) {
         handleApiError('비밀번호 수정을 하는 중 오류 발생 : ',error)
     }
