@@ -38,7 +38,6 @@ function Main() {
                 {(isWriteEndpoint && currentPath.includes('board')) && <Write title={"피드"}/>}
                 <Routes>
                     {/*유저관련 라우터*/}
-                    <Route path={"/join"} element={<UserRegist/>}/>
                     <Route path={"/edit"} element={<UserEdit/>}/>
                     <Route path={"/profile"} element={<UserProfile/>}/>
                     <Route path={"/profile/:userId"} element={<OtherProfile/>}/>
