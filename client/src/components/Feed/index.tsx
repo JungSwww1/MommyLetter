@@ -128,24 +128,15 @@ const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
             </ContextContainer>
 
             <PhotoContainer>
-                <div className="w-[60%] h-200[px] m-2">
-                    <img src={logo} alt="Logo" className={"max-h-[200px]"}/>
-                </div>
-                <div className="h-200[px] h-200[px] m-2">
-                    <img src={logo} alt="Logo" className={"max-w-[100%] max-h-[200px]"}/>
-                </div>
-                <div className="h-200[px] h-200[px] m-2">
-                    <img src={logo} alt="Logo" className={"w-[50px] h-[50px]"}/>
-                </div>
-            </PhotoContainer>
-            <PhotoContainer>
                 {board.photoList.map((photo, index) =>{
                     // console.log(`${process.env.PUBLIC_URL}/${photo.path.substring(45)}`); // photo.path 값을 콘솔에 출력
                     return(
-                    <div key={index} className="m-2" style={{width: 'calc(33.333% - 1rem)', float: 'left'}}>
-                        <img src={`${process.env.PUBLIC_URL}/${photo.path.substring(45)}`} alt={`Photo ${index + 1}`} className={"w-full h-full object-cover"}/>
-                    </div>
-                )})}
+                        <div key={index} className="m-2" style={{width: 'calc(33.333% - 1rem)', float: 'left'}}>
+                            <img src={`/boardimages/${photo.path.substring(72)}`} alt={`Photo ${index + 1}`}
+                                 className={"w-full h-full object-cover"}/>
+                        </div>
+                    )
+                })}
             </PhotoContainer>
 
             <HashtagContainer>
