@@ -13,16 +13,10 @@ import {useEffect, useState} from "react";
 import {getFollowerAPI, getFollowingAPI} from "@/apis/Follow/FollowAPI";
 import {getProfileAPI} from "@/apis/profile/ProfileAPI";
 import {useNavigate} from "react-router-dom";
+import Modal from "@/pages/Profile/following/followingModal";
+import Modal1 from "@/pages/Profile/follower/followerModal";
+import {ProfileProps} from "@/pages/type/types";
 
-interface Profile {
-    userId:number;
-    nickname:string;
-    intro:string;
-    backgroundPhoto:string;
-    profilePhoto: string;
-    follower:number;
-    following:number;
-}
 
 const UserProfile = () => {
     const navigate = useNavigate();
@@ -38,7 +32,7 @@ const UserProfile = () => {
     };
     const [authUser, setAuthUser] = useState(getAuthUser());
     // 프로필 정보 가져오기
-    const [profileData, setProfileData] = useState<Profile>({
+    const [profileData, setProfileData] = useState<ProfileProps>({
         userId:0,
         nickname:'',
         intro:'',
@@ -61,6 +55,20 @@ const UserProfile = () => {
     const profileEdit = () => {
         navigate("/edit")
     }
+
+
+    const [showFollowerModal, setShowFollowerModal] = useState(false);
+    const [showFollowingModal, setShowFollowingModal] = useState(false);
+
+    // 팔로워 모달을 표시하거나 숨기는 함수
+    const toggleFollowerModal = () => {
+        setShowFollowerModal(!showFollowerModal);
+    };
+
+    // 팔로잉 모달을 표시하거나 숨기는 함수
+    const toggleFollowingModal = () => {
+        setShowFollowingModal(!showFollowingModal);
+    };
     return (
         <div>
             {/* 본문 */}
@@ -68,12 +76,14 @@ const UserProfile = () => {
                 {/* 배경 사진 */}
                 <BackgroundImg
                     src={logo}
+                    // src={profileData.backgroundPhoto}
                     alt="Logo"
                 />
 
                 {/* 사용자 프로필 부분 */}
                 <ProfileContainer>
                     <Img src={logo} alt="Logo"/>
+                    {/*<Img src={profileData.profilePhoto} alt="Logo"/>*/}
                     <p className={"text-[20px]"}>{profileData.nickname}</p>
                     <p>{profileData.intro}</p>
                     <SubProfileContainer>
@@ -81,13 +91,15 @@ const UserProfile = () => {
                             <p className={'text-[140%]'}>51</p>
                             <p>게시물</p>
                         </div>
-                        <div>
+                        <div onClick={toggleFollowerModal}>
                             <p className={'text-[140%]'}>{profileData.follower}</p>
                             <p>팔로워</p>
+                            {showFollowerModal && <Modal1 onClose={toggleFollowerModal} userId={authUser.userId}/>}
                         </div>
-                        <div>
+                        <div onClick={toggleFollowingModal}>
                             <p className={'text-[140%]'}>{profileData.following}</p>
                             <p>팔로잉</p>
+                            {showFollowingModal  && <Modal onClose={toggleFollowingModal} userId={authUser.userId}/>}
                         </div>
                     </SubProfileContainer>
 

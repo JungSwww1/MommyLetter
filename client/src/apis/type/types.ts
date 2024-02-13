@@ -56,5 +56,5 @@ export interface editBoardRequestProps {
     content: string;
     access: string;
     category: string;
-    hashTagList: { content: string; }[];
+    hashTagList: string[];
 }

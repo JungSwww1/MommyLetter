@@ -3,7 +3,7 @@ import BottomUpModal from "@/components/Feed/FeedEditModal/index";
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {Toast} from "@/components/Toast/Toast";
-import {writeBoardAPI} from "@/apis/Board/boardApi";
+import {editBoardAPI} from "@/apis/Board/boardApi";
 import {BoardProps} from "@/pages/type/types";
 
 
@@ -19,11 +19,12 @@ interface FeedEditProps {
     boardHashTagList: { content: string }[];
 }
 export const FeedEdit: React.FC<FeedEditProps> = ({boardId, boardContent, boardAccess, boardCategory, boardHashTagList}) => {
-    console.log(boardId, boardContent, boardAccess, boardCategory, boardHashTagList)
-    const [content, setContent] = useState("");
     const [user, setUser] = useState<UserProps>({ nickname: '', userId: '' });
+    const [content, setContent] = useState(boardContent);
     const [hashtagInput, setHashtagInput] = useState(""); // 해시태그 입력 상태 추가
-    const [hashtags, setHashtags] = useState<{ content: string; }[]>([]);
+    const [hashtags, setHashtags] = useState<{ content: string; }[]>(boardHashTagList);
+    const [privacy, setPrivacy] = useState(boardAccess);
+    const [category, setCategory] = useState("One");
 
     useEffect(() => {
         const storedAuth = localStorage.getItem('Auth');
@@ -34,23 +35,20 @@ export const FeedEdit: React.FC<FeedEditProps> = ({boardId, boardContent, boardA
     }, []);
 
     const feedEdit = async () => {
-        const formData = new FormData();
         const hashtagList = hashtags.map(tag => tag.content);
 
         const boardRequest = {
-            userId: user.userId,
             content: content,
             access: privacy,
             category:category,
             hashtagList : hashtagList,
         };
-        formData.append('boardRequest', new Blob([JSON.stringify(boardRequest)], { type: "application/json" }));
-        writeBoardAPI(formData).then(response => {
+        await editBoardAPI(boardId, boardRequest).then(response => {
             if (content === "") {
                 Toast.error("내용을 입력하세요");
                 return;
             }
-            Toast.success("작성되었습니다.");
+            Toast.success("수정되었습니다.");
             setContent("");
             setTimeout(() => document.getElementById("closeBtn")?.click(), 800);
         }).catch(error => console.log(error));
@@ -70,8 +68,7 @@ export const FeedEdit: React.FC<FeedEditProps> = ({boardId, boardContent, boardA
     const removeHashtag = (index: number) => {
         setHashtags(prev => prev.filter((_, i) => i !== index));
     };
-    const [privacy, setPrivacy] = useState("All");
-    const [category, setCategory] = useState("One");
+
 
     // 공개 범위와 카테고리 선택 핸들러
     const handlePrivacyChange = (e:any) => {
@@ -83,7 +80,8 @@ export const FeedEdit: React.FC<FeedEditProps> = ({boardId, boardContent, boardA
     };
 
     const writeButton = <button className="btn btn-ghost bg-user hover:bg-MenuColor hover:text-white" onClick={feedEdit}>수정하기</button>
-    const children =
+    return (
+        <BottomUpModal writeButton={writeButton} boardId={boardId}>
         <div className="flex flex-col ml-5 mt-5 w-[98%] h-[100%]">
             <ToastContainer style={{}} position={"top-center"} hideProgressBar={true} autoClose={300}/>
 
@@ -108,7 +106,7 @@ export const FeedEdit: React.FC<FeedEditProps> = ({boardId, boardContent, boardA
             </div>
             <div className="h-[30%]">
                 <textarea onChange={e => setContent(e.target.value)} placeholder="내용을 입력해주세요."
-                          className="shadow-custom-inner border-b-2 text-[17px] h-[100%] w-[97%] ext-[#9d9d9d] rounded-xl p-2"/>
+                          value={content} className="shadow-custom-inner border-b-2 text-[17px] h-[100%] w-[97%] ext-[#9d9d9d] rounded-xl p-2"/>
             </div>
             <div>
                 <input
@@ -128,10 +126,9 @@ export const FeedEdit: React.FC<FeedEditProps> = ({boardId, boardContent, boardA
                     ))}
                 </div>
             </div>
-
         </div>
-    return (
-        <BottomUpModal children={children} writeButton={writeButton}/>
+        </BottomUpModal>
+
     );
 }
 
