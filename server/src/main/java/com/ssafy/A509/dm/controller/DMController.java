@@ -62,12 +62,13 @@ public class DMController {
 	@Operation(
 		summary = "dm 시작",
 		description = "dm이 시작되면 chatGroup 생성(향후 참여 중인 채팅방 리스트 관리에 사용)"
+			+ "chatGroupId 반환"
 	)
 	@GetMapping("/start/{user1Id}/{user2Id}")
-	public ResponseEntity<Void> startDM(@NotNull @PathVariable Long user1Id, @NotNull @PathVariable Long user2Id) {
+	public ResponseEntity<Long> startDM(@NotNull @PathVariable Long user1Id, @NotNull @PathVariable Long user2Id) {
 		String chatGroupName = getMessageKey(user1Id, user2Id);
-		dmService.createChatGroup(user1Id, user2Id, chatGroupName);
-		return ResponseEntity.ok().build();
+		Long chatGroupId = dmService.createChatGroup(user1Id, user2Id, chatGroupName);
+		return ResponseEntity.ok(chatGroupId);
 	}
 
 	@Operation(
@@ -117,14 +118,17 @@ public class DMController {
 		return ResponseEntity.ok(dmService.findAllDMGroupList(userId));
 	}
 
+
 	@Operation(
 		summary = "채팅 기록 조회",
-		description = "chatGroupId로 dm 채팅 기록 조회"
+		description = "사용자 아이디 2개로 dm 채팅 기록 조회"
 	)
-	@GetMapping("/list/{chatGroupId}")
-	public ResponseEntity<List<DMResponse>> getListByUsers(@NotNull @PathVariable Long chatGroupId) {
-		return ResponseEntity.ok(dmService.getChatList(chatGroupId));
+	@GetMapping("/list/{user1Id}/{user2Id}")
+	public ResponseEntity<List<DMResponse>> getListByUsers(@NotNull @PathVariable Long user1Id,
+		@NotNull @PathVariable Long user2Id) {
+		return ResponseEntity.ok(dmService.getListByUsers(user1Id, user2Id));
 	}
+
 
 	private String getMessageKey(Long user1Id, Long user2Id) {
 		return "chat_" + Math.min(user1Id, user2Id) + "_" + Math.max(

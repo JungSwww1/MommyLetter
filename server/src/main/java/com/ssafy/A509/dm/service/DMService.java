@@ -79,7 +79,7 @@ public class DMService {
 	}
 
 	@Transactional
-	public void createChatGroup(Long user1Id, Long user2Id, String roomName) {
+	public Long createChatGroup(Long user1Id, Long user2Id, String roomName) {
 		checkExistGroup(roomName);
 
 		ChatGroup chatGroup = ChatGroup.builder()
@@ -88,6 +88,8 @@ public class DMService {
 
 		ChatGroup save = chatGroupRepository.save(chatGroup);
 		enterGroup(user1Id, user2Id, save);
+
+		return save.getChatGroupId();
 	}
 
 	@Transactional
@@ -125,6 +127,14 @@ public class DMService {
 			return message.getUnreadCount();
 
 	}
+
+	public List<DMResponse> getListByUsers(Long user1Id, Long user2Id) {
+		return dmRepository.getDmListByUsers(user1Id, user2Id, Sort.by(Sort.Direction.DESC, "createdDate")).stream()
+			.map(dm -> modelMapper.map(dm, DMResponse.class))
+			.collect(
+				Collectors.toList());
+	}
+
 
 	public void checkExistGroup(String chatGroupName) {
 		if (getChatGroup(chatGroupName) != null) {
