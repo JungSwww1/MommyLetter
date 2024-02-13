@@ -14,22 +14,17 @@ import com.ssafy.A509.exception.CustomException;
 import com.ssafy.A509.exception.ErrorCode;
 import com.ssafy.A509.hashtag.dto.HashtagResponse;
 import com.ssafy.A509.hashtag.model.Hashtag;
-import com.ssafy.A509.photo.dto.CreatePhotoRequest;
 import com.ssafy.A509.photo.model.Photo;
 import com.ssafy.A509.photo.service.PhotoService;
 import com.ssafy.A509.profile.dto.UserProfileResponse;
 import com.ssafy.A509.profile.service.ProfileService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -81,7 +76,7 @@ public class BoardService {
                 .toList();
 
         boardAll.addAll(boardFollower);
-		boardAll.addAll(boardMe);
+		boardMe.stream().filter(boardResponse -> !boardAll.contains(boardResponse)).map(boardAll::add);
 
         Collections.sort(boardAll, Comparator.comparing(BoardResponse::getCreatedDate).reversed());
         return boardAll;
