@@ -15,7 +15,7 @@ const StyledToastContainer = styled(ToastContainer)`
 
 const defaultToastOption = {
     position: 'top-center',
-    autoClose: 300,
+    autoClose: 200,
     hideProgressBar: true,
     closeOnClick: true,
     draggable: true,

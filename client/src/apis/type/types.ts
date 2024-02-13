@@ -18,9 +18,9 @@ export interface DiaryUpdateRequestProps {
     diaryId: number;
     content: string;
     emoji: number;
-    photoList: string[];
     createdDate: string;
-    emoticonRequest: {
+    photoList: string[];
+    emoticon: {
         emotionList: string[];
         familyList: string[];
         healthList: string[];
