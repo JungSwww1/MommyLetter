@@ -10,12 +10,10 @@ import com.ssafy.A509.follow.dto.FollowingListResponseDTO;
 import com.ssafy.A509.follow.model.Follow;
 import com.ssafy.A509.follow.repository.FollowRepository;
 import com.ssafy.A509.profile.dto.BoardProfileResponse;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.webjars.NotFoundException;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
@@ -109,7 +107,8 @@ public class FollowServiceImpl implements FollowService {
     }
 
 
-    private boolean isAlreadyFollowing(Long followerUserId, Long followingUserId) {
+    @Override
+    public boolean isAlreadyFollowing(Long followerUserId, Long followingUserId) {
         return followRepository.findByFollowerUserIdAndFollowingUserId(followerUserId, followingUserId).isPresent();
     }
 }

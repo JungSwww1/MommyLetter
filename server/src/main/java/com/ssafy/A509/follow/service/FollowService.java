@@ -9,4 +9,6 @@ public interface FollowService {
     void unfollowUser(Long followerUserId, FollowRequestDTO followRequestDTO);
     FollowerListResponseDTO getFollowerList(Long userId);
     FollowingListResponseDTO getFollowingList(Long userId);
+
+    boolean isAlreadyFollowing(Long followerUserId, Long followingUserId);
 }

@@ -45,4 +45,12 @@ public class FollowController {
         FollowingListResponseDTO followingList = followService.getFollowingList(userId);
         return new ResponseEntity<>(followingList, HttpStatus.OK);
     }
+
+    @GetMapping("/check/follow/{user1Id}/{user2Id}")
+    public ResponseEntity<Boolean> isFollow(@PathVariable Long user1Id, @PathVariable Long user2Id) {
+        boolean check = false;
+        check =
+			followService.isAlreadyFollowing(user1Id, user2Id) || (followService.isAlreadyFollowing(user2Id, user1Id));
+        return new ResponseEntity<>(check, HttpStatus.OK);
+    }
 }
