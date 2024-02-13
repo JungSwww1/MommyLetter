@@ -1,50 +1,46 @@
 import React, {useEffect, useRef, useState} from "react";
 import {Button, Img, Label} from './styles';
-import BottomUpModal from "@/components/Modal";
-import {createDiary} from "@/apis/diary/DiaryAPI";
+import {UpdateBottomUpModal} from "@/components/Modal";
+import {updateDiary} from "@/apis/diary/DiaryAPI";
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {Toast} from "@/components/Toast/Toast";
 import {ReactComponent as CircleX} from "@/assets/icons/circleX.svg";
 import {useParams} from "react-router-dom";
-import {DiaryWriteRequestProps} from "@/apis/type/types";
 
-interface DateProps {
-    currYear: number;
-    currMonth: number;
-    currDay: number;
-    refreshDiary: () => void;
-}
+import {DiaryReadResponseProps} from "@/pages/type/types";
+import {DiaryUpdateRequestProps} from "@/apis/type/types";
+
 
 interface UpdateProps {
     currYear: number;
     currMonth: number;
     currDay: number;
     refreshDiary: () => void;
-    diary: DiaryWriteRequestProps;
+    diary: DiaryReadResponseProps;
+    setDiaryList: (e:any)=>void;
+    diaryList:DiaryReadResponseProps[];
 }
 
 interface UserProps {
     nickname: string;
-    userId: string;
+    userId: number;
 }
 
-export const DiaryWrite: React.FC<DateProps> = (props) => {
+export const DiaryUpdate: React.FC<UpdateProps> = (props) => {
     const [emotion, setEmotion] = useState(99);
     const [content, setContent] = useState("");
     const [imgFiles, setImgFiles] = useState<File[]>([]);
     const imgRef = useRef<HTMLInputElement>(null);
     const [previews, setPreviews] = useState<string[]>([]);
-    const [user, setUser] = useState<UserProps>({nickname: '', userId: ''}); // UserProps로 수정
-    const {currYear, currMonth, currDay, refreshDiary} = props;
+    const [user, setUser] = useState<UserProps>({nickname: '', userId: 0}); // UserProps로 수정
+    const {currYear, currMonth, currDay, diary, refreshDiary} = props;
     const param = useParams()["*"];
-
-
-    const emojiArr: string[] = [];
-    const path = "/assets/images/"
-    const emotionImg = ["1sad.png", "2lonely.png", "3irritated.png", "4tired.png", "5angry.png", "6soso.png", "7delight.png", "8calm.png", "9delight.png", "10excited.png"]
-    for (let i = 0; i < 10; i++) {
-        emojiArr[i] = path + emotionImg[i];
+    const emojiArr:string[] = [];
+    const path ="/assets/images/"
+    const emotionImg = ["1sad.png","2lonely.png","3irritated.png","4tired.png","5angry.png","6soso.png","7delight.png","8calm.png","9delight.png","10excited.png"]
+    for(let i = 0; i<10; i++){
+        emojiArr[i] = path+emotionImg[i];
     }
     useEffect(() => {
         const storedAuth = localStorage.getItem('Auth');
@@ -52,8 +48,17 @@ export const DiaryWrite: React.FC<DateProps> = (props) => {
             const parsedAuth: UserProps = JSON.parse(storedAuth);
             setUser(parsedAuth);
         }
+        setContent(diary.content);
+        clickedEmotion(diary.emoji);
 
-    }, []);
+        const tempFiles = diary.photoList.map((photo)=>photo.path.substring(42,));
+        console.log("../../4../",tempFiles[0]);
+
+        setPreviews(tempFiles);
+
+    }, [diary]);
+
+
     const saveImgFiles = async (e: any) => {
         const files: FileList = e.target.files;
 
@@ -66,7 +71,9 @@ export const DiaryWrite: React.FC<DateProps> = (props) => {
             }
 
             // 파일이 유효하다면 미리보기 설정 및 파일 설정
+
             await setPreviews(prevFiles => [...prevFiles, URL.createObjectURL(file)]);
+
             await setImgFiles(imgFiles => [...imgFiles, file]);
 
         });
@@ -89,43 +96,35 @@ export const DiaryWrite: React.FC<DateProps> = (props) => {
         })
         return err
     }
-    // X버튼을 눌렀을때 EventListener
-    const closeBtn = document.getElementById('closeBtn');
-    closeBtn?.addEventListener('click', function () {
-        setContent("");
-        setEmotion(99);
-        setImgFiles([]);
-        setPreviews([]);
-    });
-    const diaryWrite = async () => {
+
+    const diaryUpdate = async () => {
+
         const createdDate = new Date(currYear, currMonth - 1, currDay + 1);
 
         const formData = new FormData();
-
-        imgFiles.forEach((file) => {
-            formData.append('uploadFiles', file);
-
+        previews.map((object:any) => object).forEach((file) => {
+            formData.append('uploadFiles', file.toString().substring(27,));
         });
-        const category = param ? param?.charAt(0).toUpperCase() + param?.substring(1,) : "Mom";
-        const diaryRequest = {
-            userId: user.userId,
+
+        diary.emoticon?.weatherList
+        const diaryRequest: DiaryUpdateRequestProps = {
+            diaryId: diary.diaryId,
             content: content,
-            category: category,
-            createdDate: createdDate.toISOString(),
             emoji: emotion,
+            createdDate: createdDate.toISOString(),
+            photoList: previews.map((file:any)=>file.path),
             emoticon: {
-                emotionList: ["Joy"],
-                familyList: ["Harmony"],
-                healthList: ["Healthy"],
-                peopleList: ["Family"],
-                weatherList: ["Clear"],
-            }
-        }
+                emotionList: (diary.emoticon?.emotionList ?? []).map((object: any) => object.emotion),
+                familyList: (diary.emoticon?.familyList ?? []).map((object: any) => object.family),
+                healthList: (diary.emoticon?.healthList ?? []).map((object: any) => object.health),
+                peopleList: (diary.emoticon?.peopleList ?? []).map((object: any) => object.people),
+                weatherList: (diary.emoticon?.weatherList ?? []).map((object: any) => object.weather),
+            },
+        };
 
         formData.append('diaryRequest', new Blob([JSON.stringify(diaryRequest)], {
             type: "application/json"
         }));
-
         if (content === "") {
             Toast.error("내용을 입력하세요")
             return;
@@ -134,17 +133,18 @@ export const DiaryWrite: React.FC<DateProps> = (props) => {
             Toast.error("이모지를 클릭해주세요")
             return;
         }
-        createDiary(formData).then((response) => {
 
-            setContent("");
-            setEmotion(99);
-            setImgFiles([]);
-            setPreviews([]);
+        // props.setDiaryList(tempDiaryList);
+        updateDiary(user.userId,formData).then((response) => {
+
+
+            Toast.success("작성되었습니다.");
+
             setTimeout(() => {
-                Toast.success("작성되었습니다.");
-                document.getElementById("closeBtn")?.click(); // 모달닫기
-                refreshDiary();
-            }, 500)
+                document.getElementById("updateCloseBtn")?.click(); // 모달닫기
+
+
+            }, 800)
         }).catch((error) => {
             console.log(error);
         });
@@ -166,35 +166,34 @@ export const DiaryWrite: React.FC<DateProps> = (props) => {
     const clickedEmotion = (num: number) => {
         setEmotion(num);
     }
-    const writeButton = <button className="btn btn-ghost bg-user" onClick={diaryWrite}>작성하기</button>
-    const children = <div className="flex flex-col ml-2 mt-5 w-[98%] h-[100%]">
-
+    const writeButton = <button className="btn btn-ghost bg-user" onClick={diaryUpdate}>작성하기</button>
+    const children = <div className="flex flex-col ml-5 mt-5 w-[98%] h-[100%]">
         <ToastContainer style={{}} position={"top-center"} hideProgressBar={true} autoClose={300}/>
 
-
-        <p className="text-[15px] font-bold text-black">날짜</p>
+        <p className="text-[15px] font-bold text-black">선택 날짜</p>
         <div className="flex justify-around mb-3">
             <p className="font-bold">{currYear}</p>
             <p className="font-bold">{currMonth}</p>
             <p className="font-bold">{currDay}</p>
-        </div>
 
-        <p className="text-[15px] font-bold text-black mt-5"> 어떤 하루였나요? </p>
+        </div>
+        <p className="text-[15px] font-bold text-black mt-5"> 오늘의 기분 </p>
 
         <div className="flex justify-around ">
             {emojiArr.slice(0, 5).map((emoji, index) => (
                 <Button key={index} className={emotion === index ? "bg-gray-300" : ""}
                         onClick={() => clickedEmotion(index)}>
                     <Img src={`${emoji}`}/>
-                </Button>))}
+                </Button>
+            ))}
         </div>
-
         <div className="flex justify-around ">
             {emojiArr.slice(5, 10).map((emoji, index) => (
                 <Button key={index} className={emotion === index + 5 ? "bg-gray-300" : ""}
                         onClick={() => clickedEmotion(index + 5)}>
                     <Img src={`${emoji}`}/>
-                </Button>))}
+                </Button>
+            ))}
         </div>
         <br/>
         <div className="h-[30%]">
@@ -220,7 +219,7 @@ export const DiaryWrite: React.FC<DateProps> = (props) => {
                             }}>
                         <CircleX/>
                     </button>
-                    <img src={preview} className="w-[150px] aspect-[1]"/>
+                    <img src={`../../../${preview}`} className="w-[150px] aspect-[1]"/>
                 </div>))}
             </div>
 
@@ -228,6 +227,6 @@ export const DiaryWrite: React.FC<DateProps> = (props) => {
     </div>
     return (
 
-        <BottomUpModal children={children} writeButton={writeButton}/>);
+        <UpdateBottomUpModal children={children} writeButton={writeButton}/>);
 }
 

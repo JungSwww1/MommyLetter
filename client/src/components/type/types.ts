@@ -19,7 +19,7 @@ export interface UserListCardComponentProps{
 };
 
 export interface DirectMessageComponentProps {
-    type: 'chat-start' | 'chat-end';
+    type: boolean;
     name: string;
     time: string;
     message: string;
@@ -49,5 +49,5 @@ export interface DirectMessageCardProps{
     profileUrl: string;
     date: string;
     content: string;
-    roomNumber: number;
+    chatGroupId: number;
 }
