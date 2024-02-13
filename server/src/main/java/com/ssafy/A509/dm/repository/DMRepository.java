@@ -12,12 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DMRepository extends MongoRepository<DirectMessage, Long> {
 	Optional<DirectMessage> findById(String id);
-	@Query("{'$or': [{'senderId': ?0}, {'receiverId': ?0}]}")
-	List<DirectMessage> findByUserId(Long userId);
-
-	List<DirectMessage> findBySenderId(Long senderId);
-	List<DirectMessage> findByReceiverId(Long senderId);
-
 	List<DirectMessage> findAllByChatGroupIdAndCreatedDateGreaterThanEqual(Long chatGroupId, LocalDateTime createdDate);
 
 	DirectMessage findFirstByChatGroupIdOrderByCreatedDateDesc(Long chatGroupId);
@@ -26,5 +20,9 @@ public interface DMRepository extends MongoRepository<DirectMessage, Long> {
 	List<DirectMessage> findChatsBeforeDateAndGroupWithUnreadCount(Long chatGroupId, LocalDateTime createdDate);
 
 	List<DirectMessage> getDmListByChatGroupId(Long chatGroupId, Sort sort);
+
+	@Query("{'$or': [{'senderId': ?0, 'receiverId': ?1}, {'senderId': ?1, 'receiverId': ?0}]}")
+	List<DirectMessage> getDmListByUsers(Long user1Id, Long user2Id, Sort sort);
+
 
 }
