@@ -13,4 +13,5 @@ public class DMUserResponse {
 	private Long chatGroupId;
 	private String chatRoomName;
 	private LocalDateTime createdDate;
+	private DMResponse dmResponse;
 }

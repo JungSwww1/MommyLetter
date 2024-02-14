@@ -42,7 +42,12 @@ public class DMService {
 		user.getGroups().forEach(chatGroup -> {
 			String chatRoomName = chatGroup.getChatRoomName();
 			if (chatRoomName.startsWith("chat_")) {
-				chatGroupList.add(modelMapper.map(chatGroup, DMUserResponse.class));
+				DMUserResponse dmUserResponse = modelMapper.map(chatGroup, DMUserResponse.class);
+				DMResponse dmResponse = dmRepository.findFirstByChatGroupIdOrderByCreatedDateDesc(chatGroup.getChatGroupId())
+					.map(directMessage -> modelMapper.map(directMessage, DMResponse.class))
+					.orElse(null);
+				dmUserResponse.setDmResponse(dmResponse);
+				chatGroupList.add(dmUserResponse);
 			}
 		});
 		return chatGroupList;
@@ -56,7 +61,7 @@ public class DMService {
 	}
 
 	public DirectMessage getLatestMessage(Long chatGroupId) {
-		return dmRepository.findFirstByChatGroupIdOrderByCreatedDateDesc(chatGroupId);
+		return dmRepository.findFirstByChatGroupIdOrderByCreatedDateDesc(chatGroupId).get();
 	}
 
 	public ChatGroup getChatGroup(String chatRoomName) {
@@ -120,11 +125,11 @@ public class DMService {
 
 	@Transactional
 	public int readMessageAndGetCount(DirectMessage message, List<Long> users) {
-		if(users!=null) {
+		if (users != null) {
 			users.forEach(message::addReader);
 			dmRepository.save(message);
 		}
-			return message.getUnreadCount();
+		return message.getUnreadCount();
 
 	}
 
