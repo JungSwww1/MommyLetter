@@ -57,7 +57,7 @@ const DiaryBabyPage: React.FC<Props> = ({diaryList, setDiaryList, refreshDiary, 
         deleteDiary(selectedDiaryId);
         const temp = diaryList.filter((diary) => diary.diaryId !== selectedDiaryId);
         setDiaryList(temp);
-        alert("db문제로 삭제안됨")
+
         setModal(false);
     }
     const deleteLayout = (
