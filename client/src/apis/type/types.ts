@@ -123,8 +123,6 @@ export interface PatientDetailRes{
 
 }
 
-export interface FollowRes {
-    userId:number;
 export interface DoctorRes{
     "userId": number;
     "doctorId": number;
@@ -144,4 +142,7 @@ interface consultInfo {
     "pregnancyStatus": string,
     "extra": string;
     "diaryOpen": boolean;
+}
+export interface FollowRes {
+    userId:number;
 }
