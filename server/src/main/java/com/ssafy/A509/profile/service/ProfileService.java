@@ -20,4 +20,5 @@ public interface ProfileService {
 
     DoctorProfileResponse getDoctorProfile(Long doctorId);
 
+    DoctorProfileResponse getUserDoctorProfile(Long userId);
 }
