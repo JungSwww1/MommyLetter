@@ -1,4 +1,5 @@
-import logo from '@/assets/images/sample1.jpg'
+import logo from '@/assets/images/basicprofile.jpeg'
+import back from '@/assets/images/basicbackground.png'
 import {
     BackgroundImg,
     Container,
@@ -15,6 +16,8 @@ import {getProfileAPI} from "@/apis/profile/ProfileAPI";
 import {useEffect, useState} from "react";
 import Modal1 from "@/pages/Profile/follower/followerModal";
 import Modal from "@/pages/Profile/following/followingModal";
+import {isFollowAPI} from "@/apis/Follow/FollowAPI";
+
 
 const UserProfile = () => {
     const navigate = useNavigate();
@@ -54,7 +57,6 @@ const UserProfile = () => {
                 }
             } catch (error) {
                 console.error('프로필 데이터를 가져오는 데 실패했습니다.', error);
-                // 오류 처리 로직...
             }
         };
         fetchProfileData();
@@ -73,19 +75,43 @@ const UserProfile = () => {
         setShowFollowingModal(!showFollowingModal);
     };
 
+    //팔로잉 확인 여부
+    const[isFollow, setIsFollow] = useState(false)
+    const[event, setEvent] = useState(0)
+    useEffect (()=> {
+        const fetchFollow = async () => {
+            const userIdNumber = userId ? parseInt(userId, 10) : null;
+            if (!userIdNumber) {
+                console.log('userId가 유효한 숫자가 아닙니다.');
+                return;
+            }
+            try {
+                const res = await isFollowAPI(authUser, userIdNumber)
+                setIsFollow(res)
+            } catch (error) {
+                console.error('프로필 데이터를 가져오는 데 실패했습니다.', error);
+            }
+        }
+    },[userId, event])
+    const handleFollow = () => {
+        setEvent(1)
+    }
+    const background = profileData.backgroundPhoto
+        ? `/profileimages/${profileData.backgroundPhoto.substring(72)}`
+        : back;
+    const profile = profileData.profilePhoto
+        ? `/profileimages/${profileData.profilePhoto.substring(72)}`
+        : logo;
     return (
         <div>
             {/* 본문 */}
             <Container>
                 {/* 배경 사진 */}
-                <BackgroundImg
-                    src={logo}
-                    alt="Logo"
-                />
+                <BackgroundImg src={background} alt="background"/>
 
                 {/* 사용자 프로필 부분 */}
                 <ProfileContainer>
-                    <Img src={logo} alt="Logo"/>
+                    <Img src={profile} alt="profile"/>
                     <p className={"text-[20px]"}>{userId}</p>
                     <p>{profileData.intro}</p>
                     <SubProfileContainer>
@@ -106,7 +132,9 @@ const UserProfile = () => {
                     </SubProfileContainer>
 
                     <SubProfileContainer>
-                        <ProfileButton>프로필 편집</ProfileButton>
+                        <ProfileButton onClick={handleFollow}>
+                            {isFollow ? '팔로잉' : '팔로우'}
+                        </ProfileButton>
                         <ProfileButton>프로필 공유</ProfileButton>
                     </SubProfileContainer>
 

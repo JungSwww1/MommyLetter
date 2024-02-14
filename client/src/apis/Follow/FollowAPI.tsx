@@ -20,6 +20,21 @@ export const getFollowingAPI = async (userId:number) => {
     }
 }
 
+//팔로우 확인 여부
+export const isFollowAPI = async (user1Id:number, user2Id:number) => {
+    try {
+        const response = await axios.get(`${FOLLOW_BASE_URL}/check/follow/${user1Id}/${user2Id}`)
+        const isFollow = response.data
+        if(isFollow) {
+            return Promise.resolve(true);
+        } else {
+            return Promise.resolve(false);
+        }
+    } catch (error) {
+        handleApiError('팔로우 확인을 하는 중 오류 발생 : ', error)
+        return Promise.reject(false);
+    }
+}
 
 const handleApiError = (message:any, error:any) => {
     console.error(`${message}:`, error);
