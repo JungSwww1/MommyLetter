@@ -9,8 +9,10 @@ export const ProfileImg = styled.img`
 
 export const Input = styled.input`
     bg-white
-    shadow-inner
-    md:shadow md:w-[100%] md:h-9 md:rounded-2xl
+    shadow-custom-inner
+    border-b-2
+    p-3
+    rounded-2xl
     pl-[4%]
 `
 

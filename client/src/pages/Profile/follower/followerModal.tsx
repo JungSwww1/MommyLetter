@@ -3,6 +3,7 @@ import {getFollowerAPI} from "@/apis/Follow/FollowAPI";
 import './Modal.css'
 import {CommentContainer, MainContainer, SubContainer, SubDiv, SubWrapper} from "@/components/Feed/CommentModal/styles";
 import {useNavigate} from "react-router-dom";
+import logo from "@/assets/images/basicprofile.jpeg";
 
 interface ModalProps {
     onClose: () => void;
@@ -50,6 +51,10 @@ const FollowerModal: FC<ModalProps>  = ({ onClose ,  userId }) => {
                     {followers.map((follow: follow, index) => (
                         <CommentContainer key={index}>
                             <MainContainer onClick={()=>clickMove(follow.userId)}>
+                                <img src={follow.profilePhoto ? `/profileimages/${follow.profilePhoto.substring(88)}` : logo}
+                                     alt="profilephoto"
+                                     className = "w-[20%] mr-[5%] rounded-full"
+                                />
                                 <div className={"ml-[2%] mr-[3%]"}>{follow.nickname}</div>
                                 <p>{follow.userId}</p>
                             </MainContainer>

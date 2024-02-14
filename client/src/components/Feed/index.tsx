@@ -32,7 +32,6 @@ interface MainFeedProps {
 }
 
 const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
-    console.log(board.accountSimpleReponse.profilePhoto)
     const navigate = useNavigate()
     //댓글 가져오는 용도
     const [comments, setComments] = useState<CommentProps[]>([])
@@ -46,7 +45,6 @@ const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
         }
         fetchComments();
     }, [board.boardId]);
-
 
     //게시물 좋아요 버튼 용도
     const likeData = {
@@ -103,7 +101,10 @@ const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
         <Layout>
             <TitleContainer>
                 <TitleWrapper onClick={()=>moveProfile(board.accountSimpleReponse.userId)}>
-                    <img src={logo} alt="Logo" className={"w-[50px] h-[50px] rounded-full"}/>
+                    <img src={board.accountSimpleReponse.profilePhoto ? `/profileimages/${board.accountSimpleReponse.profilePhoto.substring(88)}` : logo}
+                         alt="Logo"
+                         className={"w-[50px] h-[50px] rounded-full"}
+                    />
                     <p className={"text-[16px] font-bold"}>{board.accountSimpleReponse.nickname}</p>
                 </TitleWrapper>
                 <TitleRightWrapper>
@@ -133,7 +134,6 @@ const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
 
             <PhotoContainer>
                 {board.photoList.map((photo, index) =>{
-                    // console.log(`${process.env.PUBLIC_URL}/${photo.path.substring(45)}`); // photo.path 값을 콘솔에 출력
                     return(
                         <div key={index} className="m-2" style={{width: 'calc(33.333% - 1rem)', float: 'left'}}>
                             <img src={`/boardimages/${photo.path.substring(72)}`} alt={`Photo ${index + 1}`}

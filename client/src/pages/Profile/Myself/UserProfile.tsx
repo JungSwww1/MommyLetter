@@ -68,7 +68,7 @@ const UserProfile = () => {
     };
     // 배경사진 및 프사용
     const background = profileData.backgroundPhoto
-        ? `/profileimages/${profileData.backgroundPhoto.substring(88)}`
+        ? `/backgroundimages/${profileData.backgroundPhoto.substring(91)}`
         : back;
     const profile = profileData.profilePhoto
         ? `/profileimages/${profileData.profilePhoto.substring(88)}`

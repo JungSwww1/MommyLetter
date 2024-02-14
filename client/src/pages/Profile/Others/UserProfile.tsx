@@ -114,7 +114,7 @@ const UserProfile = () => {
     }
 
     const backgroundPhotoUrl = profileData.backgroundPhoto
-        ? `/profileimages/${profileData.backgroundPhoto.substring(88)}`
+        ? `/backgroundimages/${profileData.backgroundPhoto.substring(91)}`
         : back;
     const profilePhotoUrl = profileData.profilePhoto
         ? `/profileimages/${profileData.profilePhoto.substring(88)}`

@@ -64,7 +64,7 @@
         }
 
         const background = incomeData.backgroundPhoto
-            ? `/profileimages/${incomeData.backgroundPhoto.substring(88)}`
+            ? `/backgroundimages/${incomeData.backgroundPhoto.substring(91)}`
             : back;
         const profile = incomeData.profilePhoto
             ? `/profileimages/${incomeData.profilePhoto.substring(88)}`
