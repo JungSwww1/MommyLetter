@@ -3,6 +3,7 @@ package com.ssafy.A509.profile.controller;
 
 import com.ssafy.A509.profile.dto.*;
 import com.ssafy.A509.profile.service.ProfileService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,9 +47,23 @@ public class ProfileController {
         return ResponseEntity.ok(doctorProfileCards);
     }
 
-    @GetMapping("/doctors/{userId}")
+    @Operation(
+        summary = "DoctorId를 통해 profile 얻기",
+        description = "{doctorId}에 대응하는 DoctorProfile 반환"
+    )
+    @GetMapping("/doctors/{doctorId}")
     public ResponseEntity<DoctorProfileResponse> getDoctorProfile(@PathVariable Long doctorId) {
         DoctorProfileResponse doctorProfile = profileService.getDoctorProfile(doctorId);
+        return ResponseEntity.ok(doctorProfile);
+    }
+
+    @Operation(
+        summary = "User가 Doctor이면 profile 얻기",
+        description = "{userId}에 대응하는 DoctorProfile 반환"
+    )
+    @GetMapping("/doctors/user/{userId}")
+    public ResponseEntity<DoctorProfileResponse> getUserDoctorProfile(@PathVariable Long userId) {
+        DoctorProfileResponse doctorProfile = profileService.getUserDoctorProfile(userId);
         return ResponseEntity.ok(doctorProfile);
     }
 }

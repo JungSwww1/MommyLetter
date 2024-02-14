@@ -94,6 +94,18 @@ public class ProfileServiceImpl implements ProfileService {
             throw new CustomException(ErrorCode.NO_SUCH_DOCTOR, "doctorId: " + doctorId);
         }
     }
+
+    @Override
+    public DoctorProfileResponse getUserDoctorProfile(Long userId) {
+        Profile doctorProfile = profileRepository.findByUserId(userId);
+        if(doctorProfile != null && doctorProfile.getUser().getRole() == Role.Doctor){
+            return getDoctorProfileResponse(doctorProfile);
+        }else{
+            throw new CustomException(ErrorCode.NOT_DOCTOR, "userId: " + userId);
+        }
+
+    }
+
     private static DoctorProfileResponse getDoctorProfileResponse(Profile doctorProfile) {
         DoctorProfileResponse profileResponse = new DoctorProfileResponse();
         profileResponse.setUserId(doctorProfile.getUserId());
