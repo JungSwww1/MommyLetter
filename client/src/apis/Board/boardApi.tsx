@@ -1,5 +1,5 @@
 import LocalAxios from "@/util/localAxios";
-import {editBoardRequestProps, sendBoardRequestProps} from "@/apis/type/types";
+import {EditBoardRequestProps, SendBoardRequestProps} from "@/apis/type/types";
 
 
 const axios = LocalAxios();
@@ -77,7 +77,7 @@ export const countBoardLike = async(boardId:number) => {
 }
 
 // 게시물 좋아요 누르기
-export const sendBoardLikeAPI = async(data:sendBoardRequestProps) => {
+export const sendBoardLikeAPI = async(data:SendBoardRequestProps) => {
     try{
         const response = await axios.post(`likes/boards`,data)
     } catch (error) {

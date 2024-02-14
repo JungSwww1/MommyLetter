@@ -7,20 +7,15 @@ import {ReactComponent as Trash} from "@/assets/icons/trash.svg";
 import {ReactComponent as Edit} from "@/assets/icons/edit.svg";
 import {DiaryUpdate} from "@/pages/Diary/DiaryUpdate";
 
-interface UserProps {
-    nickname: string;
-    userId: string;
-}
-
 interface Props {
     diaryList: DiaryReadResponseProps[];
     setDiaryList: (e: any) => void;
     refreshDiary: () => void;
-    user: UserProps;
+    userId: number;
 
 }
 
-const DiaryBabyPage: React.FC<Props> = ({diaryList, setDiaryList, refreshDiary, user}) => {
+const DiaryBabyPage: React.FC<Props> = ({diaryList, setDiaryList, refreshDiary, userId}) => {
     const [events, setEvents] = useState<any[]>([]);
 
     const [displayedDiaryList, setDisplayedDiaryList] = useState<DiaryReadResponseProps[]>([]);
@@ -92,7 +87,7 @@ const DiaryBabyPage: React.FC<Props> = ({diaryList, setDiaryList, refreshDiary, 
                     emoji: diary.emoji,
                     uploadFiles: diary.photoList,
                     category: diary.category,
-                    userId: user.userId,
+                    userId: userId,
                     emotionList: diary.emoticon?.emotionList,
                     familyList: diary.emoticon?.familyList,
                     healthList: diary.emoticon?.healthList,
@@ -103,7 +98,7 @@ const DiaryBabyPage: React.FC<Props> = ({diaryList, setDiaryList, refreshDiary, 
         });
         setDisplayedDiaryList(categoryDiaryList);
         setEvents(newEvents);
-    }, [diaryList, user]);
+    }, [diaryList, userId]);
 
     return (<div>
 

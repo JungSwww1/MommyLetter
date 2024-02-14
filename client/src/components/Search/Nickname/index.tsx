@@ -56,7 +56,7 @@ const NicknameComponent: React.FC<{ nicknameList: NicknameProps[] }> = ({nicknam
     return (<div className="w-[100%]">
             {nicknameList.map((nicknameItem, index) => (
                 <div key={index} className="flex justify-between items-center ml-5 h-[13%] w-[100%] ">
-                    <img className="w-[15%]  rounded-full hover:scale-125 duration-300" src={`${nicknameItem.profilePhoto  ? "/userimages/"+nicknameItem.profilePhoto.substring(72,) : "/assets/images/default_image.png"}`} />
+                    <img className="w-[15%]  rounded-full hover:scale-125 duration-300" src={`${nicknameItem.profilePhoto  ? "/profileimages/"+nicknameItem.profilePhoto.substring(72,) : "/assets/images/default_image.png"}`} />
                     <button onClick={() => goProfile(nicknameItem.userId)}
                             className="duraaation-300 hover:scale-125 duration-300">{nicknameItem.nickname}</button>
                     <button onClick={() => goDm(nicknameItem.userId)}

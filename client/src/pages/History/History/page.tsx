@@ -1,7 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {BackPageSection, DoctorProfileSection, HistoryLayout} from "@/pages/History/History/styles";
-
-
 import {ReactComponent as Left} from "@/assets/icons/chevron-left.svg"
 import {useParams} from "react-router-dom";
 import {fetchHistoryDetail} from "@/apis/history/HistoryAPI";
@@ -20,15 +17,15 @@ const HistoryPage = () => {
     //     })
     // }, [param.id])
     console.log(historyDetail);
-    return (<HistoryLayout>
-        <BackPageSection>
+    return (<div className="flex flex-col h-[100%] w-[100%]">
+        <div className="flex items-center h-[10%] bg-user">
             <Left/>
-        </BackPageSection>
-        <DoctorProfileSection>
+        </div>
+        <div className="h-[30%]">
             {historyDetail &&
                 <DoctorListCard  date={historyDetail.location} img="/assets/images/seungwon.png"
                                 name={historyDetail.doctorName} department={historyDetail.department}/>}
-        </DoctorProfileSection>
+        </div>
         {historyDetail && <div
             className="flex flex-col w-[100%] h-[100%] p-3 rounded-tl-[20px] rounded-tr-[20px] bg-[#fffaf2]"
             // style={{boxShadow: "0px -4px 4px 0 rgba(0,0,0,0.25)"}}
@@ -44,12 +41,12 @@ const HistoryPage = () => {
             <span className="font-bold text-pointColor">처방전</span>
             {historyDetail.prescriptionPath}
 
-                <img src="/assets/images/처방전.png"/>
+                <img src="/assets/images/prescription.png"/>
                 <p className="text-blue-600">다운로드</p>
             
         </div>}
 
-    </HistoryLayout>);
+    </div>);
 };
 
 export default HistoryPage;

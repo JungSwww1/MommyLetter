@@ -19,10 +19,12 @@ import palette from "@/lib/styles/colorPalette";
 // 평상시에 보여줄 화면
 export const Header = () => {
     const [isDoctor, setIsDoctor] = useState<boolean>(false);
+    const [userId, setUserId] = useState<number>()
     const [isBlue, setIsBlue] = useState<boolean>()
     const param = useParams()["*"];
     useEffect(() => {
         setIsDoctor(MommyLetterWS.getInstance().getUserInfo().role==="Doctor");
+        setUserId(Number(MommyLetterWS.getInstance().getUserInfo().userId));
     }, [isDoctor]);
     useEffect(() => {
         if(!param) return;
@@ -36,7 +38,7 @@ export const Header = () => {
                 <Link to={""}><p className={`${isBlue ? "text-white" : "text-MenuColor" } font-bold text-[20px]`}>Mommy Letter</p></Link>
             </div>
             <Link className="" to={"/message"}><Message fill={`${isBlue ? "white" : palette.MenuColor}`}/></Link>
-            {!isDoctor &&<Link to={"/diary/mom"}><Diary fill={`${isBlue ? "white" : palette.MenuColor}`}/></Link>}
+            {!isDoctor &&<Link to={`${userId}/diary`}><Diary fill={`${isBlue ? "white" : palette.MenuColor}`}/></Link>}
 
             <HamburgerButton>
                 <Hamburger stroke={`${isBlue ? "white" : palette.MenuColor}`}/>

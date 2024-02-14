@@ -87,7 +87,5 @@ export interface ProfileProps {
 }
 
 export interface UserProps {
-    nickname: string;
     userId: string;
-    role: string;
 }
