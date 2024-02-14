@@ -1,8 +1,13 @@
 import {DiaryLayout} from "@/pages/Diary/DiaryWrite/styles";
-import {useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {useNavigate, useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
 
 const DiaryHeader = () => {
+    const param = useParams()["*"];
+    useEffect(() => {
+
+    }, [param]);
+    console.log(param);
     const [isToggled, setToggled] = useState(false);
     const navigate = useNavigate();
     const handleToggle = () => {

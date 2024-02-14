@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Link} from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 import DirectMessageCard from "@/components/DirectMessageCard";
-import { fetchChatList, fetchDMList } from "@/apis/DM/DMAPI";
-import { MommyLetterWS } from "@/apis/ws/MommyLetterWS";
-import { getProfileAPI } from "@/apis/profile/ProfileAPI";
-import DirectMessageDetailPage from "@/pages/DirectMessage/DirectMessageDetail/page";
+import {fetchChatList, fetchDMList} from "@/apis/DM/DMAPI";
+import {MommyLetterWS} from "@/apis/ws/MommyLetterWS";
+import {getProfileAPI} from "@/apis/profile/ProfileAPI";
 
 interface DMResProps {
     "chatGroupId": number,
@@ -39,40 +38,36 @@ const DirectMessageList = () => {
     useEffect(() => {
         const fetchOpponentsData = async () => {
             const opponentsData: OpponentResProps[] = [];
-
             for (const dm of dmList) {
                 const chatGroupName = dm.chatRoomName.split("_")
                 const opponentId = chatGroupName[2] == user["userId"] ? Number(chatGroupName[1]) : Number(chatGroupName[2]);
-                console.log(chatGroupName);
-                console.log(opponentId);
                 const profileRes = await getProfileAPI(opponentId);
-
                 const chatListRes = await fetchChatList(Number(user["userId"]), opponentId);
 
-
-                if(chatListRes[0]){
-                    const chatListResEntity = { content: chatListRes[0].content, createdDate: chatListRes[0].createdDate};
-                    const response: OpponentResProps = { ...profileRes, ...chatListResEntity, chatGroupId: dm.chatGroupId };
+                if (chatListRes[0]) {
+                    const chatListResEntity = {
+                        content: chatListRes[0].content, createdDate: chatListRes[0].createdDate
+                    };
+                    const response: OpponentResProps = {
+                        ...profileRes, ...chatListResEntity, chatGroupId: dm.chatGroupId
+                    };
                     opponentsData.push(response);
                 }
-
             }
-
             setOpponents(opponentsData);
         };
-
         fetchOpponentsData();
     }, [dmList]);
 
-    return (
-        <div className="flex flex-col justify-center items-center w-[100%]">
-            {opponents && opponents.map((opponent, index) => (
-                <Link key={index} className="w-[100%] hover:bg-gray-100" to={`${opponent.chatGroupId}`}>
-                    <DirectMessageCard profileUrl={opponent.profilePhoto} nickname={opponent.nickname} content={opponent.content} date={new Date(opponents[0].createdDate).getTime().toString()} chatGroupId={opponent.chatGroupId}/>
-                </Link>
-            ))}
-        </div>
-    );
+    return (<div className="flex flex-col justify-center items-center w-[100%]">
+        {opponents && opponents.sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()).map((opponent, index) => (
+            <Link key={index} className="w-[100%] hover:bg-gray-100" to={`${opponent.chatGroupId}`}>
+                <DirectMessageCard profileUrl={`${opponent.profilePhoto  ? "/userimages/"+opponent.profilePhoto.substring(72,) : "/assets/images/default_image.png"}`} nickname={opponent.nickname}
+                                   content={opponent.content}
+                                   date={new Date(opponent.createdDate).getTime().toString()}
+                                   chatGroupId={opponent.chatGroupId}/>
+            </Link>))}
+    </div>);
 };
 
 export default DirectMessageList;

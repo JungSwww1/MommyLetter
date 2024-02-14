@@ -1,5 +1,5 @@
-import React, {FC} from "react";
-import {Link, useNavigate} from 'react-router-dom';
+import React, {FC, useEffect, useState} from "react";
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import {HeaderItem, HeaderLayout, NavigationItem, NavigationLayout, WriteItem, WriteLayout} from "./styles"
 import HamburgerButton from "@/components/HamburgerButton/index"
 import {ReactComponent as Feed} from "@/assets/icons/feed.svg"
@@ -10,23 +10,39 @@ import {ReactComponent as X} from "@/assets/icons/x.svg"
 import Search from "@/assets/icons/search";
 import Logo from "@/assets/icons/logo";
 import Message from "@/assets/icons/message";
+import {MommyLetterWS} from "@/apis/ws/MommyLetterWS";
+import Hamburger from "@/assets/icons/Hamburger";
+import palette from "@/lib/styles/colorPalette";
 // Main화면 가장 상단 영역
 
 
 // 평상시에 보여줄 화면
 export const Header = () => {
-    return (<HeaderLayout>
-        <HeaderItem style={{boxShadow: "0px 2px 4px 0 rgba(0,0,0,0.15)"}}>
-            <div className="flex items-center h-[100%] w-[70%]">
-                <Link className="flex items-center h-[100%] mr-3 ml-5" to={"/"}><Logo/></Link>
-                <Link to={""}><p className="font-bold text-MenuColor text-[20px]">Mommy Letter</p></Link>
-            </div>
-            <Link className="mr-3" to={"/message"}><Message/></Link>
-            <Link to={"/diary/mom"}><Diary/></Link>
+    const [isDoctor, setIsDoctor] = useState<boolean>(false);
+    const [isBlue, setIsBlue] = useState<boolean>()
+    const param = useParams()["*"];
+    useEffect(() => {
+        setIsDoctor(MommyLetterWS.getInstance().getUserInfo().role==="Doctor");
+    }, [isDoctor]);
+    useEffect(() => {
+        if(!param) return;
+        setIsBlue(param.includes("consult")|| param.includes("history"));
 
-            <HamburgerButton/>
+    }, [param]);
+    return <HeaderLayout>
+        <HeaderItem className={`${isBlue? "bg-doctor" : "bg-user"} p-3`} style={{boxShadow: "0px 2px 4px 0 rgba(0,0,0,0.15)"}}>
+            <div className="flex items-center h-[100%] w-[70%]">
+                <Link className="flex items-center h-[100%] mr-3 ml-5" to={"/"}><Logo fill={`${isBlue ? "white" : palette.MenuColor}`}/></Link>
+                <Link to={""}><p className={`${isBlue ? "text-white" : "text-MenuColor" } font-bold text-[20px]`}>Mommy Letter</p></Link>
+            </div>
+            <Link className="" to={"/message"}><Message fill={`${isBlue ? "white" : palette.MenuColor}`}/></Link>
+            {!isDoctor &&<Link to={"/diary/mom"}><Diary fill={`${isBlue ? "white" : palette.MenuColor}`}/></Link>}
+
+            <HamburgerButton>
+                <Hamburger stroke={`${isBlue ? "white" : palette.MenuColor}`}/>
+            </HamburgerButton>
         </HeaderItem>
-    </HeaderLayout>);
+    </HeaderLayout>;
 }
 
 

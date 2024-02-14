@@ -39,6 +39,7 @@ export interface PhotoListProps{
 }
 
 export interface ProfileProps{
+    profilePhoto:string;
     name: string;
     intro: string;
 

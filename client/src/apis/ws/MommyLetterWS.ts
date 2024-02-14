@@ -16,11 +16,12 @@ export class MommyLetterWS {
 
         return result;
     }
-    getUserInfo(): { nickname?: string, userId?: string } {
+    getUserInfo(): { nickname: string, userId: string, role: string } {
         const authObject = JSON.parse(this.header.Auth || "{}");
         return {
             nickname: authObject.nickname,
-            userId: authObject.userId
+            userId: authObject.userId,
+            role: authObject.role // 추가된 부분
         };
     }
     // login(newToken: string) {

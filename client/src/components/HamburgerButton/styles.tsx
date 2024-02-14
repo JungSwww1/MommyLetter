@@ -20,8 +20,7 @@ export const List = styled.ul`
     `;
 
 export const Item=styled.li`
-        {/*Daisy ui를 사용할거라 쓸일은 없을 것 같음.
-         List와 Item을 구분하기 위해서 사용.*/}
+    h-[65px]
     `
 export const Button=styled.button`
     button

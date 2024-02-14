@@ -8,7 +8,7 @@ const DirectMessageComponent = ({type, name, time, message, status, imageUrl}: D
     return (<div className={`chat ${isStart} m-5 ml-5 mr-5`}>
             <div className="chat-image avatar">
                 <div className="w-10 rounded-full">
-                    <img alt="Tailwind CSS chat bubble component" src={imageUrl}/>
+                    <img alt="Tailwind CSS chat bubble component aspect-[1]" src={imageUrl}/>
                 </div>
             </div>
             <div className="chat-header">
