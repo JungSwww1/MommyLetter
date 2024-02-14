@@ -142,4 +142,6 @@ interface consultInfo {
     "pregnancyStatus": string,
     "extra": string;
     "diaryOpen": boolean;
+export interface FollowRes {
+    userId:number;
 }

@@ -1,4 +1,5 @@
-    import logo from '@/assets/images/sample1.jpg'
+    import logo from '@/assets/images/basicprofile.jpeg'
+    import back from '@/assets/images/basicbackground.png'
     import {
     BackgroundContainer,
     ButtonWrapper, CheckButton,
@@ -17,9 +18,13 @@
     import axios from "axios";
     import PasswordChange from "@/pages/UserEdit/PasswordChange/PasswordChange";
     import UserDelete from "@/pages/UserEdit/UserDelete/UserDelete";
+    import {MommyLetterWS} from "@/apis/ws/MommyLetterWS";
+    import ProfilePhotoChange from "@/pages/UserEdit/PhotoChange/ProfilePhotoChange";
+    import BackgroundPhotoChange from "@/pages/UserEdit/PhotoChange/BackgroundPhotoChange";
 
 
     const UserEdit = () => {
+        MommyLetterWS.getInstance().getUserInfo(); //이거슨 localStorage에 있는거 가져오기용
         const [localUserId, setLocalUserId] = useState(0)
         //아래는 무한 루프 방지 용도
         useEffect(() => {
@@ -34,7 +39,7 @@
         // 컴포넌트가 마운트될 때 초기 데이터 로딩
         useEffect(() => {
             screenData(localUserId);
-        }, [localUserId]);  // 빈 배열을 전달하여 한 번만 실행되도록 설정
+        }, [localUserId]);
 
         const handleInputChange = (e:any, field:string) => {
             editEditedData({
@@ -45,34 +50,11 @@
 
         // profile photo change 이건 차후에 수정할 거
         const profileChange = () => {
-            try {
-                const fileInput = document.createElement('input');
-                fileInput.type = 'file';
-                fileInput.accept = '.jpg, .png, .svg';
-                fileInput.addEventListener('change', async (event) => {
-                    const file = (event.target as HTMLInputElement).files?.[0];
-
-                    if (file) {
-                        const formData = new FormData();
-                        formData.append('uploadFiles', file);
-
-                        const response = await axios.post('백엔드_API_URL', formData, {
-                            headers: {
-                                'Content-Type': 'multipart/form-data',
-                            },
-                        });
-
-                        console.log('백엔드 응답:', response.data);
-                    }
-                });
-                fileInput.click();
-            } catch (error) {
-                console.error('프로필 이미지 업로드 중 오류 발생:', error);
-            }
+            (document.getElementById(`my_modal_9`) as any).showModal();
         }
         // background photo change
         const backgroundChange = ()=>{
-
+            (document.getElementById(`my_modal_10`) as any).showModal();
         }
         const pwdChange = () => {
             (document.getElementById('my_modal_1') as any).showModal()
@@ -80,16 +62,23 @@
         const userDelete = () => {
             (document.getElementById('my_modal_2') as any).showModal()
         }
+
+        const background = incomeData.backgroundPhoto
+            ? `/backgroundimages/${incomeData.backgroundPhoto.substring(91)}`
+            : back;
+        const profile = incomeData.profilePhoto
+            ? `/profileimages/${incomeData.profilePhoto.substring(88)}`
+            : logo;
         return (
             <Layout>
                 <Container>
                     {/* 하단의 헤더 마진값은 추후에 조정해야 한다. */}
-                    <BackgroundContainer style={{backgroundImage: `url(${logo})`}}>
+                    <BackgroundContainer style={{backgroundImage: `url(${background})`}}>
                         {/* Profile IMG */}
                         <ProfileWrapper>
                             <ProfileImg
-                                src={logo}
-                                alt="Logo"
+                                src={profile}
+                                alt="profile"
                             />
                         </ProfileWrapper>
                         <ButtonWrapper>
@@ -144,6 +133,8 @@
                         <Submit onClick={edit}>수정</Submit>
                     </Wrapper3>
                 </Container>
+                <ProfilePhotoChange/>
+                <BackgroundPhotoChange/>
             </Layout>
         )
     }

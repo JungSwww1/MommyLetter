@@ -2,6 +2,7 @@ import React from 'react';
 import {ReactComponent as Camera} from "@/assets/icons/camera.svg";
 import {DirectMessageCardProps} from "@/components/type/types";
 import potato from "../../assets/images/logo.png";
+import {MommyLetterWS} from "@/apis/ws/MommyLetterWS";
 
 const DirectMessageCard = ({nickname,profileUrl,date,content}:DirectMessageCardProps) => {
     const elapsedTime = (date: number): string => {

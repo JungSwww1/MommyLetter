@@ -11,12 +11,12 @@ import {
     TitleRightWrapper,
     ThreeDot, CommentWrapper
 } from "@/components/Feed/styles";
-import logo from '@/assets/images/sample1.jpg'
+import logo from '@/assets/images/basicprofile.jpeg'
 import {useEffect, useRef, useState} from "react";
 import MultiMessage from "@/assets/icons/multiMessage";
 import ThreeDotMenu from "@/assets/icons/ThreeDotMenu";
 import FeedHeartButton from "@/assets/icons/FeedHeartButton";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {countBoardLike, deleteBoardAPI} from "@/apis/Board/boardApi";
 import Modal from "@/components/Feed/CommentModal/CommentModal";
 import {getAllCommentsAPI} from "@/apis/Comments/CommentAPI";
@@ -32,7 +32,7 @@ interface MainFeedProps {
 }
 
 const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
-
+    const navigate = useNavigate()
     //댓글 가져오는 용도
     const [comments, setComments] = useState<CommentProps[]>([])
     const [countComments, setCountComments] = useState<number>(0);
@@ -45,7 +45,6 @@ const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
         }
         fetchComments();
     }, [board.boardId]);
-
 
     //게시물 좋아요 버튼 용도
     const likeData = {
@@ -95,11 +94,17 @@ const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
         await window.location.reload()
     };
 
+    const moveProfile = (userId:number) => {
+        navigate(`/profile/${userId}`)
+    }
     return (
         <Layout>
             <TitleContainer>
-                <TitleWrapper>
-                    <img src={logo} alt="Logo" className={"w-[50px] h-[50px] rounded-full"}/>
+                <TitleWrapper onClick={()=>moveProfile(board.accountSimpleReponse.userId)}>
+                    <img src={board.accountSimpleReponse.profilePhoto ? `/profileimages/${board.accountSimpleReponse.profilePhoto.substring(88)}` : logo}
+                         alt="Logo"
+                         className={"w-[50px] h-[50px] rounded-full"}
+                    />
                     <p className={"text-[16px] font-bold"}>{board.accountSimpleReponse.nickname}</p>
                 </TitleWrapper>
                 <TitleRightWrapper>
@@ -129,7 +134,6 @@ const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
 
             <PhotoContainer>
                 {board.photoList.map((photo, index) =>{
-                    // console.log(`${process.env.PUBLIC_URL}/${photo.path.substring(45)}`); // photo.path 값을 콘솔에 출력
                     return(
                         <div key={index} className="m-2" style={{width: 'calc(33.333% - 1rem)', float: 'left'}}>
                             <img src={`/boardimages/${photo.path.substring(72)}`} alt={`Photo ${index + 1}`}

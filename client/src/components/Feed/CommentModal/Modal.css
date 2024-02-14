@@ -18,9 +18,9 @@
     opacity: 1; /* 최종 투명도 1 */
     visibility: visible; /* 보이게 설정 */
 }
-.modal-content {
-    width: 40%;
-    height: 70%;
+.modal-content1 {
+    width: 30%;
+    height: 60%;
     background-color: floralwhite;
     padding: 20px;
     border-radius: 20px;
@@ -33,7 +33,7 @@
     opacity: 0; /* 초기 투명도 0 */
     transition: all 0.3s ease-out;
 }
-.modal-content.show {
+.modal-content1.show {
     transform: translateY(0); /* 최종 상태는 원래 위치 */
     opacity: 1; /* 최종 투명도 1 */
 }

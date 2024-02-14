@@ -1,7 +1,8 @@
 import logo from '@/assets/images/basicprofile.jpeg'
 import back from '@/assets/images/basicbackground.png'
+import preview from '@/assets/images/previewimage.webp'
 import {
-    BackgroundImg,
+    BackgroundImg, BoardImg,
     Container,
     ContentContainer,
     ContentWrapper,
@@ -11,17 +12,17 @@ import {
     SubProfileContainer
 } from "@/pages/Profile/Myself/styles";
 import {useNavigate, useParams} from "react-router-dom";
-import {ProfileProps} from "@/pages/type/types";
+import {ProfileBoard, ProfileProps} from "@/pages/type/types";
 import {getProfileAPI} from "@/apis/profile/ProfileAPI";
 import {useEffect, useState} from "react";
 import Modal1 from "@/pages/Profile/follower/followerModal";
 import Modal from "@/pages/Profile/following/followingModal";
-import {isFollowAPI} from "@/apis/Follow/FollowAPI";
+import {deleteFollowAPI, doFollowAPI, isFollowAPI} from "@/apis/Follow/FollowAPI";
+import {getProfileBoardAPI} from "@/apis/Board/boardApi";
 
 
 const UserProfile = () => {
     const navigate = useNavigate();
-    const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
     const getAuthUser = () => {
         const authData = localStorage.getItem('Auth');
         if (authData) {
@@ -41,6 +42,8 @@ const UserProfile = () => {
         follower:0,
         following:0
     })
+    const [background, setBackground] = useState()
+    const [profile, setProfile] = useState()
     useEffect(()=>{
         const fetchProfileData = async () => {
             const userIdNumber = userId ? parseInt(userId, 10) : null;
@@ -86,37 +89,60 @@ const UserProfile = () => {
                 return;
             }
             try {
-                const res = await isFollowAPI(authUser, userIdNumber)
+                const res = await isFollowAPI(authUser.userId, userIdNumber)
                 setIsFollow(res)
             } catch (error) {
                 console.error('프로필 데이터를 가져오는 데 실패했습니다.', error);
             }
         }
+        fetchFollow()
     },[userId, event])
-    const handleFollow = () => {
-        setEvent(1)
+    const handleFollow = async () => {
+        const userIdNumber = userId ? parseInt(userId, 10) : null;
+        if (!userIdNumber) {
+            console.log('userId가 유효한 숫자가 아닙니다.');
+            return;
+        }
+        const data = {userId:userIdNumber}
+        if(isFollow) {
+            await deleteFollowAPI(authUser.userId, data)
+        } else {
+            await doFollowAPI(authUser.userId, data)
+        }
+        await setEvent(1)
+        await window.location.reload()
     }
-    const background = profileData.backgroundPhoto
-        ? `/profileimages/${profileData.backgroundPhoto.substring(72)}`
+
+    const backgroundPhotoUrl = profileData.backgroundPhoto
+        ? `/backgroundimages/${profileData.backgroundPhoto.substring(91)}`
         : back;
-    const profile = profileData.profilePhoto
-        ? `/profileimages/${profileData.profilePhoto.substring(72)}`
+    const profilePhotoUrl = profileData.profilePhoto
+        ? `/profileimages/${profileData.profilePhoto.substring(88)}`
         : logo;
+
+    const [allBoards, setAllBoards]=useState([])
+    useEffect(() => {
+        const fetchBoardData = async () => {
+            const data = await getProfileBoardAPI(profileData.userId);
+            setAllBoards(data);
+        };
+        fetchBoardData();
+    }, [userId])
     return (
         <div>
             {/* 본문 */}
             <Container>
                 {/* 배경 사진 */}
-                <BackgroundImg src={background} alt="background"/>
+                <BackgroundImg src={backgroundPhotoUrl || back} alt="background"/>
 
                 {/* 사용자 프로필 부분 */}
                 <ProfileContainer>
-                    <Img src={profile} alt="profile"/>
+                    <Img src={profilePhotoUrl || logo} alt="profile"/>
                     <p className={"text-[20px]"}>{userId}</p>
                     <p>{profileData.intro}</p>
                     <SubProfileContainer>
                         <div>
-                            <p>51</p>
+                            <p>{allBoards.length}</p>
                             <p>게시물</p>
                         </div>
                         <div onClick={toggleFollowerModal}>
@@ -133,20 +159,21 @@ const UserProfile = () => {
 
                     <SubProfileContainer>
                         <ProfileButton onClick={handleFollow}>
-                            {isFollow ? '팔로잉' : '팔로우'}
+                            {isFollow ? '팔로우 취소' : '팔로우'}
                         </ProfileButton>
                         <ProfileButton>프로필 공유</ProfileButton>
                     </SubProfileContainer>
 
                     {/* 게시물 부분 */}
                     <ContentContainer>
-                        {items.map((item, key) => (
-                            <ContentWrapper
-                                key={key}
-                            >
-                                {item}
-                            </ContentWrapper>
-                        ))}
+                        {allBoards.map((board:ProfileBoard, key) => {
+                            const imagePath = board.photo ? `/boardimages/${board.photo.path.substring(72)}` : preview;
+                            return (
+                                <ContentWrapper key={key}>
+                                    <BoardImg src={imagePath} alt={`board-${board.boardId}`} />
+                                </ContentWrapper>
+                            );
+                        })}
                     </ContentContainer>
                 </ProfileContainer>
             </Container>

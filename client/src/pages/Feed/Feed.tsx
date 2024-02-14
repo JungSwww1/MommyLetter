@@ -78,7 +78,7 @@ const Feed: React.FC = () => {
         (document.getElementById('my_modal_3') as any).showModal()
     }
     const sort = () => {
-        alert("h")
+        alert("정렬 완료")
     }
     return (
         <Layout>
