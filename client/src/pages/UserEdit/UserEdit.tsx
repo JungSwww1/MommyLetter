@@ -1,4 +1,5 @@
-    import logo from '@/assets/images/sample1.jpg'
+    import logo from '@/assets/images/basicprofile.jpeg'
+    import back from '@/assets/images/basicbackground.png'
     import {
     BackgroundContainer,
     ButtonWrapper, CheckButton,
@@ -34,7 +35,7 @@
         // 컴포넌트가 마운트될 때 초기 데이터 로딩
         useEffect(() => {
             screenData(localUserId);
-        }, [localUserId]);  // 빈 배열을 전달하여 한 번만 실행되도록 설정
+        }, [localUserId]);
 
         const handleInputChange = (e:any, field:string) => {
             editEditedData({
@@ -84,7 +85,7 @@
             <Layout>
                 <Container>
                     {/* 하단의 헤더 마진값은 추후에 조정해야 한다. */}
-                    <BackgroundContainer style={{backgroundImage: `url(${logo})`}}>
+                    <BackgroundContainer style={{backgroundImage: `url(${back})`}}>
                         {/* Profile IMG */}
                         <ProfileWrapper>
                             <ProfileImg

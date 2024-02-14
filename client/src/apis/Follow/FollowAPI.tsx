@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {FollowRes} from "@/apis/type/types";
 
 const FOLLOW_BASE_URL = `http://i10a509.p.ssafy.io:8081/follows`
 
@@ -36,6 +37,21 @@ export const isFollowAPI = async (user1Id:number, user2Id:number) => {
     }
 }
 
+export const doFollowAPI = async (userId:number, data:FollowRes) => {
+    try {
+        const response = await axios.post(`${FOLLOW_BASE_URL}/${userId}`, data)
+    } catch (error) {
+        handleApiError('팔로우 요청을 보내는 중 오류 발생 : ', error)
+    }
+}
+
+export const deleteFollowAPI = async (userId:number, data:FollowRes) => {
+    try {
+        const response = await axios.post(`${FOLLOW_BASE_URL}/unfollow/${userId}`, data)
+    } catch (error) {
+        handleApiError('팔로우 취소를 하는 중 오류 발생 : ', error)
+    }
+}
 const handleApiError = (message:any, error:any) => {
     console.error(`${message}:`, error);
     throw new Error(message);
