@@ -16,7 +16,7 @@ import {getProfileAPI} from "@/apis/profile/ProfileAPI";
 import {useEffect, useState} from "react";
 import Modal1 from "@/pages/Profile/follower/followerModal";
 import Modal from "@/pages/Profile/following/followingModal";
-import {isFollowAPI} from "@/apis/Follow/FollowAPI";
+import {deleteFollowAPI, doFollowAPI, isFollowAPI} from "@/apis/Follow/FollowAPI";
 
 
 const UserProfile = () => {
@@ -41,6 +41,8 @@ const UserProfile = () => {
         follower:0,
         following:0
     })
+    const [background, setBackground] = useState()
+    const [profile, setProfile] = useState()
     useEffect(()=>{
         const fetchProfileData = async () => {
             const userIdNumber = userId ? parseInt(userId, 10) : null;
@@ -86,32 +88,46 @@ const UserProfile = () => {
                 return;
             }
             try {
-                const res = await isFollowAPI(authUser, userIdNumber)
+                const res = await isFollowAPI(authUser.userId, userIdNumber)
                 setIsFollow(res)
             } catch (error) {
                 console.error('프로필 데이터를 가져오는 데 실패했습니다.', error);
             }
         }
+        fetchFollow()
     },[userId, event])
-    const handleFollow = () => {
-        setEvent(1)
+    const handleFollow = async () => {
+        const userIdNumber = userId ? parseInt(userId, 10) : null;
+        if (!userIdNumber) {
+            console.log('userId가 유효한 숫자가 아닙니다.');
+            return;
+        }
+        const data = {userId:userIdNumber}
+        if(isFollow) {
+            await deleteFollowAPI(authUser.userId, data)
+        } else {
+            await doFollowAPI(authUser.userId, data)
+        }
+        await setEvent(1)
+        await window.location.reload()
     }
-    const background = profileData.backgroundPhoto
-        ? `/profileimages/${profileData.backgroundPhoto.substring(72)}`
+
+    const backgroundPhotoUrl = profileData.backgroundPhoto
+        ? profileData.backgroundPhoto.substring(72)
         : back;
-    const profile = profileData.profilePhoto
-        ? `/profileimages/${profileData.profilePhoto.substring(72)}`
+    const profilePhotoUrl = profileData.profilePhoto
+        ? profileData.profilePhoto.substring(72)
         : logo;
     return (
         <div>
             {/* 본문 */}
             <Container>
                 {/* 배경 사진 */}
-                <BackgroundImg src={background} alt="background"/>
+                <BackgroundImg src={backgroundPhotoUrl || back} alt="background"/>
 
                 {/* 사용자 프로필 부분 */}
                 <ProfileContainer>
-                    <Img src={profile} alt="profile"/>
+                    <Img src={profilePhotoUrl || logo} alt="profile"/>
                     <p className={"text-[20px]"}>{userId}</p>
                     <p>{profileData.intro}</p>
                     <SubProfileContainer>
@@ -133,7 +149,7 @@ const UserProfile = () => {
 
                     <SubProfileContainer>
                         <ProfileButton onClick={handleFollow}>
-                            {isFollow ? '팔로잉' : '팔로우'}
+                            {isFollow ? '팔로우 취소' : '팔로우'}
                         </ProfileButton>
                         <ProfileButton>프로필 공유</ProfileButton>
                     </SubProfileContainer>

@@ -121,3 +121,7 @@ export interface PatientDetailRes{
     ssn: string ;
 
 }
+
+export interface FollowRes {
+    userId:number;
+}

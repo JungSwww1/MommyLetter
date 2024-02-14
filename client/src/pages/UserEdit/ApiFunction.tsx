@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getUserData, updateUser, nicknameCheck } from "@/apis/User/userApi";
+import {getProfileAPI} from "@/apis/profile/ProfileAPI";
 
 export const localFunction = (localUserId:number) => {
 
@@ -25,7 +26,7 @@ export const localFunction = (localUserId:number) => {
     const screenData = async (screenId:number) => {
         try {
             if (screenId) {
-                const userData = await getUserData(screenId);
+                const userData = await getProfileAPI(screenId);
                 setIncomeData({
                     localNickname: userData.nickname,
                     localIntro: userData.intro,
@@ -34,7 +35,7 @@ export const localFunction = (localUserId:number) => {
                     nickname: userData.nickname,
                     intro: userData.intro,
                 });
-                // console.log("응답 데이터:", userData);
+                console.log("응답 데이터:", userData);
             }
 
         } catch (error) {

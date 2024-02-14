@@ -131,7 +131,7 @@ const Modal: FC<ModalProps> = ({ onClose , boardId, userId}) => {
     return (
 
         <div className={`modal-backdrop ${showModal ? 'show' : ''}`}  onClick={handleBackdropClick}>
-            <div className={`modal-content scrollBar ${showModal ? 'show' : ''}`}>
+            <div className={`modal-content1 scrollBar ${showModal ? 'show' : ''}`}>
                 <span className="modal-close" onClick={onClose}>&times;</span>
                 {/* 이 위까지 모달 작동을 위한 CSS 부분 */}
                 {/* 하단은 댓글 부분 */}
@@ -176,10 +176,10 @@ const Modal: FC<ModalProps> = ({ onClose , boardId, userId}) => {
                         type="text"
                         value={inputValue}
                         onChange={handleInputChange}
-                        className="modal-input border-2 border-black rounded-xl"
+                        className="modal-input shadow-custom-inner border-b-2 rounded-xl"
                         placeholder="댓글을 입력하세요"
                     />
-                    <Submit onClick={handleSubmit}><Message/></Submit>
+                    <Submit onClick={handleSubmit}><Message fill={"black"}/></Submit>
                 </InputContainer>
 
             </div>
