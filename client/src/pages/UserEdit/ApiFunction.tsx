@@ -34,7 +34,7 @@ export const localFunction = (localUserId:number) => {
                     nickname: userData.nickname,
                     intro: userData.intro,
                 });
-                console.log("응답 데이터:", userData);
+                // console.log("응답 데이터:", userData);
             }
 
         } catch (error) {

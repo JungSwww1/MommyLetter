@@ -1,6 +1,11 @@
 import LocalAxios from "@/util/localAxios";
 import {getUserData} from "@/apis/User/userApi";
-import {loginDataRequestProps, registDataRequestProps, consultDataRequestProps} from "@/apis/type/types"
+import {
+    loginDataRequestProps,
+    registDataRequestProps,
+    consultDataRequestProps,
+    pwdChangeRequestProps
+} from "@/apis/type/types"
 
 const axios = LocalAxios();
 // 로그인
@@ -20,7 +25,7 @@ export const loginAPI = async (data:loginDataRequestProps) => {
             const userId = payloadObj.sub;
 
             const fullData = await getUserData(userId);
-            const userData = { nickname: fullData.nickname, userId: userId };
+            const userData = { nickname: fullData.nickname, userId: userId, email:fullData.email };
             localStorage.setItem('Auth', JSON.stringify(userData));
             return Promise.resolve(true);
         }
@@ -48,6 +53,25 @@ export const addConsultInfoAPI = async (userId:number, data:consultDataRequestPr
     }
 }
 
+//비밀번호 수정
+export const pwdChangeAPI = async (userId:number, data:pwdChangeRequestProps) => {
+    try {
+        const response = await axios.patch(`auth/changepwd/${userId}`, data)
+        return response
+    } catch (error) {
+        handleApiError('비밀번호 수정을 하는 중 오류 발생 : ',error)
+    }
+}
+
+// 회원탈퇴
+export const deleteUserAPI = async (userId:number) => {
+    try {
+        const response = await axios.delete(`auth/${userId}`)
+        return response
+    } catch (error) {
+        handleApiError('회원 탈퇴를 하는 중 오류 발생 : ',error)
+    }
+}
 
 const handleApiError = (message:any, error:any) => {
     console.error(`${message}:`, error);

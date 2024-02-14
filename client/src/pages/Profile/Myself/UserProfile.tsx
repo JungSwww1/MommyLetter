@@ -1,4 +1,5 @@
-import logo from '@/assets/images/sample1.jpg'
+import logo from '@/assets/images/basicprofile.jpeg'
+import back from '@/assets/images/basicbackground.png'
 import {
     BackgroundImg,
     Container,
@@ -43,15 +44,13 @@ const UserProfile = () => {
     })
     useEffect(()=>{
         const fetchProfileData = async () => {
-            const data = await getProfileAPI(101); // 예를 들어 사용자 ID가 101인 경우
+            const data = await getProfileAPI(authUser.userId); // 예를 들어 사용자 ID가 101인 경우
             setProfileData(data);
         };
         fetchProfileData();
     }, [])
 
-
     const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-    console.log(profileData)
     const profileEdit = () => {
         navigate("/edit")
     }
@@ -69,21 +68,25 @@ const UserProfile = () => {
     const toggleFollowingModal = () => {
         setShowFollowingModal(!showFollowingModal);
     };
+
+    // 배경사진 및 프사용
+    const background = profileData.backgroundPhoto
+        ? `/profileimages/${profileData.backgroundPhoto.substring(72)}`
+        : back;
+    const profile = profileData.profilePhoto
+        ? `/profileimages/${profileData.profilePhoto.substring(72)}`
+        : logo;
+
     return (
         <div>
             {/* 본문 */}
             <Container>
                 {/* 배경 사진 */}
-                <BackgroundImg
-                    src={logo}
-                    // src={profileData.backgroundPhoto}
-                    alt="Logo"
-                />
+                <BackgroundImg src={background} alt="background"/>
 
                 {/* 사용자 프로필 부분 */}
                 <ProfileContainer>
-                    <Img src={logo} alt="Logo"/>
-                    {/*<Img src={profileData.profilePhoto} alt="Logo"/>*/}
+                    <Img src={profile} alt="profile"/>
                     <p className={"text-[20px]"}>{profileData.nickname}</p>
                     <p>{profileData.intro}</p>
                     <SubProfileContainer>
