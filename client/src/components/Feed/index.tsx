@@ -11,12 +11,12 @@ import {
     TitleRightWrapper,
     ThreeDot, CommentWrapper
 } from "@/components/Feed/styles";
-import logo from '@/assets/images/sample1.jpg'
+import logo from '@/assets/images/basicprofile.jpeg'
 import {useEffect, useRef, useState} from "react";
 import MultiMessage from "@/assets/icons/multiMessage";
 import ThreeDotMenu from "@/assets/icons/ThreeDotMenu";
 import FeedHeartButton from "@/assets/icons/FeedHeartButton";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {countBoardLike, deleteBoardAPI} from "@/apis/Board/boardApi";
 import Modal from "@/components/Feed/CommentModal/CommentModal";
 import {getAllCommentsAPI} from "@/apis/Comments/CommentAPI";
@@ -32,6 +32,8 @@ interface MainFeedProps {
 }
 
 const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
+    console.log(board.accountSimpleReponse.profilePhoto)
+    const navigate = useNavigate()
     //댓글 가져오는 용도
     const [comments, setComments] = useState<CommentProps[]>([])
     const [countComments, setCountComments] = useState<number>(0);
@@ -94,10 +96,13 @@ const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
         await window.location.reload()
     };
 
+    const moveProfile = (userId:number) => {
+        navigate(`/profile/${userId}`)
+    }
     return (
         <Layout>
             <TitleContainer>
-                <TitleWrapper>
+                <TitleWrapper onClick={()=>moveProfile(board.accountSimpleReponse.userId)}>
                     <img src={logo} alt="Logo" className={"w-[50px] h-[50px] rounded-full"}/>
                     <p className={"text-[16px] font-bold"}>{board.accountSimpleReponse.nickname}</p>
                 </TitleWrapper>

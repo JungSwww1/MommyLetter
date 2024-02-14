@@ -114,20 +114,20 @@ const UserProfile = () => {
     }
 
     const backgroundPhotoUrl = profileData.backgroundPhoto
-        ? `/profileimages/${profileData.backgroundPhoto.substring(72)}`
+        ? `/profileimages/${profileData.backgroundPhoto.substring(88)}`
         : back;
     const profilePhotoUrl = profileData.profilePhoto
-        ? `/profileimages/${profileData.profilePhoto.substring(72)}`
+        ? `/profileimages/${profileData.profilePhoto.substring(88)}`
         : logo;
 
     const [allBoards, setAllBoards]=useState([])
     useEffect(() => {
         const fetchBoardData = async () => {
-            const data = await getProfileBoardAPI(authUser.userId);
+            const data = await getProfileBoardAPI(profileData.userId);
             setAllBoards(data);
         };
         fetchBoardData();
-    }, [])
+    }, [userId])
     return (
         <div>
             {/* 본문 */}
@@ -142,7 +142,7 @@ const UserProfile = () => {
                     <p>{profileData.intro}</p>
                     <SubProfileContainer>
                         <div>
-                            <p>51</p>
+                            <p>{allBoards.length}</p>
                             <p>게시물</p>
                         </div>
                         <div onClick={toggleFollowerModal}>

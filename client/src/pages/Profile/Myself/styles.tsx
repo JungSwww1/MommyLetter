@@ -23,7 +23,6 @@ export const ContentContainer = styled.div`
 
 export const ContentWrapper = styled.div`
     m-2
-    bg-gray-200
     h-[90px]
 `
 
@@ -57,4 +56,5 @@ export const ProfileButton = styled.button`
 export const BoardImg = styled.img`
     h-[90px]
     w-full
+    rounded-2xl
 `

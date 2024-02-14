@@ -2,6 +2,11 @@
 import LocalAxios from "@/util/localAxios";
 // axios 객체 생성
 const axios = LocalAxios();
+const config = {
+    headers: {
+        'Content-Type': 'multipart/form-data'
+    },
+};
 
 export const ReadDoctorList = async () => {
     try {
@@ -30,3 +35,27 @@ export const getProfileAPI = async (userId:number) => {
         console.log(`${statusCode} - ${statusText} - ${message}`);
     }
 }
+
+// 프로필 사진 바꾸기
+export const profilePhotoChangeAPI = async (userId:number,data:FormData) => {
+    try {
+        const response = await axios.post(`/profiles/profileImage/${userId}`, data, config)
+    } catch (error) {
+        handleApiError('프로필 사진을 바꾸는 중 오류 발생 : ', error)
+    }
+}
+
+// 배경사진 바꾸기
+export const backgroundPhotoChangeAPI = async (userId:number,data:FormData) => {
+    try {
+        const response = await axios.post(`/profiles/backgroundImage/${userId}`,data,config)
+    } catch (error) {
+        handleApiError('배경 사진을 바꾸는 중 오류 발생 : ', error)
+    }
+}
+
+
+const handleApiError = (message:any, error:any) => {
+    console.error(`${message}:`, error);
+    throw new Error(message);
+};

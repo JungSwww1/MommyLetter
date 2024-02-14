@@ -4,7 +4,7 @@ import BottomUpModal from "@/components/Modal";
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {Toast} from "@/components/Toast/Toast";
-import {ReactComponent as CircleX} from "@/assets/icons/circleX.svg";;
+import {ReactComponent as CircleX} from "@/assets/icons/circleX.svg";
 import {writeBoardAPI} from "@/apis/Board/boardApi";
 
 
