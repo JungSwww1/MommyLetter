@@ -88,7 +88,7 @@ const Feed: React.FC = () => {
                 ))}
                 {load &&
                     <div className={"flex flex-col justify-center items-center"}>
-                        <div><LogoWhite/></div>
+                        <div><LogoWhite fill={"black"}/></div>
                         <div className="py-3 bg-floralwhite text-center">로딩 중...</div>
                     </div>
                 }

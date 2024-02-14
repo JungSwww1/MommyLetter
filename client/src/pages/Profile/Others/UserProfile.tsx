@@ -19,7 +19,13 @@ import Modal1 from "@/pages/Profile/follower/followerModal";
 import Modal from "@/pages/Profile/following/followingModal";
 import {deleteFollowAPI, doFollowAPI, isFollowAPI} from "@/apis/Follow/FollowAPI";
 import {getProfileBoardAPI} from "@/apis/Board/boardApi";
+import {fetchDMList, startDM} from "@/apis/DM/DMAPI";
+import {MommyLetterWS} from "@/apis/ws/MommyLetterWS";
 
+interface DMProps {
+    userId: number;
+    chatGroupId: number;
+}
 
 const UserProfile = () => {
     const navigate = useNavigate();
@@ -128,6 +134,36 @@ const UserProfile = () => {
         };
         fetchBoardData();
     }, [userId])
+
+    const [user, setUser] = useState<number>();
+    const [myDMList, setMyDMList] = useState<DMProps[]>([])
+    const otherId = Number(userId)
+    useEffect(() => {
+        setUser(Number(MommyLetterWS.getInstance().getUserInfo()["userId"]));
+    }, []);
+    useEffect(() => {
+        if (!user) return;
+        fetchDMList(user).then((response) => {
+            response.map((dm: any) => {
+                const dmList: DMProps[] = response.map((dm: any) => ({
+                    chatGroupId: Number(dm.chatGroupId),
+                    userId: user == Number(dm.chatRoomName.split("_")[2]) ? Number(dm.chatRoomName.split("_")[1]) : Number(dm.chatRoomName.split("_")[2])
+                }));
+                setMyDMList(dmList);
+            });
+        })
+    }, [user]);
+    const goDm = async (otherUserId: number) => {
+        if (!user) return;
+        const isUsed = myDMList.find((tempUser: DMProps) => tempUser.userId === otherUserId)
+        if (isUsed) return navigate(`/message/${isUsed.chatGroupId}`);
+        await startDM(user, otherUserId)
+            .then(response => {
+                setMyDMList(prevState => [...prevState, response, otherUserId])
+                navigate(`/message/${response}`);
+            });
+    }
+
     return (
         <div>
             {/* 본문 */}
@@ -161,12 +197,12 @@ const UserProfile = () => {
                         <ProfileButton onClick={handleFollow}>
                             {isFollow ? '팔로우 취소' : '팔로우'}
                         </ProfileButton>
-                        <ProfileButton>프로필 공유</ProfileButton>
+                        <ProfileButton onClick={()=>goDm(otherId)}>메세지</ProfileButton>
                     </SubProfileContainer>
 
                     {/* 게시물 부분 */}
                     <ContentContainer>
-                        {allBoards.map((board:ProfileBoard, key) => {
+                        {[...allBoards].reverse().map((board:ProfileBoard, key) => {
                             const imagePath = board.photo ? `/boardimages/${board.photo.path.substring(72)}` : preview;
                             return (
                                 <ContentWrapper key={key}>

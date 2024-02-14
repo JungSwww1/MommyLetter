@@ -12,13 +12,13 @@ import {
     SubProfileContainer
 } from "@/pages/Profile/Myself/styles";
 import {useEffect, useState} from "react";
-import {getFollowerAPI, getFollowingAPI} from "@/apis/Follow/FollowAPI";
 import {getProfileAPI} from "@/apis/profile/ProfileAPI";
 import {useNavigate} from "react-router-dom";
 import Modal from "@/pages/Profile/following/followingModal";
 import Modal1 from "@/pages/Profile/follower/followerModal";
 import {ProfileBoard, ProfileProps} from "@/pages/type/types";
 import {getProfileBoardAPI} from "@/apis/Board/boardApi";
+import FeedModal from "@/pages/Profile/Myself/FeedModal/FeedModal";
 
 
 const UserProfile = () => {
@@ -83,6 +83,10 @@ const UserProfile = () => {
         fetchBoardData();
     }, [])
 
+    const [showFeedModal, setShowFeedModal] = useState(false);
+    const toggleModal = () => {
+        setShowFeedModal(!showFeedModal);
+    };
     return (
         <div>
             {/* 본문 */}
@@ -118,11 +122,12 @@ const UserProfile = () => {
 
                     {/* 게시물 부분 */}
                     <ContentContainer>
-                        {allBoards.map((board:ProfileBoard, key) => {
+                        {[...allBoards].reverse().map((board:ProfileBoard, key) => {
                             const imagePath = board.photo ? `/boardimages/${board.photo.path.substring(72)}` : preview;
                             return (
                                 <ContentWrapper key={key}>
-                                    <BoardImg src={imagePath} alt={`board-${board.boardId}`} />
+                                    <BoardImg src={imagePath} alt={`board-${board.boardId}`} onClick={toggleModal}/>
+                                    {showFeedModal && <FeedModal onClose={toggleModal} boardId={board.boardId}/>}
                                 </ContentWrapper>
                             );
                         })}

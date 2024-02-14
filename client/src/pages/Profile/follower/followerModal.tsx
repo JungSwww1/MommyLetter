@@ -56,7 +56,6 @@ const FollowerModal: FC<ModalProps>  = ({ onClose ,  userId }) => {
                                      className = "w-[20%] mr-[5%] rounded-full"
                                 />
                                 <div className={"ml-[2%] mr-[3%]"}>{follow.nickname}</div>
-                                <p>{follow.userId}</p>
                             </MainContainer>
                         </CommentContainer>
                     ))}
