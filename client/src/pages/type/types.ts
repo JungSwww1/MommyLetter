@@ -21,6 +21,7 @@ export interface PhotoProps {
 }
 
 export interface DoctorProfileProps {
+    doctorId: string;
     name: string;
     location: string;
     department: string;
@@ -83,4 +84,10 @@ export interface ProfileProps {
     profilePhoto: string;
     follower:number;
     following:number;
+}
+
+export interface UserProps {
+    nickname: string;
+    userId: string;
+    role: string;
 }

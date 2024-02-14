@@ -29,9 +29,9 @@ const SearchPage = () => {
     const param = useParams()["*"];
     const [isChecked, setIsChecked] = useState<number>(1)
     const navigate = useNavigate();
-    useEffect(()=>{
+    useEffect(() => {
         navigate('nickname');
-    },[])
+    }, [])
     const searchData = () => {
 
         fetchNickname(inputData).then((response) => {
@@ -45,28 +45,34 @@ const SearchPage = () => {
         console.log(nicknameList);
 
     }
-    const changeBg = (state:number) => {
+    const changeBg = (state: number) => {
         setIsChecked(state);
     }
 
-    const handleOnKeyPress= (e:any) =>{
+    const handleOnKeyPress = (e: any) => {
         if (e.key === 'Enter') {
             searchData();
         }
-
 
     }
     return (<div className="flex flex-col w-[100%] h-[100%]">
         <div
             className="flex flex-row m-5 bg-white shadow-md items-center w-[95%] h-[4%] bg-gray-300 rounded-2xl p-5">
-            <input type="text" onChange={e => setInputData(e.target.value)} className="w-[95%] " placeholder="검색어를 입력" onKeyUp={handleOnKeyPress}/>
+            <input type="text" onChange={e => setInputData(e.target.value)} className="w-[95%] " placeholder="검색어를 입력"
+                   onKeyUp={handleOnKeyPress}/>
             <button onClick={searchData}><Search/></button>
         </div>
         <div className="flex justify-around p-3">
 
-            <Link to={"/search/nickname"} onClick={()=>{changeBg(1)}} className={`hover:text-MenuColor hover:font-bold ${isChecked == 1 && "font-bold text-MenuColor"}`}>닉네임</Link>
+            <Link to={"/search/nickname"} onClick={() => {
+                changeBg(1)
+            }}
+                  className={`hover:text-MenuColor hover:font-bold ${isChecked == 1 && "font-bold text-MenuColor"}`}>닉네임</Link>
 
-            <Link to={"/search/hashtag"} onClick={()=>{changeBg(2)}} className={`hover:text-MenuColor hover:font-bold ${isChecked == 2 && "font-bold text-MenuColor"}`}>태그</Link>
+            <Link to={"/search/hashtag"} onClick={() => {
+                changeBg(2)
+            }}
+                  className={`hover:text-MenuColor hover:font-bold ${isChecked == 2 && "font-bold text-MenuColor"}`}>태그</Link>
         </div>
         <hr/>
         <div className="flex h-[100%] justify-center mt-3">

@@ -13,6 +13,7 @@ export const Wrapper = styled.div`
 `
 export const Wrapper2 = styled.div`
     flex
+    
     ml-[3%] mb-[5%]
 `
 

@@ -18,7 +18,6 @@ export const HeaderItem=styled.div`
     h-[100%]
     rounded-bl-[15px]
     rounded-br-[15px]
-    bg-user
 `;
 
 
