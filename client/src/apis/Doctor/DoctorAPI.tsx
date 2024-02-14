@@ -42,3 +42,4 @@ export const readPatientDetail = async (reserveId:number) => {
 export const createReservation = async (data: ReservationReq) => {
     await axios.post('/consults/reserve', data).then((response) => console.log(" 진료예약 완료: ",response.data)).catch((error) => console.log(error.response.data.message)) //메시지를 지정해 준 경우);
 };
+

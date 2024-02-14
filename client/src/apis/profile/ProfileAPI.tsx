@@ -8,7 +8,7 @@ const config = {
     },
 };
 
-export const ReadDoctorList = async () => {
+export const readDoctorList = async () => {
     try {
         const res = await axios.get('/profiles/doctors')
         return res.data;
@@ -21,7 +21,18 @@ export const ReadDoctorList = async () => {
 
     }
 };
-
+export const readDoctorDetail = async (doctorId:number) => {
+    try{
+        const res = await axios.get(`/profiles/doctors/${doctorId}`)
+        return res.data;
+    }catch(err:any){
+        console.log('Register err : ', err.response);
+        const statusCode = err.response.status; // 400
+        const statusText = err.response.statusText; // Bad Request
+        const message = err.response.data.message[0]; // id should not be empty
+        console.log(`${statusCode} - ${statusText} - ${message}`);
+    }
+}
 // 프로필 관련 정보 가져오기
 export const getProfileAPI = async (userId:number) => {
     try {

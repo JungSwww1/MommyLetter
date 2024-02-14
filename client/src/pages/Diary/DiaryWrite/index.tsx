@@ -3,8 +3,8 @@ import {Button, Img, Label} from './styles';
 import BottomUpModal from "@/components/Modal";
 import {createDiary} from "@/apis/diary/DiaryAPI";
 import {ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import {Toast} from "@/components/Toast/Toast";
+import 'react-toastify/dist/ReactToastify.css';
 import {ReactComponent as CircleX} from "@/assets/icons/circleX.svg";
 import {useParams} from "react-router-dom";
 import {DiaryWriteRequestProps} from "@/apis/type/types";
@@ -24,18 +24,15 @@ interface UpdateProps {
     diary: DiaryWriteRequestProps;
 }
 
-interface UserProps {
-    nickname: string;
-    userId: string;
-}
+
 
 export const DiaryWrite: React.FC<DateProps> = (props) => {
     const [emotion, setEmotion] = useState(99);
     const [content, setContent] = useState("");
     const [imgFiles, setImgFiles] = useState<File[]>([]);
-    const imgRef = useRef<HTMLInputElement>(null);
     const [previews, setPreviews] = useState<string[]>([]);
-    const [user, setUser] = useState<UserProps>({nickname: '', userId: ''}); // UserProps로 수정
+    const imgRef = useRef<HTMLInputElement>(null);
+    const [user, setUser] = useState<number>(); // UserProps로 수정
     const {currYear, currMonth, currDay, refreshDiary} = props;
     const param = useParams()["*"];
 
@@ -46,14 +43,7 @@ export const DiaryWrite: React.FC<DateProps> = (props) => {
     for (let i = 0; i < 10; i++) {
         emojiArr[i] = path + emotionImg[i];
     }
-    useEffect(() => {
-        const storedAuth = localStorage.getItem('Auth');
-        if (storedAuth) {
-            const parsedAuth: UserProps = JSON.parse(storedAuth);
-            setUser(parsedAuth);
-        }
 
-    }, []);
     const saveImgFiles = async (e: any) => {
         const files: FileList = e.target.files;
 
@@ -98,7 +88,8 @@ export const DiaryWrite: React.FC<DateProps> = (props) => {
         setPreviews([]);
     });
     const diaryWrite = async () => {
-        const createdDate = new Date(currYear, currMonth - 1, currDay + 1);
+        const createdDate = new Date(currYear, currMonth - 1, currDay+1); // 변경
+
 
         const formData = new FormData();
 
@@ -108,7 +99,7 @@ export const DiaryWrite: React.FC<DateProps> = (props) => {
         });
         const category = param ? param?.charAt(0).toUpperCase() + param?.substring(1,) : "Mom";
         const diaryRequest = {
-            userId: user.userId,
+            userId: user,
             content: content,
             category: category,
             createdDate: createdDate.toISOString(),
@@ -121,17 +112,17 @@ export const DiaryWrite: React.FC<DateProps> = (props) => {
                 weatherList: ["Clear"],
             }
         }
-
+        console.log(createdDate.toISOString());
         formData.append('diaryRequest', new Blob([JSON.stringify(diaryRequest)], {
             type: "application/json"
         }));
 
         if (content === "") {
-            Toast.error("내용을 입력하세요")
+            alert("내용을입력")
             return;
         }
         if (emotion === 99) {
-            Toast.error("이모지를 클릭해주세요")
+            alert("이모지를 클릭")
             return;
         }
         createDiary(formData).then((response) => {
@@ -169,7 +160,6 @@ export const DiaryWrite: React.FC<DateProps> = (props) => {
     const writeButton = <button className="btn btn-ghost bg-user" onClick={diaryWrite}>작성하기</button>
     const children = <div className="flex flex-col ml-2 mt-5 w-[98%] h-[100%]">
 
-        <ToastContainer style={{}} position={"top-center"} hideProgressBar={true} autoClose={300}/>
 
 
         <p className="text-[15px] font-bold text-black">날짜</p>

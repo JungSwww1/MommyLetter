@@ -20,7 +20,9 @@ import DiaryPage from "@/pages/Diary/page";
 import ReserveListPage from "@/pages/Reserve/ReserveList/page";
 import { MommyLetterWS } from "@/apis/ws/MommyLetterWS";
 import {UserProps} from "@/pages/type/types";
-import ReservePage from "@/pages/Reserve/Reserve/page";
+
+import ReserveDetailPage from "@/pages/Reserve/ResultDetail/page";
+import ReserveWritePage from "@/pages/Reserve/ReserveWrite/page";
 
 function Main() {
     const currentPath = window.location.pathname;
@@ -50,7 +52,7 @@ function Main() {
                     <Route path={"/"} element={<Feed />} />
 
                     {user &&
-                        <Route path={"/diary/*"} element={<DiaryPage user={user} />} />} {/* 수정된 부분 */}
+                        <Route path={"/:userId/diary/*"} element={<DiaryPage />} />}
 
                     {/*DM관련 라우터*/}
                     <Route path={"/message"} element={<DirectMessageList />} />
@@ -70,8 +72,9 @@ function Main() {
                     <Route path={"/history/:id"} element={<HistoryPage />} />
 
                     {/*의사 관련 라우터*/}
-                    <Route path={"/reserve/"} element={<ReserveListPage />} />
-                    <Route path={"/reserve/:reserveId"} element={<ReservePage/>} />
+                    <Route path={"/reserve"} element={<ReserveListPage />} />
+                    <Route path={"/reserve/:reserveId"} element={<ReserveDetailPage/>} />
+                    <Route path={"/reserve/:reserveId/write"} element={<ReserveWritePage/>} />
                     {/*접근관련 라우터*/}
                     <Route path={"/*"} element="" />
 

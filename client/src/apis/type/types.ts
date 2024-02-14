@@ -21,37 +21,37 @@ export interface DiaryUpdateRequestProps {
     } | null;
 }
 
-export interface loginDataRequestProps {
+export interface LoginDataRequestProps {
     email: string;
     password: string;
 }
 
-export interface registDataRequestProps {
+export interface RegistDataRequestProps {
     email: string;
     password: string;
     nickname: string;
 }
 
-export interface consultDataRequestProps {
+export interface ConsultDataRequestProps {
     phone: string;
     pregnancyStatus: string;
     extra: string;
     diaryOpen: boolean;
 }
 
-export interface sendBoardRequestProps {
+export interface SendBoardRequestProps {
     userId: number;
     boardId: number;
 }
 
-export interface editBoardRequestProps {
+export interface EditBoardRequestProps {
     content: string;
     access: string;
     category: string;
     hashTagList: string[];
 }
 
-export interface pwdChangeRequestProps {
+export interface PwdChangeRequestProps {
     userId:number;
     nickname:string;
     intro:string;
@@ -74,6 +74,7 @@ export interface ConsultListRes {
     "reserveDate": string;
     "prescriptionPath": string;
 }
+
 
 export interface ConsultDetailRes {
     "counselingId": number;
@@ -124,4 +125,23 @@ export interface PatientDetailRes{
 
 export interface FollowRes {
     userId:number;
+export interface DoctorRes{
+    "userId": number;
+    "doctorId": number;
+    "name": string;
+    "location": string;
+    "historyList": string[];
+    "department": string;
+    "validTime": string;
+    "profilePhoto": string;
+    "backgroundPhoto": string;
+}
+interface consultInfo {
+    "userInfoId": number;
+    "name": string;
+    "ssn": string;
+    "phone": string;
+    "pregnancyStatus": string,
+    "extra": string;
+    "diaryOpen": boolean;
 }

@@ -26,17 +26,8 @@ const ReserveListPage = () => {
 
     return (<div className="flex flex-col h-[100%]">
         <div className="flex justify-between p-5">
-            <details className="dropdown duration-300">
-                <summary className="m-1 rounded-full ">상담하기</summary>
-                <ul className="p-2 shadow menu dropdown-content duration-300 z-[1] bg-base-100 rounded-box w-52">
-                    <li><a>Item 1</a></li>
-                    <li><a>Item 2</a></li>
-                </ul>
-            </details>
-            <select className="select select-bordered rounded-full" onChange={selectDepartment}>
-                <option>선택</option>
+                <div className="font-bold text-pointColor m-1 rounded-full ">상담하기</div>
 
-            </select>
         </div>
         <section className="h-[30%]">
             {displayedUserList?.map((user: PatientRes, index) => (

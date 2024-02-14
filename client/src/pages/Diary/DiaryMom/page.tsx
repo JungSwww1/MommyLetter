@@ -1,26 +1,23 @@
 import React, {useEffect, useState} from "react";
 import DiaryListComponent from "@/components/DiaryList";
 import {deleteDiary} from "@/apis/diary/DiaryAPI";
-import {DiaryReadResponseProps} from "@/pages/type/types";
+import {DiaryReadResponseProps, UserProps} from "@/pages/type/types";
 import CalendarComponent from "@/components/Calendar";
 import {ReactComponent as Trash} from "@/assets/icons/trash.svg";
 import {ReactComponent as Edit} from "@/assets/icons/edit.svg";
 import {DiaryUpdate} from "@/pages/Diary/DiaryUpdate";
 
-interface UserProps {
-    nickname: string;
-    userId: string;
-}
+
 
 interface Props {
     diaryList: DiaryReadResponseProps[];
     setDiaryList: (e: any) => void;
     refreshDiary: () => void;
-    user: UserProps;
+    userId: number;
 
 }
 
-const DiaryBabyPage: React.FC<Props> = ({diaryList, setDiaryList, refreshDiary, user}) => {
+const DiaryBabyPage: React.FC<Props> = ({diaryList, setDiaryList, refreshDiary, userId}) => {
     const [events, setEvents] = useState<any[]>([]);
 
     const [displayedDiaryList, setDisplayedDiaryList] = useState<DiaryReadResponseProps[]>([]);
@@ -57,7 +54,7 @@ const DiaryBabyPage: React.FC<Props> = ({diaryList, setDiaryList, refreshDiary, 
         deleteDiary(selectedDiaryId);
         const temp = diaryList.filter((diary) => diary.diaryId !== selectedDiaryId);
         setDiaryList(temp);
-        alert("db문제로 삭제안됨")
+
         setModal(false);
     }
     const deleteLayout = (
@@ -93,7 +90,7 @@ const DiaryBabyPage: React.FC<Props> = ({diaryList, setDiaryList, refreshDiary, 
                     emoji: diary.emoji,
                     uploadFiles: diary.photoList,
                     category: diary.category,
-                    userId: user.userId,
+                    userId: userId,
                     emotionList: diary.emoticon?.emotionList,
                     familyList: diary.emoticon?.familyList,
                     healthList: diary.emoticon?.healthList,
@@ -104,7 +101,7 @@ const DiaryBabyPage: React.FC<Props> = ({diaryList, setDiaryList, refreshDiary, 
         });
         setDisplayedDiaryList(categoryDiaryList);
         setEvents(newEvents);
-    }, [diaryList, user]);
+    }, [diaryList, userId]);
 
     return (<div>
 

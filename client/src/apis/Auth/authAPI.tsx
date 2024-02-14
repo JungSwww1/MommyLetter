@@ -1,15 +1,15 @@
 import LocalAxios from "@/util/localAxios";
 import {getUserData} from "@/apis/User/userApi";
 import {
-    loginDataRequestProps,
-    registDataRequestProps,
-    consultDataRequestProps,
-    pwdChangeRequestProps
+    LoginDataRequestProps,
+    RegistDataRequestProps,
+    ConsultDataRequestProps,
+    PwdChangeRequestProps
 } from "@/apis/type/types"
 
 const axios = LocalAxios();
 // 로그인
-export const loginAPI = async (data:loginDataRequestProps) => {
+export const loginAPI = async (data:LoginDataRequestProps) => {
     try {
         const response = await axios.post(`auth/user-login`, data);
         if(response.data.status === 500) {
@@ -37,7 +37,7 @@ export const loginAPI = async (data:loginDataRequestProps) => {
 };
 
 // 회원가입
-export const registAPI = async (data:registDataRequestProps) => {
+export const registAPI = async (data:RegistDataRequestProps) => {
     try {
         const res = await axios.post(`auth/signup`, data)
     } catch (error) {
@@ -46,7 +46,7 @@ export const registAPI = async (data:registDataRequestProps) => {
 }
 
 // 상담 정보 등록
-export const addConsultInfoAPI = async (userId:number, data:consultDataRequestProps) => {
+export const addConsultInfoAPI = async (userId:number, data:ConsultDataRequestProps) => {
     try {
         const response = await axios.post(`auth/consult-info/${userId}`, data)
     } catch (error) {
@@ -55,7 +55,7 @@ export const addConsultInfoAPI = async (userId:number, data:consultDataRequestPr
 }
 
 //비밀번호 수정
-export const pwdChangeAPI = async (userId:number, data:pwdChangeRequestProps) => {
+export const pwdChangeAPI = async (userId:number, data:PwdChangeRequestProps) => {
     try {
         const response = await axios.patch(`auth/changepwd/${userId}`, data)
         return response
@@ -79,3 +79,10 @@ const handleApiError = (message:any, error:any) => {
     throw new Error(message);
 };
 
+
+// 상담디테일을 가져오기
+export const readConsultInfo = async (userId:number) => {
+    await axios.get(`/auth/consult-info/${userId}`).then(response => {
+        return response.data;
+    }).catch((error) => console.error(error));
+};
