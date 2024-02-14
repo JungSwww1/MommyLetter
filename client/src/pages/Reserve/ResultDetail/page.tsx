@@ -119,13 +119,12 @@ const ReserveDetailPage = () => {
                     {patient?.diaryOpen &&
                         <button onClick={goDiary} className="btn rounded-full bg-user"><Diary fill={"black"}/>일기 확인
                         </button>}
-
-
-                </div>
-                <div className="flex justify-center">
-                    <button className="btn btn-primary" onClick={writeAction}>결과 작성하기</button>
+                    <Submit className="btn btn-primary" onClick={writeAction}>결과작성</Submit>
 
                 </div>
+
+
+
 
             </Layout>
 

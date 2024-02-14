@@ -38,7 +38,7 @@ export const Header = () => {
                 <Link to={""}><p className={`${isBlue ? "text-white" : "text-MenuColor" } font-bold text-[20px]`}>Mommy Letter</p></Link>
             </div>
             <Link className="" to={"/message"}><Message fill={`${isBlue ? "white" : palette.MenuColor}`}/></Link>
-            {!isDoctor &&<Link to={`${userId}/diary`}><Diary fill={`${isBlue ? "white" : palette.MenuColor}`}/></Link>}
+            {!isDoctor &&<Link to={`${userId}/diary/mom`}><Diary fill={`${isBlue ? "white" : palette.MenuColor}`}/></Link>}
 
             <HamburgerButton>
                 <Hamburger stroke={`${isBlue ? "white" : palette.MenuColor}`}/>

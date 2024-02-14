@@ -59,7 +59,7 @@ const CalendarComponent = ({doctorId,userId}:CalendarProps) => {
                         const time = `${hour < 10 ? '0' : ''}${hour}:${minute}`;
                         return (<div
                                 key={index}
-                                className={`border-2 rounded-xl p-2 px-5 m-1 bg-white ${selectedTime === time ? 'bg-green-600 text-white' : 'bg-gray'}`}
+                                className={` border-2 rounded-xl p-2 px-5 m-1 bg-white ${selectedTime === time ? 'bg-green-700 text-white' : 'bg-white-500'}`}
                                 onClick={() => handleTimeClick(time)}
                             >
                                 {time}
