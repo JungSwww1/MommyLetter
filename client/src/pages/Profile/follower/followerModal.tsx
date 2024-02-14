@@ -45,7 +45,7 @@ const FollowerModal: FC<ModalProps>  = ({ onClose ,  userId }) => {
     return (
         <div>
             <div className={`modal-backdrop ${showModal ? 'show' : ''}`} onClick={handleBackdropClick1}>
-                <div className={`modal-content scrollBar ${showModal ? 'show' : ''}`}>
+                <div className={`modal-content3 scrollBar ${showModal ? 'show' : ''}`}>
                     <span className="modal-close" onClick={onClose}>&times;</span>
                     {followers.map((follow: follow, index) => (
                         <CommentContainer key={index}>
