@@ -3,6 +3,7 @@ package com.ssafy.A509.dm.service;
 import com.ssafy.A509.account.dto.AccountSimpleResponse;
 import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.account.repository.AccountRepository;
+import com.ssafy.A509.dm.dto.DMResponse;
 import com.ssafy.A509.dm.dto.GroupMessageRequest;
 import com.ssafy.A509.dm.dto.ChatGroupResponse;
 import com.ssafy.A509.dm.dto.GroupMessageResponse;
@@ -98,7 +99,11 @@ public class GroupDMService {
 		Set<ChatGroupResponse> groups = new HashSet<>();
 		user.getGroups().forEach(chatGroup -> {
 			if (!chatGroup.getChatRoomName().startsWith("chat_")) {
-				groups.add(getGroupResponse(chatGroup));
+				ChatGroupResponse groupResponse = getGroupResponse(chatGroup);
+				DMResponse dmResponse = modelMapper.map(dmRepository.findFirstByChatGroupIdOrderByCreatedDateDesc(
+					chatGroup.getChatGroupId()), DMResponse.class);
+				groupResponse.setDmResponse(dmResponse);
+				groups.add(groupResponse);
 			}
 		});
 
