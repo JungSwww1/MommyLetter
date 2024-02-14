@@ -86,7 +86,7 @@ const DirectMessageDetailPage = () => {
 
     const connect = (roomNumber:number) =>{
         const clientdata = new Stomp.Client({
-            brokerURL: "ws://localhost:8080/ws",
+            brokerURL: "ws://i10a509.p.ssafy.io:8081/ws",
             connectHeaders:{}
             // MommyLetterWS.getInstance().header
             ,
