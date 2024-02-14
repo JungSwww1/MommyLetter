@@ -91,3 +91,16 @@ export interface UserProps {
     userId: string;
     role: string;
 }
+
+export interface Photo {
+    photoId: number;
+    path: string;
+    diary: null | string;
+    createdDate: string;
+    updatedDate: string;
+}
+
+export interface ProfileBoard {
+    boardId: number;
+    photo: Photo;
+}

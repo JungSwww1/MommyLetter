@@ -1,7 +1,8 @@
 import logo from '@/assets/images/basicprofile.jpeg'
 import back from '@/assets/images/basicbackground.png'
+import preview from '@/assets/images/previewimage.webp'
 import {
-    BackgroundImg,
+    BackgroundImg, BoardImg,
     Container,
     ContentContainer,
     ContentWrapper,
@@ -16,7 +17,8 @@ import {getProfileAPI} from "@/apis/profile/ProfileAPI";
 import {useNavigate} from "react-router-dom";
 import Modal from "@/pages/Profile/following/followingModal";
 import Modal1 from "@/pages/Profile/follower/followerModal";
-import {ProfileProps} from "@/pages/type/types";
+import {ProfileBoard, ProfileProps} from "@/pages/type/types";
+import {getProfileBoardAPI} from "@/apis/Board/boardApi";
 
 
 const UserProfile = () => {
@@ -44,13 +46,12 @@ const UserProfile = () => {
     })
     useEffect(()=>{
         const fetchProfileData = async () => {
-            const data = await getProfileAPI(authUser.userId); // 예를 들어 사용자 ID가 101인 경우
+            const data = await getProfileAPI(authUser.userId);
             setProfileData(data);
         };
         fetchProfileData();
     }, [])
 
-    const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
     const profileEdit = () => {
         navigate("/edit")
     }
@@ -58,17 +59,14 @@ const UserProfile = () => {
 
     const [showFollowerModal, setShowFollowerModal] = useState(false);
     const [showFollowingModal, setShowFollowingModal] = useState(false);
-
     // 팔로워 모달을 표시하거나 숨기는 함수
     const toggleFollowerModal = () => {
         setShowFollowerModal(!showFollowerModal);
     };
-
     // 팔로잉 모달을 표시하거나 숨기는 함수
     const toggleFollowingModal = () => {
         setShowFollowingModal(!showFollowingModal);
     };
-
     // 배경사진 및 프사용
     const background = profileData.backgroundPhoto
         ? `/profileimages/${profileData.backgroundPhoto.substring(72)}`
@@ -76,6 +74,15 @@ const UserProfile = () => {
     const profile = profileData.profilePhoto
         ? `/profileimages/${profileData.profilePhoto.substring(72)}`
         : logo;
+
+    const [allBoards, setAllBoards]=useState([])
+    useEffect(() => {
+        const fetchBoardData = async () => {
+            const data = await getProfileBoardAPI(authUser.userId);
+            setAllBoards(data);
+        };
+        fetchBoardData();
+    }, [])
 
     return (
         <div>
@@ -112,13 +119,14 @@ const UserProfile = () => {
 
                     {/* 게시물 부분 */}
                     <ContentContainer>
-                        {items.map((item, key) => (
-                            <ContentWrapper
-                                key={key}
-                            >
-                                {item}
-                            </ContentWrapper>
-                        ))}
+                        {allBoards.map((board:ProfileBoard, key) => {
+                            const imagePath = board.photo ? `/boardimages/${board.photo.path.substring(72)}` : preview;
+                            return (
+                                <ContentWrapper key={key}>
+                                    <BoardImg src={imagePath} alt={`board-${board.boardId}`} />
+                                </ContentWrapper>
+                            );
+                        })}
                     </ContentContainer>
                 </ProfileContainer>
             </Container>

@@ -18,9 +18,11 @@
     import axios from "axios";
     import PasswordChange from "@/pages/UserEdit/PasswordChange/PasswordChange";
     import UserDelete from "@/pages/UserEdit/UserDelete/UserDelete";
+    import {MommyLetterWS} from "@/apis/ws/MommyLetterWS";
 
 
     const UserEdit = () => {
+        MommyLetterWS.getInstance().getUserInfo(); //이거슨 localStorage에 있는거 가져오기용
         const [localUserId, setLocalUserId] = useState(0)
         //아래는 무한 루프 방지 용도
         useEffect(() => {
@@ -81,6 +83,7 @@
         const userDelete = () => {
             (document.getElementById('my_modal_2') as any).showModal()
         }
+
         return (
             <Layout>
                 <Container>
