@@ -23,6 +23,7 @@ import {UserProps} from "@/pages/type/types";
 
 import ReserveDetailPage from "@/pages/Reserve/ResultDetail/page";
 import ReserveWritePage from "@/pages/Reserve/ReserveWrite/page";
+import DiaryAnalysisPage from "@/pages/Diary/DiaryAnalysis/page";
 
 function Main() {
     const currentPath = window.location.pathname;
@@ -51,8 +52,9 @@ function Main() {
                     {/*피드관련 라우터*/}
                     <Route path={"/"} element={<Feed />} />
 
-                    {user &&
-                        <Route path={"/:userId/diary/*"} element={<DiaryPage />} />}
+                    {/*다이어리관련 라우터*/}
+                    <Route path={"/:userId/diary/*"} element={<DiaryPage />}/>
+                    <Route path={"/:userId/diary/analysis"} element={<DiaryAnalysisPage />}/>
 
                     {/*DM관련 라우터*/}
                     <Route path={"/message"} element={<DirectMessageList />} />

@@ -56,8 +56,8 @@ const HamburgerButton = ({children}: { children: ReactNode }) => {
                             <img className="w-[20%] mr-3" src="/assets/images/default_image.png"/>{nickname}</div>
                         <div className="h-[80%]">
                             <Item><Link to="/profile"><Profile/>내 정보</Link></Item>
-                            {!isDoctor && <Item><Link to={`${user.userId}/diary/mom`}><Diary fill={"black"}/>나의일기</Link></Item>}
-                            {!isDoctor && <Item><Link to="/analysis"><Chart/>일기분석</Link></Item>}
+                            {!isDoctor && <Item><Link to={`/${user.userId}/diary/mom`}><Diary fill={"black"}/>나의일기</Link></Item>}
+                            {!isDoctor && <Item><Link to={`/${user.userId}/diary/analysis`}><Chart/>일기분석</Link></Item>}
                             {!isDoctor && <Item><Link to="/consult"><Consult/>상담하기</Link></Item>}
                             {!isDoctor && <Item><Link to="/history"><Book/>상담기록</Link></Item>}
                             {!isDoctor &&<Item><Link to="/consultRegist"><Edit/>상담정보 등록/수정</Link></Item>}

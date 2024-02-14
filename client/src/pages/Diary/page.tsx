@@ -21,19 +21,21 @@ const DiaryPage=() => {
     const [userId, setUserId] = useState<number>()
     const [diaryList, setDiaryList] = useState<DiaryReadResponseProps[]>([]);
     const paramUserId = useParams()["userId"];
-    const [isAccess, setIsAccess] = useState<boolean>()
+
+    useEffect(() => {
+        setUserId(Number(paramUserId));
+    }, [paramUserId]);
+
     //접근관련
     useEffect(() => {
         const headerUser = MommyLetterWS.getInstance().getUserInfo()
         setAccessUser(headerUser);
         if (!accessUser) return;
-        if (Number(accessUser.userId) !== userId && accessUser.role !== "Doctor") setIsAccess( false);
-        if (Number(accessUser.userId) === userId) setIsAccess(true);
+        if (Number(accessUser.userId) !== Number(userId) && accessUser.role !== "Doctor") navigate("/");
+
     }, [userId]);
 
-    useEffect(() => {
-        setUserId(Number(paramUserId));
-    }, [paramUserId]);
+
     useEffect(() => {
         if (currParam === "baby")
             setToggled(true);
