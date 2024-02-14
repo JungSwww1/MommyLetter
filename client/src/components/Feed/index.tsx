@@ -32,7 +32,6 @@ interface MainFeedProps {
 }
 
 const MainFeed: React.FC<MainFeedProps>  = ({authUserId, board}) => {
-
     //댓글 가져오는 용도
     const [comments, setComments] = useState<CommentProps[]>([])
     const [countComments, setCountComments] = useState<number>(0);

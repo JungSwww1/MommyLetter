@@ -94,7 +94,15 @@ export const sendBoardUnlikeAPI = async(userId:number, boardId:number)=> {
     }
 }
 
-
+// 해당유저에 대한 게시물 사진만 가져오기
+export const getProfileBoardAPI = async (userId:number) => {
+    try{
+        const response = await axios.get(`/boards/user/${userId}`)
+        return response.data
+    } catch (error) {
+        handleApiError('해당 유저에 대한 게시물 사진을 가져오는 중 오류 발생 : ',error)
+    }
+}
 // 에러 처리
 const handleApiError = (message:any, error:any) => {
     console.error(`${message}:`, error);

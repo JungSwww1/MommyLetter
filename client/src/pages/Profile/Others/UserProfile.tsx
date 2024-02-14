@@ -1,7 +1,8 @@
 import logo from '@/assets/images/basicprofile.jpeg'
 import back from '@/assets/images/basicbackground.png'
+import preview from '@/assets/images/previewimage.webp'
 import {
-    BackgroundImg,
+    BackgroundImg, BoardImg,
     Container,
     ContentContainer,
     ContentWrapper,
@@ -11,17 +12,17 @@ import {
     SubProfileContainer
 } from "@/pages/Profile/Myself/styles";
 import {useNavigate, useParams} from "react-router-dom";
-import {ProfileProps} from "@/pages/type/types";
+import {ProfileBoard, ProfileProps} from "@/pages/type/types";
 import {getProfileAPI} from "@/apis/profile/ProfileAPI";
 import {useEffect, useState} from "react";
 import Modal1 from "@/pages/Profile/follower/followerModal";
 import Modal from "@/pages/Profile/following/followingModal";
 import {deleteFollowAPI, doFollowAPI, isFollowAPI} from "@/apis/Follow/FollowAPI";
+import {getProfileBoardAPI} from "@/apis/Board/boardApi";
 
 
 const UserProfile = () => {
     const navigate = useNavigate();
-    const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
     const getAuthUser = () => {
         const authData = localStorage.getItem('Auth');
         if (authData) {
@@ -113,11 +114,20 @@ const UserProfile = () => {
     }
 
     const backgroundPhotoUrl = profileData.backgroundPhoto
-        ? profileData.backgroundPhoto.substring(72)
+        ? `/profileimages/${profileData.backgroundPhoto.substring(72)}`
         : back;
     const profilePhotoUrl = profileData.profilePhoto
-        ? profileData.profilePhoto.substring(72)
+        ? `/profileimages/${profileData.profilePhoto.substring(72)}`
         : logo;
+
+    const [allBoards, setAllBoards]=useState([])
+    useEffect(() => {
+        const fetchBoardData = async () => {
+            const data = await getProfileBoardAPI(authUser.userId);
+            setAllBoards(data);
+        };
+        fetchBoardData();
+    }, [])
     return (
         <div>
             {/* 본문 */}
@@ -156,13 +166,14 @@ const UserProfile = () => {
 
                     {/* 게시물 부분 */}
                     <ContentContainer>
-                        {items.map((item, key) => (
-                            <ContentWrapper
-                                key={key}
-                            >
-                                {item}
-                            </ContentWrapper>
-                        ))}
+                        {allBoards.map((board:ProfileBoard, key) => {
+                            const imagePath = board.photo ? `/boardimages/${board.photo.path.substring(72)}` : preview;
+                            return (
+                                <ContentWrapper key={key}>
+                                    <BoardImg src={imagePath} alt={`board-${board.boardId}`} />
+                                </ContentWrapper>
+                            );
+                        })}
                     </ContentContainer>
                 </ProfileContainer>
             </Container>

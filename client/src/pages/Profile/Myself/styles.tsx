@@ -53,3 +53,8 @@ export const ProfileButton = styled.button`
     shadow-custom-outer
     border-[#FFE588]
 `
+
+export const BoardImg = styled.img`
+    h-[90px]
+    w-full
+`
