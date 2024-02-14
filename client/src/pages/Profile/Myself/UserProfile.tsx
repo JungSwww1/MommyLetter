@@ -18,7 +18,7 @@ import Modal from "@/pages/Profile/following/followingModal";
 import Modal1 from "@/pages/Profile/follower/followerModal";
 import {ProfileBoard, ProfileProps} from "@/pages/type/types";
 import {getProfileBoardAPI} from "@/apis/Board/boardApi";
-import FeedModal from "@/pages/Profile/Myself/FeedModal/FeedModal";
+import BottomUpModal from "@/pages/Profile/Myself/FeedModal/index";
 
 
 const UserProfile = () => {
@@ -83,9 +83,8 @@ const UserProfile = () => {
         fetchBoardData();
     }, [])
 
-    const [showFeedModal, setShowFeedModal] = useState(false);
-    const toggleModal = () => {
-        setShowFeedModal(!showFeedModal);
+    const toggleModal = (boardId:number) => {
+        (document.getElementById(`modal_${boardId}`) as any).showModal();
     };
     return (
         <div>
@@ -126,8 +125,10 @@ const UserProfile = () => {
                             const imagePath = board.photo ? `/boardimages/${board.photo.path.substring(72)}` : preview;
                             return (
                                 <ContentWrapper key={key}>
-                                    <BoardImg src={imagePath} alt={`board-${board.boardId}`} onClick={toggleModal}/>
-                                    {showFeedModal && <FeedModal onClose={toggleModal} boardId={board.boardId}/>}
+                                    <BoardImg src={imagePath} alt={`board-${board.boardId}`} onClick={()=>toggleModal(board.boardId)}/>
+                                    <dialog id={`modal_${board.boardId}`} className="modal">
+                                        <BottomUpModal children={board.boardId} writeButton={null} boardId={board.boardId}/>
+                                    </dialog>
                                 </ContentWrapper>
                             );
                         })}

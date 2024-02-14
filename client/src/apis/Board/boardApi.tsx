@@ -103,6 +103,17 @@ export const getProfileBoardAPI = async (userId:number) => {
         handleApiError('해당 유저에 대한 게시물 사진을 가져오는 중 오류 발생 : ',error)
     }
 }
+
+// boardId에 맞는 게시물 하나 가져오기
+export const getOneBoardAPI = async (boardId:number) => {
+    try {
+        const response = await axios.get(`/boards/${boardId}`)
+        return response.data
+    } catch (error) {
+        handleApiError('boardId에 해당하는 게시물을 가져오는 중 오류 발생 : ',error)
+    }
+}
+
 // 에러 처리
 const handleApiError = (message:any, error:any) => {
     console.error(`${message}:`, error);
