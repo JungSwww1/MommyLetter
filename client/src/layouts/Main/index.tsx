@@ -1,13 +1,11 @@
-import React from 'react';
-import {MainLayout,BodySection} from './styles';
-import {Routes, Route} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { MainLayout, BodySection } from './styles';
+import { Routes, Route } from 'react-router-dom';
 import OtherProfile from "@/pages/Profile/Others/UserProfile"
 import UserProfile from "@/pages/Profile/Myself/UserProfile";
 import Feed from "@/pages/Feed/Feed";
-import {Header,Write, Navigation} from "@/components/Menu";
+import { Header, Write, Navigation } from "@/components/Menu";
 import './index.css';
-import DiaryMomPage from "@/pages/Diary/DiaryMom/page";
-import ChatBarComponent from "@/components/ChatBar";
 import DirectMessagePage from "@/pages/DirectMessage/DirectMessageDetail/page";
 import DirectMessageList from "@/pages/DirectMessage/DirectMessageList/page";
 import UserRegist from "@/pages/UserRegist/UserRegist";
@@ -19,55 +17,63 @@ import HistoryListPage from "@/pages/History/HistoryList/page";
 import ConsultRegist from "@/pages/Consult/ConsultRegist/page";
 import UserEdit from "@/pages/UserEdit/UserEdit";
 import DiaryPage from "@/pages/Diary/page";
-import FeedAddButton from "@/assets/icons/FeedAddButton";
-
-
+import ReserveListPage from "@/pages/Reserve/ReserveList/page";
+import { MommyLetterWS } from "@/apis/ws/MommyLetterWS";
+import {UserProps} from "@/pages/type/types";
+import ReservePage from "@/pages/Reserve/Reserve/page";
 
 function Main() {
     const currentPath = window.location.pathname;
+    const userInstance = MommyLetterWS.getInstance().getUserInfo()
+    const [user, setUser] = useState<UserProps>();
 
-    // 만약 현재 경로에 write가 포함되어 있다면 Header숨김
-    const isWriteEndpoint = currentPath.includes('write');
-    const isMessageEndPoint = currentPath.includes('room');
+    useEffect(() => {
+        const storedAuth = localStorage.getItem('Auth');
+        if (storedAuth) {
+            const parsedAuth: UserProps = JSON.parse(storedAuth);
+            setUser(parsedAuth);
+        }
+    }, []);
+
     return (
         <MainLayout>
             <BodySection className="scrollBar">
-                {!isWriteEndpoint && <Header />}
-                {(isWriteEndpoint && currentPath.includes('mom')) && <Write title={"산모일기"}/>}
-                {(isWriteEndpoint && currentPath.includes('baby')) && <Write title={"육아일기"}/>}
-                {(isWriteEndpoint && currentPath.includes('board')) && <Write title={"피드"}/>}
+                <Header />
                 <Routes>
                     {/*유저관련 라우터*/}
-                    <Route path={"/edit"} element={<UserEdit/>}/>
-                    <Route path={"/profile"} element={<UserProfile/>}/>
-                    <Route path={"/profile/:userId"} element={<OtherProfile/>}/>
+                    <Route path={"/join"} element={<UserRegist />} />
+                    <Route path={"/edit"} element={<UserEdit />} />
+                    <Route path={"/profile"} element={<UserProfile />} />
+                    <Route path={"/profile/:userId"} element={<OtherProfile />} />
 
                     {/*피드관련 라우터*/}
-                    <Route path={"/"} element={<Feed/>}/>
+                    <Route path={"/"} element={<Feed />} />
 
-                    {/*다이어리관련 라우터*/}
-                    <Route path={"/diary/*"} element={<DiaryPage/>}/>
+                    {user &&
+                        <Route path={"/diary/*"} element={<DiaryPage user={user} />} />} {/* 수정된 부분 */}
 
                     {/*DM관련 라우터*/}
-                    <Route path={"/message"} element={<DirectMessageList/>}/>
-                    <Route path={"/message/:roomNumber"} element={<DirectMessagePage/>}/>
+                    <Route path={"/message"} element={<DirectMessageList />} />
+                    <Route path={"/message/:roomNumber"} element={<DirectMessagePage />} />
 
                     {/*검색관련 라우터*/}
-                    <Route path={"/search/*"} element={<SearchPage/>}/>
+                    <Route path={"/search/*"} element={<SearchPage />} />
 
                     {/*상담관련 라우터*/}
-                    <Route path={"/consult"} element={<ConsultListPage/>}/>
-                    <Route path={"/consultRegist"} element={<ConsultRegist/>}/>
-                    <Route path={"/consult/:id/"} element={<ConsultPage/>}/>
-                    <Route path={"/consult/:id/write"} element={<ConsultRegist/>}/>
+                    <Route path={"/consult"} element={<ConsultListPage />} />
+                    <Route path={"/consultRegist"} element={<ConsultRegist />} />
+                    <Route path={"/consult/:id/"} element={<ConsultPage />} />
+                    <Route path={"/consult/:id/write"} element={<ConsultRegist />} />
 
                     {/*기록관련 라우터*/}
-                    <Route path={"/history"} element={<HistoryListPage/>}/>
-                    <Route path={"/history/:id"} element={<HistoryPage/>}/>
+                    <Route path={"/history"} element={<HistoryListPage />} />
+                    <Route path={"/history/:id"} element={<HistoryPage />} />
 
-
+                    {/*의사 관련 라우터*/}
+                    <Route path={"/reserve/"} element={<ReserveListPage />} />
+                    <Route path={"/reserve/:reserveId"} element={<ReservePage/>} />
                     {/*접근관련 라우터*/}
-                    <Route path={"/*"} element=""/>
+                    <Route path={"/*"} element="" />
 
                 </Routes>
             </BodySection>

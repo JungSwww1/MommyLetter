@@ -36,7 +36,7 @@ export const DiaryListComponent = ({content, emoji, photoList, createdDate}: Dia
                         {photoList.map((photo, index) => (<img
                                 key={index}
                                 className="w-[200px] h-[150px] mt-5 mr-3"
-                                src={photo.path}
+                                src={`/diaryimages/${photo.path.substring(72,)}`}
                                 alt={`Picture ${index + 1}`}/>))}
                     </div>
                 </div>

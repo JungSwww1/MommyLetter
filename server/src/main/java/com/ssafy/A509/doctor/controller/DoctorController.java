@@ -26,10 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequiredArgsConstructor
 @RequestMapping("/doctors")
 @Tag(name = "Doctors", description = "Doctor APIs")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class DoctorController {
 
 	private final DoctorService doctorService;

@@ -25,7 +25,8 @@ export const loginAPI = async (data:loginDataRequestProps) => {
             const userId = payloadObj.sub;
 
             const fullData = await getUserData(userId);
-            const userData = { nickname: fullData.nickname, userId: userId, email:fullData.email };
+            const userData = { nickname: fullData.nickname, userId: userId, email:fullData.email, role:fullData.role };
+
             localStorage.setItem('Auth', JSON.stringify(userData));
             return Promise.resolve(true);
         }
@@ -77,3 +78,4 @@ const handleApiError = (message:any, error:any) => {
     console.error(`${message}:`, error);
     throw new Error(message);
 };
+
