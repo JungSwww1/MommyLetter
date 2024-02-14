@@ -2,6 +2,7 @@ package com.ssafy.A509.account.service;
 
 import com.ssafy.A509.account.dto.CreateUserInfoRequest;
 import com.ssafy.A509.account.dto.UpdateUserInfoRequest;
+import com.ssafy.A509.account.dto.UserInfoResponse;
 import com.ssafy.A509.account.model.User;
 import com.ssafy.A509.account.model.UserInfo;
 import com.ssafy.A509.account.repository.AccountRepository;
@@ -41,5 +42,16 @@ public class UserInfoService {
 
         modelMapper.map(updateRequest, userInfo); // 기존 엔티티에 변경사항 매핑
         userInfoRepository.save(userInfo);
+    }
+
+    public UserInfoResponse getUserInfo(Long userId){
+        UserInfo userInfo = userInfoRepository.findByUserUserId(userId);
+
+        if(userInfo == null){
+            return UserInfoResponse.builder().build();
+        }else{
+            return modelMapper.map(userInfo, UserInfoResponse.class);
+        }
+
     }
 }

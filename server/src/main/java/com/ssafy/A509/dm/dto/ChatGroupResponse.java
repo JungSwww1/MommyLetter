@@ -11,9 +11,10 @@ import lombok.Setter;
 @Setter
 @Builder
 public class ChatGroupResponse {
-	Long chatGroupId;
-	String dpGroupName;
-	AccountSimpleResponse host;
-	Set<AccountSimpleResponse> users;
-	LocalDateTime createdDate;
+	private Long chatGroupId;
+	private String dpGroupName;
+	private AccountSimpleResponse host;
+	private Set<AccountSimpleResponse> users;
+	private LocalDateTime createdDate;
+	private DMResponse dmResponse;
 }
