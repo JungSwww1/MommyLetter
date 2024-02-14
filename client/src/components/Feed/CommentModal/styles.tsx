@@ -9,7 +9,7 @@ export const CommentContainer = styled.div`
 
 export const MainContainer = styled.div`
     flex flex-row 
-    mb-[2%] 
+    mb-[3%] 
     items-center
 `
 
