@@ -19,6 +19,8 @@
     import PasswordChange from "@/pages/UserEdit/PasswordChange/PasswordChange";
     import UserDelete from "@/pages/UserEdit/UserDelete/UserDelete";
     import {MommyLetterWS} from "@/apis/ws/MommyLetterWS";
+    import ProfilePhotoChange from "@/pages/UserEdit/PhotoChange/ProfilePhotoChange";
+    import BackgroundPhotoChange from "@/pages/UserEdit/PhotoChange/BackgroundPhotoChange";
 
 
     const UserEdit = () => {
@@ -48,34 +50,11 @@
 
         // profile photo change 이건 차후에 수정할 거
         const profileChange = () => {
-            try {
-                const fileInput = document.createElement('input');
-                fileInput.type = 'file';
-                fileInput.accept = '.jpg, .png, .svg';
-                fileInput.addEventListener('change', async (event) => {
-                    const file = (event.target as HTMLInputElement).files?.[0];
-
-                    if (file) {
-                        const formData = new FormData();
-                        formData.append('uploadFiles', file);
-
-                        const response = await axios.post('백엔드_API_URL', formData, {
-                            headers: {
-                                'Content-Type': 'multipart/form-data',
-                            },
-                        });
-
-                        console.log('백엔드 응답:', response.data);
-                    }
-                });
-                fileInput.click();
-            } catch (error) {
-                console.error('프로필 이미지 업로드 중 오류 발생:', error);
-            }
+            (document.getElementById(`my_modal_9`) as any).showModal();
         }
         // background photo change
         const backgroundChange = ()=>{
-
+            (document.getElementById(`my_modal_10`) as any).showModal();
         }
         const pwdChange = () => {
             (document.getElementById('my_modal_1') as any).showModal()
@@ -84,16 +63,22 @@
             (document.getElementById('my_modal_2') as any).showModal()
         }
 
+        const background = incomeData.backgroundPhoto
+            ? `/profileimages/${incomeData.backgroundPhoto.substring(88)}`
+            : back;
+        const profile = incomeData.profilePhoto
+            ? `/profileimages/${incomeData.profilePhoto.substring(88)}`
+            : logo;
         return (
             <Layout>
                 <Container>
                     {/* 하단의 헤더 마진값은 추후에 조정해야 한다. */}
-                    <BackgroundContainer style={{backgroundImage: `url(${back})`}}>
+                    <BackgroundContainer style={{backgroundImage: `url(${background})`}}>
                         {/* Profile IMG */}
                         <ProfileWrapper>
                             <ProfileImg
-                                src={logo}
-                                alt="Logo"
+                                src={profile}
+                                alt="profile"
                             />
                         </ProfileWrapper>
                         <ButtonWrapper>
@@ -148,6 +133,8 @@
                         <Submit onClick={edit}>수정</Submit>
                     </Wrapper3>
                 </Container>
+                <ProfilePhotoChange/>
+                <BackgroundPhotoChange/>
             </Layout>
         )
     }

@@ -56,7 +56,6 @@ const UserProfile = () => {
         navigate("/edit")
     }
 
-
     const [showFollowerModal, setShowFollowerModal] = useState(false);
     const [showFollowingModal, setShowFollowingModal] = useState(false);
     // 팔로워 모달을 표시하거나 숨기는 함수
@@ -69,10 +68,10 @@ const UserProfile = () => {
     };
     // 배경사진 및 프사용
     const background = profileData.backgroundPhoto
-        ? `/profileimages/${profileData.backgroundPhoto.substring(72)}`
+        ? `/profileimages/${profileData.backgroundPhoto.substring(88)}`
         : back;
     const profile = profileData.profilePhoto
-        ? `/profileimages/${profileData.profilePhoto.substring(72)}`
+        ? `/profileimages/${profileData.profilePhoto.substring(88)}`
         : logo;
 
     const [allBoards, setAllBoards]=useState([])
@@ -98,7 +97,7 @@ const UserProfile = () => {
                     <p>{profileData.intro}</p>
                     <SubProfileContainer>
                         <div>
-                            <p className={'text-[140%]'}>51</p>
+                            <p className={'text-[140%]'}>{allBoards.length}</p>
                             <p>게시물</p>
                         </div>
                         <div onClick={toggleFollowerModal}>

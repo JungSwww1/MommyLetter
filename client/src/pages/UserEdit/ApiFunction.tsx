@@ -11,6 +11,8 @@ export const localFunction = (localUserId:number) => {
     const [incomeData, setIncomeData] = useState({
         localNickname: "",
         localIntro: "",
+        backgroundPhoto:"",
+        profilePhoto:""
     });
 
     // 수정된 데이터 용도
@@ -30,6 +32,8 @@ export const localFunction = (localUserId:number) => {
                 setIncomeData({
                     localNickname: userData.nickname,
                     localIntro: userData.intro,
+                    backgroundPhoto: userData.backgroundPhoto,
+                    profilePhoto: userData.profilePhoto
                 });
                 setEditedData({
                     nickname: userData.nickname,
