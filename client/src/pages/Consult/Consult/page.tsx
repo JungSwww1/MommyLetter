@@ -31,11 +31,11 @@ const ConsultPage = () => {
         }
 
     }, [param]);
-    console.log(consultDetail);
+
     useEffect(() => {
 
     }, []);
-    console.log(consultDetail?.historyList);
+
     const goWriting = () => {
 
         if (1) return alert("이 부분 user_info 중복 시 에러남 ");

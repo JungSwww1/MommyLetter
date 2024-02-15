@@ -82,7 +82,12 @@ const handleApiError = (message:any, error:any) => {
 
 // 상담디테일을 가져오기
 export const readConsultInfo = async (userId:number) => {
-    await axios.get(`/auth/consult-info/${userId}`).then(response => {
+    try {
+        const response = await axios.get(`/auth/consult-info/${userId}`);
+        console.log(response.data);
         return response.data;
-    }).catch((error) => console.error(error));
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 };
