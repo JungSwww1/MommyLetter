@@ -14,9 +14,10 @@ interface CalendarProps {
     diaryList: DiaryReadResponseProps[];
     setDiaryList: (e:any)=>void;
     setDisplayedDiaryList: (e:any)=>void;
+    userId: number;
 }
 
-const CalendarComponent: React.FC<CalendarProps> = ({ events, refreshDiary, diaryList, setDiaryList,setDisplayedDiaryList}) => {
+const CalendarComponent: React.FC<CalendarProps> = ({ events, refreshDiary, diaryList, setDiaryList,setDisplayedDiaryList,userId}) => {
     const [currYear,setCurrYear] = useState(0);
     const [currMonth,setCurrMonth] = useState(0);
     const [currDay,setCurrDay] = useState(0);
@@ -152,7 +153,7 @@ const CalendarComponent: React.FC<CalendarProps> = ({ events, refreshDiary, diar
     return (
         <div id="calendar-container" className="p-5">
             <ToastContainer style={{}} position={"top-center"} hideProgressBar={true} autoClose={300}/>
-            <DiaryWrite currYear={currYear} currMonth={currMonth} currDay={currDay} refreshDiary={refreshDiary}/>
+            <DiaryWrite currYear={currYear} currMonth={currMonth} currDay={currDay} refreshDiary={refreshDiary} userId={userId}/>
             <FullCalendar
                 locale="ko"
                 plugins={[dayGridPlugin, interactionPlugin]}
