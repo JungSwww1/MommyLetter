@@ -50,7 +50,7 @@ public class FollowController {
     public ResponseEntity<Boolean> isFollow(@PathVariable Long user1Id, @PathVariable Long user2Id) {
         boolean check = false;
         check =
-			followService.isAlreadyFollowing(user1Id, user2Id) || (followService.isAlreadyFollowing(user2Id, user1Id));
+			followService.isAlreadyFollowing(user1Id, user2Id);
         return new ResponseEntity<>(check, HttpStatus.OK);
     }
 }
