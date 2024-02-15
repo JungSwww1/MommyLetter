@@ -7,6 +7,16 @@
     top: 100%; /* ThreeDotMenu 바로 아래에 위치하도록 설정 */
     right: 330%; /* ThreeDotMenu 왼쪽 정렬 */
 }
+@media (max-width: 768px) {
+    .MenuModal {
+        width: 100vw; /* 전체 너비로 설정 */
+    }
+}
+@media (max-width: 768px) {
+    .MenuModal {
+        width: 100vw; /* 전체 너비로 설정 */
+    }
+}
 
 .horizontal-text {
     writing-mode: horizontal-tb;

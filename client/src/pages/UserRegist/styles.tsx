@@ -14,7 +14,7 @@ export const Container = styled.div`
 export const RegistContainer = styled.div`
     flex 
     justify-center
-    mt-[10%]
+    mt-[3%]
 `
 export const EmailWrapper = styled.div`
     flex 
