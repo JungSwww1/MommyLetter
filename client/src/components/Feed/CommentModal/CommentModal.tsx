@@ -19,6 +19,7 @@ import {
 } from "@/components/Feed/CommentModal/styles";
 import {FormatDate} from "@/components/Feed/LocalFunction";
 import AlertModal from "@/pages/Feed/AlertModal";
+import {useNavigate} from "react-router-dom";
 
 
 interface ModalProps {
@@ -37,6 +38,7 @@ interface Comment {
 }
 
 const Modal: FC<ModalProps> = ({ onClose , boardId, userId}) => {
+    const navigate = useNavigate()
     const [comments, setComments] = useState<Comment[]>([]);
     const [event, setEvent] = useState(0)
     const fetchComments = async () => {
@@ -128,6 +130,9 @@ const Modal: FC<ModalProps> = ({ onClose , boardId, userId}) => {
         }
     }
 
+    const moveProfile = (userId:number) => {
+        navigate(`profile/${userId}`)
+    }
     return (
 
         <div className={`modal-backdrop ${showModal ? 'show' : ''}`}  onClick={handleBackdropClick}>
@@ -141,7 +146,7 @@ const Modal: FC<ModalProps> = ({ onClose , boardId, userId}) => {
                             <CommentHeartButton
                                 likedata={{boardId: boardId, userId: userId, commentId: comment.commentId}}
                                 onLikeStatusChange={(likedStatus: boolean) => handleLikeStatusChange(comment.commentId, likedStatus)}/>
-                            <div className={"ml-[2%] mr-[3%]"}>{comment.nickname}</div>
+                            <div className={"ml-[2%] mr-[3%]"} onClick={()=>moveProfile(comment.userId)}>{comment.nickname}</div>
                             <p>{comment.content}</p>
                         </MainContainer>
 
