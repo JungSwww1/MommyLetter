@@ -7,6 +7,7 @@ import com.ssafy.A509.board.dto.BoardResponse;
 import com.ssafy.A509.board.dto.BoardSimpleResponse;
 import com.ssafy.A509.board.dto.CreateBoardRequest;
 import com.ssafy.A509.board.dto.UpdateBoardRequest;
+import com.ssafy.A509.board.model.Access;
 import com.ssafy.A509.board.model.Board;
 import com.ssafy.A509.board.model.Category;
 import com.ssafy.A509.board.repository.BoardRepository;
@@ -65,20 +66,34 @@ public class BoardService {
     }
 
     public List<BoardResponse> getAllBoardByUser(Long userId) {
-        List<BoardResponse> boardAll = getAllBoard();
+//        List<BoardResponse> boardAll = getAllBoard();
 
-        List<BoardResponse> boardFollower = boardRepository.findByAccess(userId).stream()
-                .map(this::getBoardResponse)
-                .toList();
+//        List<BoardResponse> boardFollower = boardRepository.findByAccess(userId).stream()
+//                .map(this::getBoardResponse)
+//                .toList();
 
-        List<BoardResponse> boardMe = boardRepository.findAllByUserUserId(userId).stream()
-                .map(this::getBoardResponse)
-                .toList();
+        List<Long> boardFollower = boardRepository.findFollowerBoard(userId).stream()
+            .toList();
 
-        boardAll.addAll(boardFollower);
-		boardMe.stream().filter(boardResponse -> !boardAll.contains(boardResponse)).map(boardAll::add);
+        //새로운 sql문
+        List<BoardResponse> boardAll = boardRepository
+            .findAllByAccessOrUserUserIdOrBoardIdInOrderByCreatedDateDesc(Access.All, userId, boardFollower)
+            .stream()
+            .map(this::getBoardResponse)
+            .toList();
 
-        Collections.sort(boardAll, Comparator.comparing(BoardResponse::getCreatedDate).reversed());
+//        List<BoardResponse> boardMe = boardRepository.findAllByUserUserId(userId).stream()
+//                .map(this::getBoardResponse)
+//                .toList();
+
+//        boardAll.addAll(boardFollower);
+//		boardMe.stream().filter(boardResponse -> !boardAll.contains(boardResponse)).map(boardAll::add);
+//
+//        Collections.sort(boardAll, Comparator.comparing(BoardResponse::getCreatedDate).reversed());
+
+//        boardAllAndMe.addAll(boardFollower);
+//        Collections.sort(boardAllAndMe, Comparator.comparing(BoardResponse::getCreatedDate).reversed());
+
         return boardAll;
     }
 
