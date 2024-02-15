@@ -116,7 +116,7 @@ const BottomUpModal = ({children, writeButton, boardId}: Props) => {
                             {comments.map((comment, index) => (
                                 <div key={comment.commentId}>
                                     <CommentWrapper key={index}>
-                                        <div className={"flex mr-[3%]"}>
+                                        <div className={"flex w-[30%]"}>
                                             <p className="text-[90%] font-bold">{comment.nickname}</p>
                                         </div>
                                         <div className={"flex w-[75%]"}>
