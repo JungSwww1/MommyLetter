@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DiaryAnalysisPage = () => {
+const InvalidAccessPage = () => {
     return (
         <div className="w-[100%] h-[100%]">
             <img src="/assets/images/invalid_access.jpg"/>
@@ -8,4 +8,4 @@ const DiaryAnalysisPage = () => {
     );
 };
 
-export default DiaryAnalysisPage;
+export default InvalidAccessPage;

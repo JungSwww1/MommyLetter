@@ -31,11 +31,11 @@ const DiaryPage=() => {
         const headerUser = MommyLetterWS.getInstance().getUserInfo()
         setAccessUser(headerUser);
         if (!accessUser) return;
-        if (Number(accessUser.userId) !== Number(userId) && accessUser.role !== "Doctor") navigate("/");
+        if (Number(accessUser.userId) !== Number(userId) && accessUser.role !== "Doctor") navigate("/notaccess");
         console.log(userId);
     }, [userId]);
 
-
+    console.log(MommyLetterWS.getInstance().getUserInfo());
     useEffect(() => {
         if (currParam === "baby")
             setToggled(true);
