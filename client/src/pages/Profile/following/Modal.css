@@ -37,6 +37,11 @@
     transform: translateY(0); /* 최종 상태는 원래 위치 */
     opacity: 1; /* 최종 투명도 1 */
 }
+@media (max-width: 768px) {
+    .modal-content2  {
+        width: 60vw; /* 전체 너비로 설정 */
+    }
+}
 .modal-close {
     position: absolute;
     top: 10px;
