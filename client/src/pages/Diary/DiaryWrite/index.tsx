@@ -14,6 +14,7 @@ interface DateProps {
     currMonth: number;
     currDay: number;
     refreshDiary: () => void;
+    userId: number;
 }
 
 interface UpdateProps {
@@ -35,7 +36,6 @@ export const DiaryWrite: React.FC<DateProps> = (props) => {
     const [user, setUser] = useState<number>(); // UserProps로 수정
     const {currYear, currMonth, currDay, refreshDiary} = props;
     const param = useParams()["*"];
-
 
     const emojiArr: string[] = [];
     const path = "/assets/images/"
@@ -99,7 +99,7 @@ export const DiaryWrite: React.FC<DateProps> = (props) => {
         });
         const category = param ? param?.charAt(0).toUpperCase() + param?.substring(1,) : "Mom";
         const diaryRequest = {
-            userId: user,
+            userId: props.userId,
             content: content,
             category: category,
             createdDate: createdDate.toISOString(),
