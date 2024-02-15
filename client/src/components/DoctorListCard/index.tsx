@@ -32,7 +32,7 @@ const DoctorListCardComponent = ({img, date, name, department}: DoctorListCardCo
                 <List>
                     <div className="flex flex-col text-sm w-[50%]">
                         <Item className="font-bold">{name}</Item>
-                        <Item className="">{elapsedTime(new Date(date).getTime())}</Item>
+                        <Item className="">{date && elapsedTime(new Date(date).getTime())}</Item>
                         <Item>{department}</Item>
                     </div>
                     <ButtonBox>

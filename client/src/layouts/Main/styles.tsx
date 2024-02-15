@@ -11,4 +11,5 @@ export const MainLayout = styled.div`
 export const BodySection=styled.section`
     h-[100%] 
     max-h-[100%]
+    overflow-y-auto
 `
