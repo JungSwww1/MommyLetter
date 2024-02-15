@@ -193,11 +193,11 @@ const DirectMessageDetailPage = () => {
         <div className="DMWrapper fixed bottom-0 h-[5%] w-[40%]">
             <div className="flex flex-row items-center DMContent h-[100%] bg-gray-300 rounded-2xl p-5">
 
-                <input type="text" onChange={(e) => setChat(e.target.value)} className="w-[95%] bg-gray-300"
+                <input type="text" onChange={(e) => setChat(e.target.value)} className="w-[90%] bg-gray-300"
                        placeholder="메시지 보내기..."
                        value={chat}
                        onKeyUp={handleOnKeyPress}/>
-                <button onClick={sendChat}>확인</button>
+                <button onClick={sendChat} className={"100px"}>확인</button>
             </div>
         </div>
     </div>);
