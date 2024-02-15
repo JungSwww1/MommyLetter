@@ -1,0 +1,12 @@
+.emoji-labels {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.emoji-labels img {
+    margin-bottom: 10px;
+    pointer-events: none; /* 이미지 위에 있는 요소에 마우스 이벤트를 전달하지 않도록 설정합니다. */
+}
