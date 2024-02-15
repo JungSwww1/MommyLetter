@@ -63,7 +63,7 @@ const NicknameComponent: React.FC<{ nicknameList: NicknameProps[] }> = ({nicknam
                             className="hover:scale-125 duration-300 w-[10%] h-[10%]"><Send/></button>
 
                 </div>))}
-
+        {(!nicknameList) ||(nicknameList && nicknameList?.length<1) && <img src="/assets/images/not_found_search.jpg"/>}
         </div>);
 };
 export default NicknameComponent;

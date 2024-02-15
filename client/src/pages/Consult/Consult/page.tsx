@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from 'react-router-dom'
 
-import sample1 from "@/assets/images/sample1.jpg"
+import sample1 from "@/assets/images/basicbackground.png"
 import {ProfileComponent} from "@/components/Profile";
 import {createReservation} from "@/apis/consult/ConsultAPI";
 import {MommyLetterWS} from "@/apis/ws/MommyLetterWS";
@@ -55,7 +55,7 @@ const ConsultPage = () => {
                 <div className=" flex flex-col items-center h-[50%] w-[100%] mb-5">
                     {consultDetail &&
                         <ProfileComponent
-                            profilePhoto={`${consultDetail.profilePhoto ? "/profileimages/" + consultDetail.profilePhoto.substring(72,) : "/assets/images/default_image_doctor.png"}`}
+                            profilePhoto={`${consultDetail.profilePhoto ? "/profileimages/" + consultDetail.profilePhoto.substring(88,) : "/assets/images/default_image_doctor.png"}`}
                             name={consultDetail.name} intro={consultDetail.department}/>}
                 </div>
 
