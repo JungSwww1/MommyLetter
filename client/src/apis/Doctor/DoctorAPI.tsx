@@ -15,7 +15,11 @@ const config = {
 };
 // 처방전 작성
 export const createPrescription = async (data: FormData) => {
-    await axios.post('/doctors', data, config).then((response) => console.log("처방전 작성: ", response.data)).catch((error) => console.log(error.response.data.message)) //메시지를 지정해 준 경우);
+    await axios.post('/doctors', data, config).then((response) => {
+
+        console.log("처방전 작성: ", response.data)
+        return response;
+    }).catch((error) => console.log(error.response.data.message)) //메시지를 지정해 준 경우);
 };
 // 환자리스트 조회
 export const readPatientList = async (doctorId:number) => {

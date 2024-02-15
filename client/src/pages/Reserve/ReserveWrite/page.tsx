@@ -9,6 +9,7 @@ import {PatientDetailRes} from "@/apis/type/types";
 import {createDiary} from "@/apis/diary/DiaryAPI";
 import {Toast} from "@/components/Toast/Toast";
 import {Label} from "@/pages/Diary/DiaryWrite/styles";
+import {deleteConsult} from "@/apis/consult/ConsultAPI";
 
 
 
@@ -37,7 +38,8 @@ const ReserveWritePage = () => {
     };
 
 
-    const writeBtn =()=> {
+    const writeBtn =async ()=> {
+        if(!patient) return;
         const consultRequest = {
             userId: patient?.userId,
             reserveId: patient?.reserveId
@@ -48,13 +50,14 @@ const ReserveWritePage = () => {
         }));
         if(imgFiles)
         formData.append('prescription', imgFiles);
-        createPrescription(formData).then((response) => {
+
+        await createPrescription(formData).then((response) => {
 
             Toast.success("작성되었습니다.");
-            navigate(-2);
-
-        })
-
+            setTimeout(() => {
+                navigate(-2);
+            }, 500); // 0.5초를 기다림 (0.5초 = 500밀리초)
+        });
 
     }
 
