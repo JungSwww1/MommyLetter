@@ -90,6 +90,7 @@ const ReserveWritePage = () => {
                        onChange={saveImgFiles}
                 />
             </div>
+            <div className="text-gray-500">pdf파일만 선택가능</div>
             <button onClick={writeBtn} className="btn btn-primary">작성하기</button>
         </div>
 

@@ -28,7 +28,7 @@ const DoctorListCardComponent = ({img, date, name, department}: DoctorListCardCo
         <CardListLayout >
             <CardBox >
 
-                <Img src={img} alt="User"/>
+                <Img src={img}/>
                 <List>
                     <div className="flex flex-col text-sm w-[50%]">
                         <Item className="font-bold">{name}</Item>

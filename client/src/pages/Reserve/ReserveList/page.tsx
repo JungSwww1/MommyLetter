@@ -42,7 +42,7 @@ const ReserveListPage = () => {
                         <DoctorListCardComponent
                             name={user.name}
                             department={user.status}
-                            img={`${user.profilePhoto ? "/userimages/" + user.profilePhoto.substring(72,) : "/assets/images/default_image.png"}`}
+                            img={`${user.profilePhoto ? "/profileimages/" + user.profilePhoto.substring(88,) : "/assets/images/default_image.png"}`}
                             date={user.reserveDate}
                         />
                     </button>
