@@ -5,6 +5,7 @@ import DiaryBabyPage from "@/pages/Diary/DiaryBaby/page";
 import { DiaryReadResponseProps, UserProps } from "@/pages/type/types";
 import { fetchDiary } from "@/apis/diary/DiaryAPI";
 import {MommyLetterWS} from "@/apis/ws/MommyLetterWS";
+import {readConsultInfo} from "@/apis/Auth/authAPI";
 
 interface AccessUser{
     nickname:string;
@@ -21,9 +22,9 @@ const DiaryPage=() => {
     const [userId, setUserId] = useState<number>()
     const [diaryList, setDiaryList] = useState<DiaryReadResponseProps[]>([]);
     const paramUserId = useParams()["userId"];
-
     useEffect(() => {
         setUserId(Number(paramUserId));
+
     }, [paramUserId]);
 
     //접근관련
@@ -35,7 +36,7 @@ const DiaryPage=() => {
         console.log(userId);
     }, [userId]);
 
-    console.log(MommyLetterWS.getInstance().getUserInfo());
+
     useEffect(() => {
         if (currParam === "baby")
             setToggled(true);
