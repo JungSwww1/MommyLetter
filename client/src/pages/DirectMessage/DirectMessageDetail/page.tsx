@@ -23,7 +23,9 @@ interface DMInfoProps {
     "chatRoomName": string,
     "createdDate": string
 }
-
+interface defaultSend{
+    sendMessage:string;
+}
 
 const DirectMessageDetailPage = () => {
     const [chatList, setChatList] = useState<DMProps[]>([]);
@@ -182,7 +184,7 @@ const DirectMessageDetailPage = () => {
             {chatList.map((chat, index) => (
                 <DirectMessage key={index} type={chat.senderId === Number(user["userId"])} name={chat.nickname}
                                time={new Date(chat.createdDate).toString()}
-                               message={chat.content} status={""} imageUrl={`${chat.profilePhoto  ? "/userimages/"+chat.profilePhoto.substring(72,) : "/assets/images/default_image.png"}`}
+                               message={chat.content} status={""} imageUrl={`${chat.profilePhoto  ? "/profileimages/"+chat.profilePhoto.substring(88,) : "/assets/images/default_image.png"}`}
                 />))}
 
 
@@ -190,12 +192,11 @@ const DirectMessageDetailPage = () => {
 
         <div className="fixed bottom-0 h-[5%] w-[40%] ">
             <div className="flex flex-row items-center w-[100%] h-[100%] bg-gray-300 rounded-2xl p-5">
-                <button><Camera className="mr-3"/></button>
-                <input type="text" onChange={(e) => setChat(e.target.value)} className="w-[90%] bg-gray-300"
+
+                <input type="text" onChange={(e) => setChat(e.target.value)} className="w-[95%] bg-gray-300"
                        placeholder="메시지 보내기..."
                        value={chat}
                        onKeyUp={handleOnKeyPress}/>
-                <button><Picture/></button>
                 <button onClick={sendChat}>확인</button>
             </div>
         </div>

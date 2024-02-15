@@ -62,7 +62,7 @@ const DirectMessageList = () => {
     return (<div className="flex flex-col justify-center items-center w-[100%]">
         {opponents && opponents.sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()).map((opponent, index) => (
             <Link key={index} className="w-[100%] hover:bg-gray-100" to={`${opponent.chatGroupId}`}>
-                <DirectMessageCard profileUrl={`${opponent.profilePhoto  ? "/userimages/"+opponent.profilePhoto.substring(72,) : "/assets/images/default_image.png"}`} nickname={opponent.nickname}
+                <DirectMessageCard profileUrl={`${opponent.profilePhoto  ? "/profileimages/"+opponent.profilePhoto.substring(88,) : "/assets/images/default_image.png"}`} nickname={opponent.nickname}
                                    content={opponent.content}
                                    date={new Date(opponent.createdDate).getTime().toString()}
                                    chatGroupId={opponent.chatGroupId}/>

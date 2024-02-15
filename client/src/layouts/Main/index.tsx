@@ -60,7 +60,7 @@ function Main() {
 
                     {/*DM관련 라우터*/}
                     <Route path={"/message"} element={<DirectMessageList />} />
-                    <Route path={"/message/:roomNumber"} element={<DirectMessagePage />} />
+                    <Route path={"/message/:roomNumber"} element={<DirectMessagePage/>} />
 
                     <Route path={"/search/*"} element={<SearchPage />} />
 
