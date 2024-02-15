@@ -30,7 +30,5 @@ export const readConsultDetail = async (counselingId:number) => {
 
 // 상담삭제하기
 export const deleteConsult = async (reserveId:number) => {
-    await axios.delete(`/consults/reserve/${reserveId}`).then(response => {
-        console.log(".삭제가 완료됨"+response.data);
-    }).catch((error) => console.error(error));
-};
+    axios.delete(`/consults/reserve/${reserveId}`).then((response) => console.log("삭제 완료: ", response.data)).catch((error) => console.error(error));
+}
