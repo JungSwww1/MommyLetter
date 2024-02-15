@@ -1,0 +1,9 @@
+.feed-body {
+    margin-left:35%
+}
+
+@media (max-width: 768px) {
+    .feed-body {
+        margin-left: 80%; /* 전체 너비로 설정 */
+    }
+}

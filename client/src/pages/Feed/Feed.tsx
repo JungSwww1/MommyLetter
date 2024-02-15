@@ -8,7 +8,7 @@ import FeedAddButton from "@/assets/icons/FeedAddButton";
 import Menu from "@/pages/Feed/AddModal/FeedMenuModal";
 import {FeedWrite} from "@/components/Feed/FeedWriteModal/FeedWrite"
 import {BoardProps} from "@/pages/type/types";
-
+import './index.css'
 
 const Feed: React.FC = () => {
     // localStorage에서 유저 가져오기
@@ -98,7 +98,7 @@ const Feed: React.FC = () => {
                         Observer Element
                     </div>
                 )}
-                <div className="fixed bottom-10 ml-[35%]" onClick={toggleMenu}>
+                <div className="feed-body fixed bottom-10" onClick={toggleMenu}>
                     <FeedAddButton />
                     {showMenu && (
                         <div className="MenuModal absolute top-full right-0 z-100">
