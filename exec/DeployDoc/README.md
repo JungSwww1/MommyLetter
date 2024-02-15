@@ -13,13 +13,11 @@ _________
 ### nginx - proxy.conf
 ```
 server {
-listen 3000;
+        listen 80;
+        server_name i10a509.p.ssafy.io;
 
         location / {
-                root /home/ubuntu/ssafy/MommyLetter/client/build;
-                index index.html index.htm;
-                try_files $uri $uri/ /index.html;
-
+                proxy_pass http://localhost:3000;
         }
 
         location /boardimages {
@@ -42,6 +40,12 @@ listen 3000;
 
         location /backgroundimages {
                 alias /home/ubuntu/ssafy/MommyLetter/client/public/assets/images/upload/profile/background-image;
+                autoindex on;
+                expires 30d;
+        }
+
+        location /prescription {
+                alias /home/ubuntu/ssafy/MommyLetter/client/public/assets/images/upload/prescription;
                 autoindex on;
                 expires 30d;
         }
@@ -74,7 +78,7 @@ git pull origin develope
 
 cd $REPOSITORY/$SERVER_NAME/
 chmod +x ./gradlew
-echo "> 프로젝트 빌드"
+echo "> 서버 프로젝트 빌드"
 ./gradlew build
 
 echo "> 디렉토리 이동"
@@ -83,7 +87,7 @@ cd $GIT_REPO
 echo "> 서버 빌드 파일 복사"
 cp $REPOSITORY/$SERVER_NAME/build/libs/*.jar $GIT_REPO/
 
-echo "> 현재 구동중 애플리케이션 pid 확인"
+echo "> 현재 구동중 서버 애플리케이션 pid 확인"
 CURRENT_PID=$(pgrep -f "$SERVER_NAME.*.jar")
 
 if [ -z "$CURRENT_PID" ]; then
@@ -91,21 +95,33 @@ if [ -z "$CURRENT_PID" ]; then
 else
     echo "> kill -15 $CURRENT_PID"
     sudo kill -15 $CURRENT_PID
-    sleep 5
+    sleep 3
 fi
 
-# 서비스 재시작
+echo "> 현재 구동중 클라이언트 애플리케이션 pid 확인"
+CURRENT_PID=$(lsof -i :3000 -t)
+
+if [ -z "$CURRENT_PID" ]; then
+    echo "> 3000번 포트에서 실행 중인 애플리케이션이 없으므로 종료하지 않습니다."
+else
+    echo "> kill -15 $CURRENT_PID"
+    kill -15 $CURRENT_PID
+    sleep 3
+fi
+
+# 서버 재시작
+echo "> 서버 재시작"
 echo "> sudo nohup java -jar -Dserver.port=8081 Server-0.0.1-SNAPSHOT.jar &"
 sudo nohup java -jar -Dserver.port=8081 Server-0.0.1-SNAPSHOT.jar &
 
-echo "> 클라이언트 빌드"
-cd $REPOSITORY/$CLIENT_NAME/build
+echo "> 클라이언트 재시작"
+cd $REPOSITORY/$CLIENT_NAME
 yarn
-yarn build
+nohup yarn start > $GIT_REPO/reactLog 2>&1 &
 
 echo ">재 배포"
 sudo service nginx stop
-sleep 3
+sleep 1
 sudo service nginx start
 sleep 1
 sudo service nginx status
@@ -134,7 +150,7 @@ _________
 
 
 _________ 
-SpringBoot : application.yml
+### SpringBoot : application.yml
 ```
 spring:
   datasource:
@@ -189,7 +205,7 @@ _________
 
 
 _________ 
-React : .env
+### React : .env
 ```
 REACT_APP_BACKEND_BASE_URL=http://localhost:8080
 REACT_APP_BACKEND_SERVER_URL=http://i10a509.p.ssafy.io:8081
