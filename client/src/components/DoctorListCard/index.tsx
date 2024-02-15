@@ -24,12 +24,9 @@ const DoctorListCardComponent = ({img, date, name, department}: DoctorListCardCo
                 <List>
                     <div className="flex flex-col text-sm w-[50%]">
                         <Item className="font-bold">{name}</Item>
-                        <Item className=""> {isTwoletter(month)}월 {isTwoletter(day)}일 {isTwoletter(hour)}: {isTwoletter(minute)}</Item>
+                        <Item className=""> {date &&`${isTwoletter(month)}월 ${isTwoletter(day)}일 ${isTwoletter(hour)}: ${isTwoletter(minute)}`}</Item>
                         <Item>{department}</Item>
                     </div>
-                    <ButtonBox>
-                        <RightButton/>
-                    </ButtonBox>
                 </List>
             </CardBox>
         </CardListLayout>);
