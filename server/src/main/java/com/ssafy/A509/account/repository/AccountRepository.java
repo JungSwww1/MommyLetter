@@ -26,7 +26,7 @@ public interface AccountRepository extends JpaRepository<User, Long> {
             + "RIGHT JOIN Reserve r ON u.userId = r.user.userId "
             + "LEFT JOIN UserInfo ui ON u.userId = ui.user.userId "
             + "LEFT JOIN Profile p ON u.userId = p.userId "
-            + "WHERE r.doctor.doctorId = :doctorId "
+            + "WHERE r.doctor.doctorId = :doctorId AND r.reserveId NOT IN (SELECT c.reserve.reserveId FROM Consult c) "
             + "ORDER BY r.reserveDate DESC ")
     List<PatientResponse> findPatientByReserveDoctorId(Long doctorId);
 
