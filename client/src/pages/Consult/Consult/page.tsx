@@ -35,7 +35,7 @@ const ConsultPage = () => {
     useEffect(() => {
 
     }, []);
-
+    console.log(consultDetail?.historyList);
     const goWriting = () => {
 
         if (1) return alert("이 부분 user_info 중복 시 에러남 ");
@@ -85,7 +85,7 @@ const ConsultPage = () => {
                      style={{boxShadow: "0px -3px 4px 0 rgba(0,0,0,0.25)"}}>
                     <p className="mb-3">약력</p>
                     {consultDetail?.historyList.map((history) =>
-                        <p>history</p>)}
+                        <p>{history}</p>)}
 
                 </div>
 
