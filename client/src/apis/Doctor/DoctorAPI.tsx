@@ -25,6 +25,7 @@ export const createPrescription = async (data: FormData) => {
 export const readPatientList = async (doctorId:number) => {
     try {
         const response = await axios.get(`/doctors/${doctorId}`);
+        console.log(response);
         return response.data;
     } catch (error) {
         console.error(error);
