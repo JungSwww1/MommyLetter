@@ -32,7 +32,7 @@ const DiaryPage=() => {
         setAccessUser(headerUser);
         if (!accessUser) return;
         if (Number(accessUser.userId) !== Number(userId) && accessUser.role !== "Doctor") navigate("/");
-
+        console.log(userId);
     }, [userId]);
 
 
@@ -72,9 +72,8 @@ const DiaryPage=() => {
                 </label>
             </section>
             <Routes>
-
-                <Route path={"/mom"} element={<DiaryMomPage diaryList={diaryList} setDiaryList={setDiaryList} userId={147} refreshDiary={refreshDiary}/>}/>
-                <Route path={"/baby"} element={<DiaryBabyPage diaryList={diaryList} setDiaryList={setDiaryList} userId={147} refreshDiary={refreshDiary}/>}/>
+                <Route path={"/mom"} element={<DiaryMomPage diaryList={diaryList} setDiaryList={setDiaryList} userId={Number(userId)} refreshDiary={refreshDiary}/>}/>
+                <Route path={"/baby"} element={<DiaryBabyPage diaryList={diaryList} setDiaryList={setDiaryList} userId={Number(userId)} refreshDiary={refreshDiary}/>}/>
             </Routes>
         </div>
     );
