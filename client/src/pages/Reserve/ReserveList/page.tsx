@@ -4,21 +4,27 @@ import {readPatientList} from "@/apis/Doctor/DoctorAPI";
 import {PatientRes} from "@/apis/type/types";
 import {DoctorProfileProps} from "@/pages/type/types";
 import DoctorListCardComponent from "@/components/DoctorListCard";
+import {MommyLetterWS} from "@/apis/ws/MommyLetterWS";
+import {readDoctorDetailuser} from "@/apis/profile/ProfileAPI";
 
 
 const ReserveListPage = () => {
     const [doctorId, setDoctorId] = useState<number>() //API수정 시 바꿔야 할 내용
     const [userList, setUserList] = useState<PatientRes[]>([])
     const [displayedUserList, setDisplayedUserList] = useState<PatientRes[]>([])
+
     useEffect(() => {
-        setDoctorId(6);
+
+        readDoctorDetailuser(Number(MommyLetterWS.getInstance().getUserInfo().userId)).then((response)=>
+        setDoctorId(response.doctorId));
         if(!doctorId) return;
         readPatientList(doctorId).then((response)=>{
             setUserList(response);
+            console.log(response);
             setDisplayedUserList(response);
         })
     }, [doctorId]);
-
+    console.log(userList);
     const [patientList, setPatientList] = useState<PatientRes[]>([])
     const selectDepartment = (event: React.ChangeEvent<HTMLSelectElement>) =>{
 

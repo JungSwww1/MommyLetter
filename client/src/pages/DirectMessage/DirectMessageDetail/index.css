@@ -1,3 +1,23 @@
+.DMContent {
+    width:100%;
+}
+
+.DMWrapper {
+    margin-bottom: 1.2%;
+}
+
+@media (max-width: 768px) {
+    .DMContent {
+        width:100vw;
+    }
+}
+
+@media (max-width: 768px) {
+    .DMWrapper {
+        margin-bottom: 3.2%;
+    }
+}
+
 .scrollBar::-webkit-scrollbar {
     width: 3px; /*스크롤바의 너비*/
 }
