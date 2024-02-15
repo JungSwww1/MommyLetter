@@ -106,7 +106,7 @@ const DiaryBabyPage: React.FC<Props> = ({diaryList, setDiaryList, refreshDiary, 
     return (<div>
 
         {selectedDiary ? <DiaryUpdate currYear={currYear} currMonth={currMonth} currDay={currDay} diary={selectedDiary}
-                                      refreshDiary={refreshDiary} diaryList={diaryList} setDiaryList={setDiaryList}/> : null}
+                                      refreshDiary={refreshDiary} diaryList={diaryList} setDiaryList={setDiaryList} userId={userId}/> : null}
         <CalendarComponent events={events} refreshDiary={refreshDiary} diaryList={categoryDiaryList}
                            setDiaryList={setCategoryDiaryList} setDisplayedDiaryList={setDisplayedDiaryList} userId={userId}/>
         {modal && deleteLayout}

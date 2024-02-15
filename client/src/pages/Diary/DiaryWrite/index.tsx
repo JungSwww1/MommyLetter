@@ -17,14 +17,6 @@ interface DateProps {
     userId: number;
 }
 
-interface UpdateProps {
-    currYear: number;
-    currMonth: number;
-    currDay: number;
-    refreshDiary: () => void;
-    diary: DiaryWriteRequestProps;
-}
-
 
 
 export const DiaryWrite: React.FC<DateProps> = (props) => {

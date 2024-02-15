@@ -20,6 +20,7 @@ interface UpdateProps {
     diary: DiaryReadResponseProps;
     setDiaryList: (e:any)=>void;
     diaryList:DiaryReadResponseProps[];
+    userId:number;
 }
 
 interface UserProps {
