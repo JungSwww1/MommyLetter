@@ -38,7 +38,7 @@ const ConsultListPage = () => {
                         <DoctorListCardComponent
                             name={doctor.name}
                             department={doctor.department}
-                            img={`${doctor.profilePhoto ? "/profileimages/" + doctor.profilePhoto.substring(72,) : "/assets/images/default_image_doctor.png"}`}
+                            img={`${doctor.profilePhoto ? "/profileimages/" + doctor.profilePhoto.substring(88,) : "/assets/images/default_image_doctor.png"}`}
                             date=""
                         />
                     </button>
