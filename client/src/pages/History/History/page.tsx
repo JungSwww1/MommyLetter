@@ -1,33 +1,38 @@
 import React, {useEffect, useState} from 'react';
-import {ReactComponent as Left} from "@/assets/icons/chevron-left.svg"
 import {useParams} from "react-router-dom";
 import {fetchHistoryDetail} from "@/apis/history/HistoryAPI";
 import {HistoryDetailProps} from "@/pages/type/types";
 import DoctorListCard from "@/components/DoctorListCard";
-
-
+import {readDoctorDetailuser} from "@/apis/profile/ProfileAPI";
 
 
 const HistoryPage = () => {
     const param = useParams()
     const [historyDetail, setHistoryDetail] = useState<HistoryDetailProps>()
+    const [consultDate, setConsultDate] = useState<Date>()
+    const [doctorId, setDoctorId] = useState()
     useEffect(() => {
-         fetchHistoryDetail(Number(param.id)).then((response) => {
-             console.log(response);
+        fetchHistoryDetail(Number(param.id)).then((response) => {
             setHistoryDetail(response);
+            setConsultDate(new Date(response.reserveDate));
+
         })
-    }, [param.id])
-    console.log(historyDetail);
+
+    }, [])
 
     const goDoctorProfile = () => {
 
     }
+    const isTwoletter = (num: number) => {
+        if (num.toString().length > 1) return num;
+        return `0${num.toString()}`;
 
+    }
     return (<div className="flex flex-col h-[100%] w-[100%]">
         <div className="h-[30%]" onClick={goDoctorProfile}>
-            {historyDetail &&
-                <DoctorListCard  date={historyDetail.location} img={`${historyDetail.profilePhoto  ? "/profileimages/"+historyDetail.profilePhoto.substring(72,) : "/assets/images/default_image_doctor.png"}`}
-                                name={historyDetail.doctorName} department={historyDetail.department}/>}
+            {historyDetail && <DoctorListCard date={historyDetail.reserveDate}
+                                              img={`${historyDetail.profilePhoto ? "/profileimages/" + historyDetail.profilePhoto.substring(88,) : "/assets/images/default_image_doctor.png"}`}
+                                              name={historyDetail.doctorName} department={historyDetail.department}/>}
         </div>
         {historyDetail && <div
             className="flex flex-col w-[100%] h-[100%] p-3 rounded-tl-[20px] rounded-tr-[20px] bg-[#fffaf2]"
@@ -40,9 +45,10 @@ const HistoryPage = () => {
             <div className="h-[20%]">
                 <span className="h-[20%] mb-3 font-bold text-pointColor">상담 시간</span>
 
+                <p>{consultDate && `${isTwoletter(consultDate.getMonth() + 1)}월 ${isTwoletter(consultDate.getDate())}일 ${isTwoletter(consultDate.getHours())} :${isTwoletter(consultDate.getMinutes())}`}</p>
             </div>
             <span className="font-bold text-pointColor">처방전</span>
-            {historyDetail.prescriptionPath}
+
 
             <img src="/assets/images/prescription.png"/>
             <p className="text-blue-600">다운로드</p>
