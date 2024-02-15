@@ -190,8 +190,8 @@ const DirectMessageDetailPage = () => {
 
         </div>
 
-        <div className="fixed bottom-0 h-[5%] w-[40%] ">
-            <div className="flex flex-row items-center w-[100%] h-[100%] bg-gray-300 rounded-2xl p-5">
+        <div className="DMWrapper fixed bottom-0 h-[5%] w-[40%]">
+            <div className="flex flex-row items-center DMContent h-[100%] bg-gray-300 rounded-2xl p-5">
 
                 <input type="text" onChange={(e) => setChat(e.target.value)} className="w-[95%] bg-gray-300"
                        placeholder="메시지 보내기..."
