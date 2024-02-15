@@ -24,6 +24,8 @@ import {UserProps} from "@/pages/type/types";
 import ReserveDetailPage from "@/pages/Reserve/ResultDetail/page";
 import ReserveWritePage from "@/pages/Reserve/ReserveWrite/page";
 import DiaryAnalysisPage from "@/pages/Diary/DiaryAnalysis/page";
+import InvalidAccessPage from "@/pages/Common/InvalidAccessPage";
+import ErrorPage from "@/pages/Common/ErrorPage";
 
 function Main() {
     const currentPath = window.location.pathname;
@@ -60,7 +62,6 @@ function Main() {
                     <Route path={"/message"} element={<DirectMessageList />} />
                     <Route path={"/message/:roomNumber"} element={<DirectMessagePage />} />
 
-                    {/*검색관련 라우터*/}
                     <Route path={"/search/*"} element={<SearchPage />} />
 
                     {/*상담관련 라우터*/}
@@ -78,7 +79,8 @@ function Main() {
                     <Route path={"/reserve/:reserveId"} element={<ReserveDetailPage/>} />
                     <Route path={"/reserve/:reserveId/write"} element={<ReserveWritePage/>} />
                     {/*접근관련 라우터*/}
-                    <Route path={"/*"} element="" />
+                    <Route path={"/notAccess"} element={<InvalidAccessPage/>}/>
+                    <Route path={"/*"} element={<ErrorPage/>} />
 
                 </Routes>
             </BodySection>

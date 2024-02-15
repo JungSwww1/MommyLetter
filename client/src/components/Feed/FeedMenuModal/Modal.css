@@ -9,12 +9,7 @@
 }
 @media (max-width: 768px) {
     .MenuModal {
-        width: 100vw; /* 전체 너비로 설정 */
-    }
-}
-@media (max-width: 768px) {
-    .MenuModal {
-        width: 100vw; /* 전체 너비로 설정 */
+        right: 0%; /* 전체 너비로 설정 */
     }
 }
 

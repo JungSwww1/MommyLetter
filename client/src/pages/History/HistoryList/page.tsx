@@ -26,16 +26,20 @@ const HistoryListPage = () => {
                 setHistoryList(historyList);
             })
         }
+        console.log(historyList);
     }, [user?.userId])
 
     return (<HistoryListLayout>
         <DoctorListSection>
-            {historyList?.map((history: HistoryListProps) => (
+            {historyList && historyList.map((history: HistoryListProps) => (
 
                 <Link key={history.counselingId} to={history.counselingId.toString()}><DoctorListCardComponent name={history.name}
                                                                                     department={history.department}
                                                                                     img={history.profilePhoto}
-                                                                                    date={history.reserveDate.substring(2, 10)}/></Link>))}
+                                                                                    date={history.reserveDate.substring(2, 10)}/></Link>))
+            }
+            {(!historyList) ||(historyList && historyList?.length<1) && <img src="/assets/images/not_found_consultlist.jpg"/>}
+
         </DoctorListSection>
     </HistoryListLayout>);
 };
