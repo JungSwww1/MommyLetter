@@ -1,0 +1,130 @@
+button {
+  background-color: #4665d1;
+  border-color: #4665d1;
+}
+h1 {
+  position: relative;
+  top: 77px;
+  font-size: 40px;
+  font-weight: 700;
+  color: #4665d1;
+}
+#waitRoom {
+  display: flex;
+  justify-content: center;
+}
+#waitRoom p {
+  margin: 1.2rem;
+  font-size: 18px;
+  line-height: 24px;
+  color: #4665d1;
+  text-align: center;
+}
+#waitRoom > form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 38px;
+  border-radius: 10px;
+}
+#waitRoom > form > input {
+  width: 200px;
+  height: 30px;
+  color: #414141;
+  font-size: 14px;
+  font-weight: 400;
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+}
+#waitRoom button {
+  width: 182px;
+  height: 60px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 22px;
+  border-radius: 18px;
+}
+
+/* chat room */
+#audio {
+  border-radius: 20px;
+  margin-right: 20px;
+  width: 130px;
+}
+#camera {
+  border-radius: 20px;
+  width: 200px;
+}
+#callRoom {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+}
+#videoCall {
+  display: flex;
+}
+#myStream {
+  /* display: flex;
+  flex-direction: column; */
+  padding: 30px 60px;
+}
+#peerStream {
+  padding: 30px 60px;
+}
+#chatContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+}
+#messages {
+  width: 100%;
+  height: 300px;
+  overflow-y: scroll;
+  padding: 0;
+  border-bottom: 1.5px solid #d9d9d9;
+}
+#messages > li {
+  list-style: none;
+  padding: 10px 40px;
+  border: 1px solid #ffdc69;
+  background: #ffdc69;
+  margin: 10px;
+  border-radius: 10px;
+  color: #fefefe;
+}
+#chat {
+  width: 100%;
+  border-radius: unset;
+  border: none;
+  box-shadow: none;
+}
+#chat > input {
+  width: 100%;
+  height: 50px;
+}
+#chat > button {
+  border-radius: 20px;
+}
+
+#chatlist {
+  display: flex;
+  flex-flow: wrap row;
+}
+
+#backButton {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+}

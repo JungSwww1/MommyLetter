@@ -1,0 +1,42 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Mommy Letter
+        link(rel="stylesheet", href="https://unpkg.com/mvp.css")
+        link(rel='stylesheet', href="/public/home.css")
+    body
+        header
+            h1 Mommy Letter
+        main
+            div#waitRoom
+                form
+                    p 
+                        | 상담을 시작하세요
+                        br
+                        |
+                    //- input(id="nickname", placeholder="nickname", required, type="text")
+                    //- input(id="roomName", placeholder="room name", required, type="text")
+                    button 상담하기
+            div#callRoom
+                button#backButton(onclick="window.location.href='http://i10a509.p.ssafy.io:3000'")  돌아가기
+                div#videoCall
+                    div#myStream
+                        h2 본인
+                        video#myVideo(autoplay, playinline, width="400", height="400")
+                        button#audio Mute
+                        button#camera Turn Camera Off
+                        select#cameraSelect
+                    div#peerStream
+                        h2 상대방
+                        video#peerVideo(autoplay, playinline, width="400", height="400")
+                div#chatContainer
+                    h2 Chat 💬
+                    ul#messages 
+                    form#chat
+                        input(type="text", placeholder="채팅을 입력하세요")
+                        button Send
+        script(src="/socket.io/socket.io.js") 
+        script(src="/public/app.js") 
