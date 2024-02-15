@@ -36,10 +36,12 @@ const DiaryAnalysisPage: React.FC = () => {
             </div>
             <br/>
             <hr/>
-            <div className="flex flex-col w-[100%] h-[50%]">
+            <div className="flex flex-col w-[100%] h-[70%]">
                 {isChecked == 1 && <MonthEmojiChartComponent/>}
                 {isChecked == 2 && <YearEmojiChartComponent/>}
+                <div>
                 <EmojiRank/>
+                </div>
                 <HorizontalChart/>
                 <div className="flex justify-between w-[100%] h-[8%] p-2">
                     {emotionImg.map((response) => (

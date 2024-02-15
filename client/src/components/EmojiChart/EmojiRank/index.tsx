@@ -85,7 +85,7 @@ const EmojiRank: React.FC = () => {
                 <div className="w-[80%] h-[20%] p-[40px] rounded-2xl bg-gray-200">
                     {emojiRankings.map(({icon, count, rank}) => (
                         <div key={icon} className="flex items-center justify-between mb-2">
-                            <img src={icon} alt={`Emoji ${rank}`} width="20" height="20" className="mr-2"/>
+                            <img src={icon} alt={`Emoji ${rank}`} className="w-[8%]"/>
                             <span>{` ${rank} 순위 : ${count}회`}</span>
                         </div>
                     ))}
