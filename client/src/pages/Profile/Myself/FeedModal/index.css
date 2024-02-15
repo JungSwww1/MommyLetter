@@ -1,5 +1,6 @@
-/* Add this to your stylesheet */
+ /* Add this to your stylesheet */
 .bottom-sheet7 {
+    left:30%;
     position: fixed;
     bottom: 0;
     width: 40vw;

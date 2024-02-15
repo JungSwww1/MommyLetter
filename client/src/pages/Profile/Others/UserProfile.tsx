@@ -21,6 +21,7 @@ import {deleteFollowAPI, doFollowAPI, isFollowAPI} from "@/apis/Follow/FollowAPI
 import {getProfileBoardAPI} from "@/apis/Board/boardApi";
 import {fetchDMList, startDM} from "@/apis/DM/DMAPI";
 import {MommyLetterWS} from "@/apis/ws/MommyLetterWS";
+import BottomUpModal from "@/pages/Profile/Myself/FeedModal";
 
 interface DMProps {
     userId: number;
@@ -48,8 +49,7 @@ const UserProfile = () => {
         follower:0,
         following:0
     })
-    const [background, setBackground] = useState()
-    const [profile, setProfile] = useState()
+    const [allBoards, setAllBoards]=useState([])
     useEffect(()=>{
         const fetchProfileData = async () => {
             const userIdNumber = userId ? parseInt(userId, 10) : null;
@@ -63,6 +63,8 @@ const UserProfile = () => {
                 } else {
                     const data = await getProfileAPI(userIdNumber);
                     setProfileData(data);
+                    const data1 = await getProfileBoardAPI(userIdNumber);
+                    setAllBoards(data1);
                 }
             } catch (error) {
                 console.error('프로필 데이터를 가져오는 데 실패했습니다.', error);
@@ -91,8 +93,8 @@ const UserProfile = () => {
         const fetchFollow = async () => {
             const userIdNumber = userId ? parseInt(userId, 10) : null;
             if (!userIdNumber) {
-                console.log('userId가 유효한 숫자가 아닙니다.');
-                return;
+
+                console.log('userId가 유효한 숫자가 아닙니다.');        return;
             }
             try {
                 const res = await isFollowAPI(authUser.userId, userIdNumber)
@@ -126,15 +128,6 @@ const UserProfile = () => {
         ? `/profileimages/${profileData.profilePhoto.substring(88)}`
         : logo;
 
-    const [allBoards, setAllBoards]=useState([])
-    useEffect(() => {
-        const fetchBoardData = async () => {
-            const data = await getProfileBoardAPI(profileData.userId);
-            setAllBoards(data);
-        };
-        fetchBoardData();
-    }, [userId])
-
     const [user, setUser] = useState<number>();
     const [myDMList, setMyDMList] = useState<DMProps[]>([])
     const otherId = Number(userId)
@@ -164,6 +157,10 @@ const UserProfile = () => {
             });
     }
 
+    const toggleModal = (boardId:number) => {
+        (document.getElementById(`modal_${boardId}`) as any).showModal();
+    };
+
     return (
         <div>
             {/* 본문 */}
@@ -174,7 +171,7 @@ const UserProfile = () => {
                 {/* 사용자 프로필 부분 */}
                 <ProfileContainer>
                     <Img src={profilePhotoUrl || logo} alt="profile"/>
-                    <p className={"text-[20px]"}>{userId}</p>
+                    <p className={"text-[20px]"}>{profileData.nickname}</p>
                     <p>{profileData.intro}</p>
                     <SubProfileContainer>
                         <div>
@@ -206,7 +203,10 @@ const UserProfile = () => {
                             const imagePath = board.photo ? `/boardimages/${board.photo.path.substring(72)}` : preview;
                             return (
                                 <ContentWrapper key={key}>
-                                    <BoardImg src={imagePath} alt={`board-${board.boardId}`} />
+                                    <BoardImg src={imagePath} alt={`board-${board.boardId}`}  onClick={()=>toggleModal(board.boardId)}/>
+                                    <dialog id={`modal_${board.boardId}`} className="modal">
+                                        <BottomUpModal children={board.boardId} writeButton={null} boardId={board.boardId}/>
+                                    </dialog>
                                 </ContentWrapper>
                             );
                         })}
