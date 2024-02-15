@@ -8,6 +8,7 @@ import {useParams} from "react-router-dom";
 import DirectMessage from "@/components/DirectMessage";
 import {getProfileAPI} from "@/apis/profile/ProfileAPI";
 import "./index.css";
+import Message from "@/assets/icons/message";
 interface DMProps {
     senderId: number;
     receiverId: number;
@@ -197,7 +198,7 @@ const DirectMessageDetailPage = () => {
                        placeholder="메시지 보내기..."
                        value={chat}
                        onKeyUp={handleOnKeyPress}/>
-                <button onClick={sendChat} className={"100px"}>확인</button>
+                <button onClick={sendChat} className={"100px"}><Message fill={"black"}/></button>
             </div>
         </div>
     </div>);
