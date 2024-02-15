@@ -84,8 +84,8 @@ const ConsultPage = () => {
                 <div className="p-3 rounded-tr-[10px] rounded-tl-[10px]"
                      style={{boxShadow: "0px -3px 4px 0 rgba(0,0,0,0.25)"}}>
                     <p className="mb-3">약력</p>
-                    {consultDetail?.historyList.map((history) =>
-                        <p>{history}</p>)}
+                    {consultDetail?.historyList.map((history,index) =>
+                        <p key={index}>{history}</p>)}
 
                 </div>
 
