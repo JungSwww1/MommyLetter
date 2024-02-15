@@ -52,6 +52,8 @@ const ConsultRegist = () => {
         }
 
         const data = {
+            name:consultName,
+            ssn:ssnFront,
             phone: phone,
             pregnancyStatus: selectedOption,
             extra: extra,
