@@ -6,9 +6,10 @@ import {createReservation} from "@/apis/consult/ConsultAPI";
 import {ToastContainer} from 'react-toastify';
 import {Toast} from "@/components/Toast/Toast";
 import {fetchDMList, startDM} from "@/apis/DM/DMAPI";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {readDoctorDetail} from "@/apis/profile/ProfileAPI";
 import * as Stomp from "@stomp/stompjs";
+import {readConsultInfo} from "@/apis/Auth/authAPI";
 
 interface CalendarProps {
     doctorId: number;
@@ -31,12 +32,20 @@ const CalendarComponent = ({doctorId, userId}: CalendarProps) => {
     const param = useParams()["id"];
     let [client, setClient] = useState<Stomp.Client>();
     const [chatGroupId, setChatGroupId] = useState<number>()
+    const [isConsultInfo, setIsConsultInfo] = useState<boolean>()
+    const navigate = useNavigate();
     useEffect(() => {
         readDoctorDetail(Number(param)).then((response) => {
             setDoctorUserId(response.userId);
             setDoctor(response);
         })
     }, [param]);
+    useEffect(() => {
+        readConsultInfo(Number(userId)).then((response)=>{
+            if(response.userInfoId) setIsConsultInfo(true);
+        })
+    }, [userId]);
+
     useEffect(() => {
         if (!doctorUserId) return;
         fetchDMList(doctorUserId).then((response) => {
@@ -73,23 +82,32 @@ const CalendarComponent = ({doctorId, userId}: CalendarProps) => {
         const data: ReservationReq = {
             doctorId: doctorId, reserveDate: combinedDateTime.toISOString(), userId: userId
         }
-        createReservation(data)
-        Toast.success("진료 예약 성공!");
-        goDm(userId);
-        console.log(chatGroupId);
-        if(!chatGroupId) return;
-        connect(chatGroupId);
-        console.log(chatGroupId);
-        client?.publish({
-            destination: "/pub/message",
-            body: JSON.stringify({
-                senderId:Number(doctorUserId),
-                receiverId:userId,
-                content:`안녕하세욜`,
-                chatGroupId:chatGroupId,
-            }),
-        });
+        if(!isConsultInfo) {
 
+            Toast.error("상담정보를 등록하고 예약해주세요!");
+            setTimeout(()=>{
+                return navigate("/consultRegist");
+            },1000)
+
+        }
+        else {
+            createReservation(data)
+            Toast.success("진료 예약 성공!");
+            goDm(userId);
+            console.log(chatGroupId);
+            if (!chatGroupId) return;
+            connect(chatGroupId);
+            console.log(chatGroupId);
+            client?.publish({
+                destination: "/pub/message",
+                body: JSON.stringify({
+                    senderId: Number(doctorUserId),
+                    receiverId: userId,
+                    content: `안녕하세욜`,
+                    chatGroupId: chatGroupId,
+                }),
+            });
+        }
         client?.deactivate();
         setSelectedTime("");
         setDate(new Date());

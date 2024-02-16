@@ -11,6 +11,7 @@ import {readDoctorDetail} from "@/apis/profile/ProfileAPI";
 import FullCalendar from "@fullcalendar/react";
 import TodoCalendar from "@/components/ReactCalendar";
 import CalendarComponent from "@/components/ReactCalendar";
+import {readConsultInfo} from "@/apis/Auth/authAPI";
 
 const ConsultPage = () => {
     const navigate = useNavigate();
@@ -18,8 +19,8 @@ const ConsultPage = () => {
     const [doctorId, setDoctorId] = useState<number>()
     const [userId, setUserId] = useState<number>()
     const [consultDetail, setConsultDetail] = useState<DoctorRes>()
-
     const [isValid, setIsValid] = useState<boolean>(false)
+
     useEffect(() => {
         if (param) {
             setDoctorId(Number(param));
@@ -32,9 +33,6 @@ const ConsultPage = () => {
 
     }, [param]);
 
-    useEffect(() => {
-
-    }, []);
 
     const goWriting = () => {
 
@@ -46,6 +44,8 @@ const ConsultPage = () => {
         setIsValid(!isValid);
     }
 
+
+    
     return (
 
         <div className="flex flex-col h-[100%] w-[100%]">
@@ -76,7 +76,6 @@ const ConsultPage = () => {
             </div>
             {userId && doctorId && isValid &&  <CalendarComponent doctorId={doctorId} userId={userId}/>}
             <div className="flex justify-end mr-5">
-
 
 
             </div>
