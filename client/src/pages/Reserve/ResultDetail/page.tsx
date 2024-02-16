@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../../../components/SwitchButton/ToggleSwitch.css';
 import {BasicInput, Button, Layout, Submit, Title, Wrapper, Wrapper2} from "@/pages/Consult/ConsultRegist/styles";
 import {readPatientDetail} from "@/apis/Doctor/DoctorAPI";
@@ -73,62 +73,68 @@ const ReserveDetailPage = () => {
     const writeAction = () => {
         navigate(`/reserve/${param}/write`)
     }
+    console.log(patient);
+
+    const goProfile = () =>  {
+        navigate(`/profile/${patient?.userId}`)
+    }
 
     return (<div>
-            {/* 메인 내용 */}
-            <Layout>
+        {/* 메인 내용 */}
+        <Layout>
+            <div className="flex justify-center">
+                <img className="w-[20%]" onClick={goProfile} src={`${patient?.profilePhoto  ? "/profileimages/"+patient?.profilePhoto.substring(88,) : "/assets/images/default_image.png"}`}/>
+            </div>
+            <Title>이름</Title>
+            <BasicInput value={patient?.name} disabled/>
 
-                <Title>이름</Title>
-                <BasicInput value={patient?.name} disabled/>
+            <Title>주민등록번호</Title>
+            <Wrapper>
+                <BasicInput value={patient?.ssn} disabled/>
+            </Wrapper>
 
-                <Title>주민등록번호</Title>
-                <Wrapper>
-                    <BasicInput value={patient?.ssn} disabled/>
-                </Wrapper>
+            <Title>전화번호</Title>
+            <BasicInput
+                maxLength={11}
+                value={patient?.phone} disabled/>
 
-                <Title>전화번호</Title>
-                <BasicInput
-                    maxLength={11}
-                    value={patient?.phone} disabled/>
+            <Title>임신 / 출산 여부</Title>
+            <Wrapper>
+                <Button
+                    className={`${selectedOption === 'Pregnant' ? 'bg-[#533C00] text-white' : 'bg-[#FFDF6D] text-black'}`}>임신</Button>
+                <Button
+                    className={`${selectedOption === 'Mother' ? 'bg-[#533C00] text-white' : 'bg-[#FFDF6D] text-black'}`}>출산</Button>
+                <Button
+                    className={`${selectedOption === 'None' ? 'bg-[#533C00] text-white' : 'bg-[#FFDF6D] text-black'}`}>해당없음</Button>
+            </Wrapper>
 
-                <Title>임신 / 출산 여부</Title>
-                <Wrapper>
-                    <Button
-                        className={`${selectedOption === 'Pregnant' ? 'bg-[#533C00] text-white' : 'bg-[#FFDF6D] text-black'}`}>임신</Button>
-                    <Button
-                        className={`${selectedOption === 'Mother' ? 'bg-[#533C00] text-white' : 'bg-[#FFDF6D] text-black'}`}>출산</Button>
-                    <Button
-                        className={`${selectedOption === 'None' ? 'bg-[#533C00] text-white' : 'bg-[#FFDF6D] text-black'}`}>해당없음</Button>
-                </Wrapper>
+            <Title>비고</Title>
+            <BasicInput value={patient?.extra} disabled
+            />
 
-                <Title>비고</Title>
-                <BasicInput value={patient?.extra} disabled
-                />
-
-                <Title>산모일기 제공 여부</Title>
-                <Wrapper2>
-                    <div className={`toggle-switch ${isToggled ? 'toggled' : ''}`}>
-                        <div className="slider"></div>
-
-                    </div>
-                    <p className={`ml-[3%] ${isToggled ? '' : 'text-red-500'}`}>{isToggled ? '제공' : '비제공'}</p>
-
-                </Wrapper2>
-                <div className="flex justify-around">
-                    {patient && <Submit onClick={() => goDm(patient?.userId)}>연결</Submit>}
-                    {patient?.diaryOpen &&
-                        <button onClick={goDiary} className="btn rounded-full bg-user"><Diary fill={"black"}/>일기 확인
-                        </button>}
-                    <Submit className="btn btn-primary" onClick={writeAction}>결과작성</Submit>
+            <Title>산모일기 제공 여부</Title>
+            <Wrapper2>
+                <div className={`toggle-switch ${isToggled ? 'toggled' : ''}`}>
+                    <div className="slider"></div>
 
                 </div>
+                <p className={`ml-[3%] ${isToggled ? '' : 'text-red-500'}`}>{isToggled ? '제공' : '비제공'}</p>
+
+            </Wrapper2>
+            <div className="flex justify-around">
+                {/*{patient && <Submit onClick={() => goDm(patient?.userId)}>연결</Submit>}*/}
+                {patient && <Submit><a href="https://healthpanda.site/">화상 연결</a></Submit>}
+                {patient?.diaryOpen &&
+                    <button onClick={goDiary} className="btn rounded-full bg-user"><Diary fill={"black"}/>일기 확인
+                    </button>}
+                <Submit className="btn btn-primary" onClick={writeAction}>결과작성</Submit>
+
+            </div>
 
 
+        </Layout>
 
-
-            </Layout>
-
-        </div>)
+    </div>)
 }
 
 export default ReserveDetailPage;
