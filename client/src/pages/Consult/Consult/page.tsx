@@ -51,7 +51,7 @@ const ConsultPage = () => {
                         profilePhoto={`${consultDetail.profilePhoto ? "/profileimages/" + consultDetail.profilePhoto.substring(88,) : "/assets/images/default_image_doctor.png"}`}
                         name={consultDetail.name} intro={consultDetail.department}/>}
                 </div>
-
+                    <br/>
                 <section className="flex flex-row ml-5 h-[50%] w-[100%]">
                     <section className="w-[40%]">
                         <p className="mb-3 text-base font-bold">현재 상담 가능</p>
