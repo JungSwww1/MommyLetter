@@ -1,5 +1,9 @@
 import {useState} from "react";
-
+declare global {
+    interface Window {
+        kakao: any;
+    }
+}
 const GoogleMap = () => {
     const [name, setName] = useState()
     const handleChange = (event:any) => {
