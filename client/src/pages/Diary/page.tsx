@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { Route, Routes, useNavigate, useParams } from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import {Link, Route, Routes, useNavigate, useParams} from "react-router-dom";
 import DiaryMomPage from "@/pages/Diary/DiaryMom/page";
 import DiaryBabyPage from "@/pages/Diary/DiaryBaby/page";
-import { DiaryReadResponseProps, UserProps } from "@/pages/type/types";
-import { fetchDiary } from "@/apis/diary/DiaryAPI";
+import {DiaryReadResponseProps} from "@/pages/type/types";
+import {fetchDiary} from "@/apis/diary/DiaryAPI";
 import {MommyLetterWS} from "@/apis/ws/MommyLetterWS";
-import {readConsultInfo} from "@/apis/Auth/authAPI";
+import DiaryAnalysisPage from "@/pages/Diary/DiaryAnalysis/page";
 
-interface AccessUser{
-    nickname:string;
-    userId:string;
+interface AccessUser {
+    nickname: string;
+    userId: string;
     role: string;
 }
-const DiaryPage=() => {
+
+const DiaryPage = () => {
     const {param} = useParams();
 
     const currParam = param || "mom"; // 기본값 설정
@@ -22,6 +23,7 @@ const DiaryPage=() => {
     const [userId, setUserId] = useState<number>()
     const [diaryList, setDiaryList] = useState<DiaryReadResponseProps[]>([]);
     const paramUserId = useParams()["userId"];
+    const [isAnalysis, setIsAnalysis] = useState(false)
     useEffect(() => {
         setUserId(Number(paramUserId));
 
@@ -38,8 +40,7 @@ const DiaryPage=() => {
 
 
     useEffect(() => {
-        if (currParam === "baby")
-            setToggled(true);
+        if (currParam === "baby") setToggled(true);
     }, [currParam]);
 
     useEffect(() => {
@@ -47,7 +48,7 @@ const DiaryPage=() => {
     }, [userId]);
 
     const refreshDiary = () => {
-        if(!userId) return;
+        if (!userId) return;
         fetchDiary(Number(userId))
             .then((data) => {
                 setDiaryList(data);
@@ -60,12 +61,21 @@ const DiaryPage=() => {
         newToggledState ? navigate("baby") : navigate("mom");
 
     };
-
-
-    return (
-        <div className="h-[100%] w-[100%]">
+    const goAnalysis = ()=>{
+        setIsAnalysis(true);
+        navigate(`/${userId}/diary/analysis`);
+    }
+    const goDiary = () =>{
+        setIsAnalysis(false);
+        navigate(`/${userId}/diary/mom`);
+    }
+    return (<div className="h-[100%] w-[100%]">
             <section className="flex justify-between m-3">
-                <span className="font-bold text-xl">{isToggled ? "육아일기" : "산모일기"}</span>
+                <div>
+                    {isAnalysis && <button onClick={goDiary} className="font-bold text-xl hover:scale-110 duration-300">일기</button>}
+                    {!isAnalysis && <button onClick={goDiary} className="font-bold text-xl hover:scale-110 duration-300">{isToggled ? "육아일기" : "산모일기"}</button>}
+                    / <button onClick={goAnalysis} className="font-bold text-xl hover:scale-110 duration-300">일기분석</button>
+                </div>
                 <label className="swap">
                     <div className={`toggle-switch ${isToggled ? 'toggled' : ''}`} onClick={handleToggle}>
                         <div className="slider"></div>
@@ -73,11 +83,16 @@ const DiaryPage=() => {
                 </label>
             </section>
             <Routes>
-                <Route path={"/mom"} element={<DiaryMomPage diaryList={diaryList} setDiaryList={setDiaryList} userId={Number(userId)} refreshDiary={refreshDiary}/>}/>
-                <Route path={"/baby"} element={<DiaryBabyPage diaryList={diaryList} setDiaryList={setDiaryList} userId={Number(userId)} refreshDiary={refreshDiary}/>}/>
+                <Route path={"/mom"}
+                       element={<DiaryMomPage diaryList={diaryList} setDiaryList={setDiaryList} userId={Number(userId)}
+                                              refreshDiary={refreshDiary}/>}/>
+                <Route path={"/baby"}
+                       element={<DiaryBabyPage diaryList={diaryList} setDiaryList={setDiaryList} userId={Number(userId)}
+                                               refreshDiary={refreshDiary}/>}/>
+                <Route path={"/analysis"} element={<DiaryAnalysisPage/>}/>
+
             </Routes>
-        </div>
-    );
+        </div>);
 };
 
 export default DiaryPage;
