@@ -3,15 +3,10 @@ import {useNavigate, useParams} from 'react-router-dom'
 
 import sample1 from "@/assets/images/basicbackground.png"
 import {ProfileComponent} from "@/components/Profile";
-import {createReservation} from "@/apis/consult/ConsultAPI";
 import {MommyLetterWS} from "@/apis/ws/MommyLetterWS";
-import {DoctorRes, ReservationReq} from "@/apis/type/types";
-import {readPatientList} from "@/apis/Doctor/DoctorAPI";
+import {DoctorRes} from "@/apis/type/types";
 import {readDoctorDetail} from "@/apis/profile/ProfileAPI";
-import FullCalendar from "@fullcalendar/react";
-import TodoCalendar from "@/components/ReactCalendar";
 import CalendarComponent from "@/components/ReactCalendar";
-import {readConsultInfo} from "@/apis/Auth/authAPI";
 
 const ConsultPage = () => {
     const navigate = useNavigate();
@@ -24,7 +19,7 @@ const ConsultPage = () => {
     useEffect(() => {
         if (param) {
             setDoctorId(Number(param));
-            readDoctorDetail(Number(param)).then((response)=>{
+            readDoctorDetail(Number(param)).then((response) => {
                 setConsultDetail(response);
             })
             setUserId(Number(MommyLetterWS.getInstance().getUserInfo().userId));
@@ -40,12 +35,11 @@ const ConsultPage = () => {
         navigate("write");
     }
 
-    const goReservation =() => {
+    const goReservation = () => {
         setIsValid(!isValid);
     }
 
 
-    
     return (
 
         <div className="flex flex-col h-[100%] w-[100%]">
@@ -53,10 +47,9 @@ const ConsultPage = () => {
             <img className="h-[30%]" src={sample1}/>
             <div className="relative top-[-10%] flex flex-col items-center h-[35%] w-[100%] ml-3">
                 <div className=" flex flex-col items-center h-[50%] w-[100%] mb-5">
-                    {consultDetail &&
-                        <ProfileComponent
-                            profilePhoto={`${consultDetail.profilePhoto ? "/profileimages/" + consultDetail.profilePhoto.substring(88,) : "/assets/images/default_image_doctor.png"}`}
-                            name={consultDetail.name} intro={consultDetail.department}/>}
+                    {consultDetail && <ProfileComponent
+                        profilePhoto={`${consultDetail.profilePhoto ? "/profileimages/" + consultDetail.profilePhoto.substring(88,) : "/assets/images/default_image_doctor.png"}`}
+                        name={consultDetail.name} intro={consultDetail.department}/>}
                 </div>
 
                 <section className="flex flex-row ml-5 h-[50%] w-[100%]">
@@ -74,7 +67,7 @@ const ConsultPage = () => {
                 </section>
 
             </div>
-            {userId && doctorId && isValid &&  <CalendarComponent doctorId={doctorId} userId={userId}/>}
+                {userId && doctorId && isValid && <CalendarComponent doctorId={doctorId} userId={userId}/>}
             <div className="flex justify-end mr-5">
 
 
@@ -83,8 +76,7 @@ const ConsultPage = () => {
                 <div className="p-3 rounded-tr-[10px] rounded-tl-[10px]"
                      style={{boxShadow: "0px -3px 4px 0 rgba(0,0,0,0.25)"}}>
                     <p className="mb-3">약력</p>
-                    {consultDetail?.historyList.map((history,index) =>
-                        <p key={index}>{history}</p>)}
+                    {consultDetail?.historyList.map((history, index) => <p key={index}>{history}</p>)}
 
                 </div>
 
