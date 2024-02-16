@@ -58,7 +58,6 @@ function Main() {
 
                     {/*다이어리관련 라우터*/}
                     <Route path={"/:userId/diary/*"} element={<DiaryPage />}/>
-                    <Route path={"/:userId/diary/analysis"} element={<DiaryAnalysisPage />}/>
 
                     {/*DM관련 라우터*/}
                     <Route path={"/message"} element={<DirectMessageList />} />
