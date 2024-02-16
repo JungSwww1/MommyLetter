@@ -76,11 +76,11 @@ const DiaryPage = () => {
                     {!isAnalysis && <button onClick={goDiary} className="font-bold text-xl hover:scale-110 duration-300">{isToggled ? "육아일기" : "산모일기"}</button>}
                     / <button onClick={goAnalysis} className="font-bold text-xl hover:scale-110 duration-300">일기분석</button>
                 </div>
-                <label className="swap">
+                {!isAnalysis &&<label className="swap">
                     <div className={`toggle-switch ${isToggled ? 'toggled' : ''}`} onClick={handleToggle}>
                         <div className="slider"></div>
                     </div>
-                </label>
+                </label>}
             </section>
             <Routes>
                 <Route path={"/mom"}
