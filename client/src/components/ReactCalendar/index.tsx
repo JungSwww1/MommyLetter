@@ -58,6 +58,14 @@ const CalendarComponent = ({doctorId, userId}: CalendarProps) => {
             });
         })
     }, [doctorUserId]);
+
+    useEffect(() => {
+        goDm(userId);
+        if(!chatGroupId) return;
+        connect(chatGroupId);
+    }, [doctorUserId,chatGroupId]);
+
+    (chatGroupId);
     const handleDateChange = (selectedDate: any) => {
         setDate(selectedDate);
         setSelectedTime("");
@@ -92,18 +100,14 @@ const CalendarComponent = ({doctorId, userId}: CalendarProps) => {
         }
         else {
             createReservation(data)
-            Toast.success("진료 예약 성공!");
-            goDm(userId);
-            console.log(chatGroupId);
-            if (!chatGroupId) return;
-            connect(chatGroupId);
-            console.log(chatGroupId);
+            Toast.success(`[예약완료] 메세지를 확인하세요!`);
+
             client?.publish({
                 destination: "/pub/message",
                 body: JSON.stringify({
                     senderId: Number(doctorUserId),
                     receiverId: userId,
-                    content: `안녕하세욜`,
+                    content: `${date.getMonth() + 1}월 ${date.getDate()}일 ${selectedTime}시 예약되었습니다. 약속한 시간에 https://healthpanda.site/ 접속바랍니다. `,
                     chatGroupId: chatGroupId,
                 }),
             });
@@ -115,6 +119,7 @@ const CalendarComponent = ({doctorId, userId}: CalendarProps) => {
     }
     const goDm =  (otherUserId: number) => {
         if (!doctorUserId) return;
+
         const isUsed = myDMList.find((tempUser: DMProps) => tempUser.userId === otherUserId)
         if (isUsed) setChatGroupId(isUsed.chatGroupId)
         else {
@@ -122,22 +127,20 @@ const CalendarComponent = ({doctorId, userId}: CalendarProps) => {
                 .then(response => {
                     setMyDMList(prevState => [...prevState, response, otherUserId])
                     setChatGroupId(response);
+
                 });
         }
 
     };
-
     const connect = (roomNumber: number) => {
         const clientdata = new Stomp.Client({
             brokerURL: "ws://i10a509.p.ssafy.io:8081/ws", connectHeaders: {}
-            // MommyLetterWS.getInstance().header
             , debug: function (str) {
                 console.log(str);
 
             }, reconnectDelay: 5000, // 자동 재 연결
             heartbeatIncoming: 4000, heartbeatOutgoing: 4000,
         });
-        console.log(roomNumber);
 
         clientdata.onConnect = function () {
             clientdata.subscribe("/sub/enter/" + roomNumber, callback);
@@ -152,7 +155,7 @@ const callback = function (message: any) {
     console.log(message.body);
 };
 
-return (<div>
+return (<div className="w-[100%]">
     <ToastContainer/>
     <div className={`
         }flex ${showCalendar ? 'visible' : 'hidden'}`}>
