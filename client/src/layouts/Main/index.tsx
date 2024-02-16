@@ -26,6 +26,7 @@ import DiaryAnalysisPage from "@/pages/Diary/DiaryAnalysis/page";
 import InvalidAccessPage from "@/pages/Common/InvalidAccessPage";
 import ErrorPage from "@/pages/Common/ErrorPage";
 import GoogleMap from "@/pages/Map/MapContainer";
+import Kakao from "@/pages/Map/Kakao/Kakao.js";
 
 function Main() {
     const currentPath = window.location.pathname;
@@ -50,8 +51,8 @@ function Main() {
                     <Route path={"/edit"} element={<UserEdit />} />
                     <Route path={"/profile"} element={<UserProfile />} />
                     <Route path={"/profile/:userId"} element={<OtherProfile />} />
-                    <Route path={"/map"} element={<GoogleMap/>}/>
-
+                    <Route path={"/kakaomap"} element={<Kakao/>}/>
+                    {/*<Route path={"/map"} element={<GoogleMap/>}/>*/}
                     {/*피드관련 라우터*/}
                     <Route path={"/"} element={<Feed />} />
 

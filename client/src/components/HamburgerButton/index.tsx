@@ -9,6 +9,7 @@ import {ReactComponent as Profile} from "@/assets/icons/profile.svg";
 import {ReactComponent as Consult} from "@/assets/icons/users.svg";
 import {ReactComponent as Book} from "@/assets/icons/book.svg";
 import {ReactComponent as Chart} from "@/assets/icons/bar-chart-2.svg";
+import {ReactComponent as Feeder2} from "@/assets/icons/feeder2.svg";
 import Diary from "@/assets/icons/diary"
 
 
@@ -62,6 +63,7 @@ const HamburgerButton = ({children}: { children: ReactNode }) => {
                             {!isDoctor && <Item><Link to="/history"><Book/>상담기록</Link></Item>}
                             {!isDoctor &&<Item><Link to="/consultRegist"><Edit/>상담정보 등록/수정</Link></Item>}
                             {isDoctor && <Item><Link to="/reserve"><Consult/>대기환자</Link></Item>}
+                            {!isDoctor && <Item><Link to="/kakaomap"><Feeder2/>수유실</Link></Item>}
                             <Item><Link to="/search/nickname"><Search fill={"black"}/>검색</Link></Item>
 
                         </div>
