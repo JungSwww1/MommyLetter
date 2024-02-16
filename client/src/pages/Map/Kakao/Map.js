@@ -50,15 +50,20 @@ const Map = ({ searchPlace }) => {
     };
 
     return (
-        <div id="map-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <div id="suyusil" style={{ width: '100%', height: '350px' }}></div>
-            <div>
+        <div id="map-container" className=" w-[100%]" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div id="suyusil" className=" w-[100%]" style={{ width: '100%', height: '350px' }}></div>
+            <div className="ml-[10%] mr-[10%] w-[90%]">
                 {places.map((place, index) => (
-                    <div key={index}  className={"p-2 border-2 border-black rounded-lg"} style={{ marginTop: '10px' }} onClick={() => moveToLocation(place.y, place.x)}>
+                    <div key={index} className={"w-[100%] mb-3 active:scale-95 duration-300 border-black hover:bg-gray-200 rounded-lg"}
+                         style={{marginTop: '10px'}} onClick={() => moveToLocation(place.y, place.x)}>
                         <div>{place.place_name}</div>
                         <div>{place.address_name}</div>
                         <div>{place.phone}</div>
+                        <br/>
+                        <hr/>
+
                     </div>
+
                 ))}
             </div>
             {pagination && (
