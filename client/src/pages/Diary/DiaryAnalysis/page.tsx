@@ -9,7 +9,7 @@ const DiaryAnalysisPage: React.FC = () => {
     const [isYear, set] = useState<boolean>(false);
     const [isChecked, setIsChecked] = useState<number>(1)
 
-    const changeBtn = (num:number) =>{
+    const changeBtn = (num: number) => {
         setIsChecked(num);
     }
     const emojiArr: string[] = [];
@@ -18,8 +18,7 @@ const DiaryAnalysisPage: React.FC = () => {
     for (let i = 0; i < 10; i++) {
         emojiArr[i] = path + emotionImg[i];
     }
-    return (
-        <div className="flex flex-col items-center w-[100%] h-[100%] ">
+    return (<div className="flex flex-col items-center w-[100%] h-[100%] ">
 
             <div className="flex flex-row">
                 <Activity/> <p className="font-bold text-xl"> 감정 분석 </p>
@@ -40,18 +39,18 @@ const DiaryAnalysisPage: React.FC = () => {
                 {isChecked == 1 && <MonthEmojiChartComponent/>}
                 {isChecked == 2 && <YearEmojiChartComponent/>}
                 <div>
-                <EmojiRank/>
+                    <EmojiRank/>
                 </div>
                 <HorizontalChart/>
-                <div className="flex justify-between w-[100%] h-[8%] p-2">
-                    {emotionImg.map((response) => (
-                        <img className="h-[100%]" src={path + `${response}`}/>
-                    ))}
+                <div className="flex w-[100%]">
+                    <div className="w-[4%]"></div>
+                    <div className="flex justify-around items-center w-[96%] h-[7%] ml-3 mr-2">
+                        {emotionImg.map((response) => (<img className="h-[100%]" src={path + `${response}`}/>))}
+                    </div>
                 </div>
             </div>
 
-        </div>
-    );
+        </div>);
 };
 
 export default DiaryAnalysisPage;

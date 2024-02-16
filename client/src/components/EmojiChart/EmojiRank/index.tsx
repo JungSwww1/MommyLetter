@@ -80,13 +80,13 @@ const EmojiRank: React.FC = () => {
             <div className="flex flex-col justify-center items-center">
 
                 <hr/>
-                <div className="font-bold">많이 기록한 기록한 아이콘들을 확인해보세요!</div>
+                <div className="">많이 기록한 기록한 아이콘들을 확인해보세요!</div>
                 <br/>
                 <div className="w-[80%] h-[20%] p-[40px] rounded-2xl bg-gray-200">
-                    {emojiRankings.map(({icon, count, rank}) => (
+                    {emojiRankings.filter((emoji)=>emoji.icon !='undefined').map(({icon, count, rank}) => (
                         <div key={icon} className="flex items-center justify-between mb-2">
                             <img src={icon} alt={`Emoji ${rank}`} className="w-[8%]"/>
-                            <span>{` ${rank} 순위 : ${count}회`}</span>
+                            <span>{` ${count}회`}</span>
                         </div>
                     ))}
                 </div>

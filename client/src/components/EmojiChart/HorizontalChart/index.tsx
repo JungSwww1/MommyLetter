@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import { fetchDiary } from "@/apis/diary/DiaryAPI";
 import { PhotoProps } from "@/pages/type/types";
-import { Line } from 'react-chartjs-2';
+import {Bar, Line} from 'react-chartjs-2';
 import Chart, { ChartConfiguration } from 'chart.js/auto';
 import { CategoryScale } from 'chart.js';
 
@@ -119,7 +119,7 @@ const HorizontalChart: React.FC = () => {
 
     return (
         <div className="w-[100%] h-[100%]">
-            <Line data={data} options={options} />
+            <Bar data={data} options={options} />
         </div>
     );
 };
