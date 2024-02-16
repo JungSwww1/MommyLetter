@@ -6,10 +6,9 @@ import {createReservation} from "@/apis/consult/ConsultAPI";
 import {ToastContainer} from 'react-toastify';
 import {Toast} from "@/components/Toast/Toast";
 import {fetchDMList, startDM} from "@/apis/DM/DMAPI";
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {readDoctorDetail} from "@/apis/profile/ProfileAPI";
 import * as Stomp from "@stomp/stompjs";
-import {readConsultInfo} from "@/apis/Auth/authAPI";
 
 interface CalendarProps {
     doctorId: number;
@@ -32,20 +31,12 @@ const CalendarComponent = ({doctorId, userId}: CalendarProps) => {
     const param = useParams()["id"];
     let [client, setClient] = useState<Stomp.Client>();
     const [chatGroupId, setChatGroupId] = useState<number>()
-    const [isConsultInfo, setIsConsultInfo] = useState<boolean>()
-    const navigate = useNavigate();
     useEffect(() => {
         readDoctorDetail(Number(param)).then((response) => {
             setDoctorUserId(response.userId);
             setDoctor(response);
         })
     }, [param]);
-    useEffect(() => {
-        readConsultInfo(Number(userId)).then((response)=>{
-            if(response.userInfoId) setIsConsultInfo(true);
-        })
-    }, [userId]);
-
     useEffect(() => {
         if (!doctorUserId) return;
         fetchDMList(doctorUserId).then((response) => {
@@ -58,14 +49,6 @@ const CalendarComponent = ({doctorId, userId}: CalendarProps) => {
             });
         })
     }, [doctorUserId]);
-
-    useEffect(() => {
-        goDm(userId);
-        if(!chatGroupId) return;
-        connect(chatGroupId);
-    }, [doctorUserId,chatGroupId]);
-
-    (chatGroupId);
     const handleDateChange = (selectedDate: any) => {
         setDate(selectedDate);
         setSelectedTime("");
@@ -90,28 +73,23 @@ const CalendarComponent = ({doctorId, userId}: CalendarProps) => {
         const data: ReservationReq = {
             doctorId: doctorId, reserveDate: combinedDateTime.toISOString(), userId: userId
         }
-        if(!isConsultInfo) {
+        createReservation(data)
+        Toast.success("진료 예약 성공!");
+        goDm(userId);
+        console.log(chatGroupId);
+        if(!chatGroupId) return;
+        connect(chatGroupId);
+        console.log(chatGroupId);
+        client?.publish({
+            destination: "/pub/message",
+            body: JSON.stringify({
+                senderId:Number(doctorUserId),
+                receiverId:userId,
+                content:`안녕하세욜`,
+                chatGroupId:chatGroupId,
+            }),
+        });
 
-            Toast.error("상담정보를 등록하고 예약해주세요!");
-            setTimeout(()=>{
-                return navigate("/consultRegist");
-            },1000)
-
-        }
-        else {
-            createReservation(data)
-            Toast.success(`[예약완료] 메세지를 확인하세요!`);
-
-            client?.publish({
-                destination: "/pub/message",
-                body: JSON.stringify({
-                    senderId: Number(doctorUserId),
-                    receiverId: userId,
-                    content: `${date.getMonth() + 1}월 ${date.getDate()}일 ${selectedTime}시 예약되었습니다. 약속한 시간에 https://healthpanda.site/ 접속바랍니다. `,
-                    chatGroupId: chatGroupId,
-                }),
-            });
-        }
         client?.deactivate();
         setSelectedTime("");
         setDate(new Date());
@@ -119,7 +97,6 @@ const CalendarComponent = ({doctorId, userId}: CalendarProps) => {
     }
     const goDm =  (otherUserId: number) => {
         if (!doctorUserId) return;
-
         const isUsed = myDMList.find((tempUser: DMProps) => tempUser.userId === otherUserId)
         if (isUsed) setChatGroupId(isUsed.chatGroupId)
         else {
@@ -127,20 +104,22 @@ const CalendarComponent = ({doctorId, userId}: CalendarProps) => {
                 .then(response => {
                     setMyDMList(prevState => [...prevState, response, otherUserId])
                     setChatGroupId(response);
-
                 });
         }
 
     };
+
     const connect = (roomNumber: number) => {
         const clientdata = new Stomp.Client({
             brokerURL: "ws://i10a509.p.ssafy.io:8081/ws", connectHeaders: {}
+            // MommyLetterWS.getInstance().header
             , debug: function (str) {
                 console.log(str);
 
             }, reconnectDelay: 5000, // 자동 재 연결
             heartbeatIncoming: 4000, heartbeatOutgoing: 4000,
         });
+        console.log(roomNumber);
 
         clientdata.onConnect = function () {
             clientdata.subscribe("/sub/enter/" + roomNumber, callback);
@@ -151,43 +130,43 @@ const CalendarComponent = ({doctorId, userId}: CalendarProps) => {
         setClient(clientdata); // 클라이언트 갱신
 
     }
-const callback = function (message: any) {
-    console.log(message.body);
-};
+    const callback = function (message: any) {
+        console.log(message.body);
+    };
 
-return (<div className="w-[100%]">
-    <ToastContainer/>
-    <div className={`
+    return (<div>
+        <ToastContainer/>
+        <div className={`
         }flex ${showCalendar ? 'visible' : 'hidden'}`}>
-        <div>
-            <Calendar onChange={handleDateChange} value={date}/>
+            <div>
+                <Calendar onChange={handleDateChange} value={date}/>
+            </div>
+            <div className="flex h-[100%] justify-center items-center flex-wrap">
+                {[...Array(16)].map((_, index) => {
+                    const hour = Math.floor(index / 2) + 9;
+                    const minute = index % 2 === 0 ? '00' : '30';
+                    const time = `${hour < 10 ? '0' : ''}${hour}:${minute}`;
+                    return (<div
+                        key={index}
+                        className={` border-2 rounded-xl p-2 px-5 m-1 bg-white ${selectedTime === time ? 'bg-green-600 text-white' : 'bg-white-500'}`}
+                        onClick={() => handleTimeClick(time)}
+                    >
+                        {time}
+                    </div>);
+                })}
+
+
+            </div>
+
         </div>
-        <div className="flex h-[100%] justify-center items-center flex-wrap">
-            {[...Array(16)].map((_, index) => {
-                const hour = Math.floor(index / 2) + 9;
-                const minute = index % 2 === 0 ? '00' : '30';
-                const time = `${hour < 10 ? '0' : ''}${hour}:${minute}`;
-                return (<div
-                    key={index}
-                    className={` border-2 rounded-xl p-2 px-5 m-1 bg-white ${selectedTime === time ? 'bg-green-600 text-white' : 'bg-white-500'}`}
-                    onClick={() => handleTimeClick(time)}
-                >
-                    {time}
-                </div>);
-            })}
-
+        <div className="flex justify-end mr-5">
+            <button className="btn btn-primary" onClick={handleConfirm}>확인</button>
 
         </div>
-
-    </div>
-    <div className="flex justify-end mr-5">
-        <button className="btn btn-primary" onClick={handleConfirm}>확인</button>
-
-    </div>
-    <div className="flex flex-col justify-center items-center w-[100%]">
-        <p className="font-bold">{date.getMonth() + 1}월 {date.getDate()}일 {selectedTime}시</p>
-    </div>
-</div>);
+        <div className="flex flex-col justify-center items-center w-[100%]">
+            <p className="font-bold">{date.getMonth() + 1}월 {date.getDate()}일 {selectedTime}시</p>
+        </div>
+    </div>);
 }
 
 

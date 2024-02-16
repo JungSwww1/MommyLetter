@@ -59,9 +59,12 @@ const ConsultPage = () => {
                         <p>{consultDetail?.validTime}</p>
 
                     </section>
-                    <section className="flex justify-center items-center text-center w-[60%]">
+                    <section className="flex flex-col justify-center items-center text-center w-[60%]">
 
                         <button className="btn btn-primary w-[80%]" onClick={goReservation}>진료 예약</button>
+                    <br/>
+                        <button className="btn btn-danger w-[80%]"><a href="https://healthpanda.site/">화상 연결</a></button>
+
 
                     </section>
                 </section>
